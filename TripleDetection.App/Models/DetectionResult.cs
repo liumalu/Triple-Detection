@@ -1,4 +1,4 @@
-namespace TripleDetection.App.Models
+namespace TripleDetection.Models
 {
     public class DetectionResult
     {

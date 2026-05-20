@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace TripleDetection.App.ViewModels
+namespace TripleDetection.ViewModels
 {
     public class MainViewModel : INotifyPropertyChanged
     {

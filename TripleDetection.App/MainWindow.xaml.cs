@@ -1,11 +1,12 @@
 using System;
 using System.Windows;
 using VM.PlatformSDKCS;
-using TripleDetection.App.Services;
-using TripleDetection.App.ViewModels;
+using TripleDetection.Services;
+using TripleDetection.ViewModels;
 using System.Windows.Forms;
+using System.Configuration;
 
-namespace TripleDetection.App
+namespace TripleDetection
 {
     public partial class MainWindow : Window
     {
@@ -39,7 +40,7 @@ namespace TripleDetection.App
             using (var dialog = new OpenFileDialog())
             {
                 dialog.Filter = "VM Sol File|*.sol*";
-                if (dialog.ShowDialog() == DialogResult.OK)
+                if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     txtSolPath.Text = dialog.FileName;
                 }
@@ -93,9 +94,7 @@ namespace TripleDetection.App
             {
                 try
                 {
-                    var renderControl = new VMControls.WPF.WinForm_WpfControl();
-                    renderControl.vmRenderControl1.ModuleSource = procedure;
-                    VmContainer.Child = renderControl;
+                    VmHost.Child = new VMControls.Winform.Release.VmRenderControl { ModuleSource = procedure };
                 }
                 catch (Exception ex)
                 {

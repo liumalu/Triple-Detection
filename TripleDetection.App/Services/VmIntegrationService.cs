@@ -2,9 +2,9 @@ using System;
 using VM.Core;
 using VM.PlatformSDKCS;
 using System.Drawing;
-using TripleDetection.App.Models;
+using TripleDetection.Models;
 
-namespace TripleDetection.App.Services
+namespace TripleDetection.Services
 {
     public class VmIntegrationService
     {

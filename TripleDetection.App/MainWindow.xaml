@@ -1,6 +1,7 @@
-<Window x:Class="TripleDetection.App.MainWindow"
+<Window x:Class="TripleDetection.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:wfi="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
         Title="Triple Detection - Phase 1 MVP"
         Height="600" Width="900"
         WindowStartupLocation="CenterScreen"
@@ -24,9 +25,7 @@
 
         <!-- VM 显示区域 -->
         <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1" Margin="5">
-            <Grid x:Name="VmContainer">
-                <!-- vmRenderControl 将在这里动态添加 -->
-            </Grid>
+            <wfi:WindowsFormsHost x:Name="VmHost" />
         </Border>
 
         <!-- 结果显示区域 -->
