@@ -51,6 +51,20 @@ namespace TripleDetection.Services
             return _procedure;
         }
 
+        public System.Collections.Generic.List<string> GetAllProcedureNames()
+        {
+            var names = new System.Collections.Generic.List<string>();
+            if (_isSolutionLoad)
+            {
+                var processList = VmSolution.Instance.GetAllProcedureList();
+                for (int i = 0; i < processList.nNum; i++)
+                {
+                    names.Add(processList.astProcessInfo[i].strProcessName);
+                }
+            }
+            return names;
+        }
+
         private void VmSolution_OnWorkStatusEvent(ImvsSdkDefine.IMVS_MODULE_WORK_STAUS workStatusInfo)
         {
             if (workStatusInfo.nWorkStatus == 1 && workStatusInfo.nProcessID == 10000)
