@@ -72,6 +72,10 @@ namespace TripleDetection
                     VmSolution.Save();
                 }
             }
+
+            VmSolution.OnWorkStatusEvent -= VmSolution_OnWorkStatusEvent;
+            VmSolution.OnProcessStatusStartEvent -= VmSolution_OnProcessStatusStartEvent;
+            VmSolution.OnProcessStatusStopEvent -= VmSolution_OnProcessStatusStopEvent;
         }
 
         private void ShowRenderControl()
@@ -90,6 +94,10 @@ namespace TripleDetection
 
         private void ShowMainViewControl()
         {
+            if (VmHost.Child is IDisposable disposable)
+            {
+                disposable.Dispose();
+            }
             VmHost.Child = null;
             btnConfig.Background = new System.Windows.Media.SolidColorBrush(
                 System.Windows.Media.Color.FromRgb(255, 140, 0));
@@ -148,7 +156,7 @@ namespace TripleDetection
                 if (comboProcedure.Items.Count > 0)
                 {
                     comboProcedure.SelectedIndex = 0;
-                    _procedure = VmSolution.Instance[processInfoList.astProcessInfo[0].strProcessName] as VmProcedure;
+                    _procedure = VmSolution.Instance[processList.astProcessInfo[0].strProcessName] as VmProcedure;
 
                     if (_procedure == null)
                     {
@@ -300,6 +308,7 @@ namespace TripleDetection
                 {
                     try
                     {
+                        if (_procedure == null) return;
                         var ioNameInfos = _procedure.ModuResult.GetAllOutputNameInfo();
                         if (ioNameInfos.Count != 0 && ioNameInfos[0].TypeName == IMVS_MODULE_BASE_DATA_TYPE.IMVS_GRAP_TYPE_STRING)
                         {
@@ -354,6 +363,8 @@ namespace TripleDetection
         private void UpdateResult(string strResult)
         {
             var vs = strResult.Split(';');
+            if (vs.Length < 4) return;
+
             if (vs[0] == "1")
             {
                 _viewModel.ResultText = "OK";
