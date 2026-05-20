@@ -1,0 +1,929 @@
+2026-05-20 11:34:17:3968	Application started
+2026-05-20 11:35:57:0192	Switched to parameter configuration view
+2026-05-20 11:36:12:9133	Switched to parameter configuration view
+2026-05-20 11:39:52:5247	Selected solution: D:\xcm\Test\相机拍与输出（无数据输出）.sol
+2026-05-20 11:40:07:6236	Loading solution succeeded!
+2026-05-20 11:40:10:5750	Selected [OCR识别] succeeded!
+2026-05-20 11:40:26:9430	Succeeded to save solution!
+2026-05-20 11:40:29:4012	Run once triggered
+2026-05-20 11:40:29:4171	Failed to get results, Error code: 0x0
+2026-05-20 11:40:29:4216	End Run!
+2026-05-20 11:40:33:7575	Run once triggered
+2026-05-20 11:40:33:7589	Failed to get results, Error code: 0x0
+2026-05-20 11:40:33:7599	End Run!
+2026-05-20 11:40:35:5633	Run once triggered
+2026-05-20 11:40:35:5643	Failed to get results, Error code: 0x0
+2026-05-20 11:40:35:5643	End Run!
+2026-05-20 11:41:10:3059	Selected [流程1] succeeded!
+2026-05-20 11:41:12:3754	Selected [OCR识别] succeeded!
+2026-05-20 11:41:33:4497	Run once triggered
+2026-05-20 11:41:33:4507	Failed to get results, Error code: 0x0
+2026-05-20 11:41:33:4527	End Run!
+2026-05-20 11:44:55:4108	Switched to parameter configuration view
+2026-05-20 11:45:02:5798	Start continuous run!
+2026-05-20 11:45:02:6273	Failed to get results, Error code: 0x0
+2026-05-20 11:45:02:8706	Failed to get results, Error code: 0x0
+2026-05-20 11:45:03:0778	Failed to get results, Error code: 0x0
+2026-05-20 11:45:03:2728	Failed to get results, Error code: 0x0
+2026-05-20 11:45:03:4882	Failed to get results, Error code: 0x0
+2026-05-20 11:45:03:6852	Failed to get results, Error code: 0x0
+2026-05-20 11:45:03:8823	Failed to get results, Error code: 0x0
+2026-05-20 11:45:04:0703	Failed to get results, Error code: 0x0
+2026-05-20 11:45:04:2712	Failed to get results, Error code: 0x0
+2026-05-20 11:45:04:4839	Failed to get results, Error code: 0x0
+2026-05-20 11:45:04:6757	Failed to get results, Error code: 0x0
+2026-05-20 11:45:04:9028	Failed to get results, Error code: 0x0
+2026-05-20 11:45:05:1127	Failed to get results, Error code: 0x0
+2026-05-20 11:45:05:2777	Failed to get results, Error code: 0x0
+2026-05-20 11:45:05:5176	Failed to get results, Error code: 0x0
+2026-05-20 11:45:05:6551	Failed to get results, Error code: 0x0
+2026-05-20 11:45:05:9023	Failed to get results, Error code: 0x0
+2026-05-20 11:45:06:0659	Failed to get results, Error code: 0x0
+2026-05-20 11:45:06:3086	Failed to get results, Error code: 0x0
+2026-05-20 11:45:06:4733	Failed to get results, Error code: 0x0
+2026-05-20 11:45:06:7031	Failed to get results, Error code: 0x0
+2026-05-20 11:45:06:8594	Failed to get results, Error code: 0x0
+2026-05-20 11:45:07:0556	Failed to get results, Error code: 0x0
+2026-05-20 11:45:07:2522	Failed to get results, Error code: 0x0
+2026-05-20 11:45:07:4496	Failed to get results, Error code: 0x0
+2026-05-20 11:45:07:6384	Failed to get results, Error code: 0x0
+2026-05-20 11:45:07:8653	Failed to get results, Error code: 0x0
+2026-05-20 11:45:08:0719	Failed to get results, Error code: 0x0
+2026-05-20 11:45:08:2980	Failed to get results, Error code: 0x0
+2026-05-20 11:45:08:5248	Failed to get results, Error code: 0x0
+2026-05-20 11:45:08:6859	Failed to get results, Error code: 0x0
+2026-05-20 11:45:08:8911	Failed to get results, Error code: 0x0
+2026-05-20 11:45:09:1092	Failed to get results, Error code: 0x0
+2026-05-20 11:45:09:3107	Failed to get results, Error code: 0x0
+2026-05-20 11:45:09:4842	Failed to get results, Error code: 0x0
+2026-05-20 11:45:09:7252	Failed to get results, Error code: 0x0
+2026-05-20 11:45:09:8680	Failed to get results, Error code: 0x0
+2026-05-20 11:45:10:0836	Failed to get results, Error code: 0x0
+2026-05-20 11:45:10:3378	Failed to get results, Error code: 0x0
+2026-05-20 11:45:10:4905	Failed to get results, Error code: 0x0
+2026-05-20 11:45:10:7043	Failed to get results, Error code: 0x0
+2026-05-20 11:45:10:9037	Failed to get results, Error code: 0x0
+2026-05-20 11:45:11:0960	Failed to get results, Error code: 0x0
+2026-05-20 11:45:11:3093	Failed to get results, Error code: 0x0
+2026-05-20 11:45:11:5076	Failed to get results, Error code: 0x0
+2026-05-20 11:45:11:7261	Failed to get results, Error code: 0x0
+2026-05-20 11:45:11:8976	Failed to get results, Error code: 0x0
+2026-05-20 11:45:12:1335	Failed to get results, Error code: 0x0
+2026-05-20 11:45:12:2995	Failed to get results, Error code: 0x0
+2026-05-20 11:45:12:4961	Failed to get results, Error code: 0x0
+2026-05-20 11:45:12:7284	Failed to get results, Error code: 0x0
+2026-05-20 11:45:12:8853	Failed to get results, Error code: 0x0
+2026-05-20 11:45:13:1349	Failed to get results, Error code: 0x0
+2026-05-20 11:45:13:3451	Failed to get results, Error code: 0x0
+2026-05-20 11:45:13:5484	Failed to get results, Error code: 0x0
+2026-05-20 11:45:13:7374	Failed to get results, Error code: 0x0
+2026-05-20 11:45:13:9238	Failed to get results, Error code: 0x0
+2026-05-20 11:45:14:1607	Failed to get results, Error code: 0x0
+2026-05-20 11:45:14:3634	Failed to get results, Error code: 0x0
+2026-05-20 11:45:14:5440	Failed to get results, Error code: 0x0
+2026-05-20 11:45:14:7048	Failed to get results, Error code: 0x0
+2026-05-20 11:45:14:9493	Failed to get results, Error code: 0x0
+2026-05-20 11:45:15:1159	Failed to get results, Error code: 0x0
+2026-05-20 11:45:15:3645	Failed to get results, Error code: 0x0
+2026-05-20 11:45:15:5171	Failed to get results, Error code: 0x0
+2026-05-20 11:45:15:7193	Failed to get results, Error code: 0x0
+2026-05-20 11:45:15:9671	Failed to get results, Error code: 0x0
+2026-05-20 11:45:16:1389	Failed to get results, Error code: 0x0
+2026-05-20 11:45:16:3587	Failed to get results, Error code: 0x0
+2026-05-20 11:45:16:5653	Failed to get results, Error code: 0x0
+2026-05-20 11:45:16:7555	Failed to get results, Error code: 0x0
+2026-05-20 11:45:16:9641	Failed to get results, Error code: 0x0
+2026-05-20 11:45:17:1348	Failed to get results, Error code: 0x0
+2026-05-20 11:45:17:3433	Failed to get results, Error code: 0x0
+2026-05-20 11:45:17:5554	Failed to get results, Error code: 0x0
+2026-05-20 11:45:17:7474	Failed to get results, Error code: 0x0
+2026-05-20 11:45:17:9609	Failed to get results, Error code: 0x0
+2026-05-20 11:45:18:1610	Failed to get results, Error code: 0x0
+2026-05-20 11:45:18:3592	Failed to get results, Error code: 0x0
+2026-05-20 11:45:18:5686	Failed to get results, Error code: 0x0
+2026-05-20 11:45:18:7857	Failed to get results, Error code: 0x0
+2026-05-20 11:45:18:9905	Failed to get results, Error code: 0x0
+2026-05-20 11:45:19:1338	Failed to get results, Error code: 0x0
+2026-05-20 11:45:19:3382	Failed to get results, Error code: 0x0
+2026-05-20 11:45:19:5340	Failed to get results, Error code: 0x0
+2026-05-20 11:45:19:7638	Failed to get results, Error code: 0x0
+2026-05-20 11:45:19:9493	Failed to get results, Error code: 0x0
+2026-05-20 11:45:20:1458	Failed to get results, Error code: 0x0
+2026-05-20 11:45:20:3502	Failed to get results, Error code: 0x0
+2026-05-20 11:45:20:5441	Failed to get results, Error code: 0x0
+2026-05-20 11:45:20:7627	Failed to get results, Error code: 0x0
+2026-05-20 11:45:21:0032	Failed to get results, Error code: 0x0
+2026-05-20 11:45:21:1772	Failed to get results, Error code: 0x0
+2026-05-20 11:45:21:3854	Failed to get results, Error code: 0x0
+2026-05-20 11:45:21:6206	Failed to get results, Error code: 0x0
+2026-05-20 11:45:21:7727	Failed to get results, Error code: 0x0
+2026-05-20 11:45:22:0035	Failed to get results, Error code: 0x0
+2026-05-20 11:45:22:2193	Failed to get results, Error code: 0x0
+2026-05-20 11:45:22:4159	Failed to get results, Error code: 0x0
+2026-05-20 11:45:22:5752	Failed to get results, Error code: 0x0
+2026-05-20 11:45:22:8091	Failed to get results, Error code: 0x0
+2026-05-20 11:45:23:0033	Failed to get results, Error code: 0x0
+2026-05-20 11:45:23:1939	Failed to get results, Error code: 0x0
+2026-05-20 11:45:23:3779	Failed to get results, Error code: 0x0
+2026-05-20 11:45:23:5883	Failed to get results, Error code: 0x0
+2026-05-20 11:45:23:8111	Failed to get results, Error code: 0x0
+2026-05-20 11:45:24:0197	Failed to get results, Error code: 0x0
+2026-05-20 11:45:24:2287	Failed to get results, Error code: 0x0
+2026-05-20 11:45:24:3789	Failed to get results, Error code: 0x0
+2026-05-20 11:45:24:6412	Failed to get results, Error code: 0x0
+2026-05-20 11:45:24:8242	Failed to get results, Error code: 0x0
+2026-05-20 11:45:25:0333	Failed to get results, Error code: 0x0
+2026-05-20 11:45:25:2201	Failed to get results, Error code: 0x0
+2026-05-20 11:45:25:4412	Failed to get results, Error code: 0x0
+2026-05-20 11:45:25:6017	Failed to get results, Error code: 0x0
+2026-05-20 11:45:25:8291	Failed to get results, Error code: 0x0
+2026-05-20 11:45:25:9944	Failed to get results, Error code: 0x0
+2026-05-20 11:45:26:1897	Failed to get results, Error code: 0x0
+2026-05-20 11:45:26:3898	Failed to get results, Error code: 0x0
+2026-05-20 11:45:26:5893	Failed to get results, Error code: 0x0
+2026-05-20 11:45:26:8041	Failed to get results, Error code: 0x0
+2026-05-20 11:45:27:0358	Failed to get results, Error code: 0x0
+2026-05-20 11:45:27:2487	Failed to get results, Error code: 0x0
+2026-05-20 11:45:27:4174	Failed to get results, Error code: 0x0
+2026-05-20 11:45:27:5963	Failed to get results, Error code: 0x0
+2026-05-20 11:45:27:8288	Failed to get results, Error code: 0x0
+2026-05-20 11:45:28:0261	Failed to get results, Error code: 0x0
+2026-05-20 11:45:28:2216	Failed to get results, Error code: 0x0
+2026-05-20 11:45:28:4340	Failed to get results, Error code: 0x0
+2026-05-20 11:45:28:6472	Failed to get results, Error code: 0x0
+2026-05-20 11:45:28:8743	Failed to get results, Error code: 0x0
+2026-05-20 11:45:29:0285	Failed to get results, Error code: 0x0
+2026-05-20 11:45:29:2399	Failed to get results, Error code: 0x0
+2026-05-20 11:45:29:4289	Failed to get results, Error code: 0x0
+2026-05-20 11:45:29:6671	Failed to get results, Error code: 0x0
+2026-05-20 11:45:29:8244	Failed to get results, Error code: 0x0
+2026-05-20 11:45:30:0277	Failed to get results, Error code: 0x0
+2026-05-20 11:45:30:2457	Failed to get results, Error code: 0x0
+2026-05-20 11:45:30:4277	Failed to get results, Error code: 0x0
+2026-05-20 11:45:30:6513	Failed to get results, Error code: 0x0
+2026-05-20 11:45:30:8449	Failed to get results, Error code: 0x0
+2026-05-20 11:45:31:0501	Failed to get results, Error code: 0x0
+2026-05-20 11:45:31:2272	Failed to get results, Error code: 0x0
+2026-05-20 11:45:31:4328	Failed to get results, Error code: 0x0
+2026-05-20 11:45:31:6317	Failed to get results, Error code: 0x0
+2026-05-20 11:45:31:8327	Failed to get results, Error code: 0x0
+2026-05-20 11:45:32:0423	Failed to get results, Error code: 0x0
+2026-05-20 11:45:32:2417	Failed to get results, Error code: 0x0
+2026-05-20 11:45:32:4486	Failed to get results, Error code: 0x0
+2026-05-20 11:45:32:6420	Failed to get results, Error code: 0x0
+2026-05-20 11:45:32:8630	Failed to get results, Error code: 0x0
+2026-05-20 11:45:33:0609	Failed to get results, Error code: 0x0
+2026-05-20 11:45:33:2449	Failed to get results, Error code: 0x0
+2026-05-20 11:45:33:4424	Failed to get results, Error code: 0x0
+2026-05-20 11:45:33:6751	Failed to get results, Error code: 0x0
+2026-05-20 11:45:33:8537	Failed to get results, Error code: 0x0
+2026-05-20 11:45:34:0481	Failed to get results, Error code: 0x0
+2026-05-20 11:45:34:2750	Failed to get results, Error code: 0x0
+2026-05-20 11:45:34:4534	Failed to get results, Error code: 0x0
+2026-05-20 11:45:34:6553	Failed to get results, Error code: 0x0
+2026-05-20 11:45:35:0696	Failed to get results, Error code: 0x0
+2026-05-20 11:45:35:0735	Failed to get results, Error code: 0x0
+2026-05-20 11:45:36:0096	Failed to get results, Error code: 0x0
+2026-05-20 11:45:36:1591	Failed to get results, Error code: 0x0
+2026-05-20 11:45:36:2669	Failed to get results, Error code: 0x0
+2026-05-20 11:45:36:3032	Failed to get results, Error code: 0x0
+2026-05-20 11:45:36:3058	Failed to get results, Error code: 0x0
+2026-05-20 11:45:36:3085	Failed to get results, Error code: 0x0
+2026-05-20 11:45:36:4722	Failed to get results, Error code: 0x0
+2026-05-20 11:45:36:6663	Failed to get results, Error code: 0x0
+2026-05-20 11:45:36:8675	Failed to get results, Error code: 0x0
+2026-05-20 11:45:37:0585	Failed to get results, Error code: 0x0
+2026-05-20 11:45:37:2620	Failed to get results, Error code: 0x0
+2026-05-20 11:45:37:4657	Failed to get results, Error code: 0x0
+2026-05-20 11:45:37:6762	Failed to get results, Error code: 0x0
+2026-05-20 11:45:37:8746	Failed to get results, Error code: 0x0
+2026-05-20 11:45:38:0731	Failed to get results, Error code: 0x0
+2026-05-20 11:45:38:2638	Failed to get results, Error code: 0x0
+2026-05-20 11:45:38:4776	Failed to get results, Error code: 0x0
+2026-05-20 11:45:38:6640	Failed to get results, Error code: 0x0
+2026-05-20 11:45:38:8642	Failed to get results, Error code: 0x0
+2026-05-20 11:45:39:0636	Failed to get results, Error code: 0x0
+2026-05-20 11:45:39:2709	Failed to get results, Error code: 0x0
+2026-05-20 11:45:39:4617	Failed to get results, Error code: 0x0
+2026-05-20 11:45:39:6923	Failed to get results, Error code: 0x0
+2026-05-20 11:45:39:8686	Failed to get results, Error code: 0x0
+2026-05-20 11:45:40:0715	Failed to get results, Error code: 0x0
+2026-05-20 11:45:40:2685	Failed to get results, Error code: 0x0
+2026-05-20 11:45:40:4720	Failed to get results, Error code: 0x0
+2026-05-20 11:45:40:6808	Failed to get results, Error code: 0x0
+2026-05-20 11:45:40:8816	Failed to get results, Error code: 0x0
+2026-05-20 11:45:41:0810	Failed to get results, Error code: 0x0
+2026-05-20 11:45:41:2789	Failed to get results, Error code: 0x0
+2026-05-20 11:45:41:4814	Failed to get results, Error code: 0x0
+2026-05-20 11:45:41:6770	Failed to get results, Error code: 0x0
+2026-05-20 11:45:41:8746	Failed to get results, Error code: 0x0
+2026-05-20 11:45:42:0812	Failed to get results, Error code: 0x0
+2026-05-20 11:45:42:2738	Failed to get results, Error code: 0x0
+2026-05-20 11:45:42:4911	Failed to get results, Error code: 0x0
+2026-05-20 11:45:42:6718	Failed to get results, Error code: 0x0
+2026-05-20 11:45:42:9043	Failed to get results, Error code: 0x0
+2026-05-20 11:45:43:1226	Failed to get results, Error code: 0x0
+2026-05-20 11:45:43:3526	Failed to get results, Error code: 0x0
+2026-05-20 11:45:43:4790	Failed to get results, Error code: 0x0
+2026-05-20 11:45:43:7435	Failed to get results, Error code: 0x0
+2026-05-20 11:45:43:9294	Failed to get results, Error code: 0x0
+2026-05-20 11:45:44:1122	Failed to get results, Error code: 0x0
+2026-05-20 11:45:44:3038	Failed to get results, Error code: 0x0
+2026-05-20 11:45:44:5037	Failed to get results, Error code: 0x0
+2026-05-20 11:45:44:7057	Failed to get results, Error code: 0x0
+2026-05-20 11:45:44:9023	Failed to get results, Error code: 0x0
+2026-05-20 11:45:45:1244	Failed to get results, Error code: 0x0
+2026-05-20 11:45:45:3528	Failed to get results, Error code: 0x0
+2026-05-20 11:45:45:5401	Failed to get results, Error code: 0x0
+2026-05-20 11:45:45:6880	Failed to get results, Error code: 0x0
+2026-05-20 11:45:45:9401	Failed to get results, Error code: 0x0
+2026-05-20 11:45:46:1553	Failed to get results, Error code: 0x0
+2026-05-20 11:45:46:3198	Failed to get results, Error code: 0x0
+2026-05-20 11:45:46:5325	Failed to get results, Error code: 0x0
+2026-05-20 11:45:46:7524	Failed to get results, Error code: 0x0
+2026-05-20 11:45:46:9386	Failed to get results, Error code: 0x0
+2026-05-20 11:45:47:1700	Failed to get results, Error code: 0x0
+2026-05-20 11:45:47:3570	Failed to get results, Error code: 0x0
+2026-05-20 11:45:47:5616	Failed to get results, Error code: 0x0
+2026-05-20 11:45:47:7638	Failed to get results, Error code: 0x0
+2026-05-20 11:45:47:9661	Failed to get results, Error code: 0x0
+2026-05-20 11:45:48:1307	Failed to get results, Error code: 0x0
+2026-05-20 11:45:48:3664	Failed to get results, Error code: 0x0
+2026-05-20 11:45:48:5613	Failed to get results, Error code: 0x0
+2026-05-20 11:45:48:7414	Failed to get results, Error code: 0x0
+2026-05-20 11:45:48:9590	Failed to get results, Error code: 0x0
+2026-05-20 11:45:49:1931	Failed to get results, Error code: 0x0
+2026-05-20 11:45:49:3260	Failed to get results, Error code: 0x0
+2026-05-20 11:45:49:5561	Failed to get results, Error code: 0x0
+2026-05-20 11:45:49:7427	Failed to get results, Error code: 0x0
+2026-05-20 11:45:49:9406	Failed to get results, Error code: 0x0
+2026-05-20 11:45:50:1735	Failed to get results, Error code: 0x0
+2026-05-20 11:45:50:3439	Failed to get results, Error code: 0x0
+2026-05-20 11:45:50:5478	Failed to get results, Error code: 0x0
+2026-05-20 11:45:50:7512	Failed to get results, Error code: 0x0
+2026-05-20 11:45:50:9885	Failed to get results, Error code: 0x0
+2026-05-20 11:45:51:2097	Failed to get results, Error code: 0x0
+2026-05-20 11:45:51:3500	Failed to get results, Error code: 0x0
+2026-05-20 11:45:51:5729	Failed to get results, Error code: 0x0
+2026-05-20 11:45:51:8010	Failed to get results, Error code: 0x0
+2026-05-20 11:45:51:9806	Failed to get results, Error code: 0x0
+2026-05-20 11:45:52:2129	Failed to get results, Error code: 0x0
+2026-05-20 11:45:52:4067	Failed to get results, Error code: 0x0
+2026-05-20 11:45:52:6096	Failed to get results, Error code: 0x0
+2026-05-20 11:45:52:7671	Failed to get results, Error code: 0x0
+2026-05-20 11:45:53:0214	Failed to get results, Error code: 0x0
+2026-05-20 11:45:53:1968	Failed to get results, Error code: 0x0
+2026-05-20 11:45:53:3693	Failed to get results, Error code: 0x0
+2026-05-20 11:45:53:5976	Failed to get results, Error code: 0x0
+2026-05-20 11:45:53:8105	Failed to get results, Error code: 0x0
+2026-05-20 11:45:54:0264	Failed to get results, Error code: 0x0
+2026-05-20 11:45:54:1811	Failed to get results, Error code: 0x0
+2026-05-20 11:45:54:4163	Failed to get results, Error code: 0x0
+2026-05-20 11:45:54:5961	Failed to get results, Error code: 0x0
+2026-05-20 11:45:54:7610	Failed to get results, Error code: 0x0
+2026-05-20 11:45:54:9614	Failed to get results, Error code: 0x0
+2026-05-20 11:45:55:1679	Failed to get results, Error code: 0x0
+2026-05-20 11:45:55:3646	Failed to get results, Error code: 0x0
+2026-05-20 11:45:55:5669	Failed to get results, Error code: 0x0
+2026-05-20 11:45:55:7686	Failed to get results, Error code: 0x0
+2026-05-20 11:45:55:9721	Failed to get results, Error code: 0x0
+2026-05-20 11:45:56:1698	Failed to get results, Error code: 0x0
+2026-05-20 11:45:56:3884	Failed to get results, Error code: 0x0
+2026-05-20 11:45:56:6489	Failed to get results, Error code: 0x0
+2026-05-20 11:45:56:8206	Failed to get results, Error code: 0x0
+2026-05-20 11:45:56:9949	Failed to get results, Error code: 0x0
+2026-05-20 11:45:57:1974	Failed to get results, Error code: 0x0
+2026-05-20 11:45:57:3822	Failed to get results, Error code: 0x0
+2026-05-20 11:45:57:5868	Failed to get results, Error code: 0x0
+2026-05-20 11:45:57:8040	Failed to get results, Error code: 0x0
+2026-05-20 11:45:57:9852	Failed to get results, Error code: 0x0
+2026-05-20 11:45:58:1873	Failed to get results, Error code: 0x0
+2026-05-20 11:45:58:3854	Failed to get results, Error code: 0x0
+2026-05-20 11:45:58:5832	Failed to get results, Error code: 0x0
+2026-05-20 11:45:58:7821	Failed to get results, Error code: 0x0
+2026-05-20 11:45:58:9900	Failed to get results, Error code: 0x0
+2026-05-20 11:45:59:1887	Failed to get results, Error code: 0x0
+2026-05-20 11:45:59:3827	Failed to get results, Error code: 0x0
+2026-05-20 11:45:59:5940	Failed to get results, Error code: 0x0
+2026-05-20 11:45:59:7917	Failed to get results, Error code: 0x0
+2026-05-20 11:45:59:9907	Failed to get results, Error code: 0x0
+2026-05-20 11:46:00:1876	Failed to get results, Error code: 0x0
+2026-05-20 11:46:00:3863	Failed to get results, Error code: 0x0
+2026-05-20 11:46:00:5892	Failed to get results, Error code: 0x0
+2026-05-20 11:46:00:7903	Failed to get results, Error code: 0x0
+2026-05-20 11:46:00:9946	Failed to get results, Error code: 0x0
+2026-05-20 11:46:01:1959	Failed to get results, Error code: 0x0
+2026-05-20 11:46:01:3967	Failed to get results, Error code: 0x0
+2026-05-20 11:46:01:5899	Failed to get results, Error code: 0x0
+2026-05-20 11:46:01:7994	Failed to get results, Error code: 0x0
+2026-05-20 11:46:01:9951	Failed to get results, Error code: 0x0
+2026-05-20 11:46:02:1937	Failed to get results, Error code: 0x0
+2026-05-20 11:46:02:4014	Failed to get results, Error code: 0x0
+2026-05-20 11:46:02:5961	Failed to get results, Error code: 0x0
+2026-05-20 11:46:02:7998	Failed to get results, Error code: 0x0
+2026-05-20 11:46:03:0022	Failed to get results, Error code: 0x0
+2026-05-20 11:46:03:2164	Failed to get results, Error code: 0x0
+2026-05-20 11:46:03:4201	Failed to get results, Error code: 0x0
+2026-05-20 11:46:03:6177	Failed to get results, Error code: 0x0
+2026-05-20 11:46:03:8028	Failed to get results, Error code: 0x0
+2026-05-20 11:46:04:0074	Failed to get results, Error code: 0x0
+2026-05-20 11:46:04:2227	Failed to get results, Error code: 0x0
+2026-05-20 11:46:04:4014	Failed to get results, Error code: 0x0
+2026-05-20 11:46:04:6217	Failed to get results, Error code: 0x0
+2026-05-20 11:46:04:7995	Failed to get results, Error code: 0x0
+2026-05-20 11:46:05:0034	Failed to get results, Error code: 0x0
+2026-05-20 11:46:05:2049	Failed to get results, Error code: 0x0
+2026-05-20 11:46:05:4023	Failed to get results, Error code: 0x0
+2026-05-20 11:46:05:6099	Failed to get results, Error code: 0x0
+2026-05-20 11:46:05:8079	Failed to get results, Error code: 0x0
+2026-05-20 11:46:06:0054	Failed to get results, Error code: 0x0
+2026-05-20 11:46:06:2055	Failed to get results, Error code: 0x0
+2026-05-20 11:46:06:4328	Failed to get results, Error code: 0x0
+2026-05-20 11:46:06:6479	Failed to get results, Error code: 0x0
+2026-05-20 11:46:06:8441	Failed to get results, Error code: 0x0
+2026-05-20 11:46:07:0250	Failed to get results, Error code: 0x0
+2026-05-20 11:46:07:2345	Failed to get results, Error code: 0x0
+2026-05-20 11:46:07:4350	Failed to get results, Error code: 0x0
+2026-05-20 11:46:07:6523	Failed to get results, Error code: 0x0
+2026-05-20 11:46:07:8342	Failed to get results, Error code: 0x0
+2026-05-20 11:46:08:0479	Failed to get results, Error code: 0x0
+2026-05-20 11:46:08:2778	Failed to get results, Error code: 0x0
+2026-05-20 11:46:08:4913	Failed to get results, Error code: 0x0
+2026-05-20 11:46:08:6567	Failed to get results, Error code: 0x0
+2026-05-20 11:46:08:8568	Failed to get results, Error code: 0x0
+2026-05-20 11:46:09:0838	Failed to get results, Error code: 0x0
+2026-05-20 11:46:09:2707	Failed to get results, Error code: 0x0
+2026-05-20 11:46:09:4665	Failed to get results, Error code: 0x0
+2026-05-20 11:46:09:7022	Failed to get results, Error code: 0x0
+2026-05-20 11:46:09:8997	Failed to get results, Error code: 0x0
+2026-05-20 11:46:10:0361	Failed to get results, Error code: 0x0
+2026-05-20 11:46:10:2831	Failed to get results, Error code: 0x0
+2026-05-20 11:46:10:4598	Failed to get results, Error code: 0x0
+2026-05-20 11:46:10:6592	Failed to get results, Error code: 0x0
+2026-05-20 11:46:10:8687	Failed to get results, Error code: 0x0
+2026-05-20 11:46:11:0602	Failed to get results, Error code: 0x0
+2026-05-20 11:46:11:2918	Failed to get results, Error code: 0x0
+2026-05-20 11:46:11:5098	Failed to get results, Error code: 0x0
+2026-05-20 11:46:11:7091	Failed to get results, Error code: 0x0
+2026-05-20 11:46:11:8625	Failed to get results, Error code: 0x0
+2026-05-20 11:46:12:1195	Failed to get results, Error code: 0x0
+2026-05-20 11:46:12:3072	Failed to get results, Error code: 0x0
+2026-05-20 11:46:12:5068	Failed to get results, Error code: 0x0
+2026-05-20 11:46:12:6976	Failed to get results, Error code: 0x0
+2026-05-20 11:46:12:8983	Failed to get results, Error code: 0x0
+2026-05-20 11:46:13:0744	Failed to get results, Error code: 0x0
+2026-05-20 11:46:13:3366	Failed to get results, Error code: 0x0
+2026-05-20 11:46:13:5209	Failed to get results, Error code: 0x0
+2026-05-20 11:46:13:6661	Failed to get results, Error code: 0x0
+2026-05-20 11:46:13:9158	Failed to get results, Error code: 0x0
+2026-05-20 11:46:14:1348	Failed to get results, Error code: 0x0
+2026-05-20 11:46:14:3123	Failed to get results, Error code: 0x0
+2026-05-20 11:46:14:5265	Failed to get results, Error code: 0x0
+2026-05-20 11:46:14:7005	Failed to get results, Error code: 0x0
+2026-05-20 11:46:14:9296	Failed to get results, Error code: 0x0
+2026-05-20 11:46:15:1056	Failed to get results, Error code: 0x0
+2026-05-20 11:46:15:3461	Failed to get results, Error code: 0x0
+2026-05-20 11:46:15:4945	Failed to get results, Error code: 0x0
+2026-05-20 11:46:15:7416	Failed to get results, Error code: 0x0
+2026-05-20 11:46:15:9131	Failed to get results, Error code: 0x0
+2026-05-20 11:46:16:1466	Failed to get results, Error code: 0x0
+2026-05-20 11:46:16:3447	Failed to get results, Error code: 0x0
+2026-05-20 11:46:16:4956	Failed to get results, Error code: 0x0
+2026-05-20 11:46:16:7467	Failed to get results, Error code: 0x0
+2026-05-20 11:46:16:9485	Failed to get results, Error code: 0x0
+2026-05-20 11:46:17:1577	Failed to get results, Error code: 0x0
+2026-05-20 11:46:17:3592	Failed to get results, Error code: 0x0
+2026-05-20 11:46:17:5512	Failed to get results, Error code: 0x0
+2026-05-20 11:46:17:7320	Failed to get results, Error code: 0x0
+2026-05-20 11:46:17:9730	Failed to get results, Error code: 0x0
+2026-05-20 11:46:18:1214	Failed to get results, Error code: 0x0
+2026-05-20 11:46:18:3590	Failed to get results, Error code: 0x0
+2026-05-20 11:46:18:5758	Failed to get results, Error code: 0x0
+2026-05-20 11:46:18:7584	Failed to get results, Error code: 0x0
+2026-05-20 11:46:18:9720	Failed to get results, Error code: 0x0
+2026-05-20 11:46:19:1883	Failed to get results, Error code: 0x0
+2026-05-20 11:46:19:3242	Failed to get results, Error code: 0x0
+2026-05-20 11:46:19:5754	Failed to get results, Error code: 0x0
+2026-05-20 11:46:19:7777	Failed to get results, Error code: 0x0
+2026-05-20 11:46:19:9712	Failed to get results, Error code: 0x0
+2026-05-20 11:46:20:1755	Failed to get results, Error code: 0x0
+2026-05-20 11:46:20:3404	Failed to get results, Error code: 0x0
+2026-05-20 11:46:20:5469	Failed to get results, Error code: 0x0
+2026-05-20 11:46:20:7839	Failed to get results, Error code: 0x0
+2026-05-20 11:46:20:9743	Failed to get results, Error code: 0x0
+2026-05-20 11:46:21:1461	Failed to get results, Error code: 0x0
+2026-05-20 11:46:21:3848	Failed to get results, Error code: 0x0
+2026-05-20 11:46:21:5898	Failed to get results, Error code: 0x0
+2026-05-20 11:46:21:7491	Failed to get results, Error code: 0x0
+2026-05-20 11:46:21:9878	Failed to get results, Error code: 0x0
+2026-05-20 11:46:22:1986	Failed to get results, Error code: 0x0
+2026-05-20 11:46:22:3830	Failed to get results, Error code: 0x0
+2026-05-20 11:46:22:5684	Failed to get results, Error code: 0x0
+2026-05-20 11:46:22:7791	Failed to get results, Error code: 0x0
+2026-05-20 11:46:22:9539	Failed to get results, Error code: 0x0
+2026-05-20 11:46:23:1564	Failed to get results, Error code: 0x0
+2026-05-20 11:46:23:3600	Failed to get results, Error code: 0x0
+2026-05-20 11:46:23:6077	Failed to get results, Error code: 0x0
+2026-05-20 11:46:23:7664	Failed to get results, Error code: 0x0
+2026-05-20 11:46:24:0302	Failed to get results, Error code: 0x0
+2026-05-20 11:46:24:1463	Failed to get results, Error code: 0x0
+2026-05-20 11:46:24:3741	Failed to get results, Error code: 0x0
+2026-05-20 11:46:24:5923	Failed to get results, Error code: 0x0
+2026-05-20 11:46:24:8279	Failed to get results, Error code: 0x0
+2026-05-20 11:46:24:9546	Failed to get results, Error code: 0x0
+2026-05-20 11:46:25:2242	Failed to get results, Error code: 0x0
+2026-05-20 11:46:25:4024	Failed to get results, Error code: 0x0
+2026-05-20 11:46:25:6018	Failed to get results, Error code: 0x0
+2026-05-20 11:46:25:8159	Failed to get results, Error code: 0x0
+2026-05-20 11:46:25:9810	Failed to get results, Error code: 0x0
+2026-05-20 11:46:26:1628	Failed to get results, Error code: 0x0
+2026-05-20 11:46:26:3873	Failed to get results, Error code: 0x0
+2026-05-20 11:46:26:6285	Failed to get results, Error code: 0x0
+2026-05-20 11:46:26:8263	Failed to get results, Error code: 0x0
+2026-05-20 11:46:27:0215	Failed to get results, Error code: 0x0
+2026-05-20 11:46:27:2161	Failed to get results, Error code: 0x0
+2026-05-20 11:46:27:3885	Failed to get results, Error code: 0x0
+2026-05-20 11:46:27:6238	Failed to get results, Error code: 0x0
+2026-05-20 11:46:27:8252	Failed to get results, Error code: 0x0
+2026-05-20 11:46:28:0067	Failed to get results, Error code: 0x0
+2026-05-20 11:46:28:2270	Failed to get results, Error code: 0x0
+2026-05-20 11:46:28:4065	Failed to get results, Error code: 0x0
+2026-05-20 11:46:28:5791	Failed to get results, Error code: 0x0
+2026-05-20 11:46:28:7956	Failed to get results, Error code: 0x0
+2026-05-20 11:46:29:0554	Failed to get results, Error code: 0x0
+2026-05-20 11:46:29:1936	Failed to get results, Error code: 0x0
+2026-05-20 11:46:29:4324	Failed to get results, Error code: 0x0
+2026-05-20 11:46:29:6607	Failed to get results, Error code: 0x0
+2026-05-20 11:46:29:8334	Failed to get results, Error code: 0x0
+2026-05-20 11:46:30:0188	Failed to get results, Error code: 0x0
+2026-05-20 11:46:30:2514	Failed to get results, Error code: 0x0
+2026-05-20 11:46:30:4188	Failed to get results, Error code: 0x0
+2026-05-20 11:46:30:6158	Failed to get results, Error code: 0x0
+2026-05-20 11:46:30:8298	Failed to get results, Error code: 0x0
+2026-05-20 11:46:31:0552	Failed to get results, Error code: 0x0
+2026-05-20 11:46:31:2013	Failed to get results, Error code: 0x0
+2026-05-20 11:46:31:4623	Failed to get results, Error code: 0x0
+2026-05-20 11:46:31:6246	Failed to get results, Error code: 0x0
+2026-05-20 11:46:31:8594	Failed to get results, Error code: 0x0
+2026-05-20 11:46:32:0464	Failed to get results, Error code: 0x0
+2026-05-20 11:46:32:2451	Failed to get results, Error code: 0x0
+2026-05-20 11:46:32:4267	Failed to get results, Error code: 0x0
+2026-05-20 11:46:32:6372	Failed to get results, Error code: 0x0
+2026-05-20 11:46:32:8620	Failed to get results, Error code: 0x0
+2026-05-20 11:46:33:0629	Failed to get results, Error code: 0x0
+2026-05-20 11:46:33:2644	Failed to get results, Error code: 0x0
+2026-05-20 11:46:33:4433	Failed to get results, Error code: 0x0
+2026-05-20 11:46:33:6724	Failed to get results, Error code: 0x0
+2026-05-20 11:46:33:8693	Failed to get results, Error code: 0x0
+2026-05-20 11:46:34:0756	Failed to get results, Error code: 0x0
+2026-05-20 11:46:34:2852	Failed to get results, Error code: 0x0
+2026-05-20 11:46:34:4871	Failed to get results, Error code: 0x0
+2026-05-20 11:46:34:6620	Failed to get results, Error code: 0x0
+2026-05-20 11:46:34:8890	Failed to get results, Error code: 0x0
+2026-05-20 11:46:35:0441	Failed to get results, Error code: 0x0
+2026-05-20 11:46:35:2447	Failed to get results, Error code: 0x0
+2026-05-20 11:46:35:4553	Failed to get results, Error code: 0x0
+2026-05-20 11:46:35:6487	Failed to get results, Error code: 0x0
+2026-05-20 11:46:35:8750	Failed to get results, Error code: 0x0
+2026-05-20 11:46:36:0705	Failed to get results, Error code: 0x0
+2026-05-20 11:46:36:2905	Failed to get results, Error code: 0x0
+2026-05-20 11:46:36:4939	Failed to get results, Error code: 0x0
+2026-05-20 11:46:36:6401	Failed to get results, Error code: 0x0
+2026-05-20 11:46:36:8569	Failed to get results, Error code: 0x0
+2026-05-20 11:46:37:0431	Failed to get results, Error code: 0x0
+2026-05-20 11:46:37:2520	Failed to get results, Error code: 0x0
+2026-05-20 11:46:37:4378	Failed to get results, Error code: 0x0
+2026-05-20 11:46:37:6390	Failed to get results, Error code: 0x0
+2026-05-20 11:46:37:8396	Failed to get results, Error code: 0x0
+2026-05-20 11:46:38:0509	Failed to get results, Error code: 0x0
+2026-05-20 11:46:38:2412	Failed to get results, Error code: 0x0
+2026-05-20 11:46:38:4495	Failed to get results, Error code: 0x0
+2026-05-20 11:46:38:6587	Failed to get results, Error code: 0x0
+2026-05-20 11:46:38:8687	Failed to get results, Error code: 0x0
+2026-05-20 11:46:39:0965	Failed to get results, Error code: 0x0
+2026-05-20 11:46:39:2695	Failed to get results, Error code: 0x0
+2026-05-20 11:46:39:4866	Failed to get results, Error code: 0x0
+2026-05-20 11:46:39:6750	Failed to get results, Error code: 0x0
+2026-05-20 11:46:39:9156	Failed to get results, Error code: 0x0
+2026-05-20 11:46:40:0786	Failed to get results, Error code: 0x0
+2026-05-20 11:46:40:3273	Failed to get results, Error code: 0x0
+2026-05-20 11:46:40:5130	Failed to get results, Error code: 0x0
+2026-05-20 11:46:40:7191	Failed to get results, Error code: 0x0
+2026-05-20 11:46:40:9306	Failed to get results, Error code: 0x0
+2026-05-20 11:46:41:1153	Failed to get results, Error code: 0x0
+2026-05-20 11:46:41:2861	Failed to get results, Error code: 0x0
+2026-05-20 11:46:41:4721	Failed to get results, Error code: 0x0
+2026-05-20 11:46:41:7250	Failed to get results, Error code: 0x0
+2026-05-20 11:46:41:9223	Failed to get results, Error code: 0x0
+2026-05-20 11:46:42:1201	Failed to get results, Error code: 0x0
+2026-05-20 11:46:42:3294	Failed to get results, Error code: 0x0
+2026-05-20 11:46:42:5299	Failed to get results, Error code: 0x0
+2026-05-20 11:46:42:7007	Failed to get results, Error code: 0x0
+2026-05-20 11:46:42:9302	Failed to get results, Error code: 0x0
+2026-05-20 11:46:43:0894	Failed to get results, Error code: 0x0
+2026-05-20 11:46:43:3285	Failed to get results, Error code: 0x0
+2026-05-20 11:46:43:5009	Failed to get results, Error code: 0x0
+2026-05-20 11:46:43:7311	Failed to get results, Error code: 0x0
+2026-05-20 11:46:43:9547	Failed to get results, Error code: 0x0
+2026-05-20 11:46:44:1397	Failed to get results, Error code: 0x0
+2026-05-20 11:46:44:3362	Failed to get results, Error code: 0x0
+2026-05-20 11:46:44:5148	Failed to get results, Error code: 0x0
+2026-05-20 11:46:44:6951	Failed to get results, Error code: 0x0
+2026-05-20 11:46:44:9035	Failed to get results, Error code: 0x0
+2026-05-20 11:46:45:1142	Failed to get results, Error code: 0x0
+2026-05-20 11:46:45:3470	Failed to get results, Error code: 0x0
+2026-05-20 11:46:45:5118	Failed to get results, Error code: 0x0
+2026-05-20 11:46:45:7352	Failed to get results, Error code: 0x0
+2026-05-20 11:46:45:9410	Failed to get results, Error code: 0x0
+2026-05-20 11:46:46:1659	Failed to get results, Error code: 0x0
+2026-05-20 11:46:46:3172	Failed to get results, Error code: 0x0
+2026-05-20 11:46:46:5649	Failed to get results, Error code: 0x0
+2026-05-20 11:46:46:7145	Failed to get results, Error code: 0x0
+2026-05-20 11:46:46:9482	Failed to get results, Error code: 0x0
+2026-05-20 11:46:47:1062	Failed to get results, Error code: 0x0
+2026-05-20 11:46:47:3811	Failed to get results, Error code: 0x0
+2026-05-20 11:46:47:5149	Failed to get results, Error code: 0x0
+2026-05-20 11:46:47:7245	Failed to get results, Error code: 0x0
+2026-05-20 11:46:47:9094	Failed to get results, Error code: 0x0
+2026-05-20 11:46:48:1073	Failed to get results, Error code: 0x0
+2026-05-20 11:46:48:3689	Failed to get results, Error code: 0x0
+2026-05-20 11:46:48:5117	Failed to get results, Error code: 0x0
+2026-05-20 11:46:48:7676	Failed to get results, Error code: 0x0
+2026-05-20 11:46:48:9630	Failed to get results, Error code: 0x0
+2026-05-20 11:46:49:1248	Failed to get results, Error code: 0x0
+2026-05-20 11:46:49:3299	Failed to get results, Error code: 0x0
+2026-05-20 11:46:49:5714	Failed to get results, Error code: 0x0
+2026-05-20 11:46:49:7332	Failed to get results, Error code: 0x0
+2026-05-20 11:46:49:9491	Failed to get results, Error code: 0x0
+2026-05-20 11:46:50:1297	Failed to get results, Error code: 0x0
+2026-05-20 11:46:50:3460	Failed to get results, Error code: 0x0
+2026-05-20 11:46:50:5390	Failed to get results, Error code: 0x0
+2026-05-20 11:46:50:7542	Failed to get results, Error code: 0x0
+2026-05-20 11:46:50:9534	Failed to get results, Error code: 0x0
+2026-05-20 11:46:51:1919	Failed to get results, Error code: 0x0
+2026-05-20 11:46:51:3589	Failed to get results, Error code: 0x0
+2026-05-20 11:46:51:5698	Failed to get results, Error code: 0x0
+2026-05-20 11:46:51:7692	Failed to get results, Error code: 0x0
+2026-05-20 11:46:51:9481	Failed to get results, Error code: 0x0
+2026-05-20 11:46:52:1963	Failed to get results, Error code: 0x0
+2026-05-20 11:46:52:3665	Failed to get results, Error code: 0x0
+2026-05-20 11:46:52:5935	Failed to get results, Error code: 0x0
+2026-05-20 11:46:52:8072	Failed to get results, Error code: 0x0
+2026-05-20 11:46:52:9954	Failed to get results, Error code: 0x0
+2026-05-20 11:46:53:2015	Failed to get results, Error code: 0x0
+2026-05-20 11:46:53:3615	Failed to get results, Error code: 0x0
+2026-05-20 11:46:53:6062	Failed to get results, Error code: 0x0
+2026-05-20 11:46:53:7580	Failed to get results, Error code: 0x0
+2026-05-20 11:46:53:9903	Failed to get results, Error code: 0x0
+2026-05-20 11:46:54:1732	Failed to get results, Error code: 0x0
+2026-05-20 11:46:54:4012	Failed to get results, Error code: 0x0
+2026-05-20 11:46:54:6120	Failed to get results, Error code: 0x0
+2026-05-20 11:46:54:8106	Failed to get results, Error code: 0x0
+2026-05-20 11:46:55:0160	Failed to get results, Error code: 0x0
+2026-05-20 11:46:55:1706	Failed to get results, Error code: 0x0
+2026-05-20 11:46:55:3741	Failed to get results, Error code: 0x0
+2026-05-20 11:46:55:5721	Failed to get results, Error code: 0x0
+2026-05-20 11:46:55:7834	Failed to get results, Error code: 0x0
+2026-05-20 11:46:55:9838	Failed to get results, Error code: 0x0
+2026-05-20 11:46:56:2102	Failed to get results, Error code: 0x0
+2026-05-20 11:46:56:4052	Failed to get results, Error code: 0x0
+2026-05-20 11:46:56:5919	Failed to get results, Error code: 0x0
+2026-05-20 11:46:56:8303	Failed to get results, Error code: 0x0
+2026-05-20 11:46:56:9774	Failed to get results, Error code: 0x0
+2026-05-20 11:46:57:1830	Failed to get results, Error code: 0x0
+2026-05-20 11:46:57:3803	Failed to get results, Error code: 0x0
+2026-05-20 11:46:57:6033	Failed to get results, Error code: 0x0
+2026-05-20 11:46:57:8331	Failed to get results, Error code: 0x0
+2026-05-20 11:46:58:0406	Failed to get results, Error code: 0x0
+2026-05-20 11:46:58:2082	Failed to get results, Error code: 0x0
+2026-05-20 11:46:58:4387	Failed to get results, Error code: 0x0
+2026-05-20 11:46:58:6346	Failed to get results, Error code: 0x0
+2026-05-20 11:46:58:8220	Failed to get results, Error code: 0x0
+2026-05-20 11:46:59:0413	Failed to get results, Error code: 0x0
+2026-05-20 11:46:59:2006	Failed to get results, Error code: 0x0
+2026-05-20 11:46:59:4361	Failed to get results, Error code: 0x0
+2026-05-20 11:46:59:5937	Failed to get results, Error code: 0x0
+2026-05-20 11:46:59:8346	Failed to get results, Error code: 0x0
+2026-05-20 11:47:00:0474	Failed to get results, Error code: 0x0
+2026-05-20 11:47:00:2447	Failed to get results, Error code: 0x0
+2026-05-20 11:47:00:4105	Failed to get results, Error code: 0x0
+2026-05-20 11:47:00:5961	Failed to get results, Error code: 0x0
+2026-05-20 11:47:00:8645	Failed to get results, Error code: 0x0
+2026-05-20 11:47:01:0573	Failed to get results, Error code: 0x0
+2026-05-20 11:47:01:2535	Failed to get results, Error code: 0x0
+2026-05-20 11:47:01:4071	Failed to get results, Error code: 0x0
+2026-05-20 11:47:01:6449	Failed to get results, Error code: 0x0
+2026-05-20 11:47:01:8785	Failed to get results, Error code: 0x0
+2026-05-20 11:47:02:0034	Failed to get results, Error code: 0x0
+2026-05-20 11:47:02:2696	Failed to get results, Error code: 0x0
+2026-05-20 11:47:02:4214	Failed to get results, Error code: 0x0
+2026-05-20 11:47:02:6639	Failed to get results, Error code: 0x0
+2026-05-20 11:47:02:8515	Failed to get results, Error code: 0x0
+2026-05-20 11:47:03:0276	Failed to get results, Error code: 0x0
+2026-05-20 11:47:03:2506	Failed to get results, Error code: 0x0
+2026-05-20 11:47:03:4447	Failed to get results, Error code: 0x0
+2026-05-20 11:47:03:6742	Failed to get results, Error code: 0x0
+2026-05-20 11:47:03:8208	Failed to get results, Error code: 0x0
+2026-05-20 11:47:04:0765	Failed to get results, Error code: 0x0
+2026-05-20 11:47:04:2808	Failed to get results, Error code: 0x0
+2026-05-20 11:47:04:4852	Failed to get results, Error code: 0x0
+2026-05-20 11:47:04:6544	Failed to get results, Error code: 0x0
+2026-05-20 11:47:04:8997	Failed to get results, Error code: 0x0
+2026-05-20 11:47:05:0684	Failed to get results, Error code: 0x0
+2026-05-20 11:47:05:3115	Failed to get results, Error code: 0x0
+2026-05-20 11:47:05:4480	Failed to get results, Error code: 0x0
+2026-05-20 11:47:05:6786	Failed to get results, Error code: 0x0
+2026-05-20 11:47:05:8478	Failed to get results, Error code: 0x0
+2026-05-20 11:47:06:0432	Failed to get results, Error code: 0x0
+2026-05-20 11:47:06:2488	Failed to get results, Error code: 0x0
+2026-05-20 11:47:06:4344	Failed to get results, Error code: 0x0
+2026-05-20 11:47:06:6358	Failed to get results, Error code: 0x0
+2026-05-20 11:47:06:9104	Failed to get results, Error code: 0x0
+2026-05-20 11:47:07:0431	Failed to get results, Error code: 0x0
+2026-05-20 11:47:07:2453	Failed to get results, Error code: 0x0
+2026-05-20 11:47:07:4462	Failed to get results, Error code: 0x0
+2026-05-20 11:47:07:6496	Failed to get results, Error code: 0x0
+2026-05-20 11:47:07:8536	Failed to get results, Error code: 0x0
+2026-05-20 11:47:08:0570	Failed to get results, Error code: 0x0
+2026-05-20 11:47:08:2504	Failed to get results, Error code: 0x0
+2026-05-20 11:47:08:4828	Failed to get results, Error code: 0x0
+2026-05-20 11:47:08:6475	Failed to get results, Error code: 0x0
+2026-05-20 11:47:08:8776	Failed to get results, Error code: 0x0
+2026-05-20 11:47:09:0603	Failed to get results, Error code: 0x0
+2026-05-20 11:47:09:2572	Failed to get results, Error code: 0x0
+2026-05-20 11:47:09:4498	Failed to get results, Error code: 0x0
+2026-05-20 11:47:09:6577	Failed to get results, Error code: 0x0
+2026-05-20 11:47:09:8548	Failed to get results, Error code: 0x0
+2026-05-20 11:47:10:0583	Failed to get results, Error code: 0x0
+2026-05-20 11:47:10:2833	Failed to get results, Error code: 0x0
+2026-05-20 11:47:10:4830	Failed to get results, Error code: 0x0
+2026-05-20 11:47:10:6617	Failed to get results, Error code: 0x0
+2026-05-20 11:47:10:8572	Failed to get results, Error code: 0x0
+2026-05-20 11:47:11:0741	Failed to get results, Error code: 0x0
+2026-05-20 11:47:11:2599	Failed to get results, Error code: 0x0
+2026-05-20 11:47:11:5052	Failed to get results, Error code: 0x0
+2026-05-20 11:47:11:6737	Failed to get results, Error code: 0x0
+2026-05-20 11:47:11:9098	Failed to get results, Error code: 0x0
+2026-05-20 11:47:12:1455	Failed to get results, Error code: 0x0
+2026-05-20 11:47:12:2642	Failed to get results, Error code: 0x0
+2026-05-20 11:47:12:4820	Failed to get results, Error code: 0x0
+2026-05-20 11:47:12:7335	Failed to get results, Error code: 0x0
+2026-05-20 11:47:12:9335	Failed to get results, Error code: 0x0
+2026-05-20 11:47:13:1245	Failed to get results, Error code: 0x0
+2026-05-20 11:47:13:3332	Failed to get results, Error code: 0x0
+2026-05-20 11:47:13:6050	Failed to get results, Error code: 0x0
+2026-05-20 11:47:13:6777	Failed to get results, Error code: 0x0
+2026-05-20 11:47:13:8821	Failed to get results, Error code: 0x0
+2026-05-20 11:47:14:0918	Failed to get results, Error code: 0x0
+2026-05-20 11:47:14:2721	Failed to get results, Error code: 0x0
+2026-05-20 11:47:14:4919	Failed to get results, Error code: 0x0
+2026-05-20 11:47:14:7490	Failed to get results, Error code: 0x0
+2026-05-20 11:47:14:9473	Failed to get results, Error code: 0x0
+2026-05-20 11:47:15:1461	Failed to get results, Error code: 0x0
+2026-05-20 11:47:15:3268	Failed to get results, Error code: 0x0
+2026-05-20 11:47:15:4982	Failed to get results, Error code: 0x0
+2026-05-20 11:47:15:7405	Failed to get results, Error code: 0x0
+2026-05-20 11:47:15:8906	Failed to get results, Error code: 0x0
+2026-05-20 11:47:16:1113	Failed to get results, Error code: 0x0
+2026-05-20 11:47:16:3546	Failed to get results, Error code: 0x0
+2026-05-20 11:47:16:5417	Failed to get results, Error code: 0x0
+2026-05-20 11:47:16:6986	Failed to get results, Error code: 0x0
+2026-05-20 11:47:16:9242	Failed to get results, Error code: 0x0
+2026-05-20 11:47:17:1530	Failed to get results, Error code: 0x0
+2026-05-20 11:47:17:3729	Failed to get results, Error code: 0x0
+2026-05-20 11:47:17:5256	Failed to get results, Error code: 0x0
+2026-05-20 11:47:17:7641	Failed to get results, Error code: 0x0
+2026-05-20 11:47:17:9706	Failed to get results, Error code: 0x0
+2026-05-20 11:47:18:1485	Failed to get results, Error code: 0x0
+2026-05-20 11:47:18:3727	Failed to get results, Error code: 0x0
+2026-05-20 11:47:18:5260	Failed to get results, Error code: 0x0
+2026-05-20 11:47:18:7729	Failed to get results, Error code: 0x0
+2026-05-20 11:47:18:9370	Failed to get results, Error code: 0x0
+2026-05-20 11:47:19:1344	Failed to get results, Error code: 0x0
+2026-05-20 11:47:19:3316	Failed to get results, Error code: 0x0
+2026-05-20 11:47:19:5869	Failed to get results, Error code: 0x0
+2026-05-20 11:47:19:7705	Failed to get results, Error code: 0x0
+2026-05-20 11:47:19:9898	Failed to get results, Error code: 0x0
+2026-05-20 11:47:20:1266	Failed to get results, Error code: 0x0
+2026-05-20 11:47:20:3841	Failed to get results, Error code: 0x0
+2026-05-20 11:47:20:5276	Failed to get results, Error code: 0x0
+2026-05-20 11:47:20:7217	Failed to get results, Error code: 0x0
+2026-05-20 11:47:20:9246	Failed to get results, Error code: 0x0
+2026-05-20 11:47:21:1281	Failed to get results, Error code: 0x0
+2026-05-20 11:47:21:3275	Failed to get results, Error code: 0x0
+2026-05-20 11:47:21:5295	Failed to get results, Error code: 0x0
+2026-05-20 11:47:21:7326	Failed to get results, Error code: 0x0
+2026-05-20 11:47:21:9351	Failed to get results, Error code: 0x0
+2026-05-20 11:47:22:1377	Failed to get results, Error code: 0x0
+2026-05-20 11:47:22:3433	Failed to get results, Error code: 0x0
+2026-05-20 11:47:22:5702	Failed to get results, Error code: 0x0
+2026-05-20 11:47:22:7977	Failed to get results, Error code: 0x0
+2026-05-20 11:47:22:9308	Failed to get results, Error code: 0x0
+2026-05-20 11:47:23:1529	Failed to get results, Error code: 0x0
+2026-05-20 11:47:23:3616	Failed to get results, Error code: 0x0
+2026-05-20 11:47:23:5855	Failed to get results, Error code: 0x0
+2026-05-20 11:47:23:7455	Failed to get results, Error code: 0x0
+2026-05-20 11:47:23:9991	Failed to get results, Error code: 0x0
+2026-05-20 11:47:24:1942	Failed to get results, Error code: 0x0
+2026-05-20 11:47:24:3656	Failed to get results, Error code: 0x0
+2026-05-20 11:47:24:6118	Failed to get results, Error code: 0x0
+2026-05-20 11:47:24:7878	Failed to get results, Error code: 0x0
+2026-05-20 11:47:25:0023	Failed to get results, Error code: 0x0
+2026-05-20 11:47:25:2139	Failed to get results, Error code: 0x0
+2026-05-20 11:47:25:3520	Failed to get results, Error code: 0x0
+2026-05-20 11:47:25:5928	Failed to get results, Error code: 0x0
+2026-05-20 11:47:25:7721	Failed to get results, Error code: 0x0
+2026-05-20 11:47:26:0115	Failed to get results, Error code: 0x0
+2026-05-20 11:47:26:1764	Failed to get results, Error code: 0x0
+2026-05-20 11:47:26:3741	Failed to get results, Error code: 0x0
+2026-05-20 11:47:26:6198	Failed to get results, Error code: 0x0
+2026-05-20 11:47:26:7783	Failed to get results, Error code: 0x0
+2026-05-20 11:47:27:0315	Failed to get results, Error code: 0x0
+2026-05-20 11:47:27:1695	Failed to get results, Error code: 0x0
+2026-05-20 11:47:27:3674	Failed to get results, Error code: 0x0
+2026-05-20 11:47:27:5611	Failed to get results, Error code: 0x0
+2026-05-20 11:47:27:7592	Failed to get results, Error code: 0x0
+2026-05-20 11:47:27:9653	Failed to get results, Error code: 0x0
+2026-05-20 11:47:28:1642	Failed to get results, Error code: 0x0
+2026-05-20 11:47:28:3875	Failed to get results, Error code: 0x0
+2026-05-20 11:47:28:5894	Failed to get results, Error code: 0x0
+2026-05-20 11:47:28:8013	Failed to get results, Error code: 0x0
+2026-05-20 11:47:29:0219	Failed to get results, Error code: 0x0
+2026-05-20 11:47:29:1910	Failed to get results, Error code: 0x0
+2026-05-20 11:47:29:3872	Failed to get results, Error code: 0x0
+2026-05-20 11:47:29:5828	Failed to get results, Error code: 0x0
+2026-05-20 11:47:29:7783	Failed to get results, Error code: 0x0
+2026-05-20 11:47:29:9772	Failed to get results, Error code: 0x0
+2026-05-20 11:47:30:1853	Failed to get results, Error code: 0x0
+2026-05-20 11:47:30:3844	Failed to get results, Error code: 0x0
+2026-05-20 11:47:30:5837	Failed to get results, Error code: 0x0
+2026-05-20 11:47:30:7956	Failed to get results, Error code: 0x0
+2026-05-20 11:47:30:9824	Failed to get results, Error code: 0x0
+2026-05-20 11:47:31:1857	Failed to get results, Error code: 0x0
+2026-05-20 11:47:31:3879	Failed to get results, Error code: 0x0
+2026-05-20 11:47:31:5943	Failed to get results, Error code: 0x0
+2026-05-20 11:47:31:8468	Failed to get results, Error code: 0x0
+2026-05-20 11:47:32:0220	Failed to get results, Error code: 0x0
+2026-05-20 11:47:32:2357	Failed to get results, Error code: 0x0
+2026-05-20 11:47:32:4465	Failed to get results, Error code: 0x0
+2026-05-20 11:47:32:6547	Failed to get results, Error code: 0x0
+2026-05-20 11:47:32:8167	Failed to get results, Error code: 0x0
+2026-05-20 11:47:33:0585	Failed to get results, Error code: 0x0
+2026-05-20 11:47:33:2008	Failed to get results, Error code: 0x0
+2026-05-20 11:47:33:4321	Failed to get results, Error code: 0x0
+2026-05-20 11:47:33:6751	Failed to get results, Error code: 0x0
+2026-05-20 11:47:33:8247	Failed to get results, Error code: 0x0
+2026-05-20 11:47:34:0150	Failed to get results, Error code: 0x0
+2026-05-20 11:47:34:2614	Failed to get results, Error code: 0x0
+2026-05-20 11:47:34:4385	Failed to get results, Error code: 0x0
+2026-05-20 11:47:34:6787	Failed to get results, Error code: 0x0
+2026-05-20 11:47:34:8518	Failed to get results, Error code: 0x0
+2026-05-20 11:47:35:0595	Failed to get results, Error code: 0x0
+2026-05-20 11:47:35:2730	Failed to get results, Error code: 0x0
+2026-05-20 11:47:35:4204	Failed to get results, Error code: 0x0
+2026-05-20 11:47:35:6709	Failed to get results, Error code: 0x0
+2026-05-20 11:47:35:8667	Failed to get results, Error code: 0x0
+2026-05-20 11:47:36:0719	Failed to get results, Error code: 0x0
+2026-05-20 11:47:36:2487	Failed to get results, Error code: 0x0
+2026-05-20 11:47:36:4779	Failed to get results, Error code: 0x0
+2026-05-20 11:47:36:6732	Failed to get results, Error code: 0x0
+2026-05-20 11:47:36:8680	Failed to get results, Error code: 0x0
+2026-05-20 11:47:37:0904	Failed to get results, Error code: 0x0
+2026-05-20 11:47:37:2713	Failed to get results, Error code: 0x0
+2026-05-20 11:47:37:4777	Failed to get results, Error code: 0x0
+2026-05-20 11:47:37:6460	Failed to get results, Error code: 0x0
+2026-05-20 11:47:37:8728	Failed to get results, Error code: 0x0
+2026-05-20 11:47:38:0866	Failed to get results, Error code: 0x0
+2026-05-20 11:47:38:2470	Failed to get results, Error code: 0x0
+2026-05-20 11:47:38:4491	Failed to get results, Error code: 0x0
+2026-05-20 11:47:38:6457	Failed to get results, Error code: 0x0
+2026-05-20 11:47:38:8357	Failed to get results, Error code: 0x0
+2026-05-20 11:47:39:0500	Failed to get results, Error code: 0x0
+2026-05-20 11:47:39:2479	Failed to get results, Error code: 0x0
+2026-05-20 11:47:39:4411	Failed to get results, Error code: 0x0
+2026-05-20 11:47:39:6595	Failed to get results, Error code: 0x0
+2026-05-20 11:47:39:8586	Failed to get results, Error code: 0x0
+2026-05-20 11:47:40:1010	Failed to get results, Error code: 0x0
+2026-05-20 11:47:40:2755	Failed to get results, Error code: 0x0
+2026-05-20 11:47:40:4948	Failed to get results, Error code: 0x0
+2026-05-20 11:47:40:7124	Failed to get results, Error code: 0x0
+2026-05-20 11:47:40:8554	Failed to get results, Error code: 0x0
+2026-05-20 11:47:41:1010	Failed to get results, Error code: 0x0
+2026-05-20 11:47:41:2998	Failed to get results, Error code: 0x0
+2026-05-20 11:47:41:4937	Failed to get results, Error code: 0x0
+2026-05-20 11:47:41:6695	Failed to get results, Error code: 0x0
+2026-05-20 11:47:41:9145	Failed to get results, Error code: 0x0
+2026-05-20 11:47:42:0745	Failed to get results, Error code: 0x0
+2026-05-20 11:47:42:3913	Failed to get results, Error code: 0x0
+2026-05-20 11:47:42:4628	Failed to get results, Error code: 0x0
+2026-05-20 11:47:42:7089	Failed to get results, Error code: 0x0
+2026-05-20 11:47:42:9184	Failed to get results, Error code: 0x0
+2026-05-20 11:47:43:0961	Failed to get results, Error code: 0x0
+2026-05-20 11:47:43:3212	Failed to get results, Error code: 0x0
+2026-05-20 11:47:43:4765	Failed to get results, Error code: 0x0
+2026-05-20 11:47:43:6872	Failed to get results, Error code: 0x0
+2026-05-20 11:47:43:9374	Failed to get results, Error code: 0x0
+2026-05-20 11:47:44:1423	Failed to get results, Error code: 0x0
+2026-05-20 11:47:44:3274	Failed to get results, Error code: 0x0
+2026-05-20 11:47:44:5331	Failed to get results, Error code: 0x0
+2026-05-20 11:47:44:7371	Failed to get results, Error code: 0x0
+2026-05-20 11:47:44:9356	Failed to get results, Error code: 0x0
+2026-05-20 11:47:45:1354	Failed to get results, Error code: 0x0
+2026-05-20 11:47:45:3351	Failed to get results, Error code: 0x0
+2026-05-20 11:47:45:5237	Failed to get results, Error code: 0x0
+2026-05-20 11:47:45:7228	Failed to get results, Error code: 0x0
+2026-05-20 11:47:45:9052	Failed to get results, Error code: 0x0
+2026-05-20 11:47:46:1185	Failed to get results, Error code: 0x0
+2026-05-20 11:47:46:3407	Failed to get results, Error code: 0x0
+2026-05-20 11:47:46:5436	Failed to get results, Error code: 0x0
+2026-05-20 11:47:46:7127	Failed to get results, Error code: 0x0
+2026-05-20 11:47:46:9523	Failed to get results, Error code: 0x0
+2026-05-20 11:47:47:0562	End Run!
+2026-05-20 11:56:16:4349	Application started
+2026-05-20 11:56:23:3357	Selected solution: D:\xcm\Test\相机拍与输出（无数据输出）.sol
+2026-05-20 11:56:31:2977	Failed to load solution: “VM.Core.TempVmSolution”的类型初始值设定项引发异常。
+2026-05-20 11:56:38:0295	Failed to load solution: “VM.Core.TempVmSolution”的类型初始值设定项引发异常。
+2026-05-20 11:57:02:1865	Selected solution: D:\xcm\Test\相机拍与输出（无数据输出）.sol
+2026-05-20 11:57:09:6219	Failed to load solution: “VM.Core.TempVmSolution”的类型初始值设定项引发异常。
+2026-05-20 11:57:15:0216	Failed to load solution: “VM.Core.TempVmSolution”的类型初始值设定项引发异常。
+2026-05-20 12:04:52:9059	Application started
+2026-05-20 12:04:57:9504	Selected solution: D:\xcm\Test\相机拍与输出（无数据输出）.sol
+2026-05-20 12:05:00:9563	Failed to load solution: “VM.Core.TempVmSolution”的类型初始值设定项引发异常。
+2026-05-20 12:05:04:2697	Failed to load solution: “VM.Core.TempVmSolution”的类型初始值设定项引发异常。
+2026-05-20 12:05:23:9021	Failed to load solution: “VM.Core.TempVmSolution”的类型初始值设定项引发异常。
+2026-05-20 12:36:29:8368	Application started
+2026-05-20 12:47:56:6478	Application started
+2026-05-20 12:48:06:1180	Selected solution: D:\xcm\Test\相机拍与输出（无数据输出）.sol
+2026-05-20 12:48:12:2320	Failed to load solution: “VM.Core.TempVmSolution”的类型初始值设定项引发异常。
+2026-05-20 12:48:32:0969	Selected solution: D:\xcm\Test\相机拍与输出（无数据输出）.sol
+2026-05-20 12:48:34:2066	Failed to load solution: “VM.Core.TempVmSolution”的类型初始值设定项引发异常。
+2026-05-20 12:48:36:7900	Failed to load solution: “VM.Core.TempVmSolution”的类型初始值设定项引发异常。
+2026-05-20 13:08:30:7866	Application started
+2026-05-20 13:08:47:9699	Selected solution: D:\xcm\Test\相机拍与输出（无数据输出）.sol
+2026-05-20 13:08:53:4838	End Run!
+2026-05-20 13:09:02:4885	Loading solution succeeded!
+2026-05-20 13:09:04:9393	Selected [OCR识别] succeeded!
+2026-05-20 13:09:13:9989	Run once triggered
+2026-05-20 13:09:14:0109	VmSolution_OnWorkStatusEvent VmException: Error code: 0x0
+2026-05-20 13:09:14:0149	End Run!
+2026-05-20 13:13:31:7116	Application started
+2026-05-20 13:13:37:0469	Selected solution: D:\xcm\Test\相机拍与输出（无数据输出）.sol
+2026-05-20 13:13:53:0272	Loading solution succeeded!
+2026-05-20 13:13:55:5548	Selected [OCR识别] succeeded!
+2026-05-20 13:14:01:2383	Run once triggered
+2026-05-20 13:14:01:2373	[Callback] nWorkStatus=0, nProcessID=10000
+2026-05-20 13:14:01:2393	VmSolution_OnWorkStatusEvent: getting output info...
+2026-05-20 13:14:01:2486	VmSolution_OnWorkStatusEvent: ioNameInfos.Count=1
+2026-05-20 13:14:01:2496	VmSolution_OnWorkStatusEvent: TypeName=IMVS_GRAP_TYPE_STRING
+2026-05-20 13:14:01:2541	VmSolution_OnWorkStatusEvent VmException: Error code: 0x0
+2026-05-20 13:14:01:2663	End Run!
+2026-05-20 13:19:23:3456	Application started
+2026-05-20 13:19:30:3523	Selected solution: D:\xcm\Test\相机拍与输出（无数据输出）.sol
+2026-05-20 13:19:50:7834	Loading solution succeeded!
+2026-05-20 13:19:53:1534	Selected [OCR识别] succeeded!
+2026-05-20 13:20:15:7502	Application started
+2026-05-20 13:20:21:8494	Selected solution: D:\xcm\Test\相机拍与输出（无数据输出）.sol
+2026-05-20 13:20:36:9968	Loading solution succeeded!
+2026-05-20 13:20:40:9280	Selected [OCR识别] succeeded!
+2026-05-20 13:20:47:0801	Run once triggered
+2026-05-20 13:20:47:0781	[Callback] nWorkStatus=0, nProcessID=10000
+2026-05-20 13:20:47:0846	VmSolution_OnWorkStatusEvent: getting output info...
+2026-05-20 13:20:47:0938	VmSolution_OnWorkStatusEvent: ioNameInfos.Count=1
+2026-05-20 13:20:47:0948	VmSolution_OnWorkStatusEvent: TypeName=IMVS_GRAP_TYPE_STRING
+2026-05-20 13:20:47:0948	VmSolution_OnWorkStatusEvent: calling GetOutputString with name=out
+2026-05-20 13:20:47:0980	VmSolution_OnWorkStatusEvent VmException: Error code: 0x0
+2026-05-20 13:20:47:1082	End Run!
+2026-05-20 13:28:09:9598	Application started
+2026-05-20 13:28:17:6968	Selected solution: D:\xcm\Test\相机拍与输出（无数据输出）.sol
+2026-05-20 13:28:34:5246	Loading solution succeeded!
+2026-05-20 13:28:36:9871	Selected [OCR识别] succeeded!
+2026-05-20 13:28:42:5913	Run once triggered
+2026-05-20 13:28:42:5906	[Callback] nWorkStatus=0, nProcessID=10000
+2026-05-20 13:28:42:5944	VmSolution_OnWorkStatusEvent: getting output info...
+2026-05-20 13:28:42:6034	VmSolution_OnWorkStatusEvent: ioNameInfos.Count=1
+2026-05-20 13:28:42:6044	VmSolution_OnWorkStatusEvent: TypeName=IMVS_GRAP_TYPE_STRING
+2026-05-20 13:28:42:6044	VmSolution_OnWorkStatusEvent: calling GetOutputString with name=out
+2026-05-20 13:28:42:6152	End Run!
+2026-05-20 13:28:42:6130	VmSolution_OnWorkStatusEvent VmException: Error code: 0x0
+2026-05-20 13:30:08:7145	Selected solution: D:\xcm\ApplicationDemo\OCRDemoCs\OCRDemoChinese.sol
+2026-05-20 13:30:20:6847	End Run!
+2026-05-20 13:30:21:4098	Loading solution succeeded!
+2026-05-20 13:30:23:0473	Selected [OCR识别] succeeded!
+2026-05-20 13:30:37:3255	Run once triggered
+2026-05-20 13:30:37:3257	VmSolution_OnWorkStatusEvent: ioNameInfos.Count=1
+2026-05-20 13:30:37:3257	VmSolution_OnWorkStatusEvent: calling GetOutputString with name=out
+2026-05-20 13:30:37:3257	VmSolution_OnWorkStatusEvent: getting output info...
+2026-05-20 13:30:37:3235	[Callback] nWorkStatus=0, nProcessID=10000
+2026-05-20 13:30:37:3257	VmSolution_OnWorkStatusEvent: TypeName=IMVS_GRAP_TYPE_STRING
+2026-05-20 13:30:37:3480	End Run!
+2026-05-20 13:30:37:3502	Results: CodeInfo: ; Number of characters: ; Confidence: 
+2026-05-20 13:30:37:3502	Process running time: 19.1721ms
+2026-05-20 13:31:34:6755	Run once triggered
+2026-05-20 13:31:34:6745	[Callback] nWorkStatus=0, nProcessID=10000
+2026-05-20 13:31:34:6790	VmSolution_OnWorkStatusEvent: getting output info...
+2026-05-20 13:31:34:6790	VmSolution_OnWorkStatusEvent: ioNameInfos.Count=1
+2026-05-20 13:31:34:6814	End Run!
+2026-05-20 13:31:34:6887	Results: CodeInfo: ; Number of characters: ; Confidence: 
+2026-05-20 13:31:34:6790	VmSolution_OnWorkStatusEvent: calling GetOutputString with name=out
+2026-05-20 13:31:34:6887	Process running time: 17.1546ms
+2026-05-20 13:31:34:6790	VmSolution_OnWorkStatusEvent: TypeName=IMVS_GRAP_TYPE_STRING

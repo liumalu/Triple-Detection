@@ -1,6 +1,8 @@
 using System;
+using System.Configuration;
 using System.Globalization;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using VM.Core;
@@ -111,7 +113,7 @@ namespace TripleDetection
         {
             var dialog = new OpenFileDialog();
             dialog.Filter = "VM Sol File|*.sol*";
-            if (dialog.ShowDialog() == DialogResult.OK)
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 _selectedSolPath = dialog.FileName;
                 _isSolutionLoad = false;
@@ -264,16 +266,18 @@ namespace TripleDetection
 
             try
             {
+                bool beforeToggle = _procedure.ContinuousRunEnable;
                 _procedure.ContinuousRunEnable = _procedure.ContinuousRunEnable ^ true;
-                _isContinuRun = _isContinuRun ^ true;
+                _isContinuRun = _procedure.ContinuousRunEnable;
+                _logService.Log($"Continuous run toggled: {beforeToggle} -> {_procedure.ContinuousRunEnable}");
             }
             catch (VmException ex)
             {
-                _logService.Log($"Failed to run continuous, Error code: 0x{ex.errorCode:X}");
+                _logService.Log($"Failed to toggle continuous run, Error code: 0x{ex.errorCode:X}");
             }
             catch (Exception ex)
             {
-                _logService.Log($"Failed to run continuous: {ex.Message}");
+                _logService.Log($"Failed to toggle continuous run: {ex.Message}");
             }
         }
 
@@ -302,33 +306,72 @@ namespace TripleDetection
 
         private void VmSolution_OnWorkStatusEvent(ImvsSdkDefine.IMVS_MODULE_WORK_STAUS workStatusInfo)
         {
+            _logService.Log($"[Callback] nWorkStatus={workStatusInfo.nWorkStatus}, nProcessID={workStatusInfo.nProcessID}");
             if (workStatusInfo.nWorkStatus == 0 && workStatusInfo.nProcessID == 10000)
             {
                 Dispatcher.Invoke(() =>
                 {
                     try
                     {
-                        if (_procedure == null) return;
-                        var ioNameInfos = _procedure.ModuResult.GetAllOutputNameInfo();
-                        if (ioNameInfos.Count != 0 && ioNameInfos[0].TypeName == IMVS_MODULE_BASE_DATA_TYPE.IMVS_GRAP_TYPE_STRING)
+                        if (_procedure == null)
                         {
-                            var stringVal = _procedure.ModuResult.GetOutputString(ioNameInfos[0].Name).astStringVal;
-                            if (stringVal == null || stringVal.Length == 0) return;
-                            string strResult = stringVal[0].strValue;
-                            if (strResult != null)
-                            {
-                                UpdateResult(strResult);
-                                _logService.Log($"Process running time: {_procedure.ProcessTime}ms");
-                            }
+                            _logService.Log("VmSolution_OnWorkStatusEvent: _procedure is null");
+                            return;
                         }
+                        _logService.Log("VmSolution_OnWorkStatusEvent: getting output info...");
+                        var ioNameInfos = _procedure.ModuResult.GetAllOutputNameInfo();
+                        _logService.Log($"VmSolution_OnWorkStatusEvent: ioNameInfos.Count={ioNameInfos.Count}");
+                        if (ioNameInfos.Count == 0)
+                        {
+                            _logService.Log("VmSolution_OnWorkStatusEvent: ioNameInfos.Count == 0, no output available");
+                            return;
+                        }
+                        _logService.Log($"VmSolution_OnWorkStatusEvent: TypeName={ioNameInfos[0].TypeName}");
+                        if (ioNameInfos[0].TypeName != IMVS_MODULE_BASE_DATA_TYPE.IMVS_GRAP_TYPE_STRING)
+                        {
+                            _logService.Log($"VmSolution_OnWorkStatusEvent: type mismatch, got {ioNameInfos[0].TypeName}");
+                            return;
+                        }
+                        _logService.Log("VmSolution_OnWorkStatusEvent: calling GetOutputString with name=" + ioNameInfos[0].Name);
+                        Task.Run(() =>
+                        {
+                            try
+                            {
+                                var outputResult = _procedure.ModuResult.GetOutputString(ioNameInfos[0].Name);
+                                var stringVal = outputResult.astStringVal;
+                                if (stringVal == null || stringVal.Length == 0)
+                                {
+                                    _logService.Log("VmSolution_OnWorkStatusEvent: stringVal is null or empty");
+                                    return;
+                                }
+                                string strResult = stringVal[0].strValue;
+                                if (strResult != null)
+                                {
+                                    Dispatcher.Invoke(() => UpdateResult(strResult));
+                                    _logService.Log($"Process running time: {_procedure.ProcessTime}ms");
+                                }
+                                else
+                                {
+                                    _logService.Log("VmSolution_OnWorkStatusEvent: strResult is null");
+                                }
+                            }
+                            catch (VmException ex)
+                            {
+                                _logService.Log($"VmSolution_OnWorkStatusEvent VmException: Error code: 0x{ex.errorCode:X}");
+                            }
+                            catch (Exception ex)
+                            {
+                                _logService.Log($"VmSolution_OnWorkStatusEvent Exception: {ex.Message}");
+                            }
+                        });
                     }
                     catch (VmException ex)
                     {
-                        _logService.Log($"Failed to get results, Error code: 0x{ex.errorCode:X}");
+                        _logService.Log($"VmSolution_OnWorkStatusEvent VmException: Error code: 0x{ex.errorCode:X}");
                     }
                     catch (Exception ex)
                     {
-                        _logService.Log($"Failed to get results: {ex.Message}");
+                        _logService.Log($"VmSolution_OnWorkStatusEvent Exception: {ex.Message}");
                     }
                 });
             }

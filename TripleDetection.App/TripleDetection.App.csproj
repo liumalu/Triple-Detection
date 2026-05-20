@@ -49,29 +49,13 @@
     <Reference Include="WindowsBase" />
     <Reference Include="System.Xaml" />
     <Reference Include="WindowsFormsIntegration" />
-    <Reference Include="VM.Core">
-      <Private>true</Private>
-    </Reference>
-    <Reference Include="VM.PlatformSDKCS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c1484a72052ee3d4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <Private>true</Private>
-    </Reference>
-    <Reference Include="VMControls.BaseInterface">
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="VMControls.Interface">
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="VMControls.RenderInterface">
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="VMControls.Winform.Release, Version=1.0.0.0, Culture=neutral, PublicKeyToken=2efa940dfee4dc7e, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="VMControls.WPF.Release">
-      <Private>false</Private>
-    </Reference>
+    <Reference Include="VM.Core" />
+    <Reference Include="VM.PlatformSDKCS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c1484a72052ee3d4, processorArchitecture=MSIL" />
+    <Reference Include="VMControls.BaseInterface" />
+    <Reference Include="VMControls.Interface" />
+    <Reference Include="VMControls.RenderInterface" />
+    <Reference Include="VMControls.Winform.Release, Version=1.0.0.0, Culture=neutral, PublicKeyToken=2efa940dfee4dc7e, processorArchitecture=MSIL" />
+    <Reference Include="VMControls.WPF.Release" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainWindow.xaml.cs">
@@ -83,6 +67,7 @@
     <Compile Include="Models\DetectionResult.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="Services\VmIntegrationService.cs" />
+    <Compile Include="Services\LoggingService.cs" />
     <Compile Include="Services\ImageStorageService.cs" />
   </ItemGroup>
   <ItemGroup>

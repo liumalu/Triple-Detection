@@ -19,11 +19,9 @@ namespace TripleDetection.Services
 
         public void Log(string message)
         {
-            var entry = new LogEntry
-            {
-                Timestamp = DateTime.Now,
-                Message = message
-            };
+            var entry = new LogEntry();
+            entry.Timestamp = DateTime.Now;
+            entry.Message = message;
 
             OnLogAdded?.Invoke(this, entry);
 
@@ -62,7 +60,7 @@ namespace TripleDetection.Services
 
     public class LogEntry
     {
-        public DateTime Timestamp { get; init; }
-        public string Message { get; init; }
+        public DateTime Timestamp { get; set; }
+        public string Message { get; set; }
     }
 }
