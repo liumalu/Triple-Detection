@@ -28,8 +28,15 @@ namespace TripleDetection
         private bool _isContinuRun = false;
         private VmProcedure _procedure;
 
+        private readonly string _vmInstallPath;
+
         public MainWindow()
         {
+            _vmInstallPath = ConfigurationManager.AppSettings["VmInstallPath"];
+
+            // 注册 AssemblyResolve 事件，在 GAC 找不到时从配置的 VM 路径加载
+            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+
             InitializeComponent();
 
             _okDir = ConfigurationManager.AppSettings["OkImageDir"];
@@ -54,6 +61,34 @@ namespace TripleDetection
 
             btnRender.Background = new System.Windows.Media.SolidColorBrush(
                 System.Windows.Media.Color.FromRgb(255, 140, 0));
+        }
+
+        private System.Reflection.Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            var assemblyName = new System.Reflection.AssemblyName(args.Name);
+            string dllName = assemblyName.Name + ".dll";
+
+            // VM 相关的 DLL 从配置的安装路径加载
+            string[] vmDlls = new[] { "VM.Core", "VM.PlatformSDKCS", "VMControls.BaseInterface",
+                "VMControls.Interface", "VMControls.RenderInterface", "VMControls.Winform.Release",
+                "VMControls.WPF.Release", "VM.Framework.Container", "VM.Util", "VM.Utility",
+                "Apps.Data", "Apps.ErrorCode", "Apps.Interface", "Apps.Localization", "Apps.Log",
+                "Apps.UIData", "Apps.UIHelper", "MVDCore.Net", "MVDImage.Net" };
+
+            if (Array.Exists(vmDlls, d => d == assemblyName.Name))
+            {
+                string vmPath = Path.Combine(_vmInstallPath, "Development", "V4.x", "ComControls", "Assembly", dllName);
+                if (File.Exists(vmPath))
+                {
+                    _logService.Log($"Loading {dllName} from {vmPath}");
+                    return System.Reflection.Assembly.LoadFrom(vmPath);
+                }
+                else
+                {
+                    _logService.Log($"Assembly {dllName} not found at {vmPath}");
+                }
+            }
+            return null;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -269,7 +304,11 @@ namespace TripleDetection
                 bool beforeToggle = _procedure.ContinuousRunEnable;
                 _procedure.ContinuousRunEnable = _procedure.ContinuousRunEnable ^ true;
                 _isContinuRun = _procedure.ContinuousRunEnable;
-                _logService.Log($"Continuous run toggled: {beforeToggle} -> {_procedure.ContinuousRunEnable}");
+
+                _logService.Log($"Continuous run toggled: {beforeToggle} -> {_procedure.ContinuousRunEnable}, isContinuRun={_isContinuRun}");
+
+                // 更新按钮文本以反映当前实际状态
+                btnContiRun.Content = _isContinuRun ? "停止连续" : "连续运行";
             }
             catch (VmException ex)
             {
@@ -321,49 +360,43 @@ namespace TripleDetection
                         _logService.Log("VmSolution_OnWorkStatusEvent: getting output info...");
                         var ioNameInfos = _procedure.ModuResult.GetAllOutputNameInfo();
                         _logService.Log($"VmSolution_OnWorkStatusEvent: ioNameInfos.Count={ioNameInfos.Count}");
+
                         if (ioNameInfos.Count == 0)
                         {
-                            _logService.Log("VmSolution_OnWorkStatusEvent: ioNameInfos.Count == 0, no output available");
+                            _logService.Log("VmSolution_OnWorkStatusEvent: no outputs available");
                             return;
                         }
+
                         _logService.Log($"VmSolution_OnWorkStatusEvent: TypeName={ioNameInfos[0].TypeName}");
                         if (ioNameInfos[0].TypeName != IMVS_MODULE_BASE_DATA_TYPE.IMVS_GRAP_TYPE_STRING)
                         {
                             _logService.Log($"VmSolution_OnWorkStatusEvent: type mismatch, got {ioNameInfos[0].TypeName}");
                             return;
                         }
-                        _logService.Log("VmSolution_OnWorkStatusEvent: calling GetOutputString with name=" + ioNameInfos[0].Name);
-                        Task.Run(() =>
+
+                        string outputName = ioNameInfos[0].Name;
+                        _logService.Log("VmSolution_OnWorkStatusEvent: calling GetOutputString with name=" + outputName);
+
+                        // 直接在 Dispatcher 线程调用，不要 Task.Run，避免跨线程问题
+                        var outputResult = _procedure.ModuResult.GetOutputString(outputName);
+                        _logService.Log("VmSolution_OnWorkStatusEvent: GetOutputString succeeded");
+
+                        var stringVal = outputResult.astStringVal;
+                        if (stringVal == null || stringVal.Length == 0)
                         {
-                            try
-                            {
-                                var outputResult = _procedure.ModuResult.GetOutputString(ioNameInfos[0].Name);
-                                var stringVal = outputResult.astStringVal;
-                                if (stringVal == null || stringVal.Length == 0)
-                                {
-                                    _logService.Log("VmSolution_OnWorkStatusEvent: stringVal is null or empty");
-                                    return;
-                                }
-                                string strResult = stringVal[0].strValue;
-                                if (strResult != null)
-                                {
-                                    Dispatcher.Invoke(() => UpdateResult(strResult));
-                                    _logService.Log($"Process running time: {_procedure.ProcessTime}ms");
-                                }
-                                else
-                                {
-                                    _logService.Log("VmSolution_OnWorkStatusEvent: strResult is null");
-                                }
-                            }
-                            catch (VmException ex)
-                            {
-                                _logService.Log($"VmSolution_OnWorkStatusEvent VmException: Error code: 0x{ex.errorCode:X}");
-                            }
-                            catch (Exception ex)
-                            {
-                                _logService.Log($"VmSolution_OnWorkStatusEvent Exception: {ex.Message}");
-                            }
-                        });
+                            _logService.Log("VmSolution_OnWorkStatusEvent: stringVal is null or empty");
+                            return;
+                        }
+                        string strResult = stringVal[0].strValue;
+                        if (strResult != null)
+                        {
+                            UpdateResult(strResult);
+                            _logService.Log($"Process running time: {_procedure.ProcessTime}ms");
+                        }
+                        else
+                        {
+                            _logService.Log("VmSolution_OnWorkStatusEvent: strResult is null");
+                        }
                     }
                     catch (VmException ex)
                     {

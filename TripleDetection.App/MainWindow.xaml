@@ -153,7 +153,9 @@
                          ItemsSource="{Binding ResultHistory}"
                          FontFamily="Consolas"
                          FontSize="11"
-                         BorderThickness="0"/>
+                         BorderThickness="0"
+                         MaxHeight="120"
+                         ScrollViewer.VerticalScrollBarVisibility="Auto"/>
             </GroupBox>
 
             <Border Grid.Column="1" Width="120" Height="100" Margin="10,5"
