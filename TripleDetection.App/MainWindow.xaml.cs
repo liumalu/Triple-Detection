@@ -19,6 +19,7 @@ namespace TripleDetection
         private ImageStorageService _imageStorage;
         private LoggingService _logService;
         private MainViewModel _viewModel;
+        private VMControls.Winform.Release.VmRenderControl _vmRender;
 
         private string _solPath;
         private readonly string _okDir;
@@ -29,10 +30,17 @@ namespace TripleDetection
         private VmProcedure _procedure;
 
         private readonly string _vmInstallPath;
+        private readonly string _localLibsPath;
+
+        // Navigation state
+        private bool _isNavExpanded = true;
+        private readonly Dictionary<string, System.Windows.Controls.Button> _navButtons = new Dictionary<string, System.Windows.Controls.Button>();
+        private object _currentPage;
 
         public MainWindow()
         {
             _vmInstallPath = ConfigurationManager.AppSettings["VmInstallPath"];
+            _localLibsPath = ConfigurationManager.AppSettings["LocalLibsPath"];
 
             // 注册 AssemblyResolve 事件，在 GAC 找不到时从配置的 VM 路径加载
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
@@ -55,6 +63,17 @@ namespace TripleDetection
 
             this.DataContext = _viewModel;
 
+            // Initialize navigation buttons
+            _navButtons["Dashboard"] = btnNavDashboard;
+            _navButtons["Detection"] = btnNavDetection;
+            _navButtons["Products"] = btnNavProducts;
+            _navButtons["Tasks"] = btnNavTasks;
+            _navButtons["Logs"] = btnNavLogs;
+            _navButtons["Settings"] = btnNavSettings;
+
+            // Load configuration
+            LoadConfiguration();
+
             VmSolution.OnWorkStatusEvent += VmSolution_OnWorkStatusEvent;
             VmSolution.OnProcessStatusStartEvent += VmSolution_OnProcessStatusStartEvent;
             VmSolution.OnProcessStatusStopEvent += VmSolution_OnProcessStatusStopEvent;
@@ -68,33 +87,150 @@ namespace TripleDetection
             var assemblyName = new System.Reflection.AssemblyName(args.Name);
             string dllName = assemblyName.Name + ".dll";
 
-            // VM 相关的 DLL 从配置的安装路径加载
             string[] vmDlls = new[] { "VM.Core", "VM.PlatformSDKCS", "VMControls.BaseInterface",
                 "VMControls.Interface", "VMControls.RenderInterface", "VMControls.Winform.Release",
                 "VMControls.WPF.Release", "VM.Framework.Container", "VM.Util", "VM.Utility",
                 "Apps.Data", "Apps.ErrorCode", "Apps.Interface", "Apps.Localization", "Apps.Log",
                 "Apps.UIData", "Apps.UIHelper", "MVDCore.Net", "MVDImage.Net" };
 
-            if (Array.Exists(vmDlls, d => d == assemblyName.Name))
+            if (!Array.Exists(vmDlls, d => d == assemblyName.Name))
+                return null;
+
+            // 优先级1: 从应用运行目录的 libs 子目录加载（跨版本策略）
+            string localLibsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _localLibsPath, dllName);
+            if (File.Exists(localLibsPath))
             {
-                string vmPath = Path.Combine(_vmInstallPath, "Development", "V4.x", "ComControls", "Assembly", dllName);
-                if (File.Exists(vmPath))
-                {
-                    _logService.Log($"Loading {dllName} from {vmPath}");
-                    return System.Reflection.Assembly.LoadFrom(vmPath);
-                }
-                else
-                {
-                    _logService.Log($"Assembly {dllName} not found at {vmPath}");
-                }
+                _logService.Log($"Loading {dllName} from local libs");
+                return System.Reflection.Assembly.LoadFrom(localLibsPath);
             }
+
+            // 优先级2: 回退到配置的 VM 安装路径
+            string vmPath = Path.Combine(_vmInstallPath, "Development", "V4.x", "ComControls", "Assembly", dllName);
+            if (File.Exists(vmPath))
+            {
+                _logService.Log($"Loading {dllName} from VM path");
+                return System.Reflection.Assembly.LoadFrom(vmPath);
+            }
+
+            _logService.Log($"Error: {dllName} not found in libs or VM path");
             return null;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            // Load system configuration
+            var logoPath = ConfigurationManager.AppSettings["SystemLogoPath"];
+            var systemName = ConfigurationManager.AppSettings["SystemName"];
+            if (!string.IsNullOrEmpty(logoPath))
+            {
+                try { imgLogo.Source = new System.Windows.Media.Imaging.BitmapImage(new Uri(logoPath, UriKind.Relative)); } catch { }
+            }
+            if (!string.IsNullOrEmpty(systemName))
+            {
+                txtSystemName.Text = systemName;
+            }
+
             ShowRenderControl();
             _logService.Log("Application started");
+            _logService.Log($"VM DLL Load Strategy:");
+            _logService.Log($"  - Local libs: {Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _localLibsPath)}");
+            _logService.Log($"  - VM install path: {_vmInstallPath}");
+        }
+
+        private void BtnNav_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is System.Windows.Controls.Button btn && btn.Tag is string tag)
+            {
+                NavigateTo(tag);
+            }
+        }
+
+        private void NavigateTo(string pageName)
+        {
+            // Update navigation button styles
+            foreach (var kvp in _navButtons)
+            {
+                kvp.Value.Style = kvp.Key == pageName
+                    ? (System.Windows.Style)FindResource("NavButtonActiveStyle")
+                    : (System.Windows.Style)FindResource("NavButtonStyle");
+            }
+
+            // Navigate to page
+            switch (pageName)
+            {
+                case "Dashboard":
+                    MainContent.Content = new Views.DashboardView();
+                    break;
+                case "Detection":
+                    MainContent.Content = new Views.DetectionView();
+                    break;
+                case "Products":
+                    MainContent.Content = new Views.ProductListView();
+                    break;
+                case "Tasks":
+                    MainContent.Content = new Views.TaskListView();
+                    break;
+                case "Logs":
+                    MainContent.Content = new Views.LogsView();
+                    break;
+                case "Settings":
+                    MainContent.Content = new Views.SettingsView();
+                    break;
+            }
+
+            _logService.Log($"导航到: {pageName}");
+        }
+
+        private void BtnToggleNav_Click(object sender, RoutedEventArgs e)
+        {
+            _isNavExpanded = !_isNavExpanded;
+            if (_isNavExpanded)
+            {
+                navColumn.Width = new GridLength(200);
+                btnToggleNav.Content = "◀";
+                // Show all navigation text
+                foreach (var btn in _navButtons.Values)
+                {
+                    btn.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Left;
+                }
+            }
+            else
+            {
+                navColumn.Width = new GridLength(48);
+                btnToggleNav.Content = "▶";
+                // Hide text, show only icons
+                foreach (var btn in _navButtons.Values)
+                {
+                    btn.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center;
+                }
+            }
+        }
+
+        private void BtnNotifications_Click(object sender, RoutedEventArgs e)
+        {
+            NavigateTo("Logs");
+        }
+
+        private void BtnLogout_Click(object sender, RoutedEventArgs e)
+        {
+            var result = MessageBox.Show("确认退出系统？", "确认",
+                MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                _logService.Log("用户退出系统");
+                Application.Current.Shutdown();
+            }
+        }
+
+        private void LoadConfiguration()
+        {
+            var navExpanded = ConfigurationManager.AppSettings["NavRailExpanded"];
+            if (navExpanded == "false")
+            {
+                _isNavExpanded = false;
+                navColumn.Width = new GridLength(48);
+                btnToggleNav.Content = "▶";
+            }
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -117,10 +253,14 @@ namespace TripleDetection
 
         private void ShowRenderControl()
         {
-            VmHost.Child = new VMControls.Winform.Release.VmRenderControl();
+            if (_vmRender == null)
+            {
+                _vmRender = new VMControls.Winform.Release.VmRenderControl();
+            }
+            MainContent.Content = new System.Windows.Forms.Integration.WindowsFormsHost { Child = _vmRender };
             if (_procedure != null)
             {
-                ((VMControls.Winform.Release.VmRenderControl)VmHost.Child).ModuleSource = _procedure;
+                _vmRender.ModuleSource = _procedure;
             }
             btnRender.Background = new System.Windows.Media.SolidColorBrush(
                 System.Windows.Media.Color.FromRgb(255, 140, 0));
@@ -131,17 +271,42 @@ namespace TripleDetection
 
         private void ShowMainViewControl()
         {
-            if (VmHost.Child is IDisposable disposable)
+            if (_vmRender != null)
             {
-                disposable.Dispose();
+                _vmRender.Dispose();
+                _vmRender = null;
             }
-            VmHost.Child = null;
+            MainContent.Content = null;
             btnConfig.Background = new System.Windows.Media.SolidColorBrush(
                 System.Windows.Media.Color.FromRgb(255, 140, 0));
             btnRender.Background = new System.Windows.Media.SolidColorBrush(
                 System.Windows.Media.Color.FromRgb(128, 128, 128));
             _viewModel.IsImageViewActive = false;
             _logService.Log("Switched to parameter configuration view");
+        }
+
+        private void ShowProductList()
+        {
+            if (_vmRender != null)
+            {
+                _vmRender.Dispose();
+                _vmRender = null;
+            }
+            MainContent.Content = new Views.ProductListView();
+            _viewModel.IsImageViewActive = false;
+            _logService.Log("Switched to product management view");
+        }
+
+        private void ShowTaskList()
+        {
+            if (_vmRender != null)
+            {
+                _vmRender.Dispose();
+                _vmRender = null;
+            }
+            MainContent.Content = new Views.TaskListView();
+            _viewModel.IsImageViewActive = false;
+            _logService.Log("Switched to task management view");
         }
 
         private void BtnSelectSolu_Click(object sender, RoutedEventArgs e)
@@ -201,7 +366,7 @@ namespace TripleDetection
                         return;
                     }
 
-                    var vmRender = VmHost.Child as VMControls.Winform.Release.VmRenderControl;
+                    var vmRender = _vmRender;
                     if (vmRender != null)
                         vmRender.ModuleSource = _procedure;
                 }
@@ -252,7 +417,7 @@ namespace TripleDetection
             try
             {
                 _procedure = VmSolution.Instance[comboProcedure.SelectedItem.ToString()] as VmProcedure;
-                var vmRender = VmHost.Child as VMControls.Winform.Release.VmRenderControl;
+                var vmRender = _vmRender;
                 if (vmRender != null)
                     vmRender.ModuleSource = _procedure;
 
@@ -268,7 +433,7 @@ namespace TripleDetection
             }
         }
 
-        private void BtnRunOnce_Click(object sender, RoutedEventArgs e)
+        private void BtnTaskRun_Click(object sender, RoutedEventArgs e)
         {
             if (!_isSolutionLoad || _procedure == null)
             {
@@ -291,7 +456,7 @@ namespace TripleDetection
             }
         }
 
-        private void BtnContiRun_Click(object sender, RoutedEventArgs e)
+        private void BtnTaskPause_Click(object sender, RoutedEventArgs e)
         {
             if (!_isSolutionLoad || _procedure == null)
             {
@@ -341,6 +506,16 @@ namespace TripleDetection
                 System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("zh-CN");
             }
             _logService.Log("Language switched");
+        }
+
+        private void BtnProduct_Click(object sender, RoutedEventArgs e)
+        {
+            ShowProductList();
+        }
+
+        private void BtnTask_Click(object sender, RoutedEventArgs e)
+        {
+            ShowTaskList();
         }
 
         private void VmSolution_OnWorkStatusEvent(ImvsSdkDefine.IMVS_MODULE_WORK_STAUS workStatusInfo)
