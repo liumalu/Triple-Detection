@@ -1,0 +1,114 @@
+<UserControl x:Class="TripleDetection.Views.DetectionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="#404040">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="120"/>
+        </Grid.RowDefinitions>
+
+        <!-- 任务选择 -->
+        <Border Grid.Row="0" Background="#505050" Padding="16,8">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="选择任务:" Foreground="White" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                <ComboBox x:Name="cmbTask" Width="300" SelectionChanged="CmbTask_SelectionChanged"/>
+            </StackPanel>
+        </Border>
+
+        <!-- 主内容：左侧图像 + 右侧信息 -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="320"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- 左侧：VisionMaster 显示区域 -->
+            <Border Grid.Column="0" Margin="5" BorderBrush="#606060" BorderThickness="1">
+                <Grid>
+                    <!-- VmRenderControl 占位 -->
+                    <Border x:Name="VmRenderHost" Background="#2D2D2D"/>
+                    <!-- 原有的 VmRenderControl 将在代码中初始化 -->
+                    <TextBlock Text="VisionMaster 显示区域" Foreground="#808080"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"
+                               FontSize="14" IsHitTestVisible="False"/>
+                </Grid>
+            </Border>
+
+            <!-- 右侧：任务信息 + 方案操作 + 检测结果 + 控制按钮 -->
+            <Border Grid.Column="1" Margin="0,5,5,5" Background="#505050" Padding="16">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <!-- 任务信息 -->
+                        <TextBlock Text="任务信息" FontSize="14" FontWeight="Bold" Foreground="#4FD1C5" Margin="0,0,0,8"/>
+                        <Border Background="#404040" Padding="12" Margin="0,0,0,16">
+                            <StackPanel>
+                                <TextBlock x:Name="txtProduct" Foreground="White" Margin="0,2"/>
+                                <TextBlock x:Name="txtBatch" Foreground="White" Margin="0,2"/>
+                                <TextBlock x:Name="txtProductionDate" Foreground="White" Margin="0,2"/>
+                                <TextBlock x:Name="txtExpirationDate" Foreground="White" Margin="0,2"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- 方案操作 -->
+                        <TextBlock Text="方案操作" FontSize="14" FontWeight="Bold" Foreground="#4FD1C5" Margin="0,0,0,8"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
+                            <Button x:Name="btnSelectSol" Content="选择方案" Click="BtnSelectSol_Click"
+                                    Style="{StaticResource PrimaryButtonStyle}" Margin="0,0,8,0"/>
+                            <Button x:Name="btnLoadSol" Content="加载方案" Click="BtnLoadSol_Click"
+                                    Style="{StaticResource PrimaryButtonStyle}"/>
+                        </StackPanel>
+
+                        <!-- 检测结果 -->
+                        <TextBlock Text="检测结果" FontSize="14" FontWeight="Bold" Foreground="#4FD1C5" Margin="0,0,0,8"/>
+                        <Border Background="#404040" Padding="12" Margin="0,0,0,16">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="结果:" Foreground="#A0AEC0"/>
+                                <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+                                    <TextBlock x:Name="txtOkCount" Text="OK: 0" Foreground="#00C000" Margin="0,0,8,0"/>
+                                    <TextBlock x:Name="txtNgCount" Text="NG: 0" Foreground="#FF0000"/>
+                                </StackPanel>
+                                <TextBlock Grid.Row="1" Grid.Column="0" Text="置信度:" Foreground="#A0AEC0" Margin="0,4,0,0"/>
+                                <TextBlock x:Name="txtConfidence" Grid.Row="1" Grid.Column="1" Text="--" Foreground="White" Margin="0,4,0,0"/>
+                            </Grid>
+                        </Border>
+
+                        <!-- 控制按钮 -->
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button x:Name="btnStart" Content="启动" Click="BtnStart_Click"
+                                    Style="{StaticResource PrimaryButtonStyle}" Margin="0,0,8,0" MinWidth="80"/>
+                            <Button x:Name="btnStop" Content="停止" Click="BtnStop_Click"
+                                    Style="{StaticResource PrimaryButtonStyle}" Margin="0,0,8,0" MinWidth="80"
+                                    IsEnabled="False"/>
+                            <Button x:Name="btnReset" Content="重置" Click="BtnReset_Click"
+                                    Style="{StaticResource PrimaryButtonStyle}" MinWidth="80"/>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+        </Grid>
+
+        <!-- 底部：操作日志 -->
+        <Border Grid.Row="2" Margin="5,0,5,5" Background="#505050" Padding="8">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="操作日志" FontSize="12" FontWeight="Bold" Foreground="#4FD1C5" Margin="0,0,0,4"/>
+                <ListBox Grid.Row="1" x:Name="lstLogs" Background="#404040" Foreground="White"
+                         BorderThickness="0" FontFamily="Consolas" FontSize="11"/>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>
