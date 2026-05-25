@@ -18,22 +18,13 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="48"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="24"/>
         </Grid.RowDefinitions>
 
-        <!-- Top toolbar (old buttons kept for backward compatibility) -->
-        <StackPanel Grid.Row="0" Orientation="Horizontal" Background="#505050" Margin="0,5,5,0">
-            <Button x:Name="btnProduct" Content="产品管理" Click="BtnProduct_Click" Background="#607080"/>
-            <Button x:Name="btnTask" Content="任务管理" Click="BtnTask_Click" Background="#607080"/>
-            <Button x:Name="btnRender" Content="图像显示" Click="BtnRender_Click" Background="#607080"/>
-            <Button x:Name="btnConfig" Content="参数配置" Click="BtnConfig_Click" Background="#607080"/>
-            <Button x:Name="btnLang" Content="中文/English" Click="BtnLang_Click" Background="#607080"/>
-        </StackPanel>
-
-        <!-- 标题栏 -->
-        <Border Grid.Row="1" Background="{StaticResource DarkSlateBrush}">
+        <!-- Header bar -->
+        <Border Grid.Row="0" Background="{StaticResource DarkSlateBrush}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -51,14 +42,11 @@
 
                 <!-- 右侧用户信息 -->
                 <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="16,0">
-                    <!-- 通知图标 -->
                     <Button x:Name="btnNotifications" Style="{StaticResource NavButtonStyle}"
                             Content="🔔" FontSize="16" Padding="8" Margin="0,0,8,0"
                             Click="BtnNotifications_Click" ToolTip="操作日志"/>
-                    <!-- 用户名 -->
                     <TextBlock x:Name="txtUsername" Text="Admin" Foreground="White"
                                VerticalAlignment="Center" Margin="0,0,16,0"/>
-                    <!-- 退出按钮 -->
                     <Button x:Name="btnLogout" Content="退出" Style="{StaticResource PrimaryButtonStyle}"
                             Background="#E53E3E" Foreground="White" Click="BtnLogout_Click"/>
                 </StackPanel>
@@ -66,19 +54,18 @@
         </Border>
 
         <!-- 主内容区域 -->
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition x:Name="navColumn" Width="200"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <!-- 导航栏 -->
+            <!-- 左侧导航栏 -->
             <Border Grid.Column="0" Background="#1A202C">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
                     <!-- 折叠按钮 -->
@@ -101,56 +88,27 @@
                         <Button x:Name="btnNavSettings" Content="⚙️ 系统配置"
                                 Style="{StaticResource NavButtonStyle}" Click="BtnNav_Click" Tag="Settings"/>
                     </StackPanel>
-
-                    <!-- Old sidebar controls kept for backward compatibility -->
-                    <StackPanel Grid.Row="2" Margin="8">
-                        <TextBlock Text="方案操作" Foreground="#A0AEC0" FontSize="10" Margin="0,0,0,4"/>
-                        <Button x:Name="btnSelectSolu" Content="选择方案" Click="BtnSelectSolu_Click" Margin="0,2"/>
-                        <Button x:Name="btnLoadSolu" Content="加载方案" Click="BtnLoadSolu_Click" Margin="0,2"/>
-                        <Button x:Name="btnSaveSolu" Content="保存方案" Click="BtnSaveSolu_Click" Margin="0,2"/>
-                        <TextBlock Text="流程操作" Foreground="#A0AEC0" FontSize="10" Margin="0,8,0,4"/>
-                        <ComboBox x:Name="comboProcedure" Width="100" SelectionChanged="ComboProcedure_SelectionChanged" Margin="0,2"/>
-                        <Button x:Name="btnRunOnce" Content="单次运行" Click="BtnTaskRun_Click" Margin="0,2"/>
-                        <Button x:Name="btnContiRun" Content="连续运行" Click="BtnTaskPause_Click" Margin="0,2"/>
-                    </StackPanel>
                 </Grid>
             </Border>
 
-            <!-- 主内容 -->
+            <!-- 内容区 -->
             <Border Grid.Column="1" Background="#404040">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-
-                    <ContentControl x:Name="MainContent" Grid.Row="0"/>
-
-                    <!-- Old result area kept for backward compatibility -->
-                    <Grid Grid.Row="1" Margin="5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-
-                        <ListBox x:Name="listBoxResult" Grid.Column="0"
-                                 ItemsSource="{Binding ResultHistory}"
-                                 FontFamily="Consolas" FontSize="11"
-                                 BorderThickness="0" MaxHeight="120"
-                                 ScrollViewer.VerticalScrollBarVisibility="Auto"/>
-
-                        <Border Grid.Column="1" Width="120" Height="100" Margin="10,5"
-                                Background="{Binding ResultBackground}">
-                            <TextBlock x:Name="txtResult"
-                                       Text="{Binding ResultText}"
-                                       FontSize="48" FontWeight="Bold"
-                                       Foreground="White"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"/>
-                        </Border>
-                    </Grid>
-                </Grid>
+                <ContentControl x:Name="MainContent"/>
             </Border>
         </Grid>
+
+        <!-- 底部状态栏 -->
+        <Border Grid.Row="2" Background="#2D3748" Padding="8,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="txtStatus" Grid.Column="0" Text="就绪" Foreground="#A0AEC0" VerticalAlignment="Center"/>
+                <TextBlock x:Name="txtCurrentUser" Grid.Column="1" Text="当前用户: Admin" Foreground="#A0AEC0" VerticalAlignment="Center" Margin="16,0"/>
+                <TextBlock x:Name="txtCurrentTime" Grid.Column="2" Text="" Foreground="#A0AEC0" VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
     </Grid>
 </Window>

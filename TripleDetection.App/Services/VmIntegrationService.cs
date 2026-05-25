@@ -8,7 +8,6 @@ namespace TripleDetection.Services
 {
     public class VmIntegrationService
     {
-        private VmSolution _vmSolution;
         private VmProcedure _procedure;
         private ImageStorageService _imageStorage;
         private bool _isSolutionLoad = false;
@@ -67,26 +66,48 @@ namespace TripleDetection.Services
 
         private void VmSolution_OnWorkStatusEvent(ImvsSdkDefine.IMVS_MODULE_WORK_STAUS workStatusInfo)
         {
-            if (workStatusInfo.nWorkStatus == 1 && workStatusInfo.nProcessID == 10000)
+            // 统一使用 nWorkStatus == 0，与 MainWindow 保持一致
+            if (workStatusInfo.nWorkStatus == 0 && workStatusInfo.nProcessID == 10000)
             {
                 try
                 {
-                    var ioNameInfos = _procedure.ModuResult.GetAllOutputNameInfo();
-                    if (ioNameInfos.Count > 0 && ioNameInfos[0].TypeName == IMVS_MODULE_BASE_DATA_TYPE.IMVS_GRAP_TYPE_STRING)
+                    if (_procedure == null)
                     {
-                        string strResult = _procedure.ModuResult.GetOutputString(ioNameInfos[0].Name).astStringVal[0].strValue;
+                        System.Diagnostics.Debug.WriteLine("VmIntegrationService: _procedure is null");
+                        return;
+                    }
+
+                    var ioNameInfos = _procedure.ModuResult.GetAllOutputNameInfo();
+                    if (ioNameInfos.Count == 0)
+                    {
+                        System.Diagnostics.Debug.WriteLine("VmIntegrationService: no outputs available");
+                        return;
+                    }
+
+                    if (ioNameInfos[0].TypeName != IMVS_MODULE_BASE_DATA_TYPE.IMVS_GRAP_TYPE_STRING)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"VmIntegrationService: type mismatch, got {ioNameInfos[0].TypeName}");
+                        return;
+                    }
+
+                    var outputResult = _procedure.ModuResult.GetOutputString(ioNameInfos[0].Name);
+                    var stringVal = outputResult.astStringVal;
+                    if (stringVal == null || stringVal.Length == 0)
+                    {
+                        System.Diagnostics.Debug.WriteLine("VmIntegrationService: stringVal is null or empty");
+                        return;
+                    }
+
+                    string strResult = stringVal[0].strValue;
+                    if (strResult != null)
+                    {
                         var result = ParseResult(strResult);
-
-                        // TODO: 获取图片并保存
-                        // var image = GetCurrentImage();
-                        // result.ImagePath = _imageStorage.SaveImage(image, result.IsOK);
-
                         OnDetectionResult?.Invoke(this, result);
                     }
                 }
                 catch (VmException ex)
                 {
-                    System.Diagnostics.Debug.WriteLine($"VM Error: 0x{ex.errorCode:X}");
+                    System.Diagnostics.Debug.WriteLine($"VmIntegrationService VM Error: 0x{ex.errorCode:X}");
                 }
             }
         }

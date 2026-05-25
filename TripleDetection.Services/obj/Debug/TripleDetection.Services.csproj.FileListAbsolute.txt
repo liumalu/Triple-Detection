@@ -1,0 +1,9 @@
+D:\xcm\Triple-Detection\TripleDetection.Services\bin\Debug\TripleDetection.Services.dll
+D:\xcm\Triple-Detection\TripleDetection.Services\bin\Debug\TripleDetection.Services.pdb
+D:\xcm\Triple-Detection\TripleDetection.Services\bin\Debug\TripleDetection.Data.dll
+D:\xcm\Triple-Detection\TripleDetection.Services\bin\Debug\TripleDetection.Data.pdb
+D:\xcm\Triple-Detection\TripleDetection.Services\obj\Debug\TripleDetection.Services.csproj.AssemblyReference.cache
+D:\xcm\Triple-Detection\TripleDetection.Services\obj\Debug\TripleDetection.Services.csproj.CoreCompileInputs.cache
+D:\xcm\Triple-Detection\TripleDetection.Services\obj\Debug\TripleDe.F28499EB.Up2Date
+D:\xcm\Triple-Detection\TripleDetection.Services\obj\Debug\TripleDetection.Services.dll
+D:\xcm\Triple-Detection\TripleDetection.Services\obj\Debug\TripleDetection.Services.pdb

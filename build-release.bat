@@ -21,8 +21,13 @@ if %ERRORLEVEL% neq 0 (
 )
 
 echo.
-echo [2/3] Copying libs...
-xcopy /y /q "%LIBDIR%\*.dll" "%BINDIR%\" >nul 2>&1
+echo [2/3] Copying libs directory (preserving structure)...
+if exist "%LIBDIR%" (
+    xcopy /E /I /Y "%LIBDIR%" "%BINDIR%\libs\" >nul 2>&1
+    echo Copied libs to %BINDIR%\libs\
+) else (
+    echo Warning: libs directory not found at %LIBDIR%
+)
 
 echo.
 echo [3/3] Creating distribution zip...

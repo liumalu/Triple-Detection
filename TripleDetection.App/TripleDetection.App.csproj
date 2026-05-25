@@ -9,6 +9,7 @@
     <AssemblyName>TripleDetection.App</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <LangVersion>8.0</LangVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
@@ -51,6 +52,9 @@
     <Reference Include="WindowsFormsIntegration" />
     <Reference Include="VM.Core" />
     <Reference Include="VM.PlatformSDKCS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c1484a72052ee3d4, processorArchitecture=MSIL" />
+    <Reference Include="iMVS-6000PlatformSDKCS">
+      <HintPath>$(VmInstallPath)\Development\V4.x\Libraries\win64\C#\iMVS-6000PlatformSDKCS.dll</HintPath>
+    </Reference>
     <Reference Include="VMControls.BaseInterface" />
     <Reference Include="VMControls.Interface" />
     <Reference Include="VMControls.RenderInterface" />

@@ -5,109 +5,113 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="120"/>
+            <RowDefinition Height="160"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="350"/>
+        </Grid.ColumnDefinitions>
 
-        <!-- 任务选择 -->
-        <Border Grid.Row="0" Background="#505050" Padding="16,8">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="选择任务:" Foreground="White" VerticalAlignment="Center" Margin="0,0,8,0"/>
-                <ComboBox x:Name="cmbTask" Width="300" SelectionChanged="CmbTask_SelectionChanged"/>
-            </StackPanel>
+        <!-- 左侧：VisionMaster 显示区域 -->
+        <Border Grid.Row="0" Grid.Column="0" Margin="5" BorderBrush="#606060" BorderThickness="1">
+            <Grid>
+                <Border x:Name="VmRenderHost" Background="#2D2D2D"/>
+                <TextBlock Text="VisionMaster 显示区域" Foreground="#808080"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"
+                           FontSize="14" IsHitTestVisible="False"/>
+            </Grid>
         </Border>
 
-        <!-- 主内容：左侧图像 + 右侧信息 -->
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="320"/>
-            </Grid.ColumnDefinitions>
+        <!-- 右侧：VM 操作面板 -->
+        <Border Grid.Row="0" Grid.Column="1" Margin="0,5,5,5" Background="#505050" Padding="16">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <!-- 任务选择 -->
+                    <TextBlock Text="任务选择" FontSize="14" FontWeight="Bold" Foreground="#4FD1C5" Margin="0,0,0,8"/>
+                    <ComboBox x:Name="cmbTaskSelect" Width="300" Margin="0,0,0,12"
+                             SelectionChanged="CmbTask_SelectionChanged"/>
+                    <!-- 已选任务信息 -->
+                    <TextBlock Text="已选任务信息" FontSize="14" FontWeight="Bold" Foreground="#4FD1C5" Margin="0,0,0,8"/>
+                    <Border Background="#404040" Padding="12" Margin="0,0,0,12">
+                        <StackPanel>
+                            <TextBlock x:Name="txtProduct" Text="产品: --" Foreground="White" Margin="0,2"/>
+                            <TextBlock x:Name="txtBatch" Text="批次: --" Foreground="White" Margin="0,2"/>
+                            <TextBlock x:Name="txtProductionDate" Text="生产日期: --" Foreground="White" Margin="0,2"/>
+                            <TextBlock x:Name="txtExpirationDate" Text="有效期至: --" Foreground="White" Margin="0,2"/>
+                            <TextBlock x:Name="txtSolFilePath" Text="方案路径: --" Foreground="White" Margin="0,2" TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </Border>
+                    <!-- 方案操作 -->
+                    <TextBlock Text="方案操作" FontSize="14" FontWeight="Bold" Foreground="#4FD1C5" Margin="0,0,0,8"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                        <Button x:Name="btnSelectSol" Content="选择方案" Click="BtnSelectSol_Click"
+                                Style="{StaticResource PrimaryButtonStyle}" Margin="0,0,8,0"/>
+                        <Button x:Name="btnLoadSol" Content="加载方案" Click="BtnLoadSol_Click"
+                                Style="{StaticResource PrimaryButtonStyle}" Margin="0,0,8,0"/>
+                        <Button x:Name="btnSaveSol" Content="三期信息ToVM" Click="BtnSaveSol_Click"
+                                Style="{StaticResource PrimaryButtonStyle}"/>
+                    </StackPanel>
 
-            <!-- 左侧：VisionMaster 显示区域 -->
-            <Border Grid.Column="0" Margin="5" BorderBrush="#606060" BorderThickness="1">
-                <Grid>
-                    <!-- VmRenderControl 占位 -->
-                    <Border x:Name="VmRenderHost" Background="#2D2D2D"/>
-                    <!-- 原有的 VmRenderControl 将在代码中初始化 -->
-                    <TextBlock Text="VisionMaster 显示区域" Foreground="#808080"
-                               HorizontalAlignment="Center" VerticalAlignment="Center"
-                               FontSize="14" IsHitTestVisible="False"/>
-                </Grid>
-            </Border>
-
-            <!-- 右侧：任务信息 + 方案操作 + 检测结果 + 控制按钮 -->
-            <Border Grid.Column="1" Margin="0,5,5,5" Background="#505050" Padding="16">
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <StackPanel>
-                        <!-- 任务信息 -->
-                        <TextBlock Text="任务信息" FontSize="14" FontWeight="Bold" Foreground="#4FD1C5" Margin="0,0,0,8"/>
-                        <Border Background="#404040" Padding="12" Margin="0,0,0,16">
-                            <StackPanel>
-                                <TextBlock x:Name="txtProduct" Foreground="White" Margin="0,2"/>
-                                <TextBlock x:Name="txtBatch" Foreground="White" Margin="0,2"/>
-                                <TextBlock x:Name="txtProductionDate" Foreground="White" Margin="0,2"/>
-                                <TextBlock x:Name="txtExpirationDate" Foreground="White" Margin="0,2"/>
-                            </StackPanel>
-                        </Border>
-
-                        <!-- 方案操作 -->
-                        <TextBlock Text="方案操作" FontSize="14" FontWeight="Bold" Foreground="#4FD1C5" Margin="0,0,0,8"/>
-                        <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
-                            <Button x:Name="btnSelectSol" Content="选择方案" Click="BtnSelectSol_Click"
+                    <!-- 流程操作 -->
+                    <TextBlock Text="流程操作" FontSize="14" FontWeight="Bold" Foreground="#4FD1C5" Margin="0,0,0,8"/>
+                    <StackPanel Margin="0,0,0,12">
+                        <ComboBox x:Name="cmbProcedure" Width="200" Margin="0,0,0,8"
+                                  SelectionChanged="CmbProcedure_SelectionChanged"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Button x:Name="btnRunOnce" Content="单次运行" Click="BtnTaskRun_Click"
                                     Style="{StaticResource PrimaryButtonStyle}" Margin="0,0,8,0"/>
-                            <Button x:Name="btnLoadSol" Content="加载方案" Click="BtnLoadSol_Click"
+                            <Button x:Name="btnContiRun" Content="连续运行" Click="BtnTaskPause_Click"
                                     Style="{StaticResource PrimaryButtonStyle}"/>
                         </StackPanel>
-
-                        <!-- 检测结果 -->
-                        <TextBlock Text="检测结果" FontSize="14" FontWeight="Bold" Foreground="#4FD1C5" Margin="0,0,0,8"/>
-                        <Border Background="#404040" Padding="12" Margin="0,0,0,16">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0" Grid.Column="0" Text="结果:" Foreground="#A0AEC0"/>
-                                <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
-                                    <TextBlock x:Name="txtOkCount" Text="OK: 0" Foreground="#00C000" Margin="0,0,8,0"/>
-                                    <TextBlock x:Name="txtNgCount" Text="NG: 0" Foreground="#FF0000"/>
-                                </StackPanel>
-                                <TextBlock Grid.Row="1" Grid.Column="0" Text="置信度:" Foreground="#A0AEC0" Margin="0,4,0,0"/>
-                                <TextBlock x:Name="txtConfidence" Grid.Row="1" Grid.Column="1" Text="--" Foreground="White" Margin="0,4,0,0"/>
-                            </Grid>
-                        </Border>
-
-                        <!-- 控制按钮 -->
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Button x:Name="btnStart" Content="启动" Click="BtnStart_Click"
-                                    Style="{StaticResource PrimaryButtonStyle}" Margin="0,0,8,0" MinWidth="80"/>
-                            <Button x:Name="btnStop" Content="停止" Click="BtnStop_Click"
-                                    Style="{StaticResource PrimaryButtonStyle}" Margin="0,0,8,0" MinWidth="80"
-                                    IsEnabled="False"/>
-                            <Button x:Name="btnReset" Content="重置" Click="BtnReset_Click"
-                                    Style="{StaticResource PrimaryButtonStyle}" MinWidth="80"/>
-                        </StackPanel>
                     </StackPanel>
-                </ScrollViewer>
-            </Border>
-        </Grid>
 
-        <!-- 底部：操作日志 -->
-        <Border Grid.Row="2" Margin="5,0,5,5" Background="#505050" Padding="8">
+                    <!-- 检测统计 -->
+                    <TextBlock Text="检测统计" FontSize="14" FontWeight="Bold" Foreground="#4FD1C5" Margin="0,0,0,8"/>
+                    <Border Background="#404040" Padding="12" Margin="0,0,0,12">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                <TextBlock x:Name="txtOkCount" Text="OK: 0" Foreground="#00C000" Margin="0,0,16,0"/>
+                                <TextBlock x:Name="txtNgCount" Text="NG: 0" Foreground="#FF0000"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="合格率: " Foreground="#A0AEC0"/>
+                                <TextBlock x:Name="txtPassRate" Text="--" Foreground="White"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- 操作日志 -->
+                    <TextBlock Text="操作日志" FontSize="14" FontWeight="Bold" Foreground="#4FD1C5" Margin="0,0,0,8"/>
+                    <Border Background="#404040" Padding="8" Height="120">
+                        <ListBox x:Name="lstLogs" Background="#404040" Foreground="White"
+                                 BorderThickness="0" FontFamily="Consolas" FontSize="11"/>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <!-- 底部：检测结果 -->
+        <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="5,0,5,5" Background="#505050" Padding="12">
             <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Text="操作日志" FontSize="12" FontWeight="Bold" Foreground="#4FD1C5" Margin="0,0,0,4"/>
-                <ListBox Grid.Row="1" x:Name="lstLogs" Background="#404040" Foreground="White"
-                         BorderThickness="0" FontFamily="Consolas" FontSize="11"/>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="120"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- 检测结果列表 -->
+                <Border Grid.Column="0" Background="#404040" Padding="8" Margin="0,0,12,0">
+                    <ListBox x:Name="lstDetectionLogs" Background="#404040" Foreground="White"
+                             BorderThickness="0" FontFamily="Consolas" FontSize="11"/>
+                </Border>
+
+                <!-- 当次结果 OK/NG 大字 -->
+                <Border Grid.Column="1" Background="#404040">
+                    <Viewbox>
+                        <TextBlock x:Name="txtCurrentResult" Text="--" Foreground="White"
+                                   FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </Viewbox>
+                </Border>
             </Grid>
         </Border>
     </Grid>

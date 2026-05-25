@@ -30,7 +30,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="rgba(255,255,255,0.05)"/>
+                            <Setter TargetName="border" Property="Background" Value="#0DFFFFFF"/>
                             <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -45,7 +45,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border x:Name="border" Background="rgba(79,209,197,0.1)"
+                    <Border x:Name="border" Background="#1A4FD1C5"
                             BorderThickness="4,0,0,0" BorderBrush="{StaticResource PrimaryBrush}">
                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           VerticalAlignment="Center" Margin="{TemplateBinding Padding}"/>

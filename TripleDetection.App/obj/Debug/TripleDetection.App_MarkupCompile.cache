@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 D:\xcm\Triple-Detection\TripleDetection.App\App.xaml
-11151548125
+9-2133279065
 
-7326785679
-25-210161019
-MainWindow.xaml;
+19-1485905994
+28-999177343
+MainWindow.xaml;Views\ProductListView.xaml;Views\ProductEditWindow.xaml;Views\TaskListView.xaml;Views\TaskEditWindow.xaml;Views\DetectionView.xaml;Views\DashboardView.xaml;Views\LogsView.xaml;Views\SettingsView.xaml;
 
 False
 

@@ -1,0 +1,6 @@
+D:\xcm\Triple-Detection\TripleDetection.Data\bin\Debug\TripleDetection.Data.dll
+D:\xcm\Triple-Detection\TripleDetection.Data\bin\Debug\TripleDetection.Data.pdb
+D:\xcm\Triple-Detection\TripleDetection.Data\obj\Debug\TripleDetection.Data.csproj.AssemblyReference.cache
+D:\xcm\Triple-Detection\TripleDetection.Data\obj\Debug\TripleDetection.Data.csproj.CoreCompileInputs.cache
+D:\xcm\Triple-Detection\TripleDetection.Data\obj\Debug\TripleDetection.Data.dll
+D:\xcm\Triple-Detection\TripleDetection.Data\obj\Debug\TripleDetection.Data.pdb
