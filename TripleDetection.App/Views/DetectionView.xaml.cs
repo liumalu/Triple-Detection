@@ -1,4 +1,6 @@
 using System;
+using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -19,7 +21,8 @@ namespace TripleDetection.Views
         public DetectionView()
         {
             InitializeComponent();
-            _logService = LoggingService.Instance;
+            var logPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Log", "Message");
+            _logService = new LoggingService(logPath);
             _taskService = new TaskService();
             _mainViewModel = new MainViewModel();
 
@@ -39,11 +42,11 @@ namespace TripleDetection.Views
 
         private void SubscribeToLogs()
         {
-            _logService.OnLogAdded += (s, msg) =>
+            _logService.OnLogAdded += (s, entry) =>
             {
                 Dispatcher.Invoke(() =>
                 {
-                    lstLogs.Items.Insert(0, $"[{DateTime.Now:HH:mm:ss}] {msg}");
+                    lstLogs.Items.Insert(0, $"[{DateTime.Now:HH:mm:ss}] {entry.Message}");
                     if (lstLogs.Items.Count > 100)
                         lstLogs.Items.RemoveAt(lstLogs.Items.Count - 1);
                 });
@@ -52,7 +55,7 @@ namespace TripleDetection.Views
 
         private void CmbTask_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (cmbTask.SelectedItem is Data.Entities.Task task)
+            if (cmbTask.SelectedItem is TaskEntity task)
             {
                 _selectedTask = task;
                 txtProduct.Text = $"产品：{task.Product?.Name ?? "-"}";
@@ -69,7 +72,7 @@ namespace TripleDetection.Views
         {
             var dialog = new OpenFileDialog();
             dialog.Filter = "VM Sol File|*.sol*";
-            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (dialog.ShowDialog() == true)
             {
                 _logService.Log($"已选择方案：{dialog.FileName}");
             }

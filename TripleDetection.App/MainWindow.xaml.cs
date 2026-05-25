@@ -219,7 +219,7 @@ namespace TripleDetection
             if (result == MessageBoxResult.Yes)
             {
                 _logService.Log("用户退出系统");
-                Application.Current.Shutdown();
+                System.Windows.Application.Current.Shutdown();
             }
         }
 
