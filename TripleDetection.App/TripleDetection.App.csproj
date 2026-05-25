@@ -66,9 +66,37 @@
     </Compile>
     <Compile Include="Models\DetectionResult.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\ProductListViewModel.cs" />
+    <Compile Include="ViewModels\ProductEditViewModel.cs" />
+    <Compile Include="ViewModels\TaskListViewModel.cs" />
+    <Compile Include="ViewModels\TaskEditViewModel.cs" />
     <Compile Include="Services\VmIntegrationService.cs" />
     <Compile Include="Services\LoggingService.cs" />
     <Compile Include="Services\ImageStorageService.cs" />
+    <Compile Include="Views\ProductListView.xaml.cs">
+      <DependentUpon>ProductListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProductEditWindow.xaml.cs">
+      <DependentUpon>ProductEditWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TaskListView.xaml.cs">
+      <DependentUpon>TaskListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TaskEditWindow.xaml.cs">
+      <DependentUpon>TaskEditWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DetectionView.xaml.cs">
+      <DependentUpon>DetectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DashboardView.xaml.cs">
+      <DependentUpon>DashboardView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LogsView.xaml.cs">
+      <DependentUpon>LogsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -79,9 +107,57 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\ProductListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ProductEditWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\TaskListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\TaskEditWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DetectionView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DashboardView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\LogsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TripleDetection.Data\TripleDetection.Data.csproj">
+      <Project>{E539E21E-5D6E-407F-942B-7345959D8357}</Project>
+      <Name>TripleDetection.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TripleDetection.Services\TripleDetection.Services.csproj">
+      <Project>{A9C5DD4F-4CDE-4C9A-9F66-50BEF7F67FC9}</Project>
+      <Name>TripleDetection.Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Styles.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Log\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
