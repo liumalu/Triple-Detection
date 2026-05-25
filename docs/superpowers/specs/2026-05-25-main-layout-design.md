@@ -1,24 +1,26 @@
-# Triple Detection - Main Application Layout Design
+# Triple Detection - 主应用布局设计
 
-## Context
+## 背景
 
-The user wants to design the main application layout for the Triple Detection WPF application. Product management and task management pages are complete, but the overall application navigation, menu, and main detection page need proper layout planning.
+用户需要为 Triple Detection WPF 应用设计主应用布局。产品管理和任务管理页面已完成，但整体应用导航、菜单和主检测页面需要 proper 的布局规划。
 
-**User Requirements:**
-- Navigation rail on the left (collapsible to maximize main content area)
-- Top header with: system logo (replaceable), system name, logged-in user display
-- Detection page should use wizard/stepper layout for task selection and execution
-- Navigation order: 仪表盘 (Dashboard) → 检测执行 (Detection) → 产品管理 (Product) → 任务管理 (Task) → 系统配置 (System)
+**用户需求：**
+- 左侧导航栏（可折叠以最大化主内容区域）
+- 顶部标题栏：系统 logo（可替换）、系统名称、登录用户显示
+- 检测页面使用向导/步骤布局进行任务选择和执行
+- 导航顺序：仪表盘 → 检测执行 → 产品管理 → 任务管理 → 操作日志 → 系统配置
 
-## 1. Overall Layout Structure
+---
+
+## 1. 整体布局结构
 
 ```
 ┌────────────────────────────────────────────────────────────────┐
-│ [Logo] Triple Detection           [User: Admin] [▼] [Logout] │ ← Header (48px height)
+│ [Logo] Triple Detection           [🔔 12] [Admin ▼] [Logout] │ ← 标题栏 (48px高度)
 ├─────┬──────────────────────────────────────────────────────────┤
 │     │                                                          │
 │  N  │                                                          │
-│  A  │                     Main Content                         │
+│  A  │                     主内容区域                            │
 │  V  │                                                          │
 │     │                                                          │
 │  R  │                                                          │
@@ -30,81 +32,86 @@ The user wants to design the main application layout for the Triple Detection WP
 └─────┴──────────────────────────────────────────────────────────┘
 ```
 
-**Dimensions:**
-- Header: 48px height, full width
-- Navigation Rail: 200px expanded / 48px collapsed
-- Main Content: fills remaining space
+**尺寸规格：**
+- 标题栏：48px 高度，全宽
+- 导航栏：展开 200px / 折叠 48px
+- 主内容：填充剩余空间
 
 ---
 
-## 2. Header Specification
+## 2. 标题栏规格
 
-**Layout (horizontal):**
+**水平布局：**
 ```
-[Logo 48x48] [System Name] ................. [User Avatar] [Username ▼] [Logout]
+[Logo 48x48] [系统名称] ........................ [🔔通知] [用户名 ▼] [Logout]
 ```
 
-**Components:**
-- **Logo**: 48x48 image, left-aligned, configurable path via App.config
-- **System Name**: "Triple Detection" text, 16px bold, next to logo
-- **User Menu**: Dropdown with username, role display, logout option
-- **Logout Button**: Icon button, right-aligned
+**组件说明：**
+- **Logo**: 48x48 图片，左对齐，通过 App.config 配置路径
+- **系统名称**: "Triple Detection" 文字，16px 粗体，位于 logo 右侧
+- **通知图标**: 铃铛图标 (🔔)，显示未读数量角标，点击打开日志视图
+- **用户菜单**: 下拉菜单，显示用户名、角色、退出选项
+- **退出按钮**: 图标按钮，右对齐
 
-**Background**: #2D3748 (dark slate)
-**Text Color**: #FFFFFF
+**背景色**: #2D3748 (深板岩色)
+**文字颜色**: #FFFFFF
 
 ---
 
-## 3. Navigation Rail Specification
+## 3. 导航栏规格
 
-### 3.1 Expanded State (200px width)
+### 3.1 展开状态 (200px 宽度)
 
 ```
 ┌────────────────────────────────────┐
-│ [Logo]                      [▤]    │ ← collapse button
+│ [Logo]                      [▤]    │ ← 折叠按钮
 ├────────────────────────────────────┤
-│ ▌ [Icon]                          │
-│   Dashboard                       │
+│ ▌ [图标]                          │
+│   仪表盘                          │
 ├────────────────────────────────────┤
-│   [Icon]                          │
-│   Detection                       │
+│   [图标]                          │
+│   检测执行                        │
 ├────────────────────────────────────┤
-│   [Icon]                          │
-│   Products                        │
+│   [图标]                          │
+│   产品管理                        │
 ├────────────────────────────────────┤
-│   [Icon]                          │
-│   Tasks                           │
+│   [图标]                          │
+│   任务管理                        │
 ├────────────────────────────────────┤
-│   [Icon]                          │
-│   Settings                        │
+│   [图标]                          │
+│   操作日志                        │
+├────────────────────────────────────┤
+│   [图标]                          │
+│   系统配置                        │
 └────────────────────────────────────┘
 ```
 
-**Items:**
-| Icon | Label (Chinese) | Label (English) | Route |
-|------|-----------------|-----------------|-------|
+**导航项：**
+| 图标 | 中文标签 | 英文标签 | 路由 |
+|------|----------|----------|------|
 | 📊 | 仪表盘 | Dashboard | /dashboard |
 | 🔍 | 检测执行 | Detection | /detection |
 | 📦 | 产品管理 | Products | /products |
 | 📋 | 任务管理 | Tasks | /tasks |
+| 📝 | 操作日志 | Logs | /logs |
 | ⚙️ | 系统配置 | Settings | /settings |
 
-**Active State:**
-- Left accent bar: 4px width, #4FD1C5 (teal)
-- Background: rgba(79, 209, 197, 0.1)
-- Text color: #4FD1C5
+**激活状态：**
+- 左侧强调条：4px 宽度，#4FD1C5 (青色)
+- 背景色：rgba(79, 209, 197, 0.1)
+- 文字颜色：#4FD1C5
 
-**Hover State:**
-- Background: rgba(255, 255, 255, 0.05)
+**悬停状态：**
+- 背景色：rgba(255, 255, 255, 0.05)
 
-### 3.2 Collapsed State (48px width)
+### 3.2 折叠状态 (48px 宽度)
 
 ```
 ┌────┐
-│ [▤]│ ← expand button (top)
+│ [▤]│ ← 展开按钮 (顶部)
 ├────┤
 │    │
-│ [📊]│ ← icon only, tooltip on hover
+│ [📊]│ ← 仅图标，悬停显示提示
 ├────┤
 │ [🔍]│
 ├────┤
@@ -112,43 +119,45 @@ The user wants to design the main application layout for the Triple Detection WP
 ├────┤
 │ [📋]│
 ├────┤
+│ [📝]│
+├────┤
 │ [⚙️]│
 └────┘
 ```
 
-**Transition:** Smooth width animation (200ms ease-in-out)
+**过渡动画**：平滑宽度动画 (200ms ease-in-out)
 
-### 3.3 Toggle Behavior
+### 3.3 切换行为
 
-- Click hamburger icon (top-right of rail) → collapse/expand
-- State persisted in local settings
-- Tooltip shown when collapsed: "Expand navigation"
-- Expanded by default
+- 点击导航栏右上角的汉堡图标 → 折叠/展开
+- 状态持久化到本地设置
+- 折叠时显示提示："展开导航"
+- 默认展开
 
 ---
 
-## 4. Detection Page (Wizard Layout)
+## 4. 检测页面 (向导布局)
 
-The detection page uses a 3-step wizard:
+检测页面使用 3 步向导：
 
 ```
 ┌────────────────────────────────────────────────────────────────┐
 │  ① 选择任务    ────▶    ② 执行检测    ────▶    ③ 结果查看     │
 ├────────────────────────────────────────────────────────────────┤
 │                                                                │
-│   Step 1: Select Task                                          │
+│   步骤 1: 选择任务                                              │
 │   ┌────────────────────────────────────────────────────────┐  │
-│   │ [Task Dropdown ▼]                    [Start Detection] │  │
+│   │ [任务下拉框 ▼]                      [开始检测]         │  │
 │   └────────────────────────────────────────────────────────┘  │
 │                                                                │
-│   Task Info:                                                   │
-│   - Product: OCR Product A                                      │
-│   - Batch: 2026052501                                          │
-│   - Production Date: 2026-05-25                                │
-│   - Valid Until: 2027-05-25                                    │
+│   任务信息：                                                   │
+│   - 产品：OCR 产品 A                                           │
+│   - 批次：2026052501                                          │
+│   - 生产日期：2026-05-25                                      │
+│   - 有效期至：2027-05-25                                      │
 │                                                                │
 ├────────────────────────────────────────────────────────────────┤
-│   [VmRenderControl - VisionMaster Display Area]               │
+│   [VmRenderControl - VisionMaster 显示区域]                   │
 │                                                                │
 │   ┌────────────────────────────────────────────────────────┐  │
 │   │                                                        │  │
@@ -159,119 +168,169 @@ The detection page uses a 3-step wizard:
 │   └────────────────────────────────────────────────────────┘  │
 │                                                                │
 ├────────────────────────────────────────────────────────────────┤
-│   Results Panel                                               │
+│   结果面板                                                     │
 │   ┌──────────────┬──────────────┬──────────────┬───────────┐  │
-│   │  Results    │   Count      │  Confidence  │   Time    │  │
+│   │  结果        │   数量        │  置信度      │   耗时    │  │
 │   │  OK: 12     │   15         │  98.5%       │   45ms    │  │
 │   └──────────────┴──────────────┴──────────────┴───────────┘  │
-│   [History] [Export]                                          │
+│   [历史记录] [导出]                                           │
 └────────────────────────────────────────────────────────────────┘
 ```
 
-**Wizard Steps:**
-1. **选择任务** (Select Task): Dropdown to select task, display task details
-2. **执行检测** (Execute Detection): VisionMaster display, run/pause controls
-3. **结果查看** (View Results): Statistics, history list, export options
+**向导步骤：**
+1. **选择任务**：下拉选择任务，显示任务详情
+2. **执行检测**：VisionMaster 显示，运行/暂停控制
+3. **结果查看**：统计数据，历史列表，导出选项
 
-**Controls:**
-- [Start] - Begin detection (changes to [Pause] while running)
-- [Stop] - Stop detection
-- [Reset] - Clear results
+**控制按钮：**
+- [开始] - 开始检测（运行时变为 [暂停]）
+- [停止] - 停止检测
+- [重置] - 清除结果
 
 ---
 
-## 5. Other Pages Layout
+## 5. 其他页面布局
 
-### 5.1 Dashboard Page
+### 5.1 仪表盘页面
 
 ```
 ┌────────────────────────────────────────────────────────────────┐
 │   仪表盘                                                        │
 ├────────────────────────────────────────────────────────────────┤
 │   ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌─────────┐│
-│   │ Today's OK  │ │ Today's NG  │ │ Total Tasks │ │ Pending ││
+│   │ 今日OK      │ │ 今日NG      │ │ 总任务数    │ │ 待审核   ││
 │   │    156      │ │      3      │ │     42      │ │    8    ││
 │   └─────────────┘ └─────────────┘ └─────────────┘ └─────────┘│
 │                                                                │
-│   Recent Detections                                            │
+│   最近检测                                                      │
 │   ┌─────────────────────────────────────────────────────────┐ │
-│   │ Time       │ Task      │ Result │ Confidence │          │ │
-│   │ 12:30:15   │ Task-001  │ OK     │ 99.2%      │          │ │
-│   │ 12:29:45   │ Task-002  │ NG     │ 87.5%      │          │ │
+│   │ 时间       │ 任务      │ 结果 │ 置信度 │                  │ │
+│   │ 12:30:15   │ Task-001  │ OK   │ 99.2%  │                  │ │
+│   │ 12:29:45   │ Task-002  │ NG   │ 87.5%  │                  │ │
 │   └─────────────────────────────────────────────────────────┘ │
 │                                                                │
-│   Quick Actions                                                │
-│   [New Detection] [Manage Products] [View Tasks]              │
+│   快捷操作                                                      │
+│   [新建检测] [管理产品] [查看任务]                              │
 └────────────────────────────────────────────────────────────────┘
 ```
 
-### 5.2 Product/Task List Pages
+### 5.2 产品/任务列表页面
 
-Standard list + edit panel layout (existing implementation preserved).
+标准列表 + 编辑面板布局（保留现有实现）。
 
-### 5.3 Settings Page
+### 5.3 系统配置页面
 
 ```
 ┌────────────────────────────────────────────────────────────────┐
 │   系统配置                                                        │
 ├────────────────────────────────────────────────────────────────┤
 │   ┌───────────────┬────────────────────────────────────────┐   │
-│   │ VM Settings   │                                        │   │
-│   │ Camera        │   [Form fields for selected category]  │   │
+│   │ VM设置        │                                        │   │
+│   │ 相机          │   [所选分类的表单字段]                  │   │
 │   │ PLC           │                                        │   │
-│   │ Image Storage │                                        │   │
-│   │ User Admin    │                                        │   │
+│   │ 图像存储      │                                        │   │
+│   │ 用户管理      │                                        │   │
 │   └───────────────┴────────────────────────────────────────┘   │
 └────────────────────────────────────────────────────────────────┘
 ```
 
+### 5.4 操作日志页面
+
+访问方式：标题栏图标 (🔔) + 侧边栏导航项 (📝)
+
+```
+┌────────────────────────────────────────────────────────────────┐
+│   操作日志                                                        │
+├────────────────────────────────────────────────────────────────┤
+│  ┌─────────────────────────────────────────────────────────────┐│
+│  │ [🔍 搜索] [用户 ▼] [操作 ▼] [日期范围 ▼] [清除]            ││
+│  └─────────────────────────────────────────────────────────────┘│
+│  ┌─────────────────────────────────────────────────────────────┐│
+│  │ 时间              │ 用户    │ 操作              │ 详情       ││
+│  ├─────────────────────────────────────────────────────────────┤│
+│  │ 2026-05-25 12:30  │ Admin   │ 登录              │ 成功       ││
+│  │ 2026-05-25 12:25  │ Admin   │ 加载方案          │ demo.sol   ││
+│  │ 2026-05-25 12:20  │ Admin   │ 执行检测          │ Task-001   ││
+│  │ 2026-05-25 12:15  │ Admin   │ 保存方案          │ 成功       ││
+│  └─────────────────────────────────────────────────────────────┘│
+│  分页: 首页 | 上一页 | 1 2 3 | 下一页 | 末页                    │
+└────────────────────────────────────────────────────────────────┘
+```
+
+**日志条目字段：**
+- 时间：YYYY-MM-DD HH:mm:ss
+- 用户：执行操作的用户名
+- 操作：Login, Logout, LoadSolution, SaveSolution, RunDetection 等
+- 详情：操作特定详情
+
+**记录的操作类型：**
+| 操作 | 详情内容 |
+|------|----------|
+| 登录 | 用户名 + 结果（成功/失败） |
+| 退出 | 用户名 |
+| 加载方案 | 方案文件路径 |
+| 保存方案 | 方案文件路径 |
+| 执行检测 | 任务名称 + 结果摘要 |
+| 审核任务 | 任务名称 |
+| 删除任务 | 任务名称 |
+| 创建产品 | 产品名称 |
+| 更新产品 | 产品名称 |
+
+**标题栏通知图标：**
+- 铃铛图标 (🔔) 在标题栏右侧
+- 有未读日志时显示数量角标
+- 点击打开日志视图（模态框/滑出面板）
+
 ---
 
-## 6. Component States
+## 6. 组件状态
 
-### Navigation Item States
+### 导航项状态
 
-| State | Background | Text Color | Left Bar |
-|-------|------------|------------|----------|
-| Default | Transparent | #A0AEC0 | None |
-| Hover | rgba(255,255,255,0.05) | #FFFFFF | None |
-| Active | rgba(79,209,197,0.1) | #4FD1C5 | 4px #4FD1C5 |
-| Disabled | Transparent | #718096 | None |
+| 状态 | 背景色 | 文字颜色 | 左侧条 |
+|------|--------|----------|--------|
+| 默认 | 透明 | #A0AEC0 | 无 |
+| 悬停 | rgba(255,255,255,0.05) | #FFFFFF | 无 |
+| 激活 | rgba(79,209,197,0.1) | #4FD1C5 | 4px #4FD1C5 |
+| 禁用 | 透明 | #718096 | 无 |
 
-### Button States
+### 按钮状态
 
-| State | Background | Text Color |
-|-------|------------|------------|
-| Default | #4FD1C5 | #1A202C |
-| Hover | #38B2AC | #1A202C |
-| Active/Pressed | #2C7A7B | #FFFFFF |
-| Disabled | #A0AEC0 | #718096 |
+| 状态 | 背景色 | 文字颜色 |
+|------|--------|----------|
+| 默认 | #4FD1C5 | #1A202C |
+| 悬停 | #38B2AC | #1A202C |
+| 按下 | #2C7A7B | #FFFFFF |
+| 禁用 | #A0AEC0 | #718096 |
 
 ---
 
-## 7. Technical Implementation
+## 7. 技术实现
 
-### Files to Modify/Create
+### 需要修改/创建的文件
 
-| File | Action | Description |
-|------|--------|-------------|
-| `MainWindow.xaml` | Modify | Replace current layout with header + nav rail + content |
-| `MainWindow.xaml.cs` | Modify | Add navigation logic, collapse/expand handlers |
-| `ViewModels/MainViewModel.cs` | Modify | Add navigation state, current page tracking |
-| `Views/DashboardView.xaml/.cs` | Create | Dashboard page |
-| `Views/DetectionView.xaml/.cs` | Create | Detection wizard page |
-| `Views/SettingsView.xaml/.cs` | Create | Settings page |
-| `App.config` | Modify | Add logo path configuration |
-| `Resources/Styles.xaml` | Create | Shared styles for navigation, buttons |
+| 文件 | 操作 | 说明 |
+|------|------|------|
+| `MainWindow.xaml` | 修改 | 用标题栏 + 导航栏 + 内容区替换当前布局 |
+| `MainWindow.xaml.cs` | 修改 | 添加导航逻辑、折叠/展开处理器 |
+| `ViewModels/MainViewModel.cs` | 修改 | 添加导航状态、当前页面跟踪 |
+| `ViewModels/LogsViewModel.cs` | 创建 | 日志页面 ViewModel |
+| `Views/DashboardView.xaml/.cs` | 创建 | 仪表盘页面 |
+| `Views/DetectionView.xaml/.cs` | 创建 | 检测向导页面 |
+| `Views/LogsView.xaml/.cs` | 创建 | 操作日志页面 |
+| `Views/SettingsView.xaml/.cs` | 创建 | 系统配置页面 |
+| `App.config` | 修改 | 添加 logo 路径配置 |
+| `Resources/Styles.xaml` | 创建 | 导航、按钮共享样式 |
 
-### Key Components
+### 关键组件
 
-1. **NavigationRail**: Custom UserControl with collapse/expand animation
-2. **HeaderBar**: Top bar with logo, user info, logout
-3. **WizardControl**: Step indicator + content area for detection page
-4. **PageContentArea**: ContentControl that switches between pages
+1. **NavigationRail**: 可折叠/展开动画的自定义 UserControl
+2. **HeaderBar**: 带 logo、用户信息、退出按钮的顶部栏
+3. **WizardControl**: 检测页面的步骤指示器 + 内容区
+4. **PageContentArea**: 在页面间切换的 ContentControl
+5. **NotificationIcon**: 带角标的通知铃铛图标
 
-### Configuration (App.config)
+### 配置 (App.config)
 
 ```xml
 <appSettings>
@@ -283,25 +342,27 @@ Standard list + edit panel layout (existing implementation preserved).
 
 ---
 
-## 8. Verification
+## 8. 验证标准
 
-1. **Build**: Project compiles without errors
-2. **Navigation**: Click each nav item switches page correctly
-3. **Collapse**: Click hamburger → rail animates to 48px, content expands
-4. **Expand**: Click expand button → rail animates back to 200px
-5. **Logo**: Configurable via App.config, loads from specified path
-6. **User**: Username displayed, logout works
-7. **Detection**: Wizard steps navigate correctly, VM display shows
-8. **Responsive**: Window resize handles gracefully (min 1024x768)
+1. **构建**：项目编译无错误
+2. **导航**：点击每个导航项正确切换页面
+3. **折叠**：点击汉堡图标 → 导航栏动画到 48px，内容区域扩展
+4. **展开**：点击展开按钮 → 导航栏动画回 200px
+5. **Logo**：通过 App.config 配置，可从指定路径加载
+6. **用户**：显示用户名，退出功能正常
+7. **检测**：向导步骤正确导航，VM 显示正常
+8. **日志**：日志页面显示搜索/筛选功能，通知图标显示未读数量
+9. **响应式**：窗口调整大小处理得当（最小 1024x768）
 
 ---
 
-## Status
+## 状态
 
-- [x] User approved overall structure
-- [x] Navigation rail: 200px expanded / 48px collapsed, expanded by default
-- [x] Header: Logo (48x48) + name + user menu + logout
-- [x] Detection page: Wizard/stepper layout with 3 steps
-- [x] Design document written
-- [ ] User reviews written spec
-- [ ] Implementation plan created
+- [x] 用户批准整体结构
+- [x] 导航栏：展开 200px / 折叠 48px，默认展开
+- [x] 标题栏：Logo (48x48) + 名称 + 用户菜单 + 退出
+- [x] 检测页面：3 步向导布局
+- [x] 日志页面：作为独立视图添加，支持搜索/筛选
+- [x] 设计文档已编写
+- [ ] 用户审核书面规范
+- [ ] 实施计划已创建
