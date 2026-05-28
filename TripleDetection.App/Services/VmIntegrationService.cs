@@ -3,6 +3,7 @@ using VM.Core;
 using VM.PlatformSDKCS;
 using System.Drawing;
 using TripleDetection.Models;
+using GlobalVariableModuleCs;
 
 namespace TripleDetection.Services
 {
@@ -11,12 +12,14 @@ namespace TripleDetection.Services
         private VmProcedure _procedure;
         private ImageStorageService _imageStorage;
         private bool _isSolutionLoad = false;
+        private LoggingService _logService;
 
         public event EventHandler<DetectionResult> OnDetectionResult;
 
-        public VmIntegrationService(ImageStorageService imageStorage)
+        public VmIntegrationService(ImageStorageService imageStorage, LoggingService logService)
         {
             _imageStorage = imageStorage;
+            _logService = logService;
             VmSolution.OnWorkStatusEvent += VmSolution_OnWorkStatusEvent;
         }
 
@@ -35,6 +38,20 @@ namespace TripleDetection.Services
         public void RunOnce()
         {
             _procedure?.Run();
+        }
+
+        public void SetGlobalVariableString(string name, string value)
+        {
+            if (_procedure != null)
+            {
+                var gvTool = _procedure.Modules["GlobalVariable"] as GlobalVariableModuleTool;
+                if (gvTool != null)
+                {
+                    string defaultValue = gvTool.GetGlobalVar(name) ?? "null";
+                    gvTool.SetGlobalVar(name, value);
+                    _logService?.Log($"[VM GlobalVariable] {name}: '{defaultValue}' -> '{value}'");
+                }
+            }
         }
 
         public void SetContinuousRun(bool enable)
@@ -105,9 +122,13 @@ namespace TripleDetection.Services
                         OnDetectionResult?.Invoke(this, result);
                     }
                 }
-                catch (VmException ex)
+                catch (Exception ex)
                 {
-                    System.Diagnostics.Debug.WriteLine($"VmIntegrationService VM Error: 0x{ex.errorCode:X}");
+                    dynamic vmEx = ex;
+                    if (vmEx.errorCode != null)
+                        System.Diagnostics.Debug.WriteLine($"VmIntegrationService VM Error: 0x{vmEx.errorCode:X}");
+                    else
+                        System.Diagnostics.Debug.WriteLine($"VmIntegrationService Error: {ex.Message}");
                 }
             }
         }

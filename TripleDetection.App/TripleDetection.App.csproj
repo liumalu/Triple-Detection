@@ -1,167 +1,223 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}</ProjectGuid>
     <OutputType>WinExe</OutputType>
+    <TargetFramework>net48</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>8.0</LangVersion>
     <RootNamespace>TripleDetection</RootNamespace>
     <AssemblyName>TripleDetection.App</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <LangVersion>8.0</LangVersion>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+
+  <PropertyGroup>
+    <VmInstallPath>C:\Program Files\VisionMaster4.2.0</VmInstallPath>
+    <NoWarn>$(NoWarn);CS0437</NoWarn>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+
+  <!-- VisionMaster SDK DLLs from libs folder -->
   <ItemGroup>
+    <Reference Include="VM.Core">
+      <HintPath>libs\VM.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="VM.PlatformSDKCS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c1484a72052ee3d4, processorArchitecture=MSIL">
+      <HintPath>libs\VM.PlatformSDKCS.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="iMVS-6000PlatformSDKCS">
+      <HintPath>libs\iMVS-6000PlatformSDKCS.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="VMControls.BaseInterface">
+      <HintPath>$(VmInstallPath)\Development\V4.x\ComControls\Assembly\VMControls.BaseInterface.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="VMControls.Interface">
+      <HintPath>$(VmInstallPath)\Development\V4.x\ComControls\Assembly\VMControls.Interface.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="VMControls.RenderInterface">
+      <HintPath>$(VmInstallPath)\Development\V4.x\ComControls\Assembly\VMControls.RenderInterface.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="VMControls.Winform.Release">
+      <HintPath>$(VmInstallPath)\Development\V4.x\ComControls\Assembly\VMControls.Winform.Release.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="VMControls.WPF.Release">
+      <HintPath>$(VmInstallPath)\Development\V4.x\ComControls\Assembly\VMControls.WPF.Release.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GlobalVariableModuleCs">
+      <HintPath>$(VmInstallPath)\Applications\Module(sp)\x64\Global\GlobalVariableModule\GlobalVariableModuleCs.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+
+  <!-- Internal Apps.* DLLs from libs folder -->
+  <ItemGroup>
+    <Reference Include="Apps.BaseData">
+      <HintPath>$(VmInstallPath)\Development\V4.x\ComControls\Assembly\Apps.BaseData.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Apps.ColorFun">
+      <HintPath>$(VmInstallPath)\Development\V4.x\ComControls\Assembly\Apps.ColorFun.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Apps.Data">
+      <HintPath>libs\Apps.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Apps.ErrorCode">
+      <HintPath>libs\Apps.ErrorCode.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Apps.Interface">
+      <HintPath>libs\Apps.Interface.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Apps.Localization">
+      <HintPath>libs\Apps.Localization.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Apps.Log">
+      <HintPath>libs\Apps.Log.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Apps.PcUI">
+      <HintPath>$(VmInstallPath)\Development\V4.x\ComControls\Assembly\Apps.PcUI.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Apps.UIData">
+      <HintPath>libs\Apps.UIData.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Apps.UIHelper">
+      <HintPath>libs\Apps.UIHelper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Apps.XmlParser">
+      <HintPath>$(VmInstallPath)\Development\V4.x\ComControls\Assembly\Apps.XmlParser.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Apps.XmlUI">
+      <HintPath>$(VmInstallPath)\Development\V4.x\ComControls\Assembly\Apps.XmlUI.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DirectoryBrowser">
+      <HintPath>$(VmInstallPath)\Development\V4.x\ComControls\Assembly\DirectoryBrowser.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Frontend.Base">
+      <HintPath>$(VmInstallPath)\Development\V4.x\ComControls\Assembly\Frontend.Base.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FrontendUI.WPF">
+      <HintPath>$(VmInstallPath)\Development\V4.x\ComControls\Assembly\FrontendUI.WPF.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GateWay.Base.Xml">
+      <HintPath>$(VmInstallPath)\Development\V4.x\ComControls\Assembly\GateWay.Base.Xml.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GateWay.Compress">
+      <HintPath>$(VmInstallPath)\Development\V4.x\ComControls\Assembly\GateWay.Compress.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GateWay.Control">
+      <HintPath>$(VmInstallPath)\Development\V4.x\ComControls\Assembly\GateWay.Control.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GateWay.CostomDialog">
+      <HintPath>$(VmInstallPath)\Development\V4.x\ComControls\Assembly\GateWay.CostomDialog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GateWay.Data">
+      <HintPath>$(VmInstallPath)\Development\V4.x\ComControls\Assembly\GateWay.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mvvm">
+      <HintPath>$(VmInstallPath)\Development\V4.x\ComControls\Assembly\Mvvm.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows.Interactivity">
+      <HintPath>libs\System.Windows.Interactivity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="VM.Compress">
+      <HintPath>libs\VM.Compress.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="VM.Controls">
+      <HintPath>libs\VM.Controls.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="VM.ExternalCall">
+      <HintPath>libs\VM.ExternalCall.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="VM.Framework.Container">
+      <HintPath>libs\VM.Framework.Container.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="VM.Util">
+      <HintPath>libs\VM.Util.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="VM.Utility">
+      <HintPath>libs\VM.Utility.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>libs\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+
+  <!-- Framework assemblies -->
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="WindowsBase" />
     <Reference Include="System.Xaml" />
     <Reference Include="WindowsFormsIntegration" />
-    <Reference Include="VM.Core" />
-    <Reference Include="VM.PlatformSDKCS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c1484a72052ee3d4, processorArchitecture=MSIL" />
-    <Reference Include="iMVS-6000PlatformSDKCS">
-      <HintPath>$(VmInstallPath)\Development\V4.x\Libraries\win64\C#\iMVS-6000PlatformSDKCS.dll</HintPath>
-    </Reference>
-    <Reference Include="VMControls.BaseInterface" />
-    <Reference Include="VMControls.Interface" />
-    <Reference Include="VMControls.RenderInterface" />
-    <Reference Include="VMControls.Winform.Release, Version=1.0.0.0, Culture=neutral, PublicKeyToken=2efa940dfee4dc7e, processorArchitecture=MSIL" />
-    <Reference Include="VMControls.WPF.Release" />
   </ItemGroup>
+
+  <!-- Project References -->
   <ItemGroup>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DetectionResult.cs" />
-    <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\ProductListViewModel.cs" />
-    <Compile Include="ViewModels\ProductEditViewModel.cs" />
-    <Compile Include="ViewModels\TaskListViewModel.cs" />
-    <Compile Include="ViewModels\TaskEditViewModel.cs" />
-    <Compile Include="Services\VmIntegrationService.cs" />
-    <Compile Include="Services\LoggingService.cs" />
-    <Compile Include="Services\ImageStorageService.cs" />
-    <Compile Include="Views\ProductListView.xaml.cs">
-      <DependentUpon>ProductListView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ProductEditWindow.xaml.cs">
-      <DependentUpon>ProductEditWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\TaskListView.xaml.cs">
-      <DependentUpon>TaskListView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\TaskEditWindow.xaml.cs">
-      <DependentUpon>TaskEditWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\DetectionView.xaml.cs">
-      <DependentUpon>DetectionView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\DashboardView.xaml.cs">
-      <DependentUpon>DashboardView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\LogsView.xaml.cs">
-      <DependentUpon>LogsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SettingsView.xaml.cs">
-      <DependentUpon>SettingsView.xaml</DependentUpon>
-    </Compile>
+    <ProjectReference Include="..\TripleDetection.Data\TripleDetection.Data.csproj" />
+    <ProjectReference Include="..\TripleDetection.Services\TripleDetection.Services.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\ProductListView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\ProductEditWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\TaskListView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\TaskEditWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\DetectionView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\DashboardView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\LogsView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\SettingsView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\TripleDetection.Data\TripleDetection.Data.csproj">
-      <Project>{E539E21E-5D6E-407F-942B-7345959D8357}</Project>
-      <Name>TripleDetection.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TripleDetection.Services\TripleDetection.Services.csproj">
-      <Project>{A9C5DD4F-4CDE-4C9A-9F66-50BEF7F67FC9}</Project>
-      <Name>TripleDetection.Services</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
+
+  <!-- Resource files -->
   <ItemGroup>
     <Resource Include="Resources\Styles.xaml" />
   </ItemGroup>
+
   <ItemGroup>
-    <Folder Include="Log\" />
+    <None Include="App.config" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
+  <ItemGroup>
+    <Content Include="Config\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

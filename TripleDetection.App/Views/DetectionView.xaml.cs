@@ -6,12 +6,12 @@ using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Win32;
 using VM.Core;
-using VM.PlatformSDKCS;
 using TripleDetection.Services;
 using TripleDetection.ViewModels;
 using MessageBox = System.Windows.MessageBox;
 using TaskEntity = TripleDetection.Data.Entities.Task;
 using iMVS_6000PlatformSDKCS.SyncPlatformSDKCS;
+using GlobalVariableModuleCs;
 
 namespace TripleDetection.Views
 {
@@ -202,15 +202,19 @@ namespace TripleDetection.Views
                     _logService.Log("流程数量为0，请检查方案!");
                 }
             }
-            catch (VmException ex)
-            {
-                _logService.Log($"加载方案失败, 错误码: 0x{ex.errorCode:X}");
-                MessageBox.Show($"加载方案失败: 0x{ex.errorCode:X}", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
             catch (Exception ex)
             {
-                _logService.Log($"加载方案失败: {ex.Message}");
-                MessageBox.Show($"加载方案失败: {ex.Message}", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                dynamic vmEx = ex;
+                if (vmEx.errorCode != null)
+                {
+                    _logService.Log($"加载方案失败, 错误码: 0x{vmEx.errorCode:X}");
+                    MessageBox.Show($"加载方案失败: 0x{vmEx.errorCode:X}", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else
+                {
+                    _logService.Log($"加载方案失败: {ex.Message}");
+                    MessageBox.Show($"加载方案失败: {ex.Message}", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
 
@@ -230,33 +234,150 @@ namespace TripleDetection.Views
 
             try
             {
-                var pfsync = new ImvsSdkPFSync();
-                var result = pfsync.Start();
-                if (result != 0)
-                {
-                    MessageBox.Show($"SDK初始化失败: 0x{result:X}", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-
                 var batchNumber = _selectedTask.BatchNumber ?? "";
                 var mfgDate = _selectedTask.ProductionDate.ToString("yyyyMMdd");
                 var expDate = _selectedTask.ExpirationDate.HasValue
                     ? _selectedTask.ExpirationDate.Value.ToString("yyyyMMdd")
                     : "";
 
-                pfsync.modules.moduleControl.SetGlobalVarValue("BN", batchNumber);
-                pfsync.modules.moduleControl.SetGlobalVarValue("Mfg", mfgDate);
-                pfsync.modules.moduleControl.SetGlobalVarValue("EXP", expDate);
+                // 尝试多个可能的模块名称
+                GlobalVariableModuleTool gvTool = null;
+                string[] possibleNames = { "GlobalVariable", "全局变量1", "GlobalVariableModule", "全局变量" };
+                foreach (var name in possibleNames)
+                {
+                    var mod = _procedure.Modules[name];
+                    if (mod is GlobalVariableModuleTool)
+                    {
+                        gvTool = mod as GlobalVariableModuleTool;
+                        _logService.Log($"使用模块: {name}");
+                        break;
+                    }
+                }
 
-                pfsync.Exit();
+                if (gvTool == null)
+                {
+                    MessageBox.Show("未找到全局变量模块!\n请确认方案中已添加全局变量模块。", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
 
-                _logService.Log($"三期信息已设置: BN={batchNumber}, Mfg={mfgDate}, EXP={expDate}");
+                gvTool.SetGlobalVar("BN", batchNumber);
+                gvTool.SetGlobalVar("Mfg", mfgDate);
+                gvTool.SetGlobalVar("EXP", expDate);
+
+                _logService.Log($"三期信息已设置ToVM: BN={batchNumber}, Mfg={mfgDate}, EXP={expDate}");
                 MessageBox.Show($"三期信息已设置:\nBN={batchNumber}\nMfg={mfgDate}\nEXP={expDate}", "成功", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
             {
                 _logService.Log($"设置三期信息失败: {ex.Message}");
                 MessageBox.Show($"设置失败: {ex.Message}", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void BtnSyncBn_Click(object sender, RoutedEventArgs e)
+        {
+            if (_selectedTask == null)
+            {
+                MessageBox.Show("请先选择任务!", "警告", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            if (!_isSolutionLoad || _procedure == null)
+            {
+                MessageBox.Show("请先加载方案!", "警告", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var batchNumber = _selectedTask.BatchNumber ?? "";
+
+            // 验证：非空
+            if (string.IsNullOrWhiteSpace(batchNumber))
+            {
+                MessageBox.Show("批次号不能为空!", "验证失败", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            // 验证：长度限制50字符
+            if (batchNumber.Length > 50)
+            {
+                MessageBox.Show("批次号不能超过50字符!", "验证失败", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            try
+            {
+                // 尝试多个可能的模块名称
+                GlobalVariableModuleTool gvTool = null;
+                string[] possibleNames = { "GlobalVariable", "全局变量1", "GlobalVariableModule", "全局变量" };
+                foreach (var name in possibleNames)
+                {
+                    var mod = _procedure.Modules[name];
+                    if (mod is GlobalVariableModuleTool)
+                    {
+                        gvTool = mod as GlobalVariableModuleTool;
+                        _logService.Log($"使用模块: {name}");
+                        break;
+                    }
+                }
+
+                if (gvTool == null)
+                {
+                    MessageBox.Show("未找到全局变量模块!\n请确认方案中已添加全局变量模块。", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                gvTool.SetGlobalVar("BN", batchNumber);
+                _logService.Log($"BN已同步到VM: {batchNumber}");
+                MessageBox.Show($"BN已同步到VM:\n{batchNumber}", "成功", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                _logService.Log($"BN同步失败: {ex.Message}");
+                MessageBox.Show($"BN同步失败: {ex.Message}", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void BtnLoadFromVm_Click(object sender, RoutedEventArgs e)
+        {
+            if (!_isSolutionLoad || _procedure == null)
+            {
+                MessageBox.Show("请先加载方案!", "警告", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            try
+            {
+                // 尝试多个可能的模块名称
+                GlobalVariableModuleTool gvTool = null;
+                string[] possibleNames = { "GlobalVariable", "全局变量1", "GlobalVariableModule", "全局变量" };
+                foreach (var name in possibleNames)
+                {
+                    var mod = _procedure.Modules[name];
+                    if (mod is GlobalVariableModuleTool)
+                    {
+                        gvTool = mod as GlobalVariableModuleTool;
+                        _logService.Log($"使用模块: {name}");
+                        break;
+                    }
+                }
+
+                if (gvTool == null)
+                {
+                    MessageBox.Show("未找到全局变量模块!\n请确认方案中已添加全局变量模块。", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                string bn = gvTool.GetGlobalVar("BN") ?? "";
+                string mfg = gvTool.GetGlobalVar("Mfg") ?? "";
+                string exp = gvTool.GetGlobalVar("EXP") ?? "";
+
+                _logService.Log($"三期信息已获取FromVM: BN={bn}, Mfg={mfg}, EXP={exp}");
+                MessageBox.Show($"三期信息:\nBN={bn}\nMfg={mfg}\nEXP={exp}", "成功", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                _logService.Log($"获取三期信息失败: {ex.Message}");
+                MessageBox.Show($"获取失败: {ex.Message}", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -272,13 +393,13 @@ namespace TripleDetection.Views
 
                 _logService.Log($"已选择 [{cmbProcedure.SelectedItem}]");
             }
-            catch (VmException ex)
-            {
-                _logService.Log($"选择流程失败, 错误码: 0x{ex.errorCode:X}");
-            }
             catch (Exception ex)
             {
-                _logService.Log($"选择流程失败: {ex.Message}");
+                dynamic vmEx = ex;
+                if (vmEx.errorCode != null)
+                    _logService.Log($"选择流程失败, 错误码: 0x{vmEx.errorCode:X}");
+                else
+                    _logService.Log($"选择流程失败: {ex.Message}");
             }
         }
 
@@ -301,13 +422,13 @@ namespace TripleDetection.Views
                 var confidence = random.NextDouble() * 0.4 + 0.6;
                 UpdateDetectionResult(isOk ? "OK" : "NG", confidence);
             }
-            catch (VmException ex)
-            {
-                _logService.Log($"单次运行失败, 错误码: 0x{ex.errorCode:X}");
-            }
             catch (Exception ex)
             {
-                _logService.Log($"单次运行失败: {ex.Message}");
+                dynamic vmEx = ex;
+                if (vmEx.errorCode != null)
+                    _logService.Log($"单次运行失败, 错误码: 0x{vmEx.errorCode:X}");
+                else
+                    _logService.Log($"单次运行失败: {ex.Message}");
             }
         }
 
@@ -328,13 +449,13 @@ namespace TripleDetection.Views
                 _logService.Log($"连续运行切换: {beforeToggle} -> {_procedure.ContinuousRunEnable}");
                 btnContiRun.Content = _isContinuRun ? "停止连续" : "连续运行";
             }
-            catch (VmException ex)
-            {
-                _logService.Log($"连续运行切换失败, 错误码: 0x{ex.errorCode:X}");
-            }
             catch (Exception ex)
             {
-                _logService.Log($"连续运行切换失败: {ex.Message}");
+                dynamic vmEx = ex;
+                if (vmEx.errorCode != null)
+                    _logService.Log($"连续运行切换失败, 错误码: 0x{vmEx.errorCode:X}");
+                else
+                    _logService.Log($"连续运行切换失败: {ex.Message}");
             }
         }
     }

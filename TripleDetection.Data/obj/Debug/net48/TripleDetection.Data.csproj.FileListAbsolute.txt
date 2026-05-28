@@ -1,0 +1,10 @@
+D:\xcm\Triple-Detection\TripleDetection.Data\bin\Debug\net48\TripleDetection.Data.dll
+D:\xcm\Triple-Detection\TripleDetection.Data\bin\Debug\net48\TripleDetection.Data.pdb
+D:\xcm\Triple-Detection\TripleDetection.Data\obj\Debug\net48\TripleDetection.Data.csproj.AssemblyReference.cache
+D:\xcm\Triple-Detection\TripleDetection.Data\obj\Debug\net48\TripleDetection.Data.GeneratedMSBuildEditorConfig.editorconfig
+D:\xcm\Triple-Detection\TripleDetection.Data\obj\Debug\net48\TripleDetection.Data.AssemblyInfoInputs.cache
+D:\xcm\Triple-Detection\TripleDetection.Data\obj\Debug\net48\TripleDetection.Data.AssemblyInfo.cs
+D:\xcm\Triple-Detection\TripleDetection.Data\obj\Debug\net48\TripleDetection.Data.csproj.CoreCompileInputs.cache
+D:\xcm\Triple-Detection\TripleDetection.Data\obj\Debug\net48\TripleDetection.Data.sourcelink.json
+D:\xcm\Triple-Detection\TripleDetection.Data\obj\Debug\net48\TripleDetection.Data.dll
+D:\xcm\Triple-Detection\TripleDetection.Data\obj\Debug\net48\TripleDetection.Data.pdb

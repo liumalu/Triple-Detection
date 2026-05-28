@@ -1,0 +1,27 @@
+<UserControl x:Class="TripleDetection.Views.Settings.VmSettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="White">
+
+    <StackPanel Margin="20">
+        <TextBlock Text="VisionMaster设置" FontSize="18" FontWeight="Bold" Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,20"/>
+
+        <!-- VM安装路径 -->
+        <TextBlock Text="VM安装路径" FontSize="14" FontWeight="Bold" Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,12"/>
+        <Border Background="{StaticResource CardBackgroundBrush}" Padding="16" Margin="0,0,0,20">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Text="安装路径:" VerticalAlignment="Center" Foreground="{StaticResource TextSecondaryBrush}"/>
+                <TextBox Grid.Column="1" x:Name="txtVmPath"/>
+                <Button Grid.Column="2" Content="浏览..." Click="BrowseButton_Click" Style="{StaticResource PrimaryButtonStyle}" Margin="8,0,0,0"/>
+            </Grid>
+        </Border>
+
+        <Button Content="保存设置" Click="SaveButton_Click" Style="{StaticResource PrimaryButtonStyle}" HorizontalAlignment="Left"/>
+    </StackPanel>
+</UserControl>

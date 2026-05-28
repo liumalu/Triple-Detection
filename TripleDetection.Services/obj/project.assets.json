@@ -1,0 +1,81 @@
+{
+  "version": 3,
+  "targets": {
+    ".NETFramework,Version=v4.8": {
+      "TripleDetection.Data/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.8",
+        "compile": {
+          "bin/placeholder/TripleDetection.Data.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/TripleDetection.Data.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "TripleDetection.Data/1.0.0": {
+      "type": "project",
+      "path": "../TripleDetection.Data/TripleDetection.Data.csproj",
+      "msbuildProject": "../TripleDetection.Data/TripleDetection.Data.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    ".NETFramework,Version=v4.8": [
+      "TripleDetection.Data >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\Administrator\\.nuget\\packages\\": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "d:\\xcm\\Triple-Detection\\TripleDetection.Services\\TripleDetection.Services.csproj",
+      "projectName": "TripleDetection.Services",
+      "projectPath": "d:\\xcm\\Triple-Detection\\TripleDetection.Services\\TripleDetection.Services.csproj",
+      "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
+      "outputPath": "d:\\xcm\\Triple-Detection\\TripleDetection.Services\\obj\\",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "net48"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net48": {
+          "targetAlias": "net48",
+          "projectReferences": {
+            "D:\\xcm\\Triple-Detection\\TripleDetection.Data\\TripleDetection.Data.csproj": {
+              "projectPath": "D:\\xcm\\Triple-Detection\\TripleDetection.Data\\TripleDetection.Data.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
+      },
+      "SdkAnalysisLevel": "9.0.300"
+    },
+    "frameworks": {
+      "net48": {
+        "targetAlias": "net48",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.314\\RuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

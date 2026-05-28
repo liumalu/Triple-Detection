@@ -36,7 +36,7 @@
                 <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="16,0">
                     <Image x:Name="imgLogo" Width="32" Height="32" Stretch="Uniform"/>
                     <TextBlock x:Name="txtSystemName" Text="Triple Detection"
-                               Foreground="White" FontSize="16" FontWeight="Bold"
+                               Foreground="{StaticResource TextPrimaryBrush}" FontSize="16" FontWeight="Bold"
                                VerticalAlignment="Center" Margin="12,0,0,0"/>
                 </StackPanel>
 
@@ -45,7 +45,7 @@
                     <Button x:Name="btnNotifications" Style="{StaticResource NavButtonStyle}"
                             Content="🔔" FontSize="16" Padding="8" Margin="0,0,8,0"
                             Click="BtnNotifications_Click" ToolTip="操作日志"/>
-                    <TextBlock x:Name="txtUsername" Text="Admin" Foreground="White"
+                    <TextBlock x:Name="txtUsername" Text="Admin" Foreground="{StaticResource TextPrimaryBrush}"
                                VerticalAlignment="Center" Margin="0,0,16,0"/>
                     <Button x:Name="btnLogout" Content="退出" Style="{StaticResource PrimaryButtonStyle}"
                             Background="#E53E3E" Foreground="White" Click="BtnLogout_Click"/>
@@ -61,17 +61,12 @@
             </Grid.ColumnDefinitions>
 
             <!-- 左侧导航栏 -->
-            <Border Grid.Column="0" Background="#1A202C">
+            <Border Grid.Column="0" Background="{StaticResource DarkSlateBrush}" BorderThickness="0,0,1,0" BorderBrush="{StaticResource PrimaryBrush}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-
-                    <!-- 折叠按钮 -->
-                    <Button Grid.Row="0" x:Name="btnToggleNav" Content="◀" FontSize="12"
-                            Style="{StaticResource NavButtonStyle}" HorizontalAlignment="Right"
-                            Margin="0,8,8,0" Click="BtnToggleNav_Click" ToolTip="折叠导航"/>
 
                     <!-- 导航项 -->
                     <StackPanel Grid.Row="1" x:Name="navPanel">
@@ -87,27 +82,104 @@
                                 Style="{StaticResource NavButtonStyle}" Click="BtnNav_Click" Tag="Logs"/>
                         <Button x:Name="btnNavSettings" Content="⚙️ 系统配置"
                                 Style="{StaticResource NavButtonStyle}" Click="BtnNav_Click" Tag="Settings"/>
+                        <Button x:Name="btnNavUserManagement" Content="👤 用户权限"
+                                Style="{StaticResource NavButtonStyle}" Click="BtnNav_Click" Tag="UserManagement"/>
                     </StackPanel>
+
+                    <!-- 折叠按钮 - 右上角小箭头 -->
+                    <ToggleButton x:Name="btnToggleNav" Grid.Row="0"
+                                  IsChecked="{Binding IsNavExpanded, Mode=TwoWay}"
+                                  Click="BtnToggleNav_Click"
+                                  ToolTip="折叠/展开导航"
+                                  HorizontalAlignment="Right"
+                                  Margin="0,8,8,0"
+                                  Cursor="Hand"
+                                  Background="Transparent" BorderThickness="0">
+                        <ToggleButton.Style>
+                            <Style TargetType="ToggleButton">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ToggleButton">
+                                            <Border x:Name="border" Background="Transparent" Padding="4">
+                                                <TextBlock x:Name="arrow" Text="◀" FontSize="10"
+                                                          Foreground="{StaticResource TextSecondaryBrush}"
+                                                          HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsChecked" Value="False">
+                                                    <Setter TargetName="arrow" Property="Text" Value="▶"/>
+                                                </Trigger>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="border" Property="Background" Value="#E0F7F5"/>
+                                                    <Setter TargetName="arrow" Property="Foreground" Value="{StaticResource PrimaryBrush}"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ToggleButton.Style>
+                    </ToggleButton>
                 </Grid>
             </Border>
 
-            <!-- 内容区 -->
-            <Border Grid.Column="1" Background="#404040">
-                <ContentControl x:Name="MainContent"/>
-            </Border>
+            <!-- 内容区 (TabBar + TabContent) -->
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Tab 栏 -->
+                <Border Grid.Row="0" Background="{StaticResource CardBackgroundBrush}" BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,0,1">
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                        <ItemsControl x:Name="tabBar">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border x:Name="tabItem" Padding="12,8" Cursor="Hand"
+                                            Background="{Binding IsActive, Converter={StaticResource TabActiveConverter}}"
+                                            BorderThickness="0,0,1,0" BorderBrush="{StaticResource BorderBrush}">
+                                        <Border.InputBindings>
+                                            <MouseBinding MouseAction="LeftClick" Command="{Binding SelectCommand}" CommandParameter="{Binding Tag}"/>
+                                        </Border.InputBindings>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding DisplayName}" VerticalAlignment="Center"
+                                                       Foreground="{Binding IsActive, Converter={StaticResource TabActiveTextConverter}}"/>
+                                            <Button Content="×" Margin="8,0,0,0" Padding="4,0"
+                                                    Background="Transparent" BorderThickness="0"
+                                                    Foreground="{Binding IsActive, Converter={StaticResource TabActiveTextConverter}}"
+                                                    Cursor="Hand" FontSize="12"
+                                                    Visibility="{Binding IsClosable, Converter={StaticResource BoolToVisibilityConverter}}"
+                                                    Command="{Binding CloseCommand}" CommandParameter="{Binding Tag}"/>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Border>
+
+                <!-- Tab 内容 -->
+                <ContentControl Grid.Row="1" x:Name="MainContent"/>
+            </Grid>
         </Grid>
 
         <!-- 底部状态栏 -->
-        <Border Grid.Row="2" Background="#2D3748" Padding="8,0">
+        <Border Grid.Row="2" Background="#F5F5F5" Padding="8,0">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock x:Name="txtStatus" Grid.Column="0" Text="就绪" Foreground="#A0AEC0" VerticalAlignment="Center"/>
-                <TextBlock x:Name="txtCurrentUser" Grid.Column="1" Text="当前用户: Admin" Foreground="#A0AEC0" VerticalAlignment="Center" Margin="16,0"/>
-                <TextBlock x:Name="txtCurrentTime" Grid.Column="2" Text="" Foreground="#A0AEC0" VerticalAlignment="Center"/>
+                <TextBlock x:Name="txtStatus" Grid.Column="0" Text="就绪" Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center"/>
+                <TextBlock x:Name="txtCurrentUser" Grid.Column="1" Text="当前用户: Admin" Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center" Margin="16,0"/>
+                <TextBlock x:Name="txtCurrentTime" Grid.Column="2" Text="" Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center"/>
             </Grid>
         </Border>
     </Grid>

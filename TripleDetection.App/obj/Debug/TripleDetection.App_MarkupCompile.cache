@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\xcm\Triple-Detection\TripleDetection.App\obj\Debug\
+d:\xcm\Triple-Detection\TripleDetection.App\obj\Debug\
 TripleDetection
 none
 false
-DEBUG;TRACE
-D:\xcm\Triple-Detection\TripleDetection.App\App.xaml
-9-2133279065
-
-19-1485905994
-28-999177343
-MainWindow.xaml;Views\ProductListView.xaml;Views\ProductEditWindow.xaml;Views\TaskListView.xaml;Views\TaskEditWindow.xaml;Views\DetectionView.xaml;Views\DashboardView.xaml;Views\LogsView.xaml;Views\SettingsView.xaml;
+TRACE;DEBUG;NETFRAMEWORK;NET48;;NET30_OR_GREATER;NET35_OR_GREATER;NET40_OR_GREATER;NET45_OR_GREATER;NET451_OR_GREATER;NET452_OR_GREATER;NET46_OR_GREATER;NET461_OR_GREATER;NET462_OR_GREATER;NET47_OR_GREATER;NET471_OR_GREATER;NET472_OR_GREATER;NET48_OR_GREATER
+d:\xcm\Triple-Detection\TripleDetection.App\App.xaml
+16-801254344
+5203014908
+44-695661638
+66-1319716147
+MainWindow.xaml;Views\DashboardView.xaml;Views\DetectionView.xaml;Views\LogsView.xaml;Views\ProductEditWindow.xaml;Views\ProductListView.xaml;Views\SettingsView.xaml;Views\Settings\CommunicationSettingsView.xaml;Views\Settings\DeviceControlSettingsView.xaml;Views\Settings\SystemSettingsView.xaml;Views\Settings\VmSettingsView.xaml;Views\TaskEditWindow.xaml;Views\TaskListView.xaml;Views\UserEditDialog.xaml;Views\UserEditWindow.xaml;Views\UserManagementView.xaml;
 
 False
 

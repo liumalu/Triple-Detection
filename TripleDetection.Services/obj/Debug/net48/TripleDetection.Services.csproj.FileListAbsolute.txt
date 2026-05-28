@@ -1,0 +1,13 @@
+D:\xcm\Triple-Detection\TripleDetection.Services\bin\Debug\net48\TripleDetection.Services.dll
+D:\xcm\Triple-Detection\TripleDetection.Services\bin\Debug\net48\TripleDetection.Services.pdb
+D:\xcm\Triple-Detection\TripleDetection.Services\bin\Debug\net48\TripleDetection.Data.dll
+D:\xcm\Triple-Detection\TripleDetection.Services\bin\Debug\net48\TripleDetection.Data.pdb
+D:\xcm\Triple-Detection\TripleDetection.Services\obj\Debug\net48\TripleDetection.Services.csproj.AssemblyReference.cache
+D:\xcm\Triple-Detection\TripleDetection.Services\obj\Debug\net48\TripleDetection.Services.GeneratedMSBuildEditorConfig.editorconfig
+D:\xcm\Triple-Detection\TripleDetection.Services\obj\Debug\net48\TripleDetection.Services.AssemblyInfoInputs.cache
+D:\xcm\Triple-Detection\TripleDetection.Services\obj\Debug\net48\TripleDetection.Services.AssemblyInfo.cs
+D:\xcm\Triple-Detection\TripleDetection.Services\obj\Debug\net48\TripleDetection.Services.csproj.CoreCompileInputs.cache
+D:\xcm\Triple-Detection\TripleDetection.Services\obj\Debug\net48\TripleDetection.Services.sourcelink.json
+D:\xcm\Triple-Detection\TripleDetection.Services\obj\Debug\net48\TripleDe.F28499EB.Up2Date
+D:\xcm\Triple-Detection\TripleDetection.Services\obj\Debug\net48\TripleDetection.Services.dll
+D:\xcm\Triple-Detection\TripleDetection.Services\obj\Debug\net48\TripleDetection.Services.pdb

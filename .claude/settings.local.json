@@ -99,7 +99,15 @@
       "Bash(\"/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"d:/xcm/Triple-Detection/TripleDetection.App/TripleDetection.App.csproj\" /p:Configuration=Debug /t:Rebuild /v:m)",
       "Bash(cmd.exe /c \"cd /d d:\\\\\\\\xcm\\\\\\\\Triple-Detection && run.bat\")",
       "Bash(cmd.exe /c \"d:\\\\\\\\xcm\\\\\\\\Triple-Detection\\\\\\\\run.bat 2>&1\")",
-      "Bash(cmd.exe /c \"d:\\\\\\\\xcm\\\\\\\\Triple-Detection\\\\\\\\run.bat < NUL\")"
+      "Bash(cmd.exe /c \"d:\\\\\\\\xcm\\\\\\\\Triple-Detection\\\\\\\\run.bat < NUL\")",
+      "Bash(C:\\\\Program Files\\\\Microsoft Visual Studio\\\\2022\\\\Community\\\\MSBuild\\\\Current\\\\Bin\\\\MSBuild.exe *)",
+      "Bash(C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe *)",
+      "Bash(cmd *)",
+      "mcp__ide__getDiagnostics",
+      "Bash(\"C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" TripleDetection.App/TripleDetection.App.csproj /t:Rebuild /p:Configuration=Debug /v:minimal)",
+      "Bash(\"/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"/d/xcm/Triple-Detection/TripleDetection.App/TripleDetection.App.csproj\" /t:Rebuild /p:Configuration=Debug)",
+      "Bash(powershell -Command \"& 'C:\\\\Program Files\\\\Microsoft Visual Studio\\\\2022\\\\Community\\\\MSBuild\\\\Current\\\\Bin\\\\MSBuild.exe' 'D:\\\\xcm\\\\Triple-Detection\\\\TripleDetection.App\\\\TripleDetection.App.csproj' /t:Rebuild /p:Configuration=Debug\")",
+      "Bash(powershell -Command \"& 'C:\\\\Program Files\\\\Microsoft Visual Studio\\\\2022\\\\Community\\\\MSBuild\\\\Current\\\\Bin\\\\MSBuild.exe' 'D:\\\\xcm\\\\Triple-Detection\\\\TripleDetection.App\\\\TripleDetection.App.csproj' /t:Rebuild /p:Configuration=Debug /v:quiet\")"
     ],
     "additionalDirectories": [
       "D:\\xcm\\Triple-Detection\\TripleDetection.App\\bin\\Debug\\log\\SDK",

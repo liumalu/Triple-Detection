@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
+             Background="White"
              d:DesignHeight="600" d:DesignWidth="900">
     <Grid>
         <Grid.RowDefinitions>
@@ -15,10 +16,10 @@
         </Grid.RowDefinitions>
 
         <!-- Header -->
-        <TextBlock Grid.Row="0" Text="任务管理" FontSize="20" FontWeight="Bold" Margin="10"/>
+        <TextBlock Grid.Row="0" Text="任务管理" FontSize="20" FontWeight="Bold" Foreground="{StaticResource TextPrimaryBrush}" Margin="10"/>
 
         <!-- Search Form -->
-        <GroupBox Grid.Row="1" Header="查询条件" Margin="10,5">
+        <GroupBox Grid.Row="1" Header="查询条件" Margin="10,5" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1">
             <Grid Margin="10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -35,13 +36,13 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="任务名称:" VerticalAlignment="Center" Margin="0,0,10,5"/>
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="任务名称:" VerticalAlignment="Center" Margin="0,0,10,5" Foreground="{StaticResource TextPrimaryBrush}"/>
                 <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding QueryName, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,10,5"/>
 
-                <TextBlock Grid.Row="0" Grid.Column="2" Text="关联产品:" VerticalAlignment="Center" Margin="0,0,10,5"/>
+                <TextBlock Grid.Row="0" Grid.Column="2" Text="关联产品:" VerticalAlignment="Center" Margin="0,0,10,5" Foreground="{StaticResource TextPrimaryBrush}"/>
                 <ComboBox Grid.Row="0" Grid.Column="3" ItemsSource="{Binding Products}" SelectedValue="{Binding QueryProductId}" SelectedValuePath="Id" DisplayMemberPath="Name" Margin="0,0,10,5"/>
 
-                <TextBlock Grid.Row="0" Grid.Column="4" Text="状态:" VerticalAlignment="Center" Margin="0,0,10,5"/>
+                <TextBlock Grid.Row="0" Grid.Column="4" Text="状态:" VerticalAlignment="Center" Margin="0,0,10,5" Foreground="{StaticResource TextPrimaryBrush}"/>
                 <ComboBox Grid.Row="0" Grid.Column="5" SelectedValue="{Binding QueryStatus}" SelectedValuePath="Tag" Margin="0,0,10,5">
                     <ComboBoxItem Content="全部" Tag="{x:Null}"/>
                     <ComboBoxItem Content="待审核" Tag="0"/>
@@ -55,12 +56,12 @@
                     <Button Content="重置" Width="80" Margin="5" Click="BtnReset_Click"/>
                 </StackPanel>
 
-                <TextBlock Grid.Row="1" Grid.Column="0" Text="生产日期:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="生产日期:" VerticalAlignment="Center" Margin="0,0,10,0" Foreground="{StaticResource TextPrimaryBrush}"/>
                 <DatePicker Grid.Row="1" Grid.Column="1" SelectedDate="{Binding QueryProductionDateFrom}" Margin="0,0,10,0"/>
-                <TextBlock Grid.Row="1" Grid.Column="2" Text="至" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <TextBlock Grid.Row="1" Grid.Column="2" Text="至" VerticalAlignment="Center" Margin="0,0,10,0" Foreground="{StaticResource TextPrimaryBrush}"/>
                 <DatePicker Grid.Row="1" Grid.Column="3" SelectedDate="{Binding QueryProductionDateTo}" Margin="0,0,10,0"/>
 
-                <TextBlock Grid.Row="1" Grid.Column="4" Text="批次号:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <TextBlock Grid.Row="1" Grid.Column="4" Text="批次号:" VerticalAlignment="Center" Margin="0,0,10,0" Foreground="{StaticResource TextPrimaryBrush}"/>
                 <TextBox Grid.Row="1" Grid.Column="5" Text="{Binding QueryBatchNumber, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,10,0"/>
             </Grid>
         </GroupBox>
@@ -78,7 +79,8 @@
 
             <DataGrid Grid.Row="1" ItemsSource="{Binding Tasks}" SelectedItem="{Binding SelectedTask}"
                       AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True"
-                      SelectionMode="Single" HeadersVisibility="Column">
+                      SelectionMode="Single" HeadersVisibility="Column"
+                      Background="White" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="序号" Binding="{Binding Id}" Width="60"/>
                     <DataGridTextColumn Header="任务名称" Binding="{Binding Name}" Width="150"/>

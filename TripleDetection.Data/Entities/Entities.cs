@@ -65,25 +65,7 @@ namespace TripleDetection.Data.Entities
         public virtual Product Product { get; set; }
     }
 
-    /// <summary>
-    /// 用户角色枚举
-    /// </summary>
-    public enum UserRole
-    {
-        Admin = 0,      // 管理员
-        Operator = 1   // 操作员
-    }
-
-    /// <summary>
-    /// 用户实体
-    /// </summary>
-    public class User : BaseEntity
-    {
-        public string Username { get; set; }               // 用户名
-        public string PasswordHash { get; set; }           // 密码哈希
-        public UserRole Role { get; set; }                 // 角色
-    }
-
+    
     /// <summary>
     /// 检测记录实体
     /// </summary>

@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Configuration;
 using System.IO;
+using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Threading;
 using VM.Core;
 using VM.PlatformSDKCS;
@@ -16,6 +19,8 @@ namespace TripleDetection
     {
         private LoggingService _logService;
         private MainViewModel _viewModel;
+        private TabManager _tabManager;
+        private ObservableCollection<TabItemViewModel> _tabItems = new ObservableCollection<TabItemViewModel>();
 
         private bool _isNavExpanded = true;
         private readonly Dictionary<string, System.Windows.Controls.Button> _navButtons = new Dictionary<string, System.Windows.Controls.Button>();
@@ -41,6 +46,13 @@ namespace TripleDetection
                 Dispatcher.Invoke(() => _viewModel.AddLog(e.Message));
             };
 
+            _tabManager = new TabManager();
+            _tabManager.ViewOpened += OnViewOpened;
+            _tabManager.ViewClosed += OnViewClosed;
+            _tabManager.ActiveViewChanged += OnActiveViewChanged;
+
+            tabBar.ItemsSource = _tabItems;
+
             this.DataContext = _viewModel;
 
             _navButtons["Dashboard"] = btnNavDashboard;
@@ -49,6 +61,7 @@ namespace TripleDetection
             _navButtons["Tasks"] = btnNavTasks;
             _navButtons["Logs"] = btnNavLogs;
             _navButtons["Settings"] = btnNavSettings;
+            _navButtons["UserManagement"] = btnNavUserManagement;
 
             LoadConfiguration();
 
@@ -105,7 +118,7 @@ namespace TripleDetection
             UpdateStatusBar();
             _logService.Log("Application started");
 
-            NavigateTo("Dashboard");
+            _tabManager.OpenView("Dashboard");
             StartStatusBarTimer();
         }
 
@@ -127,43 +140,83 @@ namespace TripleDetection
         {
             if (sender is System.Windows.Controls.Button btn && btn.Tag is string tag)
             {
-                NavigateTo(tag);
+                _tabManager.OpenView(tag);
+                UpdateNavButtonStyles(tag);
             }
         }
 
-        private void NavigateTo(string pageName)
+        private void UpdateNavButtonStyles(string activeTag)
         {
             foreach (var kvp in _navButtons)
             {
-                kvp.Value.Style = kvp.Key == pageName
+                kvp.Value.Style = kvp.Key == activeTag
                     ? (System.Windows.Style)FindResource("NavButtonActiveStyle")
                     : (System.Windows.Style)FindResource("NavButtonStyle");
             }
+        }
 
-            switch (pageName)
+        private void OnViewOpened(object sender, KeyValuePair<string, System.Windows.Controls.UserControl> e)
+        {
+            var tabItem = new TabItemViewModel
             {
-                case "Dashboard":
-                    MainContent.Content = new Views.DashboardView();
-                    break;
-                case "Detection":
-                    MainContent.Content = new Views.DetectionView();
-                    break;
-                case "Products":
-                    MainContent.Content = new Views.ProductListView();
-                    break;
-                case "Tasks":
-                    MainContent.Content = new Views.TaskListView();
-                    break;
-                case "Logs":
-                    MainContent.Content = new Views.LogsView();
-                    break;
-                case "Settings":
-                    MainContent.Content = new Views.SettingsView();
-                    break;
+                Tag = e.Key,
+                DisplayName = _tabManager.GetViewName(e.Key),
+                IsActive = true,
+                IsClosable = e.Key != "Dashboard",
+                SelectCommand = new RelayCommand(param => SelectTab(param as string)),
+                CloseCommand = new RelayCommand(param => CloseTab(param as string))
+            };
+
+            foreach (var item in _tabItems)
+            {
+                item.IsActive = false;
             }
 
-            txtStatus.Text = $"当前: {pageName}";
-            _logService.Log($"导航到: {pageName}");
+            _tabItems.Add(tabItem);
+            MainContent.Content = e.Value;
+        }
+
+        private void OnViewClosed(object sender, KeyValuePair<string, System.Windows.Controls.UserControl> e)
+        {
+            var item = _tabItems.FirstOrDefault(t => t.Tag == e.Key);
+            if (item != null)
+            {
+                _tabItems.Remove(item);
+            }
+        }
+
+        private void OnActiveViewChanged(object sender, string e)
+        {
+            foreach (var item in _tabItems)
+            {
+                item.IsActive = item.Tag == e;
+            }
+
+            var views = _tabManager.GetOpenViews();
+            if (views.ContainsKey(e))
+            {
+                MainContent.Content = views[e];
+            }
+
+            UpdateNavButtonStyles(e);
+            txtStatus.Text = $"当前: {e}";
+            _logService.Log($"导航到: {e}");
+        }
+
+        private void SelectTab(string tag)
+        {
+            if (!string.IsNullOrEmpty(tag))
+            {
+                _tabManager.ActivateView(tag);
+            }
+        }
+
+        private void CloseTab(string tag)
+        {
+            if (!string.IsNullOrEmpty(tag) && _tabItems.Count > 1)
+            {
+                _tabManager.CloseView(tag);
+            }
         }
 
         private void BtnToggleNav_Click(object sender, RoutedEventArgs e)
@@ -172,7 +225,6 @@ namespace TripleDetection
             if (_isNavExpanded)
             {
                 navColumn.Width = new GridLength(200);
-                btnToggleNav.Content = "◀";
                 foreach (var btn in _navButtons.Values)
                 {
                     btn.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Left;
@@ -181,7 +233,6 @@ namespace TripleDetection
             else
             {
                 navColumn.Width = new GridLength(48);
-                btnToggleNav.Content = "▶";
                 foreach (var btn in _navButtons.Values)
                 {
                     btn.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center;
@@ -191,7 +242,7 @@ namespace TripleDetection
 
         private void BtnNotifications_Click(object sender, RoutedEventArgs e)
         {
-            NavigateTo("Logs");
+            _tabManager.OpenView("Logs");
         }
 
         private void BtnLogout_Click(object sender, RoutedEventArgs e)
@@ -212,7 +263,6 @@ namespace TripleDetection
             {
                 _isNavExpanded = false;
                 navColumn.Width = new GridLength(48);
-                btnToggleNav.Content = "▶";
             }
         }
 
@@ -251,5 +301,22 @@ namespace TripleDetection
                 });
             }
         }
+    }
+
+    public class RelayCommand : ICommand
+    {
+        private readonly Action<object> _execute;
+        private readonly Func<object, bool> _canExecute;
+
+        public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
+        {
+            _execute = execute;
+            _canExecute = canExecute;
+        }
+
+        public bool CanExecute(object parameter) => _canExecute == null || _canExecute(parameter);
+        public void Execute(object parameter) => _execute(parameter);
+
+        public event EventHandler CanExecuteChanged;
     }
 }

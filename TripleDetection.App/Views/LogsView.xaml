@@ -1,7 +1,7 @@
 <UserControl x:Class="TripleDetection.Views.LogsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             Background="#404040">
+             Background="White">
 
     <Grid Margin="20">
         <Grid.RowDefinitions>
@@ -12,23 +12,23 @@
         </Grid.RowDefinitions>
 
         <!-- 标题 -->
-        <TextBlock Grid.Row="0" Text="操作日志" FontSize="24" FontWeight="Bold" Foreground="White" Margin="0,0,0,20"/>
+        <TextBlock Grid.Row="0" Text="操作日志" FontSize="20" FontWeight="Bold" Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,20"/>
 
         <!-- 搜索筛选 -->
-        <Border Grid.Row="1" Background="#505050" Padding="12" Margin="0,0,0,16">
-            <StackPanel Orientation="Horizontal">
+        <GroupBox Grid.Row="1" Header="查询条件" Margin="0,0,0,16" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1">
+            <StackPanel Orientation="Horizontal" Margin="10">
                 <TextBox x:Name="txtSearch" Width="200" Margin="0,0,16,0"/>
                 <ComboBox x:Name="cmbUser" Width="120" Margin="0,0,16,0"/>
                 <ComboBox x:Name="cmbAction" Width="120" Margin="0,0,16,0"/>
                 <Button Content="搜索" Style="{StaticResource PrimaryButtonStyle}" Margin="0,0,8,0"/>
                 <Button Content="清除" Style="{StaticResource PrimaryButtonStyle}"/>
             </StackPanel>
-        </Border>
+        </GroupBox>
 
         <!-- 日志列表 -->
-        <Border Grid.Row="2" Background="#505050" Padding="16">
+        <Border Grid.Row="2" Background="{StaticResource CardBackgroundBrush}" Padding="16">
             <DataGrid x:Name="dgLogs" AutoGenerateColumns="False" Background="Transparent"
-                      Foreground="White" BorderThickness="0" IsReadOnly="True">
+                      Foreground="{StaticResource TextPrimaryBrush}" BorderThickness="1" BorderBrush="{StaticResource BorderBrush}" IsReadOnly="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="时间" Binding="{Binding CreateAt}" Width="150"/>
                     <DataGridTextColumn Header="用户" Binding="{Binding UserName}" Width="100"/>
@@ -39,10 +39,10 @@
         </Border>
 
         <!-- 分页 -->
-        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,16,0,0">
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,16,0,0">
             <Button Content="首页" Style="{StaticResource PrimaryButtonStyle}" Margin="0,0,4,0"/>
             <Button Content="上一页" Style="{StaticResource PrimaryButtonStyle}" Margin="0,0,4,0"/>
-            <TextBlock Text="1 / 10" Foreground="White" VerticalAlignment="Center" Margin="16,0"/>
+            <TextBlock Text="1 / 10" Foreground="{StaticResource TextPrimaryBrush}" VerticalAlignment="Center" Margin="16,0"/>
             <Button Content="下一页" Style="{StaticResource PrimaryButtonStyle}" Margin="0,0,4,0"/>
             <Button Content="末页" Style="{StaticResource PrimaryButtonStyle}"/>
         </StackPanel>
