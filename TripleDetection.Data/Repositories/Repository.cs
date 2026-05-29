@@ -72,6 +72,33 @@ namespace TripleDetection.Data.Repositories
     }
 
     /// <summary>
+    /// Audit log query conditions
+    /// </summary>
+    public class AuditLogQuery : PagedQuery
+    {
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
+        public int? UserId { get; set; }
+        public string Action { get; set; }
+        public string ObjectType { get; set; }
+        public string Keyword { get; set; }   // Details fuzzy search
+        public string IpAddress { get; set; }
+    }
+
+    /// <summary>
+    /// Detection record query conditions
+    /// </summary>
+    public class DetectionRecordQuery : PagedQuery
+    {
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
+        public int? TaskId { get; set; }
+        public int? ProductId { get; set; }
+        public string BatchNumber { get; set; }
+        public bool? IsOK { get; set; }
+    }
+
+    /// <summary>
     /// 内存仓储实现（演示用，生产环境替换为 EF6 + SQLite）
     /// </summary>
     public class InMemoryRepository<T> : IRepository<T> where T : BaseEntity

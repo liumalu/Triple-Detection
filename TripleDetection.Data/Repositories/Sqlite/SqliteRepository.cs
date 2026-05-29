@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using TripleDetection.Data;
+using TripleDetection.Data.Entities;
 using TripleDetection.Data.Repositories.Contracts;
 
 namespace TripleDetection.Data.Repositories.Sqlite

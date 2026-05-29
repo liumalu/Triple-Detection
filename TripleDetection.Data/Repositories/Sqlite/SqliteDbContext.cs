@@ -34,6 +34,7 @@ namespace TripleDetection.Data.Repositories.Sqlite
         public DbSet<DetectionRecord> DetectionRecords { get; set; }
         public DbSet<SystemConfig> SystemConfigs { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<AuditLog> AuditLogs { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -45,6 +46,7 @@ namespace TripleDetection.Data.Repositories.Sqlite
             modelBuilder.Configurations.Add(new DetectionRecordConfiguration());
             modelBuilder.Configurations.Add(new SystemConfigConfiguration());
             modelBuilder.Configurations.Add(new UserConfiguration());
+            modelBuilder.Configurations.Add(new AuditLogConfiguration());
         }
     }
 }
