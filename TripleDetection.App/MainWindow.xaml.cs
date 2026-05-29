@@ -270,22 +270,21 @@ namespace TripleDetection
         {
             try
             {
-                // 1. 停止所有流程的连续运行
-                if (VmSolution.Instance != null)
+                // 1. 停止连续运行
+                var procedure = VmSolution.Instance?.GetCurrentProcedure() as VmProcedure;
+                if (procedure?.ContinuousRunEnable == true)
                 {
-                    var processList = VmSolution.Instance.GetAllProcedureList();
-                    for (int i = 0; i < processList.nNum; i++)
-                    {
-                        var procedure = VmSolution.Instance[processList.astProcessInfo[i].strProcessName] as VmProcedure;
-                        if (procedure?.ContinuousRunEnable == true)
-                        {
-                            procedure.ContinuousRunEnable = false;
-                        }
-                    }
-
-                    // 2. 关闭方案（释放相机连接）
-                    VmSolution.Instance.CloseSolution();
+                    procedure.ContinuousRunEnable = false;
                 }
+
+                // 2. 停止流程
+                if (procedure != null)
+                {
+                    procedure.Stop();
+                }
+
+                // 3. 关闭方案（释放相机连接）
+                VmSolution.Close();
 
                 _logService.Log("VM 资源已释放");
             }
@@ -294,7 +293,7 @@ namespace TripleDetection
                 _logService.Log($"关闭时清理 VM 资源出错: {ex.Message}");
             }
 
-            // 3. 注销事件订阅
+            // 4. 注销事件订阅
             VmSolution.OnWorkStatusEvent -= VmSolution_OnWorkStatusEvent;
             VmSolution.OnProcessStatusStartEvent -= VmSolution_OnProcessStatusStartEvent;
             VmSolution.OnProcessStatusStopEvent -= VmSolution_OnProcessStatusStopEvent;
