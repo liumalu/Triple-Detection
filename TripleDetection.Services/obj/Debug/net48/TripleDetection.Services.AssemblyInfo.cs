@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TripleDetection.Services")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6bea12e9a7367cbb794cdbbaf8c45cc58effa7db")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+95c37b586485662bfb194247f56a43d74653a0f3")]
 [assembly: System.Reflection.AssemblyProductAttribute("TripleDetection.Services")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TripleDetection.Services")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

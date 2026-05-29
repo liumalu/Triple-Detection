@@ -100,7 +100,6 @@ D:\xcm\Triple-Detection\TripleDetection.App\obj\Debug\Views\Settings\DeviceContr
 D:\xcm\Triple-Detection\TripleDetection.App\obj\Debug\Views\Settings\SystemSettingsView.baml
 D:\xcm\Triple-Detection\TripleDetection.App\obj\Debug\Views\Settings\VmSettingsView.baml
 D:\xcm\Triple-Detection\TripleDetection.App\obj\Debug\Views\TaskEditWindow.baml
-D:\xcm\Triple-Detection\TripleDetection.App\obj\Debug\Views\UserEditDialog.baml
 D:\xcm\Triple-Detection\TripleDetection.App\obj\Debug\Views\UserManagementView.baml
 D:\xcm\Triple-Detection\TripleDetection.App\obj\Debug\App.baml
 D:\xcm\Triple-Detection\TripleDetection.App\obj\Debug\MainWindow.g.cs
@@ -116,7 +115,6 @@ D:\xcm\Triple-Detection\TripleDetection.App\obj\Debug\Views\Settings\SystemSetti
 D:\xcm\Triple-Detection\TripleDetection.App\obj\Debug\Views\Settings\VmSettingsView.g.cs
 D:\xcm\Triple-Detection\TripleDetection.App\obj\Debug\Views\TaskEditWindow.g.cs
 D:\xcm\Triple-Detection\TripleDetection.App\obj\Debug\Views\TaskListView.g.cs
-D:\xcm\Triple-Detection\TripleDetection.App\obj\Debug\Views\UserEditDialog.g.cs
 D:\xcm\Triple-Detection\TripleDetection.App\obj\Debug\Views\UserManagementView.g.cs
 D:\xcm\Triple-Detection\TripleDetection.App\obj\Debug\App.g.cs
 D:\xcm\Triple-Detection\TripleDetection.App\obj\Debug\TripleDetection.App_MarkupCompile.cache
