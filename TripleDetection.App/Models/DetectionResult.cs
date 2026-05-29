@@ -1,3 +1,5 @@
+using System;
+
 namespace TripleDetection.Models
 {
     public class DetectionResult
@@ -7,6 +9,8 @@ namespace TripleDetection.Models
         public int CharCount { get; set; }
         public double Confidence { get; set; }
         public string ImagePath { get; set; }
-        public System.DateTime DetectionTime { get; set; }
+        public DateTime DetectionTime { get; set; }
+        public long ElapsedMs { get; set; }
+        public string ErrorMessage { get; set; }
     }
 }

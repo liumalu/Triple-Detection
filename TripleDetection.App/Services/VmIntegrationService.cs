@@ -37,20 +37,25 @@ namespace TripleDetection.Services
 
         public void RunOnce()
         {
+            _stopwatch.Restart();
             _procedure?.Run();
         }
 
-        public void SetGlobalVariableString(string name, string value)
+        public void Stop()
         {
             if (_procedure != null)
             {
-                var gvTool = _procedure.Modules["GlobalVariable"] as GlobalVariableModuleTool;
-                if (gvTool != null)
-                {
-                    string defaultValue = gvTool.GetGlobalVar(name) ?? "null";
-                    gvTool.SetGlobalVar(name, value);
-                    _logService?.Log($"[VM GlobalVariable] {name}: '{defaultValue}' -> '{value}'");
-                }
+                _procedure.ContinuousRunEnable = false;
+            }
+        }
+
+        public bool IsContinuousRun => _procedure?.ContinuousRunEnable ?? false;
+
+        public void SetProcedure(string procedureName)
+        {
+            if (_isSolutionLoad && !string.IsNullOrEmpty(procedureName))
+            {
+                _procedure = VmSolution.Instance[procedureName] as VmProcedure;
             }
         }
 
@@ -81,11 +86,27 @@ namespace TripleDetection.Services
             return names;
         }
 
+        public void SetGlobalVariableString(string name, string value)
+        {
+            if (_procedure != null)
+            {
+                var gvTool = _procedure.Modules["GlobalVariable"] as GlobalVariableModuleTool;
+                if (gvTool != null)
+                {
+                    string defaultValue = gvTool.GetGlobalVar(name) ?? "null";
+                    gvTool.SetGlobalVar(name, value);
+                    _logService?.Log($"[VM GlobalVariable] {name}: '{defaultValue}' -> '{value}'");
+                }
+            }
+        }
+
+        private System.Diagnostics.Stopwatch _stopwatch = new System.Diagnostics.Stopwatch();
+
         private void VmSolution_OnWorkStatusEvent(ImvsSdkDefine.IMVS_MODULE_WORK_STAUS workStatusInfo)
         {
-            // 统一使用 nWorkStatus == 0，与 MainWindow 保持一致
             if (workStatusInfo.nWorkStatus == 0 && workStatusInfo.nProcessID == 10000)
             {
+                _stopwatch.Stop();
                 try
                 {
                     if (_procedure == null)
@@ -119,6 +140,7 @@ namespace TripleDetection.Services
                     if (strResult != null)
                     {
                         var result = ParseResult(strResult);
+                        result.ElapsedMs = _stopwatch.ElapsedMilliseconds;
                         OnDetectionResult?.Invoke(this, result);
                     }
                 }
@@ -129,6 +151,10 @@ namespace TripleDetection.Services
                         System.Diagnostics.Debug.WriteLine($"VmIntegrationService VM Error: 0x{vmEx.errorCode:X}");
                     else
                         System.Diagnostics.Debug.WriteLine($"VmIntegrationService Error: {ex.Message}");
+                }
+                finally
+                {
+                    _stopwatch.Restart();
                 }
             }
         }

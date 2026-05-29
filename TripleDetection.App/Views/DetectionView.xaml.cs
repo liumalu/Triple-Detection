@@ -9,8 +9,8 @@ using VM.Core;
 using TripleDetection.Services;
 using TripleDetection.ViewModels;
 using MessageBox = System.Windows.MessageBox;
+using TripleDetection.Models;
 using TaskEntity = TripleDetection.Data.Entities.Task;
-using iMVS_6000PlatformSDKCS.SyncPlatformSDKCS;
 using GlobalVariableModuleCs;
 
 namespace TripleDetection.Views
@@ -19,6 +19,7 @@ namespace TripleDetection.Views
     {
         private readonly LoggingService _logService;
         private readonly MainViewModel _viewModel;
+        private readonly VmIntegrationService _vmService;
         private string _selectedSolPath;
         private bool _isSolutionLoad = false;
         private bool _isContinuRun = false;
@@ -35,11 +36,21 @@ namespace TripleDetection.Views
             var logPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Log", "Message");
             _logService = new LoggingService(logPath);
             _viewModel = new MainViewModel();
+            _vmService = new VmIntegrationService(null, _logService);
+            _vmService.OnDetectionResult += VmService_OnDetectionResult;
 
             LoadTasks();
             SubscribeToLogs();
 
             _logService.Log("检测页面已加载");
+        }
+
+        private void VmService_OnDetectionResult(object sender, DetectionResult result)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                UpdateDetectionResult(result.IsOK ? "OK" : "NG", result.Confidence);
+            });
         }
 
         private void LoadTasks()
@@ -65,7 +76,6 @@ namespace TripleDetection.Views
             var selectedIndex = cmbTaskSelect.SelectedIndex;
             _selectedTask = _taskList[selectedIndex];
 
-            // 通过 ProductId 获取产品信息
             var productService = new TripleDetection.Services.ProductService();
             var product = productService.GetById(_selectedTask.ProductId);
 
@@ -92,7 +102,9 @@ namespace TripleDetection.Views
                     ? new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(0, 192, 0))
                     : new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 0, 0));
 
-                txtPassRate.Text = ((double)_okCount / (_okCount + _ngCount)).ToString("P2");
+                txtPassRate.Text = (_okCount + _ngCount) > 0
+                    ? ((double)_okCount / (_okCount + _ngCount)).ToString("P2")
+                    : "0%";
 
                 if (result == "OK") _okCount++;
                 else _ngCount++;
@@ -129,6 +141,23 @@ namespace TripleDetection.Views
             }
         }
 
+        private GlobalVariableModuleTool GetGlobalVariableTool()
+        {
+            if (_procedure == null) return null;
+
+            string[] possibleNames = { "GlobalVariable", "全局变量1", "GlobalVariableModule", "全局变量" };
+            foreach (var name in possibleNames)
+            {
+                var mod = _procedure.Modules[name];
+                if (mod is GlobalVariableModuleTool)
+                {
+                    _logService.Log($"使用模块: {name}");
+                    return mod as GlobalVariableModuleTool;
+                }
+            }
+            return null;
+        }
+
         private void BtnSelectSol_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new OpenFileDialog();
@@ -144,7 +173,6 @@ namespace TripleDetection.Views
 
         private void BtnLoadSol_Click(object sender, RoutedEventArgs e)
         {
-            // 如果没有选择方案路径，尝试从已选任务获取方案路径
             if (string.IsNullOrEmpty(_selectedSolPath))
             {
                 if (_selectedTask != null)
@@ -172,26 +200,25 @@ namespace TripleDetection.Views
                     _isSolutionLoad = false;
                 }
 
-                VmSolution.Load(_selectedSolPath);
+                _vmService.LoadSolution(_selectedSolPath);
                 _isSolutionLoad = true;
 
                 _logService.Log("加载方案成功!");
                 MessageBox.Show("加载方案成功!", "信息", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 cmbProcedure.Items.Clear();
-                var processList = VmSolution.Instance.GetAllProcedureList();
-                for (int i = 0; i < processList.nNum; i++)
+                foreach (var name in _vmService.GetAllProcedureNames())
                 {
-                    cmbProcedure.Items.Add(processList.astProcessInfo[i].strProcessName);
+                    cmbProcedure.Items.Add(name);
                 }
 
                 if (cmbProcedure.Items.Count > 0)
                 {
                     cmbProcedure.SelectedIndex = 0;
-                    _procedure = VmSolution.Instance[processList.astProcessInfo[0].strProcessName] as VmProcedure;
+                    _procedure = _vmService.GetProcedure();
                     if (_procedure == null)
                     {
-                        _logService.Log(" Procedure 为空，请检查方案!");
+                        _logService.Log("Procedure 为空，请检查方案!");
                         return;
                     }
                     InitVmRender();
@@ -240,29 +267,9 @@ namespace TripleDetection.Views
                     ? _selectedTask.ExpirationDate.Value.ToString("yyyyMMdd")
                     : "";
 
-                // 尝试多个可能的模块名称
-                GlobalVariableModuleTool gvTool = null;
-                string[] possibleNames = { "GlobalVariable", "全局变量1", "GlobalVariableModule", "全局变量" };
-                foreach (var name in possibleNames)
-                {
-                    var mod = _procedure.Modules[name];
-                    if (mod is GlobalVariableModuleTool)
-                    {
-                        gvTool = mod as GlobalVariableModuleTool;
-                        _logService.Log($"使用模块: {name}");
-                        break;
-                    }
-                }
-
-                if (gvTool == null)
-                {
-                    MessageBox.Show("未找到全局变量模块!\n请确认方案中已添加全局变量模块。", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-
-                gvTool.SetGlobalVar("BN", batchNumber);
-                gvTool.SetGlobalVar("Mfg", mfgDate);
-                gvTool.SetGlobalVar("EXP", expDate);
+                _vmService.SetGlobalVariableString("BN", batchNumber);
+                _vmService.SetGlobalVariableString("Mfg", mfgDate);
+                _vmService.SetGlobalVariableString("EXP", expDate);
 
                 _logService.Log($"三期信息已设置ToVM: BN={batchNumber}, Mfg={mfgDate}, EXP={expDate}");
                 MessageBox.Show($"三期信息已设置:\nBN={batchNumber}\nMfg={mfgDate}\nEXP={expDate}", "成功", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -282,7 +289,7 @@ namespace TripleDetection.Views
                 return;
             }
 
-            if (!_isSolutionLoad || _procedure == null)
+            if (!_isSolutionLoad || _vmService.GetProcedure() == null)
             {
                 MessageBox.Show("请先加载方案!", "警告", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
@@ -290,14 +297,12 @@ namespace TripleDetection.Views
 
             var batchNumber = _selectedTask.BatchNumber ?? "";
 
-            // 验证：非空
             if (string.IsNullOrWhiteSpace(batchNumber))
             {
                 MessageBox.Show("批次号不能为空!", "验证失败", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            // 验证：长度限制50字符
             if (batchNumber.Length > 50)
             {
                 MessageBox.Show("批次号不能超过50字符!", "验证失败", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -306,20 +311,7 @@ namespace TripleDetection.Views
 
             try
             {
-                // 尝试多个可能的模块名称
-                GlobalVariableModuleTool gvTool = null;
-                string[] possibleNames = { "GlobalVariable", "全局变量1", "GlobalVariableModule", "全局变量" };
-                foreach (var name in possibleNames)
-                {
-                    var mod = _procedure.Modules[name];
-                    if (mod is GlobalVariableModuleTool)
-                    {
-                        gvTool = mod as GlobalVariableModuleTool;
-                        _logService.Log($"使用模块: {name}");
-                        break;
-                    }
-                }
-
+                var gvTool = GetGlobalVariableTool();
                 if (gvTool == null)
                 {
                     MessageBox.Show("未找到全局变量模块!\n请确认方案中已添加全局变量模块。", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -339,7 +331,7 @@ namespace TripleDetection.Views
 
         private void BtnLoadFromVm_Click(object sender, RoutedEventArgs e)
         {
-            if (!_isSolutionLoad || _procedure == null)
+            if (!_isSolutionLoad || _vmService.GetProcedure() == null)
             {
                 MessageBox.Show("请先加载方案!", "警告", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
@@ -347,20 +339,7 @@ namespace TripleDetection.Views
 
             try
             {
-                // 尝试多个可能的模块名称
-                GlobalVariableModuleTool gvTool = null;
-                string[] possibleNames = { "GlobalVariable", "全局变量1", "GlobalVariableModule", "全局变量" };
-                foreach (var name in possibleNames)
-                {
-                    var mod = _procedure.Modules[name];
-                    if (mod is GlobalVariableModuleTool)
-                    {
-                        gvTool = mod as GlobalVariableModuleTool;
-                        _logService.Log($"使用模块: {name}");
-                        break;
-                    }
-                }
-
+                var gvTool = GetGlobalVariableTool();
                 if (gvTool == null)
                 {
                     MessageBox.Show("未找到全局变量模块!\n请确认方案中已添加全局变量模块。", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -387,7 +366,8 @@ namespace TripleDetection.Views
 
             try
             {
-                _procedure = VmSolution.Instance[cmbProcedure.SelectedItem.ToString()] as VmProcedure;
+                _vmService.SetProcedure(cmbProcedure.SelectedItem.ToString());
+                _procedure = _vmService.GetProcedure();
                 if (_vmRender != null)
                     _vmRender.ModuleSource = _procedure;
 
@@ -405,7 +385,7 @@ namespace TripleDetection.Views
 
         private void BtnTaskRun_Click(object sender, RoutedEventArgs e)
         {
-            if (!_isSolutionLoad || _procedure == null)
+            if (!_isSolutionLoad || _vmService.GetProcedure() == null)
             {
                 _logService.Log("流程不存在!");
                 return;
@@ -413,14 +393,8 @@ namespace TripleDetection.Views
 
             try
             {
-                _procedure.Run();
-                _logService.Log("单次运行已触发");
-
-                // 模拟检测结果更新
-                var random = new Random();
-                var isOk = random.Next(100) > 20;
-                var confidence = random.NextDouble() * 0.4 + 0.6;
-                UpdateDetectionResult(isOk ? "OK" : "NG", confidence);
+                _vmService.RunOnce();
+                _logService.Log("单次运行已触发，等待结果回调...");
             }
             catch (Exception ex)
             {
@@ -434,7 +408,7 @@ namespace TripleDetection.Views
 
         private void BtnTaskPause_Click(object sender, RoutedEventArgs e)
         {
-            if (!_isSolutionLoad || _procedure == null)
+            if (!_isSolutionLoad || _vmService.GetProcedure() == null)
             {
                 _logService.Log("流程不存在!");
                 return;
@@ -442,11 +416,10 @@ namespace TripleDetection.Views
 
             try
             {
-                bool beforeToggle = _procedure.ContinuousRunEnable;
-                _procedure.ContinuousRunEnable = _procedure.ContinuousRunEnable ^ true;
-                _isContinuRun = _procedure.ContinuousRunEnable;
-
-                _logService.Log($"连续运行切换: {beforeToggle} -> {_procedure.ContinuousRunEnable}");
+                bool newState = !_vmService.IsContinuousRun;
+                _vmService.SetContinuousRun(newState);
+                _isContinuRun = newState;
+                _logService.Log($"连续运行: {newState}");
                 btnContiRun.Content = _isContinuRun ? "停止连续" : "连续运行";
             }
             catch (Exception ex)
