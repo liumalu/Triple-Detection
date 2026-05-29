@@ -11,6 +11,7 @@ using VM.Core;
 using VM.PlatformSDKCS;
 using TripleDetection.Services;
 using TripleDetection.ViewModels;
+using TripleDetection.App;
 using MessageBox = System.Windows.MessageBox;
 
 namespace TripleDetection
@@ -104,8 +105,7 @@ namespace TripleDetection
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            // TODO: 初始化数据库 (临时禁用，待解决 DatabaseConfig 引用问题)
-            // DatabaseConfig.Initialize();
+            DatabaseConfig.Initialize();
 
             var logoPath = ConfigurationManager.AppSettings["SystemLogoPath"];
             var systemName = ConfigurationManager.AppSettings["SystemName"];
