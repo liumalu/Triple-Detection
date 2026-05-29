@@ -1,5 +1,6 @@
 using System;
 using TripleDetection.Data;
+using TripleDetection.Data.Repositories;
 using TripleDetection.Data.Repositories.Contracts;
 
 namespace TripleDetection.Data.Repositories.Sqlite
@@ -52,6 +53,18 @@ namespace TripleDetection.Data.Repositories.Sqlite
         {
             var context = new SqliteDbContext(_connectionString);
             return new SqliteUserRepository(context);
+        }
+
+        public IAuditLogRepository CreateAuditLogRepository()
+        {
+            var context = new SqliteDbContext(_connectionString);
+            return new AuditLogRepository(context);
+        }
+
+        public IDetectionRecordRepository CreateDetectionRecordRepository()
+        {
+            var context = new SqliteDbContext(_connectionString);
+            return new DetectionRecordRepository(context);
         }
     }
 }
