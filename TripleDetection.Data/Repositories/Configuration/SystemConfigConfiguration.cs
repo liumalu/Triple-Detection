@@ -13,14 +13,11 @@ namespace TripleDetection.Data.Repositories.Configuration
             ToTable("SystemConfigs");
 
             HasKey(s => s.Id);
-            Property(s => s.Id).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.DatabaseGeneratedOption.Identity);
 
             Property(s => s.Category).IsRequired().HasMaxLength(50);
             Property(s => s.Key).IsRequired().HasMaxLength(100);
             Property(s => s.Value).HasMaxLength(1000);
             Property(s => s.Description).HasMaxLength(500);
-
-            HasQueryFilter(s => !s.IsDeleted);
         }
     }
 }

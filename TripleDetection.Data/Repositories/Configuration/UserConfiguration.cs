@@ -14,9 +14,8 @@ namespace TripleDetection.Data.Repositories.Configuration
 
             // Username 是主键，不自增
             HasKey(u => u.Username);
-            Property(u => u.Username).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.DatabaseGeneratedOption.None);
-            Property(u => u.Username).HasMaxLength(100).IsRequired();
 
+            Property(u => u.Username).HasMaxLength(100).IsRequired();
             Property(u => u.RealName).HasMaxLength(100);
             Property(u => u.Password).HasMaxLength(256).IsRequired();
             Property(u => u.Role).HasMaxLength(50).IsRequired();

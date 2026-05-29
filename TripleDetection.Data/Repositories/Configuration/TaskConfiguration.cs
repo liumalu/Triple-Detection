@@ -13,7 +13,6 @@ namespace TripleDetection.Data.Repositories.Configuration
             ToTable("Tasks");
 
             HasKey(t => t.Id);
-            Property(t => t.Id).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.DatabaseGeneratedOption.Identity);
 
             Property(t => t.Name).IsRequired().HasMaxLength(200);
             Property(t => t.BatchNumber).HasMaxLength(50);
@@ -25,8 +24,6 @@ namespace TripleDetection.Data.Repositories.Configuration
                 .WithMany()
                 .HasForeignKey(t => t.ProductId)
                 .WillCascadeOnDelete(false);
-
-            HasQueryFilter(t => !t.IsDeleted);
         }
     }
 }
