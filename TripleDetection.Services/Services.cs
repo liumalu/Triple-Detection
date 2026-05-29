@@ -210,63 +210,64 @@ namespace TripleDetection.Services
 
     public interface IAuditLogService
     {
-        void Log(int userId, string action, string details, string ipAddress);
-        IEnumerable<AuditLog> GetAll();
+        void Log(int userId, string action, string objectType, int objectId, string details);
+        void Log(int userId, string action, string objectType, int objectId, string details, string ipAddress);
+        IPagedResult<AuditLog> Query(AuditLogQuery query);
+        IEnumerable<AuditLog> Export(AuditLogQuery query);
         IEnumerable<AuditLog> GetByUserId(int userId);
-        IPagedResult<AuditLog> Query(PagedQuery query);
     }
 
     public class AuditLogService : IAuditLogService
     {
-        private static readonly List<AuditLog> _logs = new List<AuditLog>();
-        private static int _idCounter = 1;
-        private static readonly object _lock = new object();
+        private readonly IAuditLogRepository _repository;
 
-        public void Log(int userId, string action, string details, string ipAddress)
+        public AuditLogService(IAuditLogRepository repository)
         {
-            lock (_lock)
+            _repository = repository;
+        }
+
+        public void Log(int userId, string action, string objectType, int objectId, string details)
+        {
+            Log(userId, action, objectType, objectId, details, SessionManager.CurrentIpAddress);
+        }
+
+        public void Log(int userId, string action, string objectType, int objectId, string details, string ipAddress)
+        {
+            try
             {
-                _logs.Add(new AuditLog
+                var log = new AuditLog
                 {
-                    Id = _idCounter++,
                     UserId = userId,
+                    UserName = SessionManager.CurrentUserName,
                     Action = action,
+                    ObjectType = objectType,
+                    ObjectId = objectId,
                     Details = details,
-                    IpAddress = ipAddress,
+                    IpAddress = string.IsNullOrEmpty(ipAddress) ? SessionManager.CurrentIpAddress : ipAddress,
                     CreateAt = DateTime.Now
-                });
+                };
+                _repository.Add(log);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"AuditLog 保存失败: {ex.Message}");
             }
         }
 
-        public IEnumerable<AuditLog> GetAll()
+        public IPagedResult<AuditLog> Query(AuditLogQuery query)
         {
-            lock (_lock)
-            {
-                return _logs.ToList();
-            }
+            return _repository.Query(query);
+        }
+
+        public IEnumerable<AuditLog> Export(AuditLogQuery query)
+        {
+            return _repository.Export(query);
         }
 
         public IEnumerable<AuditLog> GetByUserId(int userId)
         {
-            lock (_lock)
-            {
-                return _logs.FindAll(x => x.UserId == userId);
-            }
-        }
-
-        public IPagedResult<AuditLog> Query(PagedQuery query)
-        {
-            lock (_lock)
-            {
-                var logs = _logs.AsQueryable();
-                var total = logs.Count();
-                var items = logs
-                    .OrderByDescending(x => x.CreateAt)
-                    .Skip(query.PageIndex * query.PageSize)
-                    .Take(query.PageSize)
-                    .ToList();
-                return new PagedResult<AuditLog>(items, total, query.PageIndex, query.PageSize);
-            }
+            return _repository.Find(x => x.UserId == userId && !x.IsDeleted)
+                .OrderByDescending(x => x.CreateAt);
         }
     }
 
