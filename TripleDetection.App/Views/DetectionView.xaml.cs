@@ -12,6 +12,7 @@ using MessageBox = System.Windows.MessageBox;
 using TripleDetection.Models;
 using TaskEntity = TripleDetection.Data.Entities.Task;
 using GlobalVariableModuleCs;
+using TripleDetection.Data.Repositories.Sqlite;
 
 namespace TripleDetection.Views
 {
@@ -36,7 +37,12 @@ namespace TripleDetection.Views
             var logPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Log", "Message");
             _logService = new LoggingService(logPath);
             _viewModel = new MainViewModel();
-            _vmService = new VmIntegrationService(null, _logService);
+
+            var repositoryFactory = new SqliteRepositoryFactory();
+            var detectionRecordRepository = repositoryFactory.CreateDetectionRecordRepository();
+            var detectionRecordService = new DetectionRecordService(detectionRecordRepository);
+
+            _vmService = new VmIntegrationService(null, _logService, detectionRecordService);
             _vmService.OnDetectionResult += VmService_OnDetectionResult;
 
             LoadTasks();
@@ -75,6 +81,8 @@ namespace TripleDetection.Views
 
             var selectedIndex = cmbTaskSelect.SelectedIndex;
             _selectedTask = _taskList[selectedIndex];
+
+            _vmService.SetCurrentTaskContext(_selectedTask.Id, _selectedTask.ProductId, _selectedTask.BatchNumber);
 
             var productService = new TripleDetection.Services.ProductService();
             var product = productService.GetById(_selectedTask.ProductId);

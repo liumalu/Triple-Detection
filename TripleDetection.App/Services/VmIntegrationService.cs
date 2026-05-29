@@ -3,6 +3,7 @@ using VM.Core;
 using VM.PlatformSDKCS;
 using System.Drawing;
 using TripleDetection.Models;
+using TripleDetection.Data.Entities;
 using GlobalVariableModuleCs;
 
 namespace TripleDetection.Services
@@ -13,13 +14,18 @@ namespace TripleDetection.Services
         private ImageStorageService _imageStorage;
         private bool _isSolutionLoad = false;
         private LoggingService _logService;
+        private IDetectionRecordService _detectionRecordService;
+        private int _currentTaskId;
+        private int _currentProductId;
+        private string _currentBatchNumber;
 
         public event EventHandler<DetectionResult> OnDetectionResult;
 
-        public VmIntegrationService(ImageStorageService imageStorage, LoggingService logService)
+        public VmIntegrationService(ImageStorageService imageStorage, LoggingService logService, IDetectionRecordService detectionRecordService)
         {
             _imageStorage = imageStorage;
             _logService = logService;
+            _detectionRecordService = detectionRecordService;
             VmSolution.OnWorkStatusEvent += VmSolution_OnWorkStatusEvent;
         }
 
@@ -65,6 +71,13 @@ namespace TripleDetection.Services
             {
                 _procedure.ContinuousRunEnable = enable;
             }
+        }
+
+        public void SetCurrentTaskContext(int taskId, int productId, string batchNumber)
+        {
+            _currentTaskId = taskId;
+            _currentProductId = productId;
+            _currentBatchNumber = batchNumber ?? "";
         }
 
         public VmProcedure GetProcedure()
@@ -142,6 +155,29 @@ namespace TripleDetection.Services
                         var result = ParseResult(strResult);
                         result.ElapsedMs = _stopwatch.ElapsedMilliseconds;
                         OnDetectionResult?.Invoke(this, result);
+
+                        // 保存 DetectionRecord（非阻塞，异常吞噬）
+                        try
+                        {
+                            var record = new DetectionRecord
+                            {
+                                TaskId = _currentTaskId,
+                                ProductId = _currentProductId,
+                                BatchNumber = _currentBatchNumber,
+                                IsOK = result.IsOK,
+                                Confidence = result.Confidence,
+                                CharCount = result.CharCount,
+                                CodeInfo = result.CodeInfo,
+                                ImagePath = result.ImagePath,
+                                ElapsedMs = result.ElapsedMs,
+                                DetectionTime = DateTime.Now
+                            };
+                            _detectionRecordService?.Save(record);
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Diagnostics.Debug.WriteLine($"DetectionRecord保存失败: {ex.Message}");
+                        }
                     }
                 }
                 catch (Exception ex)
