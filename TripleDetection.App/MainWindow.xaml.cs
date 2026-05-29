@@ -268,6 +268,33 @@ namespace TripleDetection
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            try
+            {
+                // 1. 停止所有流程的连续运行
+                if (VmSolution.Instance != null)
+                {
+                    var processList = VmSolution.Instance.GetAllProcedureList();
+                    for (int i = 0; i < processList.nNum; i++)
+                    {
+                        var procedure = VmSolution.Instance[processList.astProcessInfo[i].strProcessName] as VmProcedure;
+                        if (procedure?.ContinuousRunEnable == true)
+                        {
+                            procedure.ContinuousRunEnable = false;
+                        }
+                    }
+
+                    // 2. 关闭方案（释放相机连接）
+                    VmSolution.Instance.CloseSolution();
+                }
+
+                _logService.Log("VM 资源已释放");
+            }
+            catch (Exception ex)
+            {
+                _logService.Log($"关闭时清理 VM 资源出错: {ex.Message}");
+            }
+
+            // 3. 注销事件订阅
             VmSolution.OnWorkStatusEvent -= VmSolution_OnWorkStatusEvent;
             VmSolution.OnProcessStatusStartEvent -= VmSolution_OnProcessStatusStartEvent;
             VmSolution.OnProcessStatusStopEvent -= VmSolution_OnProcessStatusStopEvent;
