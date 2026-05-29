@@ -72,11 +72,14 @@ namespace TripleDetection.Data.Entities
     public class DetectionRecord : BaseEntity
     {
         public int TaskId { get; set; }                   // 关联任务ID
-        public string Result { get; set; }                 // 检测结果（OK/NG）
+        public int ProductId { get; set; }                 // 关联产品ID
+        public string BatchNumber { get; set; }             // 批次号
+        public bool IsOK { get; set; }                    // 检测结果（true=OK, false=NG）
         public double Confidence { get; set; }              // 置信度
         public int CharCount { get; set; }                 // 字符数量
         public string CodeInfo { get; set; }                // 编码信息
         public string ImagePath { get; set; }              // 图像存储路径
+        public long ElapsedMs { get; set; }               // 检测耗时（毫秒）
         public DateTime DetectionTime { get; set; }         // 检测时间
 
         // 导航属性
