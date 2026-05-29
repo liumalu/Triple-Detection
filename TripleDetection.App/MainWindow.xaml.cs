@@ -104,6 +104,9 @@ namespace TripleDetection
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            // 初始化数据库
+            DatabaseConfig.Initialize();
+
             var logoPath = ConfigurationManager.AppSettings["SystemLogoPath"];
             var systemName = ConfigurationManager.AppSettings["SystemName"];
             if (!string.IsNullOrEmpty(logoPath))
