@@ -11,9 +11,9 @@ namespace TripleDetection.Services
     {
         IEnumerable<Product> GetAll();
         Product GetById(int id);
-        void Create(Product product, string createBy);
-        void Update(Product product, string updateBy);
-        void Delete(int id, string updateBy);
+        void Create(Product product, string createBy, int currentUserId);
+        void Update(Product product, string updateBy, int currentUserId);
+        void Delete(int id, string updateBy, int currentUserId);
         IPagedResult<Product> Query(PagedQuery query);
         IPagedResult<Product> Query(ProductQuery query);
     }
@@ -21,14 +21,16 @@ namespace TripleDetection.Services
     public class ProductService : IProductService
     {
         private readonly IRepository<Product> _repository;
+        private readonly IAuditLogService _auditLog;
 
-        public ProductService() : this(new InMemoryRepository<Product>())
+        public ProductService() : this(new InMemoryRepository<Product>(), null)
         {
         }
 
-        public ProductService(IRepository<Product> repository)
+        public ProductService(IRepository<Product> repository, IAuditLogService auditLogService)
         {
             _repository = repository;
+            _auditLog = auditLogService;
         }
 
         public IEnumerable<Product> GetAll()
@@ -41,7 +43,7 @@ namespace TripleDetection.Services
             return _repository.GetById(id);
         }
 
-        public void Create(Product product, string createBy)
+        public void Create(Product product, string createBy, int currentUserId)
         {
             product.CreateBy = createBy;
             product.UpdateBy = createBy;
@@ -49,16 +51,18 @@ namespace TripleDetection.Services
             product.UpdateAt = DateTime.Now;
             product.IsDeleted = false;
             _repository.Add(product);
+            _auditLog?.Log(currentUserId, "创建", "Product", product.Id, $"创建产品: {product.Name}");
         }
 
-        public void Update(Product product, string updateBy)
+        public void Update(Product product, string updateBy, int currentUserId)
         {
             product.UpdateBy = updateBy;
             product.UpdateAt = DateTime.Now;
             _repository.Update(product);
+            _auditLog?.Log(currentUserId, "修改", "Product", product.Id, $"修改产品: {product.Name}");
         }
 
-        public void Delete(int id, string updateBy)
+        public void Delete(int id, string updateBy, int currentUserId)
         {
             var product = _repository.GetById(id);
             if (product != null)
@@ -67,6 +71,7 @@ namespace TripleDetection.Services
                 product.UpdateBy = updateBy;
                 product.UpdateAt = DateTime.Now;
                 _repository.Update(product);
+                _auditLog?.Log(currentUserId, "删除", "Product", id, $"删除产品ID: {id}");
             }
         }
 
@@ -94,11 +99,11 @@ namespace TripleDetection.Services
         IEnumerable<Data.Entities.Task> GetAll();
         IEnumerable<Data.Entities.Task> GetByStatus(TaskStatus status);
         Data.Entities.Task GetById(int id);
-        void Create(Data.Entities.Task task, string createBy);
-        void Update(Data.Entities.Task task, string updateBy);
-        void Approve(int id, string reviewedBy);
-        void UpdateStatus(int id, TaskStatus status, string updateBy);
-        void Delete(int id, string updateBy);
+        void Create(Data.Entities.Task task, string createBy, int currentUserId);
+        void Update(Data.Entities.Task task, string updateBy, int currentUserId);
+        void Approve(int id, string reviewedBy, int currentUserId);
+        void UpdateStatus(int id, TaskStatus status, string updateBy, int currentUserId);
+        void Delete(int id, string updateBy, int currentUserId);
         IPagedResult<Data.Entities.Task> Query(PagedQuery query);
         IPagedResult<Data.Entities.Task> Query(TaskQuery query);
     }
@@ -106,14 +111,16 @@ namespace TripleDetection.Services
     public class TaskService : ITaskService
     {
         private readonly IRepository<Data.Entities.Task> _repository;
+        private readonly IAuditLogService _auditLog;
 
-        public TaskService() : this(new InMemoryRepository<Data.Entities.Task>())
+        public TaskService() : this(new InMemoryRepository<Data.Entities.Task>(), null)
         {
         }
 
-        public TaskService(IRepository<Data.Entities.Task> repository)
+        public TaskService(IRepository<Data.Entities.Task> repository, IAuditLogService auditLogService)
         {
             _repository = repository;
+            _auditLog = auditLogService;
         }
 
         public IEnumerable<Data.Entities.Task> GetAll()
@@ -131,7 +138,7 @@ namespace TripleDetection.Services
             return _repository.GetById(id);
         }
 
-        public void Create(Data.Entities.Task task, string createBy)
+        public void Create(Data.Entities.Task task, string createBy, int currentUserId)
         {
             task.CreateBy = createBy;
             task.UpdateBy = createBy;
@@ -140,16 +147,18 @@ namespace TripleDetection.Services
             task.IsDeleted = false;
             task.Status = TaskStatus.Pending;
             _repository.Add(task);
+            _auditLog?.Log(currentUserId, "创建", "Task", task.Id, $"创建任务: {task.Name}");
         }
 
-        public void Update(Data.Entities.Task task, string updateBy)
+        public void Update(Data.Entities.Task task, string updateBy, int currentUserId)
         {
             task.UpdateBy = updateBy;
             task.UpdateAt = DateTime.Now;
             _repository.Update(task);
+            _auditLog?.Log(currentUserId, "修改", "Task", task.Id, $"修改任务: {task.Name}");
         }
 
-        public void Approve(int id, string reviewedBy)
+        public void Approve(int id, string reviewedBy, int currentUserId)
         {
             var task = _repository.GetById(id);
             if (task != null && task.Status == TaskStatus.Pending)
@@ -160,10 +169,11 @@ namespace TripleDetection.Services
                 task.UpdateBy = reviewedBy;
                 task.UpdateAt = DateTime.Now;
                 _repository.Update(task);
+                _auditLog?.Log(currentUserId, "审批", "Task", id, $"审批任务: {task.Name}");
             }
         }
 
-        public void UpdateStatus(int id, TaskStatus status, string updateBy)
+        public void UpdateStatus(int id, TaskStatus status, string updateBy, int currentUserId)
         {
             var task = _repository.GetById(id);
             if (task != null)
@@ -172,10 +182,11 @@ namespace TripleDetection.Services
                 task.UpdateBy = updateBy;
                 task.UpdateAt = DateTime.Now;
                 _repository.Update(task);
+                _auditLog?.Log(currentUserId, "状态变更", "Task", id, $"任务状态变更为: {status}");
             }
         }
 
-        public void Delete(int id, string updateBy)
+        public void Delete(int id, string updateBy, int currentUserId)
         {
             var task = _repository.GetById(id);
             if (task != null)
@@ -184,6 +195,7 @@ namespace TripleDetection.Services
                 task.UpdateBy = updateBy;
                 task.UpdateAt = DateTime.Now;
                 _repository.Update(task);
+                _auditLog?.Log(currentUserId, "删除", "Task", id, $"删除任务ID: {id}");
             }
         }
 
@@ -282,14 +294,16 @@ namespace TripleDetection.Services
     public class ConfigService : IConfigService
     {
         private readonly IRepository<SystemConfig> _repository;
+        private readonly IAuditLogService _auditLog;
 
-        public ConfigService() : this(new InMemoryRepository<SystemConfig>())
+        public ConfigService() : this(new InMemoryRepository<SystemConfig>(), null)
         {
         }
 
-        public ConfigService(IRepository<SystemConfig> repository)
+        public ConfigService(IRepository<SystemConfig> repository, IAuditLogService auditLogService)
         {
             _repository = repository;
+            _auditLog = auditLogService;
         }
 
         public string GetValue(string category, string key, string defaultValue = null)
@@ -319,6 +333,7 @@ namespace TripleDetection.Services
                 config.UpdateBy = updateBy;
                 config.UpdateAt = DateTime.Now;
                 _repository.Update(config);
+                _auditLog?.Log(SessionManager.CurrentUserId, "修改", "Config", 0, $"修改配置: {category}/{key} = {value}");
             }
             else
             {
@@ -334,6 +349,7 @@ namespace TripleDetection.Services
                     UpdateAt = DateTime.Now,
                     IsDeleted = false
                 });
+                _auditLog?.Log(SessionManager.CurrentUserId, "创建", "Config", 0, $"创建配置: {category}/{key} = {value}");
             }
         }
 

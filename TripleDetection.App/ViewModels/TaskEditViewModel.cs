@@ -219,11 +219,11 @@ namespace TripleDetection.ViewModels
                 task.Id = _taskId;
                 task.CreateBy = "admin"; // preserve original creator
                 task.CreateAt = DateTime.Now;
-                _taskService.Update(task, "admin");
+                _taskService.Update(task, "admin", SessionManager.CurrentUserId);
             }
             else
             {
-                _taskService.Create(task, "admin");
+                _taskService.Create(task, "admin", SessionManager.CurrentUserId);
             }
 
             RequestClose?.Invoke(this, true);

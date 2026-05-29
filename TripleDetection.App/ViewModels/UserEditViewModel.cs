@@ -169,13 +169,13 @@ namespace TripleDetection.ViewModels
                 {
                     user.CreateAt = DateTime.Now;
                     user.CreateBy = "admin";
-                    _userService.Update(user, "admin");
+                    _userService.Update(user, "admin", SessionManager.CurrentUserId);
                 }
                 else
                 {
                     user.CreateAt = DateTime.Now;
                     user.CreateBy = "admin";
-                    _userService.Create(user, "admin");
+                    _userService.Create(user, "admin", SessionManager.CurrentUserId);
                 }
 
                 RequestClose?.Invoke(this, true);

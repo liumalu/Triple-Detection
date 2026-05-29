@@ -171,7 +171,7 @@ namespace TripleDetection.ViewModels
 
         public void DeleteProduct(int id)
         {
-            _productService.Delete(id, "admin");
+            _productService.Delete(id, "admin", SessionManager.CurrentUserId);
             Search();
         }
 

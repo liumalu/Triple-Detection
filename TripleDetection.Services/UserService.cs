@@ -14,13 +14,13 @@ namespace TripleDetection.Services
         User Authenticate(string username, string password);
         IEnumerable<User> GetAll();
         User GetByUsername(string username);
-        void Create(User user, string createBy);
-        void Update(User user, string updateBy);
-        void Delete(string username, string updateBy);
-        void Enable(string username, string updateBy);
-        void Disable(string username, string updateBy);
-        void Lock(string username, string updateBy);
-        void Unlock(string username, string updateBy);
+        void Create(User user, string createBy, int currentUserId);
+        void Update(User user, string updateBy, int currentUserId);
+        void Delete(string username, string updateBy, int currentUserId);
+        void Enable(string username, string updateBy, int currentUserId);
+        void Disable(string username, string updateBy, int currentUserId);
+        void Lock(string username, string updateBy, int currentUserId);
+        void Unlock(string username, string updateBy, int currentUserId);
         PagedResult<User> Query(UserQuery query);
     }
 
@@ -30,14 +30,16 @@ namespace TripleDetection.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _repository;
+        private readonly IAuditLogService _auditLog;
 
-        public UserService() : this(new UserRepository())
+        public UserService() : this(new UserRepository(), null)
         {
         }
 
-        public UserService(IUserRepository repository)
+        public UserService(IUserRepository repository, IAuditLogService auditLogService)
         {
             _repository = repository;
+            _auditLog = auditLogService;
         }
 
         public User Authenticate(string username, string password)
@@ -45,6 +47,7 @@ namespace TripleDetection.Services
             var user = _repository.GetByUsername(username);
             if (user != null && user.Password == password && user.IsEnabled && !user.IsLocked)
             {
+                _auditLog?.Log(user.Id, "登录", "User", user.Id, $"用户登录: {username}");
                 return user;
             }
             return null;
@@ -60,7 +63,7 @@ namespace TripleDetection.Services
             return _repository.GetByUsername(username);
         }
 
-        public void Create(User user, string createBy)
+        public void Create(User user, string createBy, int currentUserId)
         {
             if (string.IsNullOrEmpty(user.Username))
                 throw new ArgumentException("Username is required");
@@ -72,9 +75,10 @@ namespace TripleDetection.Services
             user.CreateBy = createBy;
             user.CreateAt = DateTime.Now;
             _repository.Add(user);
+            _auditLog?.Log(currentUserId, "创建", "User", user.Id, $"创建用户: {user.Username}");
         }
 
-        public void Update(User user, string updateBy)
+        public void Update(User user, string updateBy, int currentUserId)
         {
             var existing = _repository.GetByUsername(user.Username);
             if (existing == null)
@@ -83,18 +87,20 @@ namespace TripleDetection.Services
             user.UpdateBy = updateBy;
             user.UpdateAt = DateTime.Now;
             _repository.Update(user);
+            _auditLog?.Log(currentUserId, "修改", "User", user.Id, $"修改用户: {user.Username}");
         }
 
-        public void Delete(string username, string updateBy)
+        public void Delete(string username, string updateBy, int currentUserId)
         {
             var existing = _repository.GetByUsername(username);
             if (existing == null)
                 throw new InvalidOperationException($"User '{username}' not found");
 
             _repository.Delete(username);
+            _auditLog?.Log(currentUserId, "删除", "User", existing.Id, $"删除用户: {username}");
         }
 
-        public void Enable(string username, string updateBy)
+        public void Enable(string username, string updateBy, int currentUserId)
         {
             var user = _repository.GetByUsername(username);
             if (user == null)
@@ -104,9 +110,10 @@ namespace TripleDetection.Services
             user.UpdateBy = updateBy;
             user.UpdateAt = DateTime.Now;
             _repository.Update(user);
+            _auditLog?.Log(currentUserId, "启用", "User", user.Id, $"启用用户: {username}");
         }
 
-        public void Disable(string username, string updateBy)
+        public void Disable(string username, string updateBy, int currentUserId)
         {
             var user = _repository.GetByUsername(username);
             if (user == null)
@@ -116,9 +123,10 @@ namespace TripleDetection.Services
             user.UpdateBy = updateBy;
             user.UpdateAt = DateTime.Now;
             _repository.Update(user);
+            _auditLog?.Log(currentUserId, "禁用", "User", user.Id, $"禁用用户: {username}");
         }
 
-        public void Lock(string username, string updateBy)
+        public void Lock(string username, string updateBy, int currentUserId)
         {
             var user = _repository.GetByUsername(username);
             if (user == null)
@@ -128,9 +136,10 @@ namespace TripleDetection.Services
             user.UpdateBy = updateBy;
             user.UpdateAt = DateTime.Now;
             _repository.Update(user);
+            _auditLog?.Log(currentUserId, "锁定", "User", user.Id, $"锁定用户: {username}");
         }
 
-        public void Unlock(string username, string updateBy)
+        public void Unlock(string username, string updateBy, int currentUserId)
         {
             var user = _repository.GetByUsername(username);
             if (user == null)
@@ -140,6 +149,7 @@ namespace TripleDetection.Services
             user.UpdateBy = updateBy;
             user.UpdateAt = DateTime.Now;
             _repository.Update(user);
+            _auditLog?.Log(currentUserId, "解锁", "User", user.Id, $"解锁用户: {username}");
         }
 
         public PagedResult<User> Query(UserQuery query)

@@ -193,13 +193,13 @@ namespace TripleDetection.ViewModels
 
         public void DeleteTask(int id)
         {
-            _taskService.Delete(id, "admin");
+            _taskService.Delete(id, "admin", SessionManager.CurrentUserId);
             Search();
         }
 
         public void ApproveTask(int id)
         {
-            _taskService.Approve(id, "admin");
+            _taskService.Approve(id, "admin", SessionManager.CurrentUserId);
             Search();
         }
 

@@ -155,7 +155,7 @@ namespace TripleDetection.ViewModels
         {
             try
             {
-                _userService.Delete(username, "admin");
+                _userService.Delete(username, "admin", SessionManager.CurrentUserId);
                 Search();
             }
             catch (Exception ex)
@@ -168,7 +168,7 @@ namespace TripleDetection.ViewModels
         {
             try
             {
-                _userService.Enable(username, "admin");
+                _userService.Enable(username, "admin", SessionManager.CurrentUserId);
                 Search();
             }
             catch (Exception ex)
@@ -181,7 +181,7 @@ namespace TripleDetection.ViewModels
         {
             try
             {
-                _userService.Disable(username, "admin");
+                _userService.Disable(username, "admin", SessionManager.CurrentUserId);
                 Search();
             }
             catch (Exception ex)
@@ -194,7 +194,7 @@ namespace TripleDetection.ViewModels
         {
             try
             {
-                _userService.Lock(username, "admin");
+                _userService.Lock(username, "admin", SessionManager.CurrentUserId);
                 Search();
             }
             catch (Exception ex)
@@ -207,7 +207,7 @@ namespace TripleDetection.ViewModels
         {
             try
             {
-                _userService.Unlock(username, "admin");
+                _userService.Unlock(username, "admin", SessionManager.CurrentUserId);
                 Search();
             }
             catch (Exception ex)

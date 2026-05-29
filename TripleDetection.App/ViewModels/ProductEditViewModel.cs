@@ -187,11 +187,11 @@ namespace TripleDetection.ViewModels
             if (IsEditMode)
             {
                 product.Id = _productId;
-                _productService.Update(product, "admin");
+                _productService.Update(product, "admin", SessionManager.CurrentUserId);
             }
             else
             {
-                _productService.Create(product, "admin");
+                _productService.Create(product, "admin", SessionManager.CurrentUserId);
             }
 
             RequestClose?.Invoke(this, true);
