@@ -28,11 +28,6 @@ namespace TripleDetection.Data.Repositories.Contracts
         IRepository<T> GetRepository<T>() where T : BaseEntity;
 
         /// <summary>
-        /// 获取用户仓储
-        /// </summary>
-        IUserRepository GetUserRepository();
-
-        /// <summary>
         /// 保存所有更改
         /// </summary>
         int SaveChanges();

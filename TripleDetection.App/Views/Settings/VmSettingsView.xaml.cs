@@ -1,8 +1,8 @@
 using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Win32;
-using TripleDetection.Services;
 using TripleDetection.Models;
+using TripleDetection.Services;
 
 namespace TripleDetection.Views.Settings
 {

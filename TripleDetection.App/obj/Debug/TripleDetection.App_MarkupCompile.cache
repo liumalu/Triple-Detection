@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NETFRAMEWORK;NET48;;NET30_OR_GREATER;NET35_OR_GREATER;NET40_OR_GREATER;NET45_OR_GREATER;NET451_OR_GREATER;NET452_OR_GREATER;NET46_OR_GREATER;NET461_OR_GREATER;NET462_OR_GREATER;NET47_OR_GREATER;NET471_OR_GREATER;NET472_OR_GREATER;NET48_OR_GREATER
 d:\xcm\Triple-Detection\TripleDetection.App\App.xaml
-15-1772292133
+18-1421871586
 5203014908
-42-1161241648
-66-1319716147
-MainWindow.xaml;Views\DashboardView.xaml;Views\DetectionView.xaml;Views\LogsView.xaml;Views\ProductEditWindow.xaml;Views\ProductListView.xaml;Views\SettingsView.xaml;Views\Settings\CommunicationSettingsView.xaml;Views\Settings\DeviceControlSettingsView.xaml;Views\Settings\SystemSettingsView.xaml;Views\Settings\VmSettingsView.xaml;Views\TaskEditWindow.xaml;Views\TaskListView.xaml;Views\UserEditWindow.xaml;Views\UserManagementView.xaml;
+5084121862
+78-175603749
+MainWindow.xaml;Views\App\DashboardView.xaml;Views\App\LogsView.xaml;Views\Audit\AuditLogView.xaml;Views\Auth\UserEditWindow.xaml;Views\Auth\UserManagementView.xaml;Views\Detection\DetectionHistoryView.xaml;Views\Detection\DetectionView.xaml;Views\LoginWindow.xaml;Views\Production\ProductEditWindow.xaml;Views\Production\ProductListView.xaml;Views\Production\TaskEditWindow.xaml;Views\Production\TaskListView.xaml;Views\SettingsView.xaml;Views\Settings\CommunicationSettingsView.xaml;Views\Settings\DeviceControlSettingsView.xaml;Views\Settings\SystemSettingsView.xaml;Views\Settings\VmSettingsView.xaml;
 
 False
 

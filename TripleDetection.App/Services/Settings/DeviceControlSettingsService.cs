@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using TripleDetection.Data;
 using TripleDetection.Models;
 
 namespace TripleDetection.Services
@@ -16,14 +17,14 @@ namespace TripleDetection.Services
 
         public DeviceControlSettings Load()
         {
-            _settings = SimpleJsonHelper.Load<DeviceControlSettings>(_configPath);
+            _settings = JsonHelper.Load<DeviceControlSettings>(_configPath);
             return _settings;
         }
 
         public void Save(DeviceControlSettings settings)
         {
             _settings = settings;
-            SimpleJsonHelper.Save(settings, _configPath);
+            JsonHelper.Save(settings, _configPath);
         }
     }
 }

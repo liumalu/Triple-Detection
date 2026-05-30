@@ -7,10 +7,13 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
+using Prism.Commands;
+using Prism.Regions;
 using VM.Core;
 using VM.PlatformSDKCS;
-using TripleDetection.Services;
+using TripleDetection.App.Services.System;
 using TripleDetection.ViewModels;
+using TripleDetection.ViewModels.Detection;
 using TripleDetection.App;
 using MessageBox = System.Windows.MessageBox;
 
@@ -20,7 +23,7 @@ namespace TripleDetection
     {
         private LoggingService _logService;
         private MainViewModel _viewModel;
-        private TabManager _tabManager;
+        private IRegionManager _regionManager;
         private ObservableCollection<TabItemViewModel> _tabItems = new ObservableCollection<TabItemViewModel>();
 
         private bool _isNavExpanded = true;
@@ -29,7 +32,11 @@ namespace TripleDetection
         private readonly string _vmInstallPath;
         private readonly string _localLibsPath;
 
-        public MainWindow()
+        public MainWindow() : this(null)
+        {
+        }
+
+        public MainWindow(IRegionManager regionManager)
         {
             _vmInstallPath = ConfigurationManager.AppSettings["VmInstallPath"];
             _localLibsPath = ConfigurationManager.AppSettings["LocalLibsPath"];
@@ -38,7 +45,7 @@ namespace TripleDetection
 
             InitializeComponent();
 
-            var logPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Log", "Message");
+            var logPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs");
             _logService = new LoggingService(logPath);
 
             _viewModel = new MainViewModel();
@@ -47,10 +54,8 @@ namespace TripleDetection
                 Dispatcher.Invoke(() => _viewModel.AddLog(e.Message));
             };
 
-            _tabManager = new TabManager();
-            _tabManager.ViewOpened += OnViewOpened;
-            _tabManager.ViewClosed += OnViewClosed;
-            _tabManager.ActiveViewChanged += OnActiveViewChanged;
+            // Use Prism's IRegionManager for navigation (resolved from container if not injected)
+            _regionManager = regionManager;
 
             tabBar.ItemsSource = _tabItems;
 
@@ -63,6 +68,8 @@ namespace TripleDetection
             _navButtons["Logs"] = btnNavLogs;
             _navButtons["Settings"] = btnNavSettings;
             _navButtons["UserManagement"] = btnNavUserManagement;
+            _navButtons["AuditLog"] = btnNavAuditLog;
+            _navButtons["DetectionHistory"] = btnNavDetectionHistory;
 
             LoadConfiguration();
 
@@ -105,7 +112,23 @@ namespace TripleDetection
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            DatabaseConfig.Initialize();
+            try
+            {
+                DatabaseConfig.Initialize();
+            }
+            catch (Exception ex)
+            {
+                var inner = ex.InnerException ?? ex;
+                var errMsg = $"数据库初始化失败: {inner.GetType().Name}\n{inner.Message}\n";
+                if (inner is System.IO.FileNotFoundException fnf)
+                {
+                    errMsg += $"FileName: {fnf.FileName}\n";
+                    errMsg += $"FusionLog: {fnf.FusionLog}\n";
+                }
+                errMsg += $"\nStack:\n{inner.StackTrace}";
+                System.IO.File.WriteAllText(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "db_init_error.log"), errMsg);
+                MessageBox.Show(errMsg, "数据库初始化错误", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
             var logoPath = ConfigurationManager.AppSettings["SystemLogoPath"];
             var systemName = ConfigurationManager.AppSettings["SystemName"];
@@ -121,7 +144,10 @@ namespace TripleDetection
             UpdateStatusBar();
             _logService.Log("Application started");
 
-            _tabManager.OpenView("Dashboard");
+            // Navigate to Dashboard using IRegionManager
+            if (_regionManager != null)
+                _regionManager.RequestNavigate("MainContentRegion", "Dashboard");
+            OpenTab("Dashboard", "📊 仪表盘");
             StartStatusBarTimer();
         }
 
@@ -143,8 +169,93 @@ namespace TripleDetection
         {
             if (sender is System.Windows.Controls.Button btn && btn.Tag is string tag)
             {
-                _tabManager.OpenView(tag);
-                UpdateNavButtonStyles(tag);
+                NavigateToView(tag);
+            }
+        }
+
+        private void NavigateToView(string tag)
+        {
+            if (_regionManager != null)
+                _regionManager.RequestNavigate("MainContentRegion", tag);
+
+            UpdateNavButtonStyles(tag);
+            OpenTab(tag, GetViewDisplayName(tag));
+            txtStatus.Text = $"当前: {tag}";
+            _logService.Log($"导航到: {tag}");
+        }
+
+        private string GetViewDisplayName(string tag)
+        {
+            switch (tag)
+            {
+                case "Dashboard": return "📊 仪表盘";
+                case "Detection": return "🔍 检测执行";
+                case "Products": return "📦 产品管理";
+                case "Tasks": return "📋 任务管理";
+                case "Logs": return "📝 操作日志";
+                case "Settings": return "⚙️ 系统配置";
+                case "UserManagement": return "👤 用户权限";
+                case "AuditLog": return "📋 审计日志";
+                case "DetectionHistory": return "📜 检测记录";
+                default: return tag;
+            }
+        }
+
+        private void OpenTab(string tag, string displayName)
+        {
+            // Check if tab already exists
+            var existing = _tabItems.FirstOrDefault(t => t.Tag == tag);
+            if (existing != null)
+            {
+                // Activate existing tab
+                foreach (var item in _tabItems)
+                    item.IsActive = item.Tag == tag;
+                return;
+            }
+
+            // Create new tab item
+            foreach (var item in _tabItems)
+                item.IsActive = false;
+
+            _tabItems.Add(new TabItemViewModel
+            {
+                Tag = tag,
+                DisplayName = displayName,
+                IsActive = true,
+                IsClosable = tag != "Dashboard",
+                SelectCommand = new DelegateCommand<object>(param => SelectTab(param as string)),
+                CloseCommand = new DelegateCommand<object>(param => CloseTab(param as string))
+            });
+        }
+
+        private void SelectTab(string tag)
+        {
+            if (!string.IsNullOrEmpty(tag))
+            {
+                NavigateToView(tag);
+            }
+        }
+
+        private void CloseTab(string tag)
+        {
+            if (string.IsNullOrEmpty(tag) || _tabItems.Count <= 1)
+                return;
+
+            var item = _tabItems.FirstOrDefault(t => t.Tag == tag);
+            if (item != null)
+            {
+                bool wasActive = item.IsActive;
+                _tabItems.Remove(item);
+
+                if (wasActive)
+                {
+                    // Navigate to first remaining tab
+                    var nextTab = _tabItems.FirstOrDefault();
+                    if (nextTab != null)
+                    {
+                        NavigateToView(nextTab.Tag);
+                    }
+                }
             }
         }
 
@@ -155,70 +266,6 @@ namespace TripleDetection
                 kvp.Value.Style = kvp.Key == activeTag
                     ? (System.Windows.Style)FindResource("NavButtonActiveStyle")
                     : (System.Windows.Style)FindResource("NavButtonStyle");
-            }
-        }
-
-        private void OnViewOpened(object sender, KeyValuePair<string, System.Windows.Controls.UserControl> e)
-        {
-            var tabItem = new TabItemViewModel
-            {
-                Tag = e.Key,
-                DisplayName = _tabManager.GetViewName(e.Key),
-                IsActive = true,
-                IsClosable = e.Key != "Dashboard",
-                SelectCommand = new RelayCommand(param => SelectTab(param as string)),
-                CloseCommand = new RelayCommand(param => CloseTab(param as string))
-            };
-
-            foreach (var item in _tabItems)
-            {
-                item.IsActive = false;
-            }
-
-            _tabItems.Add(tabItem);
-            MainContent.Content = e.Value;
-        }
-
-        private void OnViewClosed(object sender, KeyValuePair<string, System.Windows.Controls.UserControl> e)
-        {
-            var item = _tabItems.FirstOrDefault(t => t.Tag == e.Key);
-            if (item != null)
-            {
-                _tabItems.Remove(item);
-            }
-        }
-
-        private void OnActiveViewChanged(object sender, string e)
-        {
-            foreach (var item in _tabItems)
-            {
-                item.IsActive = item.Tag == e;
-            }
-
-            var views = _tabManager.GetOpenViews();
-            if (views.ContainsKey(e))
-            {
-                MainContent.Content = views[e];
-            }
-
-            UpdateNavButtonStyles(e);
-            txtStatus.Text = $"当前: {e}";
-            _logService.Log($"导航到: {e}");
-        }
-
-        private void SelectTab(string tag)
-        {
-            if (!string.IsNullOrEmpty(tag))
-            {
-                _tabManager.ActivateView(tag);
-            }
-        }
-
-        private void CloseTab(string tag)
-        {
-            if (!string.IsNullOrEmpty(tag) && _tabItems.Count > 1)
-            {
-                _tabManager.CloseView(tag);
             }
         }
 
@@ -245,7 +292,7 @@ namespace TripleDetection
 
         private void BtnNotifications_Click(object sender, RoutedEventArgs e)
         {
-            _tabManager.OpenView("Logs");
+            NavigateToView("Logs");
         }
 
         private void BtnLogout_Click(object sender, RoutedEventArgs e)
@@ -273,7 +320,6 @@ namespace TripleDetection
         {
             try
             {
-                // 1. 停止所有流程的连续运行
                 if (VmSolution.Instance != null)
                 {
                     var processList = VmSolution.Instance.GetAllProcedureList();
@@ -286,7 +332,6 @@ namespace TripleDetection
                         }
                     }
 
-                    // 2. 关闭方案（释放相机连接）
                     VmSolution.Instance.CloseSolution();
                 }
 
@@ -297,7 +342,6 @@ namespace TripleDetection
                 _logService.Log($"关闭时清理 VM 资源出错: {ex.Message}");
             }
 
-            // 3. 注销事件订阅
             VmSolution.OnWorkStatusEvent -= VmSolution_OnWorkStatusEvent;
             VmSolution.OnProcessStatusStartEvent -= VmSolution_OnProcessStatusStartEvent;
             VmSolution.OnProcessStatusStopEvent -= VmSolution_OnProcessStatusStopEvent;
@@ -331,22 +375,5 @@ namespace TripleDetection
                 });
             }
         }
-    }
-
-    public class RelayCommand : ICommand
-    {
-        private readonly Action<object> _execute;
-        private readonly Func<object, bool> _canExecute;
-
-        public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
-        {
-            _execute = execute;
-            _canExecute = canExecute;
-        }
-
-        public bool CanExecute(object parameter) => _canExecute == null || _canExecute(parameter);
-        public void Execute(object parameter) => _execute(parameter);
-
-        public event EventHandler CanExecuteChanged;
     }
 }

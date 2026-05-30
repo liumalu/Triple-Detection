@@ -1,5 +1,5 @@
 using Xunit;
-using TripleDetection.App.Models;
+using TripleDetection.Models;
 
 namespace TripleDetection.App.Tests
 {
@@ -11,9 +11,9 @@ namespace TripleDetection.App.Tests
             var result = new DetectionResult();
 
             Assert.False(result.IsOK);
-            Assert.Equal(string.Empty, result.CodeInfo);
-            Assert.Equal(0, result.CharCount);
-            Assert.Equal(0.0, result.Confidence);
+            Assert.Null(result.BatchNumber);
+            Assert.Null(result.ProductionDate);
+            Assert.Null(result.ExpirationDate);
             Assert.Null(result.ImagePath);
         }
 
@@ -23,17 +23,17 @@ namespace TripleDetection.App.Tests
             var result = new DetectionResult
             {
                 IsOK = true,
-                CodeInfo = "ABC123",
-                CharCount = 6,
-                Confidence = 0.95,
+                BatchNumber = "BATCH001",
+                ProductionDate = "20250530",
+                ExpirationDate = "20260530",
                 ImagePath = @"D:\Images\OK\test.png",
                 DetectionTime = System.DateTime.Now
             };
 
             Assert.True(result.IsOK);
-            Assert.Equal("ABC123", result.CodeInfo);
-            Assert.Equal(6, result.CharCount);
-            Assert.Equal(0.95, result.Confidence);
+            Assert.Equal("BATCH001", result.BatchNumber);
+            Assert.Equal("20250530", result.ProductionDate);
+            Assert.Equal("20260530", result.ExpirationDate);
             Assert.Equal(@"D:\Images\OK\test.png", result.ImagePath);
         }
     }

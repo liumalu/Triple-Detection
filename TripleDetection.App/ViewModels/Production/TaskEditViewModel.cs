@@ -1,18 +1,17 @@
 using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows;
+using Prism.Mvvm;
 using TripleDetection.Data.Entities;
 using TripleDetection.Services;
+using TripleDetection.Services.Production;
 
-namespace TripleDetection.ViewModels
+namespace TripleDetection.ViewModels.Production
 {
-    public class TaskEditViewModel : INotifyPropertyChanged
+    public class TaskEditViewModel : BindableBase
     {
-        private readonly TaskService _taskService;
-        private readonly ProductService _productService;
+        private readonly ITaskService _taskService;
+        private readonly IProductService _productService;
         private bool _isEditMode;
         private int _taskId;
         private string _name = "";
@@ -36,13 +35,13 @@ namespace TripleDetection.ViewModels
         public bool IsEditMode
         {
             get => _isEditMode;
-            set { _isEditMode = value; OnPropertyChanged(); }
+            set => SetProperty(ref _isEditMode, value);
         }
 
         public string Name
         {
             get => _name;
-            set { _name = value; OnPropertyChanged(); ErrorMessage = ""; }
+            set { if (SetProperty(ref _name, value)) ErrorMessage = ""; }
         }
 
         public int ProductId
@@ -50,10 +49,8 @@ namespace TripleDetection.ViewModels
             get => _productId;
             set
             {
-                if (_productId != value)
+                if (SetProperty(ref _productId, value))
                 {
-                    _productId = value;
-                    OnPropertyChanged();
                     CalculateExpirationDate();
                     ErrorMessage = "";
                 }
@@ -63,7 +60,7 @@ namespace TripleDetection.ViewModels
         public TaskStatus Status
         {
             get => _status;
-            set { _status = value; OnPropertyChanged(); }
+            set => SetProperty(ref _status, value);
         }
 
         public DateTime ProductionDate
@@ -71,10 +68,8 @@ namespace TripleDetection.ViewModels
             get => _productionDate;
             set
             {
-                if (_productionDate != value)
+                if (SetProperty(ref _productionDate, value))
                 {
-                    _productionDate = value;
-                    OnPropertyChanged();
                     CalculateExpirationDate();
                 }
             }
@@ -83,35 +78,34 @@ namespace TripleDetection.ViewModels
         public DateTime? ExpirationDate
         {
             get => _expirationDate;
-            set { _expirationDate = value; OnPropertyChanged(); }
+            set => SetProperty(ref _expirationDate, value);
         }
 
         public string BatchNumber
         {
             get => _batchNumber;
-            set { _batchNumber = value; OnPropertyChanged(); ErrorMessage = ""; }
+            set { if (SetProperty(ref _batchNumber, value)) ErrorMessage = ""; }
         }
 
         public string ErrorMessage
         {
             get => _errorMessage;
-            set { _errorMessage = value; OnPropertyChanged(); }
+            set => SetProperty(ref _errorMessage, value);
         }
 
         public string WindowTitle => IsEditMode ? "编辑任务" : "新增任务";
 
-        public event PropertyChangedEventHandler PropertyChanged;
         public event EventHandler<bool> RequestClose;
 
-        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        public TaskEditViewModel(Data.Entities.ProdTask task = null)
+            : this(task, new TaskService(), new ProductService())
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-        public TaskEditViewModel(Data.Entities.Task task = null)
+        public TaskEditViewModel(Data.Entities.ProdTask task, ITaskService taskService, IProductService productService)
         {
-            _taskService = new TaskService();
-            _productService = new ProductService();
+            _taskService = taskService;
+            _productService = productService;
             LoadProducts();
 
             if (task != null)
@@ -204,7 +198,7 @@ namespace TripleDetection.ViewModels
             if (!Validate())
                 return;
 
-            var task = new Data.Entities.Task
+            var task = new Data.Entities.ProdTask
             {
                 Name = Name,
                 ProductId = ProductId,
@@ -217,7 +211,7 @@ namespace TripleDetection.ViewModels
             if (IsEditMode)
             {
                 task.Id = _taskId;
-                task.CreateBy = "admin"; // preserve original creator
+                task.CreateBy = "admin";
                 task.CreateAt = DateTime.Now;
                 _taskService.Update(task, "admin", SessionManager.CurrentUserId);
             }

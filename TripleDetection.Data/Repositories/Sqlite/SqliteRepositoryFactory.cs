@@ -40,19 +40,7 @@ namespace TripleDetection.Data.Repositories.Sqlite
         public IRepository<T> CreateRepository<T>() where T : BaseEntity
         {
             var context = new SqliteDbContext(_connectionString);
-
-            if (typeof(T) == typeof(Data.Entities.User))
-            {
-                return new SqliteUserRepository(context) as IRepository<T>;
-            }
-
             return new SqliteRepository<T>(context);
-        }
-
-        public IUserRepository CreateUserRepository()
-        {
-            var context = new SqliteDbContext(_connectionString);
-            return new SqliteUserRepository(context);
         }
 
         public IAuditLogRepository CreateAuditLogRepository()

@@ -1,15 +1,52 @@
-using System;
 using System.Windows.Input;
+using Prism.Commands;
+using Prism.Mvvm;
 
 namespace TripleDetection.ViewModels
 {
-    public class TabItemViewModel
+    public class TabItemViewModel : BindableBase
     {
-        public string Tag { get; set; }
-        public string DisplayName { get; set; }
-        public bool IsActive { get; set; }
-        public bool IsClosable { get; set; } = true;
-        public ICommand SelectCommand { get; set; }
-        public ICommand CloseCommand { get; set; }
+        private string _tag;
+        private string _displayName;
+        private bool _isActive;
+        private bool _isClosable = true;
+        private ICommand _selectCommand;
+        private ICommand _closeCommand;
+
+        public string Tag
+        {
+            get => _tag;
+            set => SetProperty(ref _tag, value);
+        }
+
+        public string DisplayName
+        {
+            get => _displayName;
+            set => SetProperty(ref _displayName, value);
+        }
+
+        public bool IsActive
+        {
+            get => _isActive;
+            set => SetProperty(ref _isActive, value);
+        }
+
+        public bool IsClosable
+        {
+            get => _isClosable;
+            set => SetProperty(ref _isClosable, value);
+        }
+
+        public ICommand SelectCommand
+        {
+            get => _selectCommand;
+            set => SetProperty(ref _selectCommand, value);
+        }
+
+        public ICommand CloseCommand
+        {
+            get => _closeCommand;
+            set => SetProperty(ref _closeCommand, value);
+        }
     }
 }

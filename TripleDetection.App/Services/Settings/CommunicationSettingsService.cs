@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using TripleDetection.Data;
 using TripleDetection.Models;
 
 namespace TripleDetection.Services
@@ -16,14 +17,14 @@ namespace TripleDetection.Services
 
         public CommunicationSettings Load()
         {
-            _settings = SimpleJsonHelper.Load<CommunicationSettings>(_configPath);
+            _settings = JsonHelper.Load<CommunicationSettings>(_configPath);
             return _settings;
         }
 
         public void Save(CommunicationSettings settings)
         {
             _settings = settings;
-            SimpleJsonHelper.Save(settings, _configPath);
+            JsonHelper.Save(settings, _configPath);
         }
 
         public string GetConfigPath() => _configPath;

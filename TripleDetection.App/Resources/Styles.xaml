@@ -24,6 +24,8 @@
     <local:TabActiveConverter x:Key="TabActiveConverter"/>
     <local:TabActiveTextConverter x:Key="TabActiveTextConverter"/>
     <local:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    <local:LoginButtonTextConverter x:Key="LoginButtonTextConverter"/>
+    <local:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
 
     <!-- 导航按钮样式 -->
     <Style x:Key="NavButtonStyle" TargetType="Button">

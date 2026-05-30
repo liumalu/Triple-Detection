@@ -14,10 +14,10 @@ namespace TripleDetection.Data.Repositories.Configuration
             Property(a => a.ObjectType).IsRequired().HasMaxLength(20);
             Property(a => a.Details).HasMaxLength(500);
             Property(a => a.IpAddress).HasMaxLength(50);
-            HasOptional(a => a.User)
-                .WithMany()
-                .HasForeignKey(a => a.UserId)
-                .WillCascadeOnDelete(false);
+
+            // UserId 是 int，但 User 主键是 string (Username)，无法建立 FK
+            // 审计日志通过冗余 UserName 字段关联，外键关系通过查询实现
+            Ignore(a => a.User);
         }
     }
 }

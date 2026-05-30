@@ -30,11 +30,6 @@ namespace TripleDetection.Data.Repositories.Contracts
         IRepository<T> CreateRepository<T>() where T : BaseEntity;
 
         /// <summary>
-        /// 创建用户仓储
-        /// </summary>
-        IUserRepository CreateUserRepository();
-
-        /// <summary>
         /// 当前数据库提供者类型
         /// </summary>
         DatabaseProviderType ProviderType { get; }

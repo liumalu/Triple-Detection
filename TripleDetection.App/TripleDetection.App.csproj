@@ -32,6 +32,14 @@
       <HintPath>libs\iMVS-6000PlatformSDKCS.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="GlobalVariableModuleCs">
+      <HintPath>bin\Debug\libs\VisionMaster\GlobalVariableModuleCs.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+
+  <!-- VMControls DLLs -->
+  <ItemGroup>
     <Reference Include="VMControls.BaseInterface">
       <HintPath>$(VmInstallPath)\Development\V4.x\ComControls\Assembly\VMControls.BaseInterface.dll</HintPath>
       <Private>True</Private>
@@ -50,10 +58,6 @@
     </Reference>
     <Reference Include="VMControls.WPF.Release">
       <HintPath>$(VmInstallPath)\Development\V4.x\ComControls\Assembly\VMControls.WPF.Release.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="GlobalVariableModuleCs">
-      <HintPath>$(VmInstallPath)\Applications\Module(sp)\x64\Global\GlobalVariableModule\GlobalVariableModuleCs.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -186,6 +190,10 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>bin\Debug\System.Data.SQLite.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http" />
@@ -197,6 +205,11 @@
     <Reference Include="WindowsBase" />
     <Reference Include="System.Xaml" />
     <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+
+  <!-- NuGet Packages -->
+  <ItemGroup>
+    <PackageReference Include="Prism.DryIoc" Version="7.2.0.1422" />
   </ItemGroup>
 
   <!-- Project References -->

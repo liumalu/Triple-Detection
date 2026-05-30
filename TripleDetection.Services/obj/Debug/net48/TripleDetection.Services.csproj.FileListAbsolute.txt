@@ -1,5 +1,9 @@
 D:\xcm\Triple-Detection\TripleDetection.Services\bin\Debug\net48\TripleDetection.Services.dll
 D:\xcm\Triple-Detection\TripleDetection.Services\bin\Debug\net48\TripleDetection.Services.pdb
+D:\xcm\Triple-Detection\TripleDetection.Services\bin\Debug\net48\EntityFramework.SqlServer.dll
+D:\xcm\Triple-Detection\TripleDetection.Services\bin\Debug\net48\EntityFramework.dll
+D:\xcm\Triple-Detection\TripleDetection.Services\bin\Debug\net48\System.Data.SQLite.dll
+D:\xcm\Triple-Detection\TripleDetection.Services\bin\Debug\net48\System.Data.SQLite.EF6.dll
 D:\xcm\Triple-Detection\TripleDetection.Services\bin\Debug\net48\TripleDetection.Data.dll
 D:\xcm\Triple-Detection\TripleDetection.Services\bin\Debug\net48\TripleDetection.Data.pdb
 D:\xcm\Triple-Detection\TripleDetection.Services\obj\Debug\net48\TripleDetection.Services.csproj.AssemblyReference.cache
@@ -11,3 +15,4 @@ D:\xcm\Triple-Detection\TripleDetection.Services\obj\Debug\net48\TripleDetection
 D:\xcm\Triple-Detection\TripleDetection.Services\obj\Debug\net48\TripleDe.F28499EB.Up2Date
 D:\xcm\Triple-Detection\TripleDetection.Services\obj\Debug\net48\TripleDetection.Services.dll
 D:\xcm\Triple-Detection\TripleDetection.Services\obj\Debug\net48\TripleDetection.Services.pdb
+d:\xcm\Triple-Detection\TripleDetection.Services\bin\Debug\net48\Newtonsoft.Json.dll

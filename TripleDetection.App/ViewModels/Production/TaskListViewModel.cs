@@ -1,18 +1,18 @@
 using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows;
+using Prism.Mvvm;
 using TripleDetection.Data.Entities;
 using TripleDetection.Data.Repositories;
 using TripleDetection.Services;
+using TripleDetection.Services.Production;
 
-namespace TripleDetection.ViewModels
+namespace TripleDetection.ViewModels.Production
 {
-    public class TaskListViewModel : INotifyPropertyChanged
+    public class TaskListViewModel : BindableBase
     {
-        private readonly TaskService _taskService;
-        private readonly ProductService _productService;
+        private readonly ITaskService _taskService;
+        private readonly IProductService _productService;
         private string _queryName = "";
         private int? _queryProductId;
         private int? _queryStatus;
@@ -23,69 +23,85 @@ namespace TripleDetection.ViewModels
         private int _pageSize = 20;
         private int _totalCount = 0;
         private int _totalPages = 0;
-        private Data.Entities.Task _selectedTask;
+        private Data.Entities.ProdTask _selectedTask;
 
-        public ObservableCollection<Data.Entities.Task> Tasks { get; } = new ObservableCollection<Data.Entities.Task>();
+        public ObservableCollection<Data.Entities.ProdTask> Tasks { get; } = new ObservableCollection<Data.Entities.ProdTask>();
         public ObservableCollection<Product> Products { get; } = new ObservableCollection<Product>();
 
         public string QueryName
         {
             get => _queryName;
-            set { _queryName = value; OnPropertyChanged(); }
+            set => SetProperty(ref _queryName, value);
         }
 
         public int? QueryProductId
         {
             get => _queryProductId;
-            set { _queryProductId = value; OnPropertyChanged(); }
+            set => SetProperty(ref _queryProductId, value);
         }
 
         public int? QueryStatus
         {
             get => _queryStatus;
-            set { _queryStatus = value; OnPropertyChanged(); }
+            set => SetProperty(ref _queryStatus, value);
         }
 
         public DateTime? QueryProductionDateFrom
         {
             get => _queryProductionDateFrom;
-            set { _queryProductionDateFrom = value; OnPropertyChanged(); }
+            set => SetProperty(ref _queryProductionDateFrom, value);
         }
 
         public DateTime? QueryProductionDateTo
         {
             get => _queryProductionDateTo;
-            set { _queryProductionDateTo = value; OnPropertyChanged(); }
+            set => SetProperty(ref _queryProductionDateTo, value);
         }
 
         public string QueryBatchNumber
         {
             get => _queryBatchNumber;
-            set { _queryBatchNumber = value; OnPropertyChanged(); }
+            set => SetProperty(ref _queryBatchNumber, value);
         }
 
         public int PageIndex
         {
             get => _pageIndex;
-            set { _pageIndex = value; OnPropertyChanged(); OnPropertyChanged(nameof(CurrentPageDisplay)); }
+            set
+            {
+                if (SetProperty(ref _pageIndex, value))
+                    RaisePropertyChanged(nameof(CurrentPageDisplay));
+            }
         }
 
         public int PageSize
         {
             get => _pageSize;
-            set { _pageSize = value; OnPropertyChanged(); }
+            set => SetProperty(ref _pageSize, value);
         }
 
         public int TotalCount
         {
             get => _totalCount;
-            set { _totalCount = value; OnPropertyChanged(); OnPropertyChanged(nameof(TotalPagesDisplay)); }
+            set
+            {
+                if (SetProperty(ref _totalCount, value))
+                    RaisePropertyChanged(nameof(TotalPagesDisplay));
+            }
         }
 
         public int TotalPages
         {
             get => _totalPages;
-            set { _totalPages = value; OnPropertyChanged(); OnPropertyChanged(nameof(TotalPagesDisplay)); OnPropertyChanged(nameof(HasNextPage)); OnPropertyChanged(nameof(HasPreviousPage)); }
+            set
+            {
+                if (SetProperty(ref _totalPages, value))
+                {
+                    RaisePropertyChanged(nameof(TotalPagesDisplay));
+                    RaisePropertyChanged(nameof(HasNextPage));
+                    RaisePropertyChanged(nameof(HasPreviousPage));
+                }
+            }
         }
 
         public string TotalPagesDisplay => $"共 {TotalCount} 条";
@@ -93,23 +109,21 @@ namespace TripleDetection.ViewModels
         public bool HasNextPage => PageIndex < TotalPages - 1;
         public bool HasPreviousPage => PageIndex > 0;
 
-        public Data.Entities.Task SelectedTask
+        public Data.Entities.ProdTask SelectedTask
         {
             get => _selectedTask;
-            set { _selectedTask = value; OnPropertyChanged(); }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged([CallerMemberName] string name = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+            set => SetProperty(ref _selectedTask, value);
         }
 
         public TaskListViewModel()
+            : this(new TaskService(), new ProductService())
         {
-            _taskService = new TaskService();
-            _productService = new ProductService();
+        }
+
+        public TaskListViewModel(ITaskService taskService, IProductService productService)
+        {
+            _taskService = taskService;
+            _productService = productService;
             LoadProducts();
         }
 
@@ -203,10 +217,10 @@ namespace TripleDetection.ViewModels
             Search();
         }
 
-        public void OpenEditWindow(Data.Entities.Task task = null)
+        public void OpenEditWindow(Data.Entities.ProdTask task = null)
         {
-            var editVm = new TaskEditViewModel(task);
-            var editWindow = new Views.TaskEditWindow { DataContext = editVm };
+            var editVm = new TaskEditViewModel(task, _taskService, _productService);
+            var editWindow = new Views.Production.TaskEditWindow { DataContext = editVm };
             editWindow.Owner = Application.Current.MainWindow;
             if (editWindow.ShowDialog() == true)
             {

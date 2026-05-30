@@ -1,17 +1,16 @@
 using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows;
+using Prism.Mvvm;
 using TripleDetection.Data.Entities;
 using TripleDetection.Data.Repositories;
 using TripleDetection.Services;
 
-namespace TripleDetection.ViewModels
+namespace TripleDetection.ViewModels.Auth
 {
-    public class UserManagementViewModel : INotifyPropertyChanged
+    public class UserManagementViewModel : BindableBase
     {
-        private readonly UserService _userService;
+        private readonly IUserService _userService;
         private string _queryUsername = "";
         private string _queryRole = "";
         private string _queryStatusText = "";
@@ -26,43 +25,59 @@ namespace TripleDetection.ViewModels
         public string QueryUsername
         {
             get => _queryUsername;
-            set { _queryUsername = value; OnPropertyChanged(); }
+            set => SetProperty(ref _queryUsername, value);
         }
 
         public string QueryRole
         {
             get => _queryRole;
-            set { _queryRole = value; OnPropertyChanged(); }
+            set => SetProperty(ref _queryRole, value);
         }
 
         public string QueryStatusText
         {
             get => _queryStatusText;
-            set { _queryStatusText = value; OnPropertyChanged(); }
+            set => SetProperty(ref _queryStatusText, value);
         }
 
         public int PageIndex
         {
             get => _pageIndex;
-            set { _pageIndex = value; OnPropertyChanged(); OnPropertyChanged(nameof(CurrentPageDisplay)); }
+            set
+            {
+                if (SetProperty(ref _pageIndex, value))
+                    RaisePropertyChanged(nameof(CurrentPageDisplay));
+            }
         }
 
         public int PageSize
         {
             get => _pageSize;
-            set { _pageSize = value; OnPropertyChanged(); }
+            set => SetProperty(ref _pageSize, value);
         }
 
         public int TotalCount
         {
             get => _totalCount;
-            set { _totalCount = value; OnPropertyChanged(); OnPropertyChanged(nameof(TotalPagesDisplay)); }
+            set
+            {
+                if (SetProperty(ref _totalCount, value))
+                    RaisePropertyChanged(nameof(TotalPagesDisplay));
+            }
         }
 
         public int TotalPages
         {
             get => _totalPages;
-            set { _totalPages = value; OnPropertyChanged(); OnPropertyChanged(nameof(TotalPagesDisplay)); OnPropertyChanged(nameof(HasNextPage)); OnPropertyChanged(nameof(HasPreviousPage)); }
+            set
+            {
+                if (SetProperty(ref _totalPages, value))
+                {
+                    RaisePropertyChanged(nameof(TotalPagesDisplay));
+                    RaisePropertyChanged(nameof(HasNextPage));
+                    RaisePropertyChanged(nameof(HasPreviousPage));
+                }
+            }
         }
 
         public string TotalPagesDisplay => $"共 {TotalCount} 条";
@@ -73,19 +88,17 @@ namespace TripleDetection.ViewModels
         public User SelectedUser
         {
             get => _selectedUser;
-            set { _selectedUser = value; OnPropertyChanged(); }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged([CallerMemberName] string name = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+            set => SetProperty(ref _selectedUser, value);
         }
 
         public UserManagementViewModel()
+            : this(new UserService())
         {
-            _userService = new UserService();
+        }
+
+        public UserManagementViewModel(IUserService userService)
+        {
+            _userService = userService;
         }
 
         public void Search()
@@ -219,7 +232,7 @@ namespace TripleDetection.ViewModels
         public void OpenEditWindow(User user = null)
         {
             var editVm = new UserEditViewModel(user, _userService);
-            var editWindow = new Views.UserEditWindow { DataContext = editVm };
+            var editWindow = new Views.Auth.UserEditWindow { DataContext = editVm };
             editWindow.Owner = Application.Current.MainWindow;
             if (editWindow.ShowDialog() == true)
             {

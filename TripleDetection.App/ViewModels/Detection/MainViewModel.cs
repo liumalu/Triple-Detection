@@ -1,16 +1,14 @@
 using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows;
-using System.Windows.Input;
-using TripleDetection.Data.Entities;
-using TripleDetection.Data.Repositories;
-using TripleDetection.Services;
+using Prism.Commands;
+using Prism.Events;
+using Prism.Mvvm;
+using Prism.Regions;
+using TripleDetection.Events;
 
-namespace TripleDetection.ViewModels
+namespace TripleDetection.ViewModels.Detection
 {
-    public class MainViewModel : INotifyPropertyChanged
+    public class MainViewModel : BindableBase
     {
         private string _resultText = "--";
         private string _resultBackground = "#808080";
@@ -18,6 +16,8 @@ namespace TripleDetection.ViewModels
         private bool _isImageViewActive = true;
         private string _selectedProcedure = "";
         private object _currentView;
+        private readonly IRegionManager _regionManager;
+        private readonly IEventAggregator _eventAggregator;
 
         public ObservableCollection<string> LogMessages { get; } = new ObservableCollection<string>();
         public ObservableCollection<string> ResultHistory { get; } = new ObservableCollection<string>();
@@ -25,64 +25,74 @@ namespace TripleDetection.ViewModels
         public string ResultText
         {
             get => _resultText;
-            set { _resultText = value; OnPropertyChanged(); }
+            set => SetProperty(ref _resultText, value);
         }
 
         public string ResultBackground
         {
             get => _resultBackground;
-            set { _resultBackground = value; OnPropertyChanged(); }
+            set => SetProperty(ref _resultBackground, value);
         }
 
         public string Details
         {
             get => _details;
-            set { _details = value; OnPropertyChanged(); }
+            set => SetProperty(ref _details, value);
         }
 
         public bool IsImageViewActive
         {
             get => _isImageViewActive;
-            set { _isImageViewActive = value; OnPropertyChanged(); }
+            set => SetProperty(ref _isImageViewActive, value);
         }
 
         public string SelectedProcedure
         {
             get => _selectedProcedure;
-            set { _selectedProcedure = value; OnPropertyChanged(); }
+            set => SetProperty(ref _selectedProcedure, value);
         }
 
         public object CurrentView
         {
             get => _currentView;
-            set { _currentView = value; OnPropertyChanged(); }
+            set => SetProperty(ref _currentView, value);
         }
 
-        public ICommand NavigateToProductCommand { get; }
+        public DelegateCommand NavigateToProductCommand { get; }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        public MainViewModel() : this(null, null)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-        public MainViewModel()
+        public MainViewModel(IRegionManager regionManager, IEventAggregator eventAggregator)
         {
-            NavigateToProductCommand = new RelayCommand(_ => NavigateToProduct());
+            _regionManager = regionManager;
+            _eventAggregator = eventAggregator;
+            NavigateToProductCommand = new DelegateCommand(NavigateToProduct);
+
+            // Subscribe to log events via EventAggregator
+            if (_eventAggregator != null)
+            {
+                _eventAggregator.GetEvent<LogAddedEvent>().Subscribe(OnLogAdded);
+            }
+        }
+
+        private void OnLogAdded(App.Services.System.LogEntry entry)
+        {
+            AddLog(entry.Message);
         }
 
         private void NavigateToProduct()
         {
-            CurrentView = new Views.ProductListView();
+            CurrentView = new Views.Production.ProductListView();
         }
 
         public void AddLog(string message)
         {
-            var entry = $"[{DateTime.Now:HH:mm:ss}] {message}";
+            var logEntry = $"[{DateTime.Now:HH:mm:ss}] {message}";
             if (LogMessages.Count > 1000)
                 LogMessages.RemoveAt(0);
-            LogMessages.Add(entry);
+            LogMessages.Add(logEntry);
         }
 
         public void AddResult(string result)
@@ -91,26 +101,5 @@ namespace TripleDetection.ViewModels
                 ResultHistory.RemoveAt(0);
             ResultHistory.Add(result);
         }
-    }
-
-    public class RelayCommand : ICommand
-    {
-        private readonly Action<object> _execute;
-        private readonly Func<object, bool> _canExecute;
-
-        public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
-        {
-            _execute = execute;
-            _canExecute = canExecute;
-        }
-
-        public event EventHandler CanExecuteChanged
-        {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
-        }
-
-        public bool CanExecute(object parameter) => _canExecute?.Invoke(parameter) ?? true;
-        public void Execute(object parameter) => _execute(parameter);
     }
 }

@@ -1,18 +1,19 @@
 using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows;
 using Microsoft.Win32;
+using Prism.Mvvm;
 using TripleDetection.Data.Entities;
 using TripleDetection.Services;
+using TripleDetection.Services.Production;
 
-namespace TripleDetection.ViewModels
+namespace TripleDetection.ViewModels.Production
 {
-    public class ProductEditViewModel : INotifyPropertyChanged
+    public class ProductEditViewModel : BindableBase
     {
-        private readonly ProductService _productService;
+        private readonly IProductService _productService;
         private bool _isEditMode;
         private int _productId;
         private string _code = "";
@@ -40,70 +41,69 @@ namespace TripleDetection.ViewModels
         public bool IsEditMode
         {
             get => _isEditMode;
-            set { _isEditMode = value; OnPropertyChanged(); }
+            set => SetProperty(ref _isEditMode, value);
         }
 
         public string Code
         {
             get => _code;
-            set { _code = value; OnPropertyChanged(); ErrorMessage = ""; }
+            set { if (SetProperty(ref _code, value)) ErrorMessage = ""; }
         }
 
         public string Name
         {
             get => _name;
-            set { _name = value; OnPropertyChanged(); ErrorMessage = ""; }
+            set { if (SetProperty(ref _name, value)) ErrorMessage = ""; }
         }
 
         public string Description
         {
             get => _description;
-            set { _description = value; OnPropertyChanged(); }
+            set => SetProperty(ref _description, value);
         }
 
         public ValidType ValidType
         {
             get => _validType;
-            set { _validType = value; OnPropertyChanged(); }
+            set => SetProperty(ref _validType, value);
         }
 
         public int ValidPeriod
         {
             get => _validPeriod;
-            set { _validPeriod = value; OnPropertyChanged(); }
+            set => SetProperty(ref _validPeriod, value);
         }
 
         public string SolFilePath
         {
             get => _solFilePath;
-            set { _solFilePath = value; OnPropertyChanged(); ErrorMessage = ""; }
+            set { if (SetProperty(ref _solFilePath, value)) ErrorMessage = ""; }
         }
 
         public ProductStatus Status
         {
             get => _status;
-            set { _status = value; OnPropertyChanged(); }
+            set => SetProperty(ref _status, value);
         }
 
         public string ErrorMessage
         {
             get => _errorMessage;
-            set { _errorMessage = value; OnPropertyChanged(); }
+            set => SetProperty(ref _errorMessage, value);
         }
 
         public string WindowTitle => IsEditMode ? "编辑产品" : "新增产品";
 
-        public event PropertyChangedEventHandler PropertyChanged;
         public event EventHandler<bool> RequestClose;
 
-        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        public ProductEditViewModel(Product product = null)
+            : this(product, new ProductService())
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-        public ProductEditViewModel(Product product = null)
+        public ProductEditViewModel(Product product, IProductService productService)
         {
-            _productService = new ProductService();
+            _productService = productService;
             if (product != null)
             {
                 IsEditMode = true;
@@ -154,7 +154,6 @@ namespace TripleDetection.ViewModels
                 return false;
             }
 
-            // Check duplicate code for new product
             if (!IsEditMode)
             {
                 var existing = _productService.GetAll().FirstOrDefault(p => p.Code == Code && !p.IsDeleted);
@@ -170,8 +169,15 @@ namespace TripleDetection.ViewModels
 
         public void Save()
         {
+            System.Diagnostics.Debug.WriteLine($"[Save] 节点1-开始校验 | Code={Code}, Name={Name}, SolFilePath={SolFilePath}, ValidPeriod={ValidPeriod}");
             if (!Validate())
+            {
+                System.Diagnostics.Debug.WriteLine($"[Save] 节点1-校验失败 | ErrorMessage={ErrorMessage}");
                 return;
+            }
+            System.Diagnostics.Debug.WriteLine($"[Save] 节点1-校验通过");
+
+            System.Diagnostics.Debug.WriteLine($"[Save] 节点2-UI数据 | Code={Code}, Name={Name}, Description={Description}, SolFilePath={SolFilePath}, Status={Status}");
 
             var product = new Product
             {
@@ -183,18 +189,29 @@ namespace TripleDetection.ViewModels
                 SolFilePath = SolFilePath,
                 Status = Status
             };
+            System.Diagnostics.Debug.WriteLine($"[Save] 节点3-构建Product对象 | Code={product.Code}, Name={product.Name}, SolFilePath={product.SolFilePath}");
 
-            if (IsEditMode)
+            System.Diagnostics.Debug.WriteLine($"[Save] 节点4-开始数据库存储...");
+            Task.Run(() =>
             {
-                product.Id = _productId;
-                _productService.Update(product, "admin", SessionManager.CurrentUserId);
-            }
-            else
-            {
-                _productService.Create(product, "admin", SessionManager.CurrentUserId);
-            }
+                System.Diagnostics.Debug.WriteLine($"[Save] 后台线程开始...");
+                if (IsEditMode)
+                {
+                    product.Id = _productId;
+                    _productService.Update(product, "admin", SessionManager.CurrentUserId);
+                }
+                else
+                {
+                    _productService.Create(product, "admin", SessionManager.CurrentUserId);
+                }
+                System.Diagnostics.Debug.WriteLine($"[Save] 后台线程完成 | ProductId={product.Id}");
 
-            RequestClose?.Invoke(this, true);
+                System.Windows.Application.Current.Dispatcher.Invoke(() =>
+                {
+                    System.Diagnostics.Debug.WriteLine($"[Save] UI线程回调完成");
+                    RequestClose?.Invoke(this, true);
+                });
+            });
         }
 
         public void Cancel()

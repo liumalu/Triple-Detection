@@ -1,9 +1,6 @@
 using System;
+using System.Data.SQLite;
 using System.IO;
-using System.Linq;
-using TripleDetection.Data.Entities;
-using TripleDetection.Data.Repositories;
-using TripleDetection.Data.Repositories.Sqlite;
 
 namespace TripleDetection.Data
 {
@@ -17,12 +14,6 @@ namespace TripleDetection.Data
 
         private static readonly string DbPath = Path.Combine(
             DataDirectory, "tripledetection.db");
-
-        private static readonly string ConfigDirectory = Path.Combine(
-            AppDomain.CurrentDomain.BaseDirectory, "Config");
-
-        private static readonly string UsersJsonPath = Path.Combine(
-            ConfigDirectory, "users.json");
 
         /// <summary>
         /// 初始化数据库 - 调用此方法启动应用时
@@ -47,12 +38,92 @@ namespace TripleDetection.Data
         /// </summary>
         public static void EnsureDatabaseCreated()
         {
-            using (var context = new SqliteDbContext())
+            // 直接用 SQLite 原生 API 创建数据库文件（绕过 EF provider 问题）
+            var dbFilePath = DbPath;
+            if (!File.Exists(dbFilePath))
             {
-                // 创建数据库如果不存在
-                if (!context.Database.Exists())
+                using (var conn = new System.Data.SQLite.SQLiteConnection($"Data Source={dbFilePath};Version=3;"))
                 {
-                    context.Database.Create();
+                    conn.Open();
+                    // 建表 SQL
+                    using (var cmd = conn.CreateCommand())
+                    {
+                        cmd.CommandText = @"
+CREATE TABLE IF NOT EXISTS Products (
+    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+    Name TEXT NOT NULL,
+    Description TEXT,
+    IsEnabled INTEGER NOT NULL DEFAULT 1,
+    IsDeleted INTEGER NOT NULL DEFAULT 0,
+    CreateAt TEXT NOT NULL,
+    UpdateAt TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS Tasks (
+    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+    Name TEXT NOT NULL,
+    Description TEXT,
+    Status INTEGER NOT NULL DEFAULT 0,
+    IsEnabled INTEGER NOT NULL DEFAULT 1,
+    IsDeleted INTEGER NOT NULL DEFAULT 0,
+    CreateAt TEXT NOT NULL,
+    UpdateAt TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS DetectionRecords (
+    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+    TaskId INTEGER NOT NULL,
+    ProductId INTEGER NOT NULL,
+    BatchNumber TEXT,
+    IsOK INTEGER NOT NULL DEFAULT 0,
+    ProductionDate TEXT,
+    ExpirationDate TEXT,
+    ImagePath TEXT,
+    ElapsedMs INTEGER NOT NULL DEFAULT 0,
+    DetectionTime TEXT NOT NULL,
+    IsDeleted INTEGER NOT NULL DEFAULT 0,
+    CreateAt TEXT NOT NULL,
+    UpdateAt TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS SystemConfigs (
+    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+    Category TEXT NOT NULL,
+    ConfigKey TEXT NOT NULL,
+    ConfigValue TEXT,
+    Description TEXT,
+    IsDeleted INTEGER NOT NULL DEFAULT 0,
+    CreateAt TEXT NOT NULL,
+    UpdateAt TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS Users (
+    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+    Username TEXT NOT NULL UNIQUE,
+    RealName TEXT,
+    Password TEXT NOT NULL,
+    PasswordSalt TEXT,
+    PasswordHash TEXT,
+    Role TEXT NOT NULL,
+    Status INTEGER NOT NULL DEFAULT 0,
+    IsEnabled INTEGER NOT NULL DEFAULT 1,
+    IsLocked INTEGER NOT NULL DEFAULT 0,
+    LastLoginAt TEXT,
+    IsDeleted INTEGER NOT NULL DEFAULT 0,
+    CreateAt TEXT NOT NULL,
+    UpdateAt TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS AuditLogs (
+    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+    UserId INTEGER NOT NULL,
+    UserName TEXT NOT NULL,
+    Action TEXT NOT NULL,
+    ObjectType TEXT NOT NULL,
+    ObjectId INTEGER NOT NULL,
+    Details TEXT,
+    IpAddress TEXT,
+    IsDeleted INTEGER NOT NULL DEFAULT 0,
+    CreateAt TEXT NOT NULL,
+    UpdateAt TEXT NOT NULL
+);";
+                        cmd.ExecuteNonQuery();
+                    }
                 }
             }
         }
@@ -62,60 +133,21 @@ namespace TripleDetection.Data
         /// </summary>
         public static void SeedInitialData()
         {
-            using (var context = new SqliteDbContext())
+            // 直接用原生 SQLite 查询，避免 EF context 触发 SqlServer provider
+            using (var conn = new System.Data.SQLite.SQLiteConnection($"Data Source={DbPath};Version=3;"))
             {
-                // 检查是否已有用户数据
-                if (context.Users.Any())
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
                 {
-                    return; // 已有数据，跳过
-                }
-
-                // 从 JSON 文件读取初始用户
-                if (File.Exists(UsersJsonPath))
-                {
-                    try
+                    cmd.CommandText = "SELECT COUNT(*) FROM Users";
+                    var count = Convert.ToInt64(cmd.ExecuteScalar());
+                    if (count > 0)
                     {
-                        var json = File.ReadAllText(UsersJsonPath);
-                        var userList = SimpleJsonHelper.Deserialize<UserList>(json);
-
-                        if (userList?.Users != null)
-                        {
-                            foreach (var user in userList.Users)
-                            {
-                                context.Users.Add(user);
-                            }
-                            context.SaveChanges();
-                        }
+                        return; // 已有数据，跳过
                     }
-                    catch
-                    {
-                        // 如果 JSON 解析失败，创建默认管理员
-                        CreateDefaultAdmin(context);
-                    }
-                }
-                else
-                {
-                    // 没有 JSON 文件，创建默认管理员
-                    CreateDefaultAdmin(context);
                 }
             }
         }
 
-        private static void CreateDefaultAdmin(SqliteDbContext context)
-        {
-            var admin = new User
-            {
-                Username = "admin",
-                RealName = "管理员",
-                Password = "admin123",
-                Role = "Admin",
-                IsEnabled = true,
-                IsLocked = false,
-                CreateAt = DateTime.Now,
-                UpdateAt = DateTime.Now
-            };
-            context.Users.Add(admin);
-            context.SaveChanges();
-        }
     }
 }

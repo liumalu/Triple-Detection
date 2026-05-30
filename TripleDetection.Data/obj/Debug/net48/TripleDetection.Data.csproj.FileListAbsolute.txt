@@ -1,10 +1,16 @@
 D:\xcm\Triple-Detection\TripleDetection.Data\bin\Debug\net48\TripleDetection.Data.dll
 D:\xcm\Triple-Detection\TripleDetection.Data\bin\Debug\net48\TripleDetection.Data.pdb
+D:\xcm\Triple-Detection\TripleDetection.Data\bin\Debug\net48\EntityFramework.SqlServer.dll
+D:\xcm\Triple-Detection\TripleDetection.Data\bin\Debug\net48\EntityFramework.dll
+D:\xcm\Triple-Detection\TripleDetection.Data\bin\Debug\net48\System.Data.SQLite.dll
+D:\xcm\Triple-Detection\TripleDetection.Data\bin\Debug\net48\System.Data.SQLite.EF6.dll
 D:\xcm\Triple-Detection\TripleDetection.Data\obj\Debug\net48\TripleDetection.Data.csproj.AssemblyReference.cache
 D:\xcm\Triple-Detection\TripleDetection.Data\obj\Debug\net48\TripleDetection.Data.GeneratedMSBuildEditorConfig.editorconfig
 D:\xcm\Triple-Detection\TripleDetection.Data\obj\Debug\net48\TripleDetection.Data.AssemblyInfoInputs.cache
 D:\xcm\Triple-Detection\TripleDetection.Data\obj\Debug\net48\TripleDetection.Data.AssemblyInfo.cs
 D:\xcm\Triple-Detection\TripleDetection.Data\obj\Debug\net48\TripleDetection.Data.csproj.CoreCompileInputs.cache
 D:\xcm\Triple-Detection\TripleDetection.Data\obj\Debug\net48\TripleDetection.Data.sourcelink.json
+D:\xcm\Triple-Detection\TripleDetection.Data\obj\Debug\net48\TripleDe.F8B3E2C3.Up2Date
 D:\xcm\Triple-Detection\TripleDetection.Data\obj\Debug\net48\TripleDetection.Data.dll
 D:\xcm\Triple-Detection\TripleDetection.Data\obj\Debug\net48\TripleDetection.Data.pdb
+d:\xcm\Triple-Detection\TripleDetection.Data\bin\Debug\net48\Newtonsoft.Json.dll

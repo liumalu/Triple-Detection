@@ -1,12 +1,18 @@
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using Prism.Events;
 using VM.Core;
 using VM.PlatformSDKCS;
 using System.Drawing;
+using TripleDetection.Events;
 using TripleDetection.Models;
 using TripleDetection.Data.Entities;
+using TripleDetection.App.Services.System;
+using TripleDetection.Services.Data;
 using GlobalVariableModuleCs;
 
-namespace TripleDetection.Services
+namespace TripleDetection.App.Services.Detection
 {
     public class VmIntegrationService
     {
@@ -15,17 +21,19 @@ namespace TripleDetection.Services
         private bool _isSolutionLoad = false;
         private LoggingService _logService;
         private IDetectionRecordService _detectionRecordService;
+        private IEventAggregator _eventAggregator;
         private int _currentTaskId;
         private int _currentProductId;
         private string _currentBatchNumber;
 
         public event EventHandler<DetectionResult> OnDetectionResult;
 
-        public VmIntegrationService(ImageStorageService imageStorage, LoggingService logService, IDetectionRecordService detectionRecordService)
+        public VmIntegrationService(ImageStorageService imageStorage, LoggingService logService, IDetectionRecordService detectionRecordService, IEventAggregator eventAggregator = null)
         {
             _imageStorage = imageStorage;
             _logService = logService;
             _detectionRecordService = detectionRecordService;
+            _eventAggregator = eventAggregator;
             VmSolution.OnWorkStatusEvent += VmSolution_OnWorkStatusEvent;
         }
 
@@ -85,9 +93,9 @@ namespace TripleDetection.Services
             return _procedure;
         }
 
-        public System.Collections.Generic.List<string> GetAllProcedureNames()
+        public List<string> GetAllProcedureNames()
         {
-            var names = new System.Collections.Generic.List<string>();
+            var names = new List<string>();
             if (_isSolutionLoad)
             {
                 var processList = VmSolution.Instance.GetAllProcedureList();
@@ -103,7 +111,8 @@ namespace TripleDetection.Services
         {
             if (_procedure != null)
             {
-                var gvTool = _procedure.Modules["GlobalVariable"] as GlobalVariableModuleTool;
+                // var gvTool = _procedure.Modules["GlobalVariable"] as GlobalVariableModuleTool;
+                var gvTool =  VmSolution.Instance["全局变量1"] as GlobalVariableModuleTool;
                 if (gvTool != null)
                 {
                     string defaultValue = gvTool.GetGlobalVar(name) ?? "null";
@@ -113,47 +122,59 @@ namespace TripleDetection.Services
             }
         }
 
-        private System.Diagnostics.Stopwatch _stopwatch = new System.Diagnostics.Stopwatch();
+        private Stopwatch _stopwatch = new Stopwatch();
 
         private void VmSolution_OnWorkStatusEvent(ImvsSdkDefine.IMVS_MODULE_WORK_STAUS workStatusInfo)
         {
+            _logService?.Log($"[Callback] nWorkStatus={workStatusInfo.nWorkStatus}, nProcessID={workStatusInfo.nProcessID}");
             if (workStatusInfo.nWorkStatus == 0 && workStatusInfo.nProcessID == 10000)
             {
+                _logService?.Log("[Callback] 进入回调处理");
                 _stopwatch.Stop();
                 try
                 {
                     if (_procedure == null)
                     {
-                        System.Diagnostics.Debug.WriteLine("VmIntegrationService: _procedure is null");
+                        Debug.WriteLine("VmIntegrationService: _procedure is null");
+                        _logService?.Log("[Callback] _procedure is null");
                         return;
                     }
+                    _logService?.Log("[Callback] _procedure ok");
 
                     var ioNameInfos = _procedure.ModuResult.GetAllOutputNameInfo();
+                    _logService?.Log($"[Callback] ioNameInfos.Count={ioNameInfos.Count}");
                     if (ioNameInfos.Count == 0)
                     {
-                        System.Diagnostics.Debug.WriteLine("VmIntegrationService: no outputs available");
+                        Debug.WriteLine("VmIntegrationService: no outputs available");
                         return;
                     }
 
                     if (ioNameInfos[0].TypeName != IMVS_MODULE_BASE_DATA_TYPE.IMVS_GRAP_TYPE_STRING)
                     {
-                        System.Diagnostics.Debug.WriteLine($"VmIntegrationService: type mismatch, got {ioNameInfos[0].TypeName}");
+                        Debug.WriteLine($"VmIntegrationService: type mismatch, got {ioNameInfos[0].TypeName}");
                         return;
                     }
 
                     var outputResult = _procedure.ModuResult.GetOutputString(ioNameInfos[0].Name);
                     var stringVal = outputResult.astStringVal;
+                    _logService?.Log($"[Callback] stringVal={(stringVal == null ? "null" : "ok, len=" + stringVal.Length)}");
                     if (stringVal == null || stringVal.Length == 0)
                     {
-                        System.Diagnostics.Debug.WriteLine("VmIntegrationService: stringVal is null or empty");
+                        Debug.WriteLine("VmIntegrationService: stringVal is null or empty");
                         return;
                     }
 
                     string strResult = stringVal[0].strValue;
+                    _logService?.Log($"[Callback] strResult={strResult}");
                     if (strResult != null)
                     {
                         var result = ParseResult(strResult);
                         result.ElapsedMs = _stopwatch.ElapsedMilliseconds;
+
+                        // Publish via EventAggregator (preferred)
+                        _eventAggregator?.GetEvent<DetectionResultEvent>().Publish(result);
+
+                        // Legacy event (backward compatibility)
                         OnDetectionResult?.Invoke(this, result);
 
                         // 保存 DetectionRecord（非阻塞，异常吞噬）
@@ -163,11 +184,10 @@ namespace TripleDetection.Services
                             {
                                 TaskId = _currentTaskId,
                                 ProductId = _currentProductId,
-                                BatchNumber = _currentBatchNumber,
+                                BatchNumber = result.BatchNumber,
                                 IsOK = result.IsOK,
-                                Confidence = result.Confidence,
-                                CharCount = result.CharCount,
-                                CodeInfo = result.CodeInfo,
+                                ProductionDate = result.ProductionDate,
+                                ExpirationDate = result.ExpirationDate,
                                 ImagePath = result.ImagePath,
                                 ElapsedMs = result.ElapsedMs,
                                 DetectionTime = DateTime.Now
@@ -176,7 +196,7 @@ namespace TripleDetection.Services
                         }
                         catch (Exception ex)
                         {
-                            System.Diagnostics.Debug.WriteLine($"DetectionRecord保存失败: {ex.Message}");
+                            Debug.WriteLine($"DetectionRecord保存失败: {ex.Message}");
                         }
                     }
                 }
@@ -184,9 +204,9 @@ namespace TripleDetection.Services
                 {
                     dynamic vmEx = ex;
                     if (vmEx.errorCode != null)
-                        System.Diagnostics.Debug.WriteLine($"VmIntegrationService VM Error: 0x{vmEx.errorCode:X}");
+                        Debug.WriteLine($"VmIntegrationService VM Error: 0x{vmEx.errorCode:X}");
                     else
-                        System.Diagnostics.Debug.WriteLine($"VmIntegrationService Error: {ex.Message}");
+                        Debug.WriteLine($"VmIntegrationService Error: {ex.Message}");
                 }
                 finally
                 {
@@ -195,15 +215,36 @@ namespace TripleDetection.Services
             }
         }
 
-        private DetectionResult ParseResult(string strResult)
+        internal static DetectionResult ParseResult(string strResult)
         {
-            var parts = strResult.Split(';');
+            if (string.IsNullOrEmpty(strResult))
+            {
+                return new DetectionResult
+                {
+                    IsOK = false,
+                    ErrorMessage = "Empty result string",
+                    DetectionTime = DateTime.Now
+                };
+            }
+
+            var parts = strResult.Trim().Split(',');
+
+            if (parts.Length < 4)
+            {
+                return new DetectionResult
+                {
+                    IsOK = false,
+                    ErrorMessage = $"Invalid result format: expected 4 fields, got {parts.Length}",
+                    DetectionTime = DateTime.Now
+                };
+            }
+
             return new DetectionResult
             {
-                IsOK = parts[0] == "1",
-                CharCount = int.Parse(parts[1]),
-                CodeInfo = parts[2],
-                Confidence = double.Parse(parts[3]),
+                IsOK = parts[0].Trim() == "1",
+                BatchNumber = parts[1].Trim(),
+                ProductionDate = parts[2].Trim(),
+                ExpirationDate = parts[3].Trim(),
                 DetectionTime = DateTime.Now
             };
         }

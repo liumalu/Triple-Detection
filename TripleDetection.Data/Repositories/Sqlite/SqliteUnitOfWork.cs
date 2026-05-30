@@ -89,31 +89,10 @@ namespace TripleDetection.Data.Repositories.Sqlite
 
             if (!_repositories.ContainsKey(entityType))
             {
-                IRepository<T> repository;
-
-                if (entityType == typeof(Data.Entities.User))
-                {
-                    repository = new SqliteUserRepository(_context) as IRepository<T>;
-                }
-                else
-                {
-                    repository = new SqliteRepository<T>(_context);
-                }
-
-                _repositories[entityType] = repository;
+                _repositories[entityType] = new SqliteRepository<T>(_context);
             }
 
             return (IRepository<T>)_repositories[entityType];
-        }
-
-        public IUserRepository GetUserRepository()
-        {
-            if (!_repositories.ContainsKey(typeof(Data.Entities.User)))
-            {
-                _repositories[typeof(Data.Entities.User)] = new SqliteUserRepository(_context);
-            }
-
-            return (IUserRepository)_repositories[typeof(Data.Entities.User)];
         }
 
         public void Dispose()

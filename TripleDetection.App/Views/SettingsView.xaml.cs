@@ -1,7 +1,7 @@
 using System.Windows;
 using System.Windows.Controls;
-using TripleDetection.Services;
 using TripleDetection.ViewModels.Settings;
+using TripleDetection.Services;
 
 namespace TripleDetection.Views
 {

@@ -3,9 +3,6 @@ using TripleDetection.Data.Entities;
 
 namespace TripleDetection.Data.Repositories.Configuration
 {
-    /// <summary>
-    /// DetectionRecord 实体配置
-    /// </summary>
     public class DetectionRecordConfiguration : EntityTypeConfiguration<DetectionRecord>
     {
         public DetectionRecordConfiguration()
@@ -15,13 +12,13 @@ namespace TripleDetection.Data.Repositories.Configuration
             HasKey(d => d.Id);
 
             Property(d => d.BatchNumber).HasMaxLength(50);
-            Property(d => d.CodeInfo).HasMaxLength(200);
+            Property(d => d.ProductionDate).HasMaxLength(50);
+            Property(d => d.ExpirationDate).HasMaxLength(50);
             Property(d => d.ImagePath).HasMaxLength(500);
             Property(d => d.IsOK).IsRequired();
             Property(d => d.ElapsedMs).IsRequired();
             Property(d => d.ProductId).IsRequired();
 
-            // 关系：DetectionRecord -> Task
             HasRequired(d => d.Task)
                 .WithMany()
                 .HasForeignKey(d => d.TaskId)

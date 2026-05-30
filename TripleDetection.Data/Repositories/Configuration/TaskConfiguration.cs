@@ -6,7 +6,7 @@ namespace TripleDetection.Data.Repositories.Configuration
     /// <summary>
     /// Task 实体配置
     /// </summary>
-    public class TaskConfiguration : EntityTypeConfiguration<Data.Entities.Task>
+    public class TaskConfiguration : EntityTypeConfiguration<Data.Entities.ProdTask>
     {
         public TaskConfiguration()
         {

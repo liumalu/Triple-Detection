@@ -1,10 +1,11 @@
 using System;
-using System.Windows.Input;
+using Prism.Commands;
+using Prism.Mvvm;
 using TripleDetection.Services;
 
 namespace TripleDetection.ViewModels.Settings
 {
-    public class SettingsShellViewModel
+    public class SettingsShellViewModel : BindableBase
     {
         private string _currentCategory = "Communication";
         private object _currentView;
@@ -13,18 +14,28 @@ namespace TripleDetection.ViewModels.Settings
         private readonly SystemSettingsService _sysService;
         private readonly DeviceControlSettingsService _deviceService;
 
-        public ICommand NavigateCommand { get; }
-        public ICommand SyncCommand { get; }
+        public DelegateCommand<string> NavigateCommand { get; }
+        public DelegateCommand SyncCommand { get; }
 
         public SettingsShellViewModel()
+            : this(new CommunicationSettingsService(), new VmSettingsService(),
+                   new SystemSettingsService(), new DeviceControlSettingsService())
         {
-            _commService = new CommunicationSettingsService();
-            _vmService = new VmSettingsService();
-            _sysService = new SystemSettingsService();
-            _deviceService = new DeviceControlSettingsService();
+        }
 
-            NavigateCommand = new RelayCommand(param => NavigateTo(param as string));
-            SyncCommand = new RelayCommand(param => SyncToVm());
+        public SettingsShellViewModel(
+            CommunicationSettingsService commService,
+            VmSettingsService vmService,
+            SystemSettingsService sysService,
+            DeviceControlSettingsService deviceService)
+        {
+            _commService = commService;
+            _vmService = vmService;
+            _sysService = sysService;
+            _deviceService = deviceService;
+
+            NavigateCommand = new DelegateCommand<string>(NavigateTo);
+            SyncCommand = new DelegateCommand(SyncToVm);
 
             // Initialize with Communication view
             NavigateTo("Communication");
@@ -35,23 +46,20 @@ namespace TripleDetection.ViewModels.Settings
             get => _currentCategory;
             set
             {
-                _currentCategory = value;
-                OnPropertyChanged(nameof(CurrentCategory));
-                OnPropertyChanged(nameof(IsCommunicationActive));
-                OnPropertyChanged(nameof(IsVmSettingsActive));
-                OnPropertyChanged(nameof(IsSystemActive));
-                OnPropertyChanged(nameof(IsDeviceControlActive));
+                if (SetProperty(ref _currentCategory, value))
+                {
+                    RaisePropertyChanged(nameof(IsCommunicationActive));
+                    RaisePropertyChanged(nameof(IsVmSettingsActive));
+                    RaisePropertyChanged(nameof(IsSystemActive));
+                    RaisePropertyChanged(nameof(IsDeviceControlActive));
+                }
             }
         }
 
         public object CurrentView
         {
             get => _currentView;
-            set
-            {
-                _currentView = value;
-                OnPropertyChanged(nameof(CurrentView));
-            }
+            set => SetProperty(ref _currentView, value);
         }
 
         public bool IsCommunicationActive => _currentCategory == "Communication";
@@ -101,13 +109,6 @@ namespace TripleDetection.ViewModels.Settings
                 System.Windows.MessageBox.Show($"同步失败: {ex.Message}", "错误",
                     System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
             }
-        }
-
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
         }
     }
 }

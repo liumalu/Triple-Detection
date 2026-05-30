@@ -1,17 +1,17 @@
 using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows;
+using Prism.Mvvm;
 using TripleDetection.Data.Entities;
 using TripleDetection.Data.Repositories;
 using TripleDetection.Services;
+using TripleDetection.Services.Production;
 
-namespace TripleDetection.ViewModels
+namespace TripleDetection.ViewModels.Production
 {
-    public class ProductListViewModel : INotifyPropertyChanged
+    public class ProductListViewModel : BindableBase
     {
-        private readonly ProductService _productService;
+        private readonly IProductService _productService;
         private string _queryCode = "";
         private string _queryName = "";
         private int? _queryStatus;
@@ -28,55 +28,71 @@ namespace TripleDetection.ViewModels
         public string QueryCode
         {
             get => _queryCode;
-            set { _queryCode = value; OnPropertyChanged(); }
+            set => SetProperty(ref _queryCode, value);
         }
 
         public string QueryName
         {
             get => _queryName;
-            set { _queryName = value; OnPropertyChanged(); }
+            set => SetProperty(ref _queryName, value);
         }
 
         public int? QueryStatus
         {
             get => _queryStatus;
-            set { _queryStatus = value; OnPropertyChanged(); }
+            set => SetProperty(ref _queryStatus, value);
         }
 
         public DateTime? QueryCreateAtFrom
         {
             get => _queryCreateAtFrom;
-            set { _queryCreateAtFrom = value; OnPropertyChanged(); }
+            set => SetProperty(ref _queryCreateAtFrom, value);
         }
 
         public DateTime? QueryCreateAtTo
         {
             get => _queryCreateAtTo;
-            set { _queryCreateAtTo = value; OnPropertyChanged(); }
+            set => SetProperty(ref _queryCreateAtTo, value);
         }
 
         public int PageIndex
         {
             get => _pageIndex;
-            set { _pageIndex = value; OnPropertyChanged(); OnPropertyChanged(nameof(CurrentPageDisplay)); }
+            set
+            {
+                if (SetProperty(ref _pageIndex, value))
+                    RaisePropertyChanged(nameof(CurrentPageDisplay));
+            }
         }
 
         public int PageSize
         {
             get => _pageSize;
-            set { _pageSize = value; OnPropertyChanged(); }
+            set => SetProperty(ref _pageSize, value);
         }
 
         public int TotalCount
         {
             get => _totalCount;
-            set { _totalCount = value; OnPropertyChanged(); OnPropertyChanged(nameof(TotalPagesDisplay)); }
+            set
+            {
+                if (SetProperty(ref _totalCount, value))
+                    RaisePropertyChanged(nameof(TotalPagesDisplay));
+            }
         }
 
         public int TotalPages
         {
             get => _totalPages;
-            set { _totalPages = value; OnPropertyChanged(); OnPropertyChanged(nameof(TotalPagesDisplay)); OnPropertyChanged(nameof(HasNextPage)); OnPropertyChanged(nameof(HasPreviousPage)); }
+            set
+            {
+                if (SetProperty(ref _totalPages, value))
+                {
+                    RaisePropertyChanged(nameof(TotalPagesDisplay));
+                    RaisePropertyChanged(nameof(HasNextPage));
+                    RaisePropertyChanged(nameof(HasPreviousPage));
+                }
+            }
         }
 
         public string TotalPagesDisplay => $"共 {TotalCount} 条";
@@ -87,19 +103,17 @@ namespace TripleDetection.ViewModels
         public Product SelectedProduct
         {
             get => _selectedProduct;
-            set { _selectedProduct = value; OnPropertyChanged(); }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged([CallerMemberName] string name = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+            set => SetProperty(ref _selectedProduct, value);
         }
 
         public ProductListViewModel()
+            : this(new ProductService())
         {
-            _productService = new ProductService();
+        }
+
+        public ProductListViewModel(IProductService productService)
+        {
+            _productService = productService;
         }
 
         public void Search()
@@ -177,8 +191,8 @@ namespace TripleDetection.ViewModels
 
         public void OpenEditWindow(Product product = null)
         {
-            var editVm = new ProductEditViewModel(product);
-            var editWindow = new Views.ProductEditWindow { DataContext = editVm };
+            var editVm = new ProductEditViewModel(product, _productService);
+            var editWindow = new Views.Production.ProductEditWindow { DataContext = editVm };
             editWindow.Owner = Application.Current.MainWindow;
             if (editWindow.ShowDialog() == true)
             {

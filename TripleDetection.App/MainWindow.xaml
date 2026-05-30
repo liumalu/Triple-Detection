@@ -1,6 +1,7 @@
 <Window x:Class="TripleDetection.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:prism="http://prismlibrary.com/"
         xmlns:local="clr-namespace:TripleDetection"
         Title="Triple Detection"
         Height="750" Width="1284"
@@ -84,6 +85,10 @@
                                 Style="{StaticResource NavButtonStyle}" Click="BtnNav_Click" Tag="Settings"/>
                         <Button x:Name="btnNavUserManagement" Content="👤 用户权限"
                                 Style="{StaticResource NavButtonStyle}" Click="BtnNav_Click" Tag="UserManagement"/>
+                        <Button x:Name="btnNavAuditLog" Content="📋 审计日志"
+                                Style="{StaticResource NavButtonStyle}" Click="BtnNav_Click" Tag="AuditLog"/>
+                        <Button x:Name="btnNavDetectionHistory" Content="📜 检测记录"
+                                Style="{StaticResource NavButtonStyle}" Click="BtnNav_Click" Tag="DetectionHistory"/>
                     </StackPanel>
 
                     <!-- 折叠按钮 - 右上角小箭头 -->
@@ -165,7 +170,7 @@
                 </Border>
 
                 <!-- Tab 内容 -->
-                <ContentControl Grid.Row="1" x:Name="MainContent"/>
+                <ContentControl Grid.Row="1" x:Name="MainContent" prism:RegionManager.RegionName="MainContentRegion"/>
             </Grid>
         </Grid>
 

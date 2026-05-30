@@ -9,6 +9,7 @@ namespace TripleDetection.Data.Repositories.Sqlite
     /// <summary>
     /// SQLite 数据库上下文
     /// </summary>
+    [DbConfigurationType(typeof(SQLiteEFConfiguration))]
     public class SqliteDbContext : DbContext
     {
         private static readonly string DefaultDbPath = Path.Combine(
@@ -30,7 +31,7 @@ namespace TripleDetection.Data.Repositories.Sqlite
 
         // DbSet 实体集
         public DbSet<Product> Products { get; set; }
-        public DbSet<Data.Entities.Task> Tasks { get; set; }
+        public DbSet<Data.Entities.ProdTask> Tasks { get; set; }
         public DbSet<DetectionRecord> DetectionRecords { get; set; }
         public DbSet<SystemConfig> SystemConfigs { get; set; }
         public DbSet<User> Users { get; set; }

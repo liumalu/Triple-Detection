@@ -1,6 +1,7 @@
 using Xunit;
 using System.IO;
 using System.Drawing;
+using TripleDetection.App.Services.Detection;
 
 namespace TripleDetection.App.Tests
 {

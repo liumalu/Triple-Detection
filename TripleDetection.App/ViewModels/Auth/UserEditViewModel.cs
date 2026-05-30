@@ -1,17 +1,16 @@
 using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows;
+using Prism.Mvvm;
 using TripleDetection.Data.Entities;
 using TripleDetection.Services;
 
-namespace TripleDetection.ViewModels
+namespace TripleDetection.ViewModels.Auth
 {
-    public class UserEditViewModel : INotifyPropertyChanged
+    public class UserEditViewModel : BindableBase
     {
-        private readonly UserService _userService;
-        private readonly bool _isEditMode;
+        private readonly IUserService _userService;
+        private bool _isEditMode;
         private string _originalUsername = "";
         private string _username = "";
         private string _realName = "";
@@ -31,55 +30,50 @@ namespace TripleDetection.ViewModels
         public bool IsEditMode
         {
             get => _isEditMode;
+            private set => SetProperty(ref _isEditMode, value);
         }
 
         public string Username
         {
             get => _username;
-            set { _username = value; OnPropertyChanged(); ErrorMessage = ""; }
+            set { if (SetProperty(ref _username, value)) ErrorMessage = ""; }
         }
 
         public string RealName
         {
             get => _realName;
-            set { _realName = value; OnPropertyChanged(); ErrorMessage = ""; }
+            set { if (SetProperty(ref _realName, value)) ErrorMessage = ""; }
         }
 
         public string Password
         {
             get => _password;
-            set { _password = value; OnPropertyChanged(); ErrorMessage = ""; }
+            set { if (SetProperty(ref _password, value)) ErrorMessage = ""; }
         }
 
         public string Role
         {
             get => _role;
-            set { _role = value; OnPropertyChanged(); }
+            set => SetProperty(ref _role, value);
         }
 
         public bool IsEnabled
         {
             get => _isEnabled;
-            set { _isEnabled = value; OnPropertyChanged(); }
+            set => SetProperty(ref _isEnabled, value);
         }
 
         public string ErrorMessage
         {
             get => _errorMessage;
-            set { _errorMessage = value; OnPropertyChanged(); }
+            set => SetProperty(ref _errorMessage, value);
         }
 
         public string WindowTitle => IsEditMode ? "编辑用户" : "新增用户";
 
-        public event PropertyChangedEventHandler PropertyChanged;
         public event EventHandler<bool> RequestClose;
 
-        protected void OnPropertyChanged([CallerMemberName] string name = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        }
-
-        public UserEditViewModel(User user = null, UserService userService = null)
+        public UserEditViewModel(User user = null, IUserService userService = null)
         {
             _userService = userService ?? new UserService();
             _isEditMode = user != null;

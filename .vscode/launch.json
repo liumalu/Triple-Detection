@@ -1,0 +1,15 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug TripleDetection.App",
+            "type": "clr",
+            "request": "launch",
+            "program": "${workspaceFolder}/TripleDetection.App/bin/Debug/TripleDetection.App.exe",
+            "args": [],
+            "cwd": "${workspaceFolder}/TripleDetection.App/bin/Debug",
+            "preLaunchTask": "build",
+            "internalConsoleOptions": "openOnSessionStart"
+        }
+    ]
+}

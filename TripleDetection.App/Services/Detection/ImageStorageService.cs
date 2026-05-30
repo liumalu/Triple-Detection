@@ -2,8 +2,9 @@ using System;
 using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Diagnostics;
 
-namespace TripleDetection.Services
+namespace TripleDetection.App.Services.Detection
 {
     public class ImageStorageService
     {
@@ -38,7 +39,7 @@ namespace TripleDetection.Services
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Failed to save image: {ex.Message}");
+                Debug.WriteLine($"Failed to save image: {ex.Message}");
                 return null;
             }
         }
