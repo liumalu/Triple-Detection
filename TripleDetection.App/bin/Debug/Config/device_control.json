@@ -1,8 +1,0 @@
-{
-  "lightSourceType": "LED",
-  "captureDelayMs": 100,
-  "captureFeedbackTimeoutMs": 5000,
-  "rejectDelayMs": 50,
-  "rejectDurationMs": 200,
-  "consecutiveRejectsToStopLine": 10
-}

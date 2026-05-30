@@ -160,7 +160,7 @@
             <!-- Login Button -->
             <Button Grid.Row="4"
                     x:Name="LoginButton"
-                    Command="{Binding LoginCommand}"
+                    Click="LoginButton_Click"
                     HorizontalAlignment="Stretch"
                     Margin="0,0,0,8"
                     Cursor="Hand">

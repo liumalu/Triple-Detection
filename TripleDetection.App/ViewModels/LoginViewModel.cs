@@ -145,7 +145,11 @@ namespace TripleDetection.ViewModels
             catch (Exception ex)
             {
                 ErrorMessage = "数据库连接失败，请稍后重试";
-                System.Diagnostics.Debug.WriteLine($"Login error: {ex.Message}");
+                var msg = ex.ToString();
+                System.Diagnostics.Debug.WriteLine($"Login error: {msg}");
+                System.IO.File.AppendAllText(
+                    System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs", "login_error.log"),
+                    DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "\n" + msg + "\n\n");
                 OnLoginFailed?.Invoke();
             }
             finally

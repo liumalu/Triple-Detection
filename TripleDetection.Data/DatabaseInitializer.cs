@@ -145,6 +145,33 @@ CREATE TABLE IF NOT EXISTS AuditLogs (
                     {
                         return; // 已有数据，跳过
                     }
+
+                    // Seed admin user
+                    cmd.CommandText = @"
+INSERT INTO Users (Username, RealName, Password, PasswordSalt, PasswordHash, Role, Status, IsEnabled, IsLocked, IsDeleted, CreateAt, UpdateAt)
+VALUES ('admin', 'Administrator', 'admin123', NULL, NULL, 'Admin', 0, 1, 0, 0, @now, @now)";
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@now", DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"));
+                    cmd.ExecuteNonQuery();
+
+                    // Seed products
+                    cmd.CommandText = @"
+INSERT INTO Products (Name, Description, IsEnabled, IsDeleted, CreateAt, UpdateAt)
+VALUES
+('OCR检测产品A', '用于OCR文字识别检测', 1, 0, @now, @now),
+('缺陷检测产品B', '用于表面缺陷检测', 1, 0, @now, @now),
+('尺寸测量产品C', '用于尺寸测量', 1, 0, @now, @now)";
+                    cmd.ExecuteNonQuery();
+
+                    // Seed tasks
+                    cmd.CommandText = @"
+INSERT INTO Tasks (Name, Description, Status, IsEnabled, IsDeleted, CreateAt, UpdateAt)
+VALUES
+('OCR检测任务-2025-05-01', 'OCR检测任务', 1, 1, 0, @now, @now),
+('缺陷检测任务-2025-05-02', '缺陷检测任务', 1, 1, 0, @now, @now),
+('尺寸测量任务-2025-05-03', '尺寸测量任务', 1, 1, 0, @now, @now),
+('备料任务-待审核', '备料任务', 0, 1, 0, @now, @now)";
+                    cmd.ExecuteNonQuery();
                 }
             }
         }

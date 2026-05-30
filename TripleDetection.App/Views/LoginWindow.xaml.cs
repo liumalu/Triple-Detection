@@ -126,8 +126,16 @@ namespace TripleDetection.Views
 
         private void SubmitLogin()
         {
+            _viewModel.Username = UsernameTextBox.Text;
+            _viewModel.Password = PasswordBox.Password;
+
             if (_viewModel.LoginCommand.CanExecute(null))
                 _viewModel.LoginCommand.Execute(null);
+        }
+
+        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        {
+            SubmitLogin();
         }
     }
 }

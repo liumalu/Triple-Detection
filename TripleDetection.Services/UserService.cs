@@ -29,7 +29,11 @@ namespace TripleDetection.Services
         private readonly Services.Audit.IAuditLogService _auditLog;
         private readonly IPasswordHashService _hashService;
 
-        public UserService() : this(new SqliteRepositoryFactory().CreateRepository<User>(), null, new PasswordHashService())
+        public UserService() : this(
+            new SqliteRepositoryFactory(
+                $"Data Source={System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "tripledetection.db")}").CreateRepository<User>(),
+            null,
+            new PasswordHashService())
         {
         }
 
