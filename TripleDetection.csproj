@@ -12,27 +12,29 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Prism.DryIoc" Version="9.0.537" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.11">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="System.Drawing.Common" Version="8.0.10" />
   </ItemGroup>
 
   <!-- VisionMaster SDK DLLs -->
   <ItemGroup>
     <Reference Include="VM.Core">
-      <HintPath>Infrastructure\libs\VM.Core.dll</HintPath>
+      <HintPath>$(VmInstallPath)\Development\V4.x\ComControls\Assembly\VM.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="VM.PlatformSDKCS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c1484a72052ee3d4, processorArchitecture=MSIL">
-      <HintPath>Infrastructure\libs\VM.PlatformSDKCS.dll</HintPath>
+      <HintPath>$(VmInstallPath)\Development\V4.x\Libraries\win64\C#\VM.PlatformSDKCS.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="iMVS-6000PlatformSDKCS">
-      <HintPath>Infrastructure\libs\iMVS-6000PlatformSDKCS.dll</HintPath>
+      <HintPath>$(VmInstallPath)\Development\V4.x\Libraries\win64\C#\iMVS-6000PlatformSDKCS.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="GlobalVariableModuleCs">
