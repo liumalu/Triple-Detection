@@ -13,12 +13,11 @@ namespace TripleDetection.Presentation.Views
         private readonly LoginViewModel _viewModel;
         private bool _isPasswordVisible;
 
-        public LoginWindow()
+        public LoginWindow(LoginViewModel viewModel)
         {
             InitializeComponent();
-
-            _viewModel = new LoginViewModel();
-            DataContext = _viewModel;
+            DataContext = viewModel;
+            _viewModel = viewModel;
 
             _viewModel.LoginSucceeded += OnLoginSucceeded;
             _viewModel.OnLoginFailed += OnLoginFailed;
