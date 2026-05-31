@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
-using Prism.Regions;
+using Prism.Navigation.Regions;
 using TripleDetection.Application.Services;
 
 namespace TripleDetection.Presentation.ViewModels.Detection

@@ -64,7 +64,7 @@ namespace TripleDetection.Presentation.Views
                 SystemNameText.Text = systemName;
         }
 
-        private void OnLoginSucceeded(Data.Entities.User user)
+        private void OnLoginSucceeded(TripleDetection.Domain.Entities.User user)
         {
             this.DialogResult = true;
             this.Close();
