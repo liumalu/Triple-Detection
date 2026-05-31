@@ -2,16 +2,14 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Windows;
-using DryIoc;
-using Prism.DryIoc;
-using Prism.Events;
-using Prism.Ioc;
+using Microsoft.Extensions.DependencyInjection;
 using TripleDetection.Application.Services;
 using TripleDetection.Application.SettingsServices;
 using TripleDetection.Application.VmServices;
 using TripleDetection.Domain.Repositories;
 using TripleDetection.Infrastructure.Persistence;
 using TripleDetection.Infrastructure.Repositories;
+using TripleDetection.Presentation.Navigation;
 using TripleDetection.Presentation.ViewModels;
 using TripleDetection.Presentation.ViewModels.Auth;
 using TripleDetection.Presentation.ViewModels.Detection;
@@ -25,9 +23,12 @@ using TripleDetection.Presentation.Views.Detection;
 using TripleDetection.Presentation.Views.Production;
 using TripleDetection.Presentation.Views.Settings;
 
-public partial class App : PrismApplication
+public partial class App : Application
 {
-    private static Mutex _mutex;
+    private IServiceProvider? _services;
+    private static Mutex? _mutex;
+
+    public static IServiceProvider Services => ((App)Current)._services!;
 
     protected override void OnStartup(StartupEventArgs e)
     {
@@ -35,96 +36,84 @@ public partial class App : PrismApplication
         if (!createdNew)
         {
             MessageBox.Show("应用程序已在运行中。", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
-            Shutdown();
-            return;
+            Shutdown(); return;
         }
 
         InitializeDatabase();
-        base.OnStartup(e);
+
+        var services = new ServiceCollection();
+        ConfigureServices(services);
+        _services = services.BuildServiceProvider();
+
+        // Show login window first
+        var loginWindow = _services.GetRequiredService<LoginWindow>();
+        var result = loginWindow.ShowDialog();
+        if (result != true) { Shutdown(); return; }
+
+        // Then show main window
+        var mainWindow = _services.GetRequiredService<MainWindow>();
+        MainWindow = mainWindow;
+        mainWindow.Show();
+        mainWindow.WindowState = WindowState.Normal;
+        mainWindow.Activate();
     }
 
-    protected override Window CreateShell() => Container.Resolve<MainWindow>();
-
-    protected override void RegisterTypes(IContainerRegistry containerRegistry)
+    private void ConfigureServices(IServiceCollection services)
     {
-        var container = containerRegistry as IContainer;
-        if (container == null) return;
-
+        // Infrastructure
         var dbPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "tripledetection.db");
         var connectionString = $"Data Source={dbPath}";
+        services.AddSingleton<IDbConnectionFactory>(new SqliteConnectionFactory(connectionString));
+        services.AddSingleton<IRepositoryFactory>(new SqliteRepositoryFactory(connectionString));
+        services.AddTransient(typeof(IRepository<>), typeof(SqliteRepository<>));
+        services.AddTransient<IAuditLogRepository, AuditLogRepository>();
+        services.AddTransient<IDetectionRecordRepository, DetectionRecordRepository>();
 
-        // Infrastructure - Connection and Repository Factory
-        container.RegisterInstance<IDbConnectionFactory>(new SqliteConnectionFactory(connectionString));
-        container.RegisterInstance<IRepositoryFactory>(new SqliteRepositoryFactory(connectionString));
-
-        // Infrastructure - Repositories (transient)
-        container.Register(typeof(IRepository<>), typeof(SqliteRepository<>), Reuse.Transient);
-        container.Register<IAuditLogRepository, AuditLogRepository>(Reuse.Transient);
-        container.Register<IDetectionRecordRepository, DetectionRecordRepository>(Reuse.Transient);
-
-        // Logging Service (singleton)
+        // Logging (singleton)
         var logPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs");
-        var eventAggregator = Container.Resolve<IEventAggregator>();
-        container.RegisterInstance(new LoggingService(logPath, eventAggregator));
+        services.AddSingleton(new LoggingService(logPath));
 
         // Image Storage (singleton)
         var okDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images", "OK");
         var ngDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images", "NG");
-        container.RegisterInstance(new ImageStorageService(okDir, ngDir));
-
-        // Application Services (transient)
-        container.Register<IUserService, UserService>(Reuse.Transient);
-        container.Register<IProductService, ProductService>(Reuse.Transient);
-        container.Register<ITaskService, TaskService>(Reuse.Transient);
-        container.Register<IAuditLogService, AuditLogService>(Reuse.Transient);
-        container.Register<IDetectionRecordService, DetectionRecordService>(Reuse.Transient);
-        container.Register<CommunicationSettingsService>(Reuse.Transient);
-        container.Register<VmSettingsService>(Reuse.Transient);
-        container.Register<SystemSettingsService>(Reuse.Transient);
-        container.Register<DeviceControlSettingsService>(Reuse.Transient);
-        container.Register<SettingsSyncService>(Reuse.Transient);
+        services.AddSingleton(new ImageStorageService(okDir, ngDir));
 
         // VM Integration (singleton)
-        container.Register<VmIntegrationService>(Reuse.Singleton);
+        services.AddSingleton<VmIntegrationService>();
+
+        // Settings
+        services.AddTransient<CommunicationSettingsService>();
+        services.AddTransient<VmSettingsService>();
+        services.AddTransient<SystemSettingsService>();
+        services.AddTransient<DeviceControlSettingsService>();
+        services.AddSingleton<SettingsSyncService>();
+
+        // Application Services (transient)
+        services.AddTransient<IUserService, UserService>();
+        services.AddTransient<IProductService, ProductService>();
+        services.AddTransient<ITaskService, TaskService>();
+        services.AddTransient<IAuditLogService, AuditLogService>();
+        services.AddTransient<IDetectionRecordService, DetectionRecordService>();
+
+        // Navigation service
+        services.AddSingleton<NavigationService>();
+        services.AddSingleton<INavigationService>(sp => sp.GetRequiredService<NavigationService>());
 
         // ViewModels (transient)
-        container.Register<MainViewModel>(Reuse.Transient);
-        container.Register<TabItemViewModel>(Reuse.Transient);
-        container.Register<LoginViewModel>(Reuse.Transient);
-        container.Register<UserManagementViewModel>(Reuse.Transient);
-        container.Register<UserEditViewModel>(Reuse.Transient);
-        container.Register<ProductListViewModel>(Reuse.Transient);
-        container.Register<ProductEditViewModel>(Reuse.Transient);
-        container.Register<TaskListViewModel>(Reuse.Transient);
-        container.Register<TaskEditViewModel>(Reuse.Transient);
-        container.Register<SettingsShellViewModel>(Reuse.Transient);
+        services.AddTransient<LoginViewModel>();
+        services.AddTransient<MainViewModel>();
+        services.AddTransient<TabItemViewModel>();
+        services.AddTransient<UserManagementViewModel>();
+        services.AddTransient<UserEditViewModel>();
+        services.AddTransient<ProductListViewModel>();
+        services.AddTransient<ProductEditViewModel>();
+        services.AddTransient<TaskListViewModel>();
+        services.AddTransient<TaskEditViewModel>();
+        services.AddTransient<SettingsShellViewModel>();
 
-        // Navigation
-        container.RegisterTypeForNavigation<DashboardView>("Dashboard");
-        container.RegisterTypeForNavigation<DetectionView>("Detection");
-        container.RegisterTypeForNavigation<ProductListView>("Products");
-        container.RegisterTypeForNavigation<TaskListView>("Tasks");
-        container.RegisterTypeForNavigation<LogsView>("Logs");
-        container.RegisterTypeForNavigation<SettingsView>("Settings");
-        container.RegisterTypeForNavigation<UserManagementView>("UserManagement");
-        container.RegisterTypeForNavigation<AuditLogView>("AuditLog");
-        container.RegisterTypeForNavigation<DetectionHistoryView>("DetectionHistory");
-
-        // MainWindow as singleton
-        container.Register<MainWindow>(Reuse.Singleton);
-    }
-
-    protected override void OnInitialized()
-    {
-        var loginWindow = new LoginWindow();
-        var result = loginWindow.ShowDialog();
-        if (result != true) { Shutdown(); return; }
-        if (MainWindow != null)
-        {
-            MainWindow.Show();
-            MainWindow.WindowState = WindowState.Normal;
-            MainWindow.Activate();
-        }
+        // Views (transient)
+        services.AddTransient<LoginWindow>();
+        services.AddTransient<MainWindow>();
     }
 
     private void InitializeDatabase()
