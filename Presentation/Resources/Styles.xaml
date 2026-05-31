@@ -1,6 +1,6 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:TripleDetection.Converters;assembly=TripleDetection.App">
+                    xmlns:local="clr-namespace:TripleDetection.Presentation.Converters">
 
     <!-- 颜色定义 -->
     <Color x:Key="PrimaryColor">#4FD1C5</Color>

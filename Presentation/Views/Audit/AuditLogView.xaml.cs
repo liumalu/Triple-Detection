@@ -7,8 +7,9 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Win32;
-using TripleDetection.Data.Repositories;
-using TripleDetection.Data.Entities;
+using TripleDetection.Domain.Entities;
+using TripleDetection.Domain.Entities.Queries;
+using TripleDetection.Domain.Repositories;
 
 namespace TripleDetection.Presentation.Views.Audit
 {

@@ -1,7 +1,7 @@
 using System.Windows;
 using System.Windows.Controls;
-using TripleDetection.Services;
-using TripleDetection.Models;
+using TripleDetection.Application.SettingsServices;
+using TripleDetection.Presentation.Models;
 
 namespace TripleDetection.Presentation.Views.Settings
 {

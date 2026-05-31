@@ -6,17 +6,15 @@ using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Win32;
 using VM.Core;
-using TripleDetection.App.Services.Detection;
-using TripleDetection.App.Services.System;
-using TripleDetection.Services.Production;
-using TripleDetection.Services.Data;
-using TripleDetection.ViewModels;
-using TripleDetection.ViewModels.Detection;
+using TripleDetection.Application.VmServices;
+using TripleDetection.Application.Services;
+using TripleDetection.Presentation.ViewModels;
+using TripleDetection.Presentation.ViewModels.Detection;
 using MessageBox = System.Windows.MessageBox;
-using TripleDetection.Models;
-using TaskEntity = TripleDetection.Data.Entities.ProdTask;
+using TripleDetection.Presentation.Models;
+using TaskEntity = TripleDetection.Domain.Entities.ProdTask;
 using GlobalVariableModuleCs;
-using TripleDetection.Data.Repositories.Sqlite;
+using TripleDetection.Infrastructure.Repositories;
 
 namespace TripleDetection.Presentation.Views.Detection
 {

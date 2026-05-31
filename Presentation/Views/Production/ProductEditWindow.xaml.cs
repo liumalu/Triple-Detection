@@ -1,6 +1,6 @@
 using System.Windows;
-using TripleDetection.ViewModels;
-using TripleDetection.ViewModels.Production;
+using TripleDetection.Presentation.ViewModels;
+using TripleDetection.Presentation.ViewModels.Production;
 
 namespace TripleDetection.Presentation.Views.Production
 {

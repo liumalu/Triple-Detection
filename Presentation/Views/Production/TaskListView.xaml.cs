@@ -1,8 +1,8 @@
 using System.Windows;
 using System.Windows.Controls;
-using TripleDetection.ViewModels;
-using TripleDetection.ViewModels.Production;
-using TaskEntity = TripleDetection.Data.Entities.ProdTask;
+using TripleDetection.Presentation.ViewModels;
+using TripleDetection.Presentation.ViewModels.Production;
+using TaskEntity = TripleDetection.Domain.Entities.ProdTask;
 
 namespace TripleDetection.Presentation.Views.Production
 {

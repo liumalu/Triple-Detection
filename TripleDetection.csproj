@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <LangVersion>12.0</LangVersion>
     <OutputType>WinExe</OutputType>
     <UseWPF>true</UseWPF>
@@ -24,26 +24,23 @@
   <!-- VisionMaster SDK DLLs -->
   <ItemGroup>
     <Reference Include="VM.Core">
-      <HintPath>libs\VM.Core.dll</HintPath>
+      <HintPath>Infrastructure\libs\VM.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="VM.PlatformSDKCS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c1484a72052ee3d4, processorArchitecture=MSIL">
-      <HintPath>libs\VM.PlatformSDKCS.dll</HintPath>
+      <HintPath>Infrastructure\libs\VM.PlatformSDKCS.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="iMVS-6000PlatformSDKCS">
-      <HintPath>libs\iMVS-6000PlatformSDKCS.dll</HintPath>
+      <HintPath>Infrastructure\libs\iMVS-6000PlatformSDKCS.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="GlobalVariableModuleCs">
-      <HintPath>bin\Debug\libs\VisionMaster\GlobalVariableModuleCs.dll</HintPath>
+      <HintPath>Infrastructure\libs\VisionMaster\GlobalVariableModuleCs.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="VMControls.BaseInterface">
       <HintPath>$(VmInstallPath)\Development\V4.x\ComControls\Assembly\VMControls.BaseInterface.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="VMControls.Interface">
       <HintPath>$(VmInstallPath)\Development\V4.x\ComControls\Assembly\VMControls.Interface.dll</HintPath>
       <Private>True</Private>
     </Reference>
@@ -68,23 +65,23 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Apps.Data">
-      <HintPath>libs\Apps.Data.dll</HintPath>
+      <HintPath>Infrastructure\libs\Apps.Data.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Apps.ErrorCode">
-      <HintPath>libs\Apps.ErrorCode.dll</HintPath>
+      <HintPath>Infrastructure\libs\Apps.ErrorCode.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Apps.Interface">
-      <HintPath>libs\Apps.Interface.dll</HintPath>
+      <HintPath>Infrastructure\libs\Apps.Interface.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Apps.Localization">
-      <HintPath>libs\Apps.Localization.dll</HintPath>
+      <HintPath>Infrastructure\libs\Apps.Localization.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Apps.Log">
-      <HintPath>libs\Apps.Log.dll</HintPath>
+      <HintPath>Infrastructure\libs\Apps.Log.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Apps.PcUI">
@@ -92,11 +89,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Apps.UIData">
-      <HintPath>libs\Apps.UIData.dll</HintPath>
+      <HintPath>Infrastructure\libs\Apps.UIData.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Apps.UIHelper">
-      <HintPath>libs\Apps.UIHelper.dll</HintPath>
+      <HintPath>Infrastructure\libs\Apps.UIHelper.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Apps.XmlParser">
@@ -144,35 +141,35 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Windows.Interactivity">
-      <HintPath>libs\System.Windows.Interactivity.dll</HintPath>
+      <HintPath>Infrastructure\libs\System.Windows.Interactivity.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="VM.Compress">
-      <HintPath>libs\VM.Compress.dll</HintPath>
+      <HintPath>Infrastructure\libs\VM.Compress.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="VM.Controls">
-      <HintPath>libs\VM.Controls.dll</HintPath>
+      <HintPath>Infrastructure\libs\VM.Controls.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="VM.ExternalCall">
-      <HintPath>libs\VM.ExternalCall.dll</HintPath>
+      <HintPath>Infrastructure\libs\VM.ExternalCall.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="VM.Framework.Container">
-      <HintPath>libs\VM.Framework.Container.dll</HintPath>
+      <HintPath>Infrastructure\libs\VM.Framework.Container.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="VM.Util">
-      <HintPath>libs\VM.Util.dll</HintPath>
+      <HintPath>Infrastructure\libs\VM.Util.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="VM.Utility">
-      <HintPath>libs\VM.Utility.dll</HintPath>
+      <HintPath>Infrastructure\libs\VM.Utility.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="log4net">
-      <HintPath>libs\log4net.dll</HintPath>
+      <HintPath>Infrastructure\libs\log4net.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

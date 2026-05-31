@@ -1,6 +1,6 @@
 using System.Windows;
-using TripleDetection.ViewModels;
-using TripleDetection.ViewModels.Auth;
+using TripleDetection.Presentation.ViewModels;
+using TripleDetection.Presentation.ViewModels.Auth;
 
 namespace TripleDetection.Presentation.Views.Auth
 {

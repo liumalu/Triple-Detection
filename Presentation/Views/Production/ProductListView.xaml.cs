@@ -1,7 +1,7 @@
 using System.Windows;
 using System.Windows.Controls;
-using TripleDetection.ViewModels;
-using TripleDetection.ViewModels.Production;
+using TripleDetection.Presentation.ViewModels;
+using TripleDetection.Presentation.ViewModels.Production;
 
 namespace TripleDetection.Presentation.Views.Production
 {

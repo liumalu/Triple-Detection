@@ -1,14 +1,13 @@
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Win32;
-using TripleDetection.Data.Repositories;
-using TripleDetection.Data.Entities;
+using TripleDetection.Domain.Entities;
+using TripleDetection.Domain.Entities.Queries;
+using TripleDetection.Application.Services;
 
 namespace TripleDetection.Presentation.Views.Detection
 {

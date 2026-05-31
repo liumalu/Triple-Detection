@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
-using TripleDetection.ViewModels;
+using TripleDetection.Presentation.ViewModels;
 
 namespace TripleDetection.Presentation.Views
 {
