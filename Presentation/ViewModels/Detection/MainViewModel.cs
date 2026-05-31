@@ -1,14 +1,13 @@
 using System;
 using System.Collections.ObjectModel;
-using Prism.Commands;
-using Prism.Events;
-using Prism.Mvvm;
-using Prism.Navigation.Regions;
-using TripleDetection.Application.Services;
+using CommunityToolkit.Mvvm;
+using CommunityToolkit.Mvvm.Messenger;
+using TripleDetection.Presentation.Messages;
+using TripleDetection.Presentation.Navigation;
 
 namespace TripleDetection.Presentation.ViewModels.Detection
 {
-    public class MainViewModel : BindableBase
+    public class MainViewModel : ObservableObject
     {
         private string _resultText = "--";
         private string _resultBackground = "#808080";
@@ -16,8 +15,7 @@ namespace TripleDetection.Presentation.ViewModels.Detection
         private bool _isImageViewActive = true;
         private string _selectedProcedure = "";
         private object _currentView;
-        private readonly IRegionManager _regionManager;
-        private readonly IEventAggregator _eventAggregator;
+        private readonly INavigationService _navigationService;
 
         public ObservableCollection<string> LogMessages { get; } = new ObservableCollection<string>();
         public ObservableCollection<string> ResultHistory { get; } = new ObservableCollection<string>();
@@ -60,27 +58,24 @@ namespace TripleDetection.Presentation.ViewModels.Detection
 
         public DelegateCommand NavigateToProductCommand { get; }
 
-        public MainViewModel(IRegionManager regionManager, IEventAggregator eventAggregator)
+        public MainViewModel(INavigationService navigationService)
         {
-            _regionManager = regionManager;
-            _eventAggregator = eventAggregator;
+            _navigationService = navigationService;
             NavigateToProductCommand = new DelegateCommand(NavigateToProduct);
 
-            // Subscribe to log events via EventAggregator
-            if (_eventAggregator != null)
-            {
-                _eventAggregator.GetEvent<LogAddedEvent>().Subscribe(OnLogAdded);
-            }
+            // Subscribe to messages via WeakReferenceMessenger
+            WeakReferenceMessenger.Default.Register<LogAddedMessage>(this, (r, m) => AddLog(m.Message));
+            WeakReferenceMessenger.Default.Register<DetectionResultMessage>(this, (r, m) => OnDetectionResult(m.Result));
         }
 
-        private void OnLogAdded(LogEntry entry)
+        private void OnLogAdded(string message)
         {
-            AddLog(entry.Message);
+            AddLog(message);
         }
 
         private void NavigateToProduct()
         {
-            CurrentView = new Views.Production.ProductListView();
+            _navigationService.NavigateTo<Views.Production.ProductListView>("Products");
         }
 
         public void AddLog(string message)
@@ -96,6 +91,11 @@ namespace TripleDetection.Presentation.ViewModels.Detection
             if (ResultHistory.Count > 500)
                 ResultHistory.RemoveAt(0);
             ResultHistory.Add(result);
+        }
+
+        private void OnDetectionResult(DetectionResult result)
+        {
+            // Handle detection result
         }
     }
 }
