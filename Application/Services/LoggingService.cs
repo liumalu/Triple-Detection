@@ -1,7 +1,8 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using Prism.Events;
+using CommunityToolkit.Mvvm.Messaging;
+using TripleDetection.Presentation.Messages;
 
 namespace TripleDetection.Application.Services;
 
@@ -9,14 +10,12 @@ public class LoggingService
 {
     private readonly string _logPath;
     private readonly object _lockObj = new object();
-    private readonly IEventAggregator _eventAggregator;
 
-    public event EventHandler<LogEntry> OnLogAdded;
+    public event EventHandler<LogEntry>? OnLogAdded;
 
-    public LoggingService(string logPath, IEventAggregator eventAggregator)
+    public LoggingService(string logPath)
     {
         _logPath = logPath;
-        _eventAggregator = eventAggregator;
         CleanupOldLogs();
     }
 
@@ -34,17 +33,17 @@ public class LoggingService
                     var fi = new FileInfo(file);
                     if ((now - fi.LastWriteTime) > threshold) File.Delete(file);
                 }
-                catch { /* skip locked files */ }
+                catch { }
             }
         }
-        catch { /* skip if inaccessible */ }
+        catch { }
     }
 
     public void Log(string message)
     {
         var entry = new LogEntry { Timestamp = DateTime.Now, Message = message };
-        _eventAggregator?.GetEvent<LogAddedEvent>()?.Publish(entry);
         OnLogAdded?.Invoke(this, entry);
+        WeakReferenceMessenger.Default.Send(new LogAddedMessage(message));
         Task.Run(() => SaveLog(entry));
     }
 
@@ -57,7 +56,7 @@ public class LoggingService
             var line = $"{entry.Timestamp:yyyy-MM-dd HH:mm:ss:ffff}\t{entry.Message}";
             lock (_lockObj) { File.AppendAllText(filename, line + Environment.NewLine); }
         }
-        catch { /* swallow logging errors */ }
+        catch { }
     }
 
     public void Clear()
@@ -71,8 +70,5 @@ public class LoggingService
 public class LogEntry
 {
     public DateTime Timestamp { get; set; }
-    public string Message { get; set; }
+    public string Message { get; set; } = "";
 }
-
-// Placeholder - the actual LogAddedEvent will be defined in Presentation layer
-public class LogAddedEvent : PubSubEvent<LogEntry> { }
