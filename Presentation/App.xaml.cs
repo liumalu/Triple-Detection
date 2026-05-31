@@ -64,7 +64,7 @@ public partial class App : Application
         var dbPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "tripledetection.db");
         var connectionString = $"Data Source={dbPath}";
         services.AddSingleton<IDbConnectionFactory>(new SqliteConnectionFactory(connectionString));
-        services.AddSingleton<IRepositoryFactory>(new SqliteRepositoryFactory(connectionString));
+        services.AddSingleton<IRepositoryFactory>(sp => new SqliteRepositoryFactory(sp.GetRequiredService<IDbConnectionFactory>()));
         services.AddTransient(typeof(IRepository<>), typeof(SqliteRepository<>));
         services.AddTransient<IAuditLogRepository, AuditLogRepository>();
         services.AddTransient<IDetectionRecordRepository, DetectionRecordRepository>();
@@ -114,6 +114,7 @@ public partial class App : Application
         // Views (transient)
         services.AddTransient<LoginWindow>();
         services.AddTransient<MainWindow>();
+        services.AddTransient<Views.Detection.DetectionView>();
     }
 
     private void InitializeDatabase()
