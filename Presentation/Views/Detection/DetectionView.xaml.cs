@@ -15,6 +15,7 @@ using TripleDetection.Presentation.Models;
 using TaskEntity = TripleDetection.Domain.Entities.ProdTask;
 using GlobalVariableModuleCs;
 using TripleDetection.Infrastructure.Repositories;
+using TripleDetection.Infrastructure.Persistence;
 
 namespace TripleDetection.Presentation.Views.Detection
 {
@@ -33,17 +34,19 @@ namespace TripleDetection.Presentation.Views.Detection
         private int _okCount = 0;
         private int _ngCount = 0;
 
-        public DetectionView()
+        public DetectionView(MainViewModel viewModel, LoggingService logService)
         {
             InitializeComponent();
-            var logPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs");
-            _logService = new LoggingService(logPath);
-            _viewModel = new MainViewModel();
+            DataContext = viewModel;
+            _viewModel = viewModel;
+            _logService = logService;
 
-            var repositoryFactory = new SqliteRepositoryFactory();
-            var detectionRecordRepository = repositoryFactory.CreateDetectionRecordRepository();
-            var detectionRecordService = new DetectionRecordService(detectionRecordRepository);
-
+            var detectionRecordService = new DetectionRecordService(
+                new SqliteRepositoryFactory(
+                    new SqliteConnectionFactory(
+                        $"Data Source={Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "tripledetection.db")}")
+                ).CreateDetectionRecordRepository()
+            );
             _vmService = new VmIntegrationService(null, _logService, detectionRecordService);
             _vmService.OnDetectionResult += VmService_OnDetectionResult;
 
