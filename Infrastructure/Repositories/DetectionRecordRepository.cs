@@ -5,6 +5,7 @@ using Microsoft.Data.Sqlite;
 using TripleDetection.Domain.Entities;
 using TripleDetection.Domain.Entities.Queries;
 using TripleDetection.Domain.Repositories;
+using TripleDetection.Infrastructure.Persistence;
 
 namespace TripleDetection.Infrastructure.Repositories;
 

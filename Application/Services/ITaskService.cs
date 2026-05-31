@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TripleDetection.Domain.Entities;
 using TripleDetection.Domain.Entities.Queries;
+using TripleDetection.Domain.Enums;
 
 namespace TripleDetection.Application.Services;
 
