@@ -1,25 +1,27 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Windows;
-using Prism.Mvvm;
+using CommunityToolkit.Mvvm;
 using TripleDetection.Domain.Entities;
 using TripleDetection.Application.Services;
+using TripleDetection.Domain.Enums;
 
 namespace TripleDetection.Presentation.ViewModels.Production
 {
-    public class TaskEditViewModel : BindableBase
+    public class TaskEditViewModel : ObservableObject
     {
         private readonly ITaskService _taskService;
         private readonly IProductService _productService;
-        private bool _isEditMode;
-        private int _taskId;
-        private string _name = "";
-        private int _productId;
-        private TaskStatus _status = TaskStatus.Pending;
-        private DateTime _productionDate = DateTime.Today;
-        private DateTime? _expirationDate;
-        private string _batchNumber = "";
-        private string _errorMessage = "";
+
+        [ObservableProperty] private bool _isEditMode;
+        [ObservableProperty] private int _taskId;
+        [ObservableProperty] private string _name = "";
+        [ObservableProperty] private int _productId;
+        [ObservableProperty] private TaskStatus _status = TaskStatus.Pending;
+        [ObservableProperty] private DateTime _productionDate = DateTime.Today;
+        [ObservableProperty] private DateTime? _expirationDate;
+        [ObservableProperty] private string _batchNumber = "";
+        [ObservableProperty] private string _errorMessage = "";
 
         public ObservableCollection<Product> Products { get; } = new ObservableCollection<Product>();
 
@@ -30,67 +32,6 @@ namespace TripleDetection.Presentation.ViewModels.Production
             TaskStatus.Running,
             TaskStatus.Completed
         };
-
-        public bool IsEditMode
-        {
-            get => _isEditMode;
-            set => SetProperty(ref _isEditMode, value);
-        }
-
-        public string Name
-        {
-            get => _name;
-            set { if (SetProperty(ref _name, value)) ErrorMessage = ""; }
-        }
-
-        public int ProductId
-        {
-            get => _productId;
-            set
-            {
-                if (SetProperty(ref _productId, value))
-                {
-                    CalculateExpirationDate();
-                    ErrorMessage = "";
-                }
-            }
-        }
-
-        public TaskStatus Status
-        {
-            get => _status;
-            set => SetProperty(ref _status, value);
-        }
-
-        public DateTime ProductionDate
-        {
-            get => _productionDate;
-            set
-            {
-                if (SetProperty(ref _productionDate, value))
-                {
-                    CalculateExpirationDate();
-                }
-            }
-        }
-
-        public DateTime? ExpirationDate
-        {
-            get => _expirationDate;
-            set => SetProperty(ref _expirationDate, value);
-        }
-
-        public string BatchNumber
-        {
-            get => _batchNumber;
-            set { if (SetProperty(ref _batchNumber, value)) ErrorMessage = ""; }
-        }
-
-        public string ErrorMessage
-        {
-            get => _errorMessage;
-            set => SetProperty(ref _errorMessage, value);
-        }
 
         public string WindowTitle => IsEditMode ? "编辑任务" : "新增任务";
 
@@ -105,13 +46,13 @@ namespace TripleDetection.Presentation.ViewModels.Production
             if (task != null)
             {
                 IsEditMode = true;
-                _taskId = task.Id;
-                _name = task.Name;
-                _productId = task.ProductId;
-                _status = task.Status;
-                _productionDate = task.ProductionDate;
-                _expirationDate = task.ExpirationDate;
-                _batchNumber = task.BatchNumber ?? "";
+                TaskId = task.Id;
+                Name = task.Name;
+                ProductId = task.ProductId;
+                Status = task.Status;
+                ProductionDate = task.ProductionDate;
+                ExpirationDate = task.ExpirationDate;
+                BatchNumber = task.BatchNumber ?? "";
                 CalculateExpirationDate();
             }
             else
@@ -128,6 +69,20 @@ namespace TripleDetection.Presentation.ViewModels.Production
                 Products.Add(product);
             }
         }
+
+        partial void OnProductIdChanged(int value)
+        {
+            CalculateExpirationDate();
+            ErrorMessage = "";
+        }
+
+        partial void OnProductionDateChanged(DateTime value)
+        {
+            CalculateExpirationDate();
+        }
+
+        partial void OnNameChanged(string value) => ErrorMessage = "";
+        partial void OnBatchNumberChanged(string value) => ErrorMessage = "";
 
         private void CalculateExpirationDate()
         {
@@ -204,7 +159,7 @@ namespace TripleDetection.Presentation.ViewModels.Production
 
             if (IsEditMode)
             {
-                task.Id = _taskId;
+                task.Id = TaskId;
                 task.CreateBy = "admin";
                 task.CreateAt = DateTime.Now;
                 _taskService.Update(task, "admin", SessionManager.CurrentUserId);

@@ -1,94 +1,48 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Windows;
-using Prism.Mvvm;
+using CommunityToolkit.Mvvm;
 using TripleDetection.Domain.Entities;
 using TripleDetection.Application.Services;
 
 namespace TripleDetection.Presentation.ViewModels.Auth
 {
-    public class UserManagementViewModel : BindableBase
+    public class UserManagementViewModel : ObservableObject
     {
         private readonly IUserService _userService;
-        private string _queryUsername = "";
-        private string _queryRole = "";
-        private string _queryStatusText = "";
-        private int _pageIndex = 0;
-        private int _pageSize = 20;
-        private int _totalCount = 0;
-        private int _totalPages = 0;
-        private User _selectedUser;
+
+        [ObservableProperty] private string _queryUsername = "";
+        [ObservableProperty] private string _queryRole = "";
+        [ObservableProperty] private string _queryStatusText = "";
+        [ObservableProperty] private int _pageIndex = 0;
+        [ObservableProperty] private int _pageSize = 20;
+        [ObservableProperty] private int _totalCount = 0;
+        [ObservableProperty] private int _totalPages = 0;
+        [ObservableProperty] private User _selectedUser;
 
         public ObservableCollection<User> Users { get; } = new ObservableCollection<User>();
 
-        public string QueryUsername
+        partial void OnPageIndexChanged(int value)
         {
-            get => _queryUsername;
-            set => SetProperty(ref _queryUsername, value);
+            OnPropertyChanged(nameof(CurrentPageDisplay));
         }
 
-        public string QueryRole
+        partial void OnTotalCountChanged(int value)
         {
-            get => _queryRole;
-            set => SetProperty(ref _queryRole, value);
+            OnPropertyChanged(nameof(TotalPagesDisplay));
         }
 
-        public string QueryStatusText
+        partial void OnTotalPagesChanged(int value)
         {
-            get => _queryStatusText;
-            set => SetProperty(ref _queryStatusText, value);
-        }
-
-        public int PageIndex
-        {
-            get => _pageIndex;
-            set
-            {
-                if (SetProperty(ref _pageIndex, value))
-                    RaisePropertyChanged(nameof(CurrentPageDisplay));
-            }
-        }
-
-        public int PageSize
-        {
-            get => _pageSize;
-            set => SetProperty(ref _pageSize, value);
-        }
-
-        public int TotalCount
-        {
-            get => _totalCount;
-            set
-            {
-                if (SetProperty(ref _totalCount, value))
-                    RaisePropertyChanged(nameof(TotalPagesDisplay));
-            }
-        }
-
-        public int TotalPages
-        {
-            get => _totalPages;
-            set
-            {
-                if (SetProperty(ref _totalPages, value))
-                {
-                    RaisePropertyChanged(nameof(TotalPagesDisplay));
-                    RaisePropertyChanged(nameof(HasNextPage));
-                    RaisePropertyChanged(nameof(HasPreviousPage));
-                }
-            }
+            OnPropertyChanged(nameof(TotalPagesDisplay));
+            OnPropertyChanged(nameof(HasNextPage));
+            OnPropertyChanged(nameof(HasPreviousPage));
         }
 
         public string TotalPagesDisplay => $"共 {TotalCount} 条";
         public string CurrentPageDisplay => $"{PageIndex + 1} / {TotalPages} 页";
         public bool HasNextPage => PageIndex < TotalPages - 1;
         public bool HasPreviousPage => PageIndex > 0;
-
-        public User SelectedUser
-        {
-            get => _selectedUser;
-            set => SetProperty(ref _selectedUser, value);
-        }
 
         public UserManagementViewModel(IUserService userService)
         {

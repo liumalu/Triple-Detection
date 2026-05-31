@@ -1,41 +1,14 @@
 using System.Windows.Input;
-using Prism.Commands;
-using Prism.Mvvm;
+using CommunityToolkit.Mvvm;
 
 namespace TripleDetection.Presentation.ViewModels
 {
-    public class TabItemViewModel : BindableBase
+    public class TabItemViewModel : ObservableObject
     {
-        private string _tag;
-        private string _displayName;
-        private bool _isActive;
-        private bool _isClosable = true;
-        private ICommand _selectCommand;
-        private ICommand _closeCommand;
-
-        public string Tag
-        {
-            get => _tag;
-            set => SetProperty(ref _tag, value);
-        }
-
-        public string DisplayName
-        {
-            get => _displayName;
-            set => SetProperty(ref _displayName, value);
-        }
-
-        public bool IsActive
-        {
-            get => _isActive;
-            set => SetProperty(ref _isActive, value);
-        }
-
-        public bool IsClosable
-        {
-            get => _isClosable;
-            set => SetProperty(ref _isClosable, value);
-        }
+        [ObservableProperty] private string _tag;
+        [ObservableProperty] private string _displayName;
+        [ObservableProperty] private bool _isActive;
+        [ObservableProperty] private bool _isClosable = true;
 
         public ICommand SelectCommand
         {
@@ -48,5 +21,8 @@ namespace TripleDetection.Presentation.ViewModels
             get => _closeCommand;
             set => SetProperty(ref _closeCommand, value);
         }
+
+        private ICommand _selectCommand;
+        private ICommand _closeCommand;
     }
 }

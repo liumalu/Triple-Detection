@@ -4,25 +4,27 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using Microsoft.Win32;
-using Prism.Mvvm;
+using CommunityToolkit.Mvvm;
 using TripleDetection.Domain.Entities;
 using TripleDetection.Application.Services;
+using TripleDetection.Domain.Enums;
 
 namespace TripleDetection.Presentation.ViewModels.Production
 {
-    public class ProductEditViewModel : BindableBase
+    public class ProductEditViewModel : ObservableObject
     {
         private readonly IProductService _productService;
-        private bool _isEditMode;
-        private int _productId;
-        private string _code = "";
-        private string _name = "";
-        private string _description = "";
-        private ValidType _validType = ValidType.Year;
-        private int _validPeriod = 1;
-        private string _solFilePath = "";
-        private ProductStatus _status = ProductStatus.Active;
-        private string _errorMessage = "";
+
+        [ObservableProperty] private bool _isEditMode;
+        [ObservableProperty] private int _productId;
+        [ObservableProperty] private string _code = "";
+        [ObservableProperty] private string _name = "";
+        [ObservableProperty] private string _description = "";
+        [ObservableProperty] private ValidType _validType = ValidType.Year;
+        [ObservableProperty] private int _validPeriod = 1;
+        [ObservableProperty] private string _solFilePath = "";
+        [ObservableProperty] private ProductStatus _status = ProductStatus.Active;
+        [ObservableProperty] private string _errorMessage = "";
 
         public ObservableCollection<ValidType> ValidTypes { get; } = new ObservableCollection<ValidType>
         {
@@ -37,60 +39,6 @@ namespace TripleDetection.Presentation.ViewModels.Production
             ProductStatus.Active
         };
 
-        public bool IsEditMode
-        {
-            get => _isEditMode;
-            set => SetProperty(ref _isEditMode, value);
-        }
-
-        public string Code
-        {
-            get => _code;
-            set { if (SetProperty(ref _code, value)) ErrorMessage = ""; }
-        }
-
-        public string Name
-        {
-            get => _name;
-            set { if (SetProperty(ref _name, value)) ErrorMessage = ""; }
-        }
-
-        public string Description
-        {
-            get => _description;
-            set => SetProperty(ref _description, value);
-        }
-
-        public ValidType ValidType
-        {
-            get => _validType;
-            set => SetProperty(ref _validType, value);
-        }
-
-        public int ValidPeriod
-        {
-            get => _validPeriod;
-            set => SetProperty(ref _validPeriod, value);
-        }
-
-        public string SolFilePath
-        {
-            get => _solFilePath;
-            set { if (SetProperty(ref _solFilePath, value)) ErrorMessage = ""; }
-        }
-
-        public ProductStatus Status
-        {
-            get => _status;
-            set => SetProperty(ref _status, value);
-        }
-
-        public string ErrorMessage
-        {
-            get => _errorMessage;
-            set => SetProperty(ref _errorMessage, value);
-        }
-
         public string WindowTitle => IsEditMode ? "编辑产品" : "新增产品";
 
         public event EventHandler<bool> RequestClose;
@@ -101,16 +49,20 @@ namespace TripleDetection.Presentation.ViewModels.Production
             if (product != null)
             {
                 IsEditMode = true;
-                _productId = product.Id;
-                _code = product.Code;
-                _name = product.Name;
-                _description = product.Description;
-                _validType = product.ValidType;
-                _validPeriod = product.ValidPeriod;
-                _solFilePath = product.SolFilePath;
-                _status = product.Status;
+                ProductId = product.Id;
+                Code = product.Code;
+                Name = product.Name;
+                Description = product.Description;
+                ValidType = product.ValidType;
+                ValidPeriod = product.ValidPeriod;
+                SolFilePath = product.SolFilePath;
+                Status = product.Status;
             }
         }
+
+        partial void OnCodeChanged(string value) => ErrorMessage = "";
+        partial void OnNameChanged(string value) => ErrorMessage = "";
+        partial void OnSolFilePathChanged(string value) => ErrorMessage = "";
 
         public void BrowseSolFile()
         {
@@ -191,7 +143,7 @@ namespace TripleDetection.Presentation.ViewModels.Production
                 System.Diagnostics.Debug.WriteLine($"[Save] 后台线程开始...");
                 if (IsEditMode)
                 {
-                    product.Id = _productId;
+                    product.Id = ProductId;
                     _productService.Update(product, "admin", SessionManager.CurrentUserId);
                 }
                 else

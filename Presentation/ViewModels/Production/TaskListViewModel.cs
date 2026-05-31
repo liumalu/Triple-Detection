@@ -1,117 +1,53 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Windows;
-using Prism.Mvvm;
+using CommunityToolkit.Mvvm;
 using TripleDetection.Domain.Entities;
 using TripleDetection.Application.Services;
 
 namespace TripleDetection.Presentation.ViewModels.Production
 {
-    public class TaskListViewModel : BindableBase
+    public class TaskListViewModel : ObservableObject
     {
         private readonly ITaskService _taskService;
         private readonly IProductService _productService;
-        private string _queryName = "";
-        private int? _queryProductId;
-        private int? _queryStatus;
-        private DateTime? _queryProductionDateFrom;
-        private DateTime? _queryProductionDateTo;
-        private string _queryBatchNumber = "";
-        private int _pageIndex = 0;
-        private int _pageSize = 20;
-        private int _totalCount = 0;
-        private int _totalPages = 0;
-        private ProdTask _selectedTask;
+
+        [ObservableProperty] private string _queryName = "";
+        [ObservableProperty] private int? _queryProductId;
+        [ObservableProperty] private int? _queryStatus;
+        [ObservableProperty] private DateTime? _queryProductionDateFrom;
+        [ObservableProperty] private DateTime? _queryProductionDateTo;
+        [ObservableProperty] private string _queryBatchNumber = "";
+        [ObservableProperty] private int _pageIndex = 0;
+        [ObservableProperty] private int _pageSize = 20;
+        [ObservableProperty] private int _totalCount = 0;
+        [ObservableProperty] private int _totalPages = 0;
+        [ObservableProperty] private ProdTask _selectedTask;
 
         public ObservableCollection<ProdTask> Tasks { get; } = new ObservableCollection<ProdTask>();
         public ObservableCollection<Product> Products { get; } = new ObservableCollection<Product>();
 
-        public string QueryName
+        partial void OnPageIndexChanged(int value)
         {
-            get => _queryName;
-            set => SetProperty(ref _queryName, value);
+            OnPropertyChanged(nameof(CurrentPageDisplay));
         }
 
-        public int? QueryProductId
+        partial void OnTotalCountChanged(int value)
         {
-            get => _queryProductId;
-            set => SetProperty(ref _queryProductId, value);
+            OnPropertyChanged(nameof(TotalPagesDisplay));
         }
 
-        public int? QueryStatus
+        partial void OnTotalPagesChanged(int value)
         {
-            get => _queryStatus;
-            set => SetProperty(ref _queryStatus, value);
-        }
-
-        public DateTime? QueryProductionDateFrom
-        {
-            get => _queryProductionDateFrom;
-            set => SetProperty(ref _queryProductionDateFrom, value);
-        }
-
-        public DateTime? QueryProductionDateTo
-        {
-            get => _queryProductionDateTo;
-            set => SetProperty(ref _queryProductionDateTo, value);
-        }
-
-        public string QueryBatchNumber
-        {
-            get => _queryBatchNumber;
-            set => SetProperty(ref _queryBatchNumber, value);
-        }
-
-        public int PageIndex
-        {
-            get => _pageIndex;
-            set
-            {
-                if (SetProperty(ref _pageIndex, value))
-                    RaisePropertyChanged(nameof(CurrentPageDisplay));
-            }
-        }
-
-        public int PageSize
-        {
-            get => _pageSize;
-            set => SetProperty(ref _pageSize, value);
-        }
-
-        public int TotalCount
-        {
-            get => _totalCount;
-            set
-            {
-                if (SetProperty(ref _totalCount, value))
-                    RaisePropertyChanged(nameof(TotalPagesDisplay));
-            }
-        }
-
-        public int TotalPages
-        {
-            get => _totalPages;
-            set
-            {
-                if (SetProperty(ref _totalPages, value))
-                {
-                    RaisePropertyChanged(nameof(TotalPagesDisplay));
-                    RaisePropertyChanged(nameof(HasNextPage));
-                    RaisePropertyChanged(nameof(HasPreviousPage));
-                }
-            }
+            OnPropertyChanged(nameof(TotalPagesDisplay));
+            OnPropertyChanged(nameof(HasNextPage));
+            OnPropertyChanged(nameof(HasPreviousPage));
         }
 
         public string TotalPagesDisplay => $"共 {TotalCount} 条";
         public string CurrentPageDisplay => $"{PageIndex + 1} / {TotalPages} 页";
         public bool HasNextPage => PageIndex < TotalPages - 1;
         public bool HasPreviousPage => PageIndex > 0;
-
-        public ProdTask SelectedTask
-        {
-            get => _selectedTask;
-            set => SetProperty(ref _selectedTask, value);
-        }
 
         public TaskListViewModel(ITaskService taskService, IProductService productService)
         {
@@ -140,7 +76,7 @@ namespace TripleDetection.Presentation.ViewModels.Production
                 ProductionDateTo = QueryProductionDateTo,
                 BatchNumber = QueryBatchNumber,
                 PageIndex = PageIndex,
-                PageSize = PageSize,
+                PageSize = _pageSize,
                 SortBy = "CreateAt",
                 SortDescending = true
             };

@@ -1,24 +1,25 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Windows;
-using Prism.Mvvm;
+using CommunityToolkit.Mvvm;
 using TripleDetection.Domain.Entities;
 using TripleDetection.Application.Services;
 using TripleDetection.Domain;
 
 namespace TripleDetection.Presentation.ViewModels.Auth
 {
-    public class UserEditViewModel : BindableBase
+    public class UserEditViewModel : ObservableObject
     {
         private readonly IUserService _userService;
-        private bool _isEditMode;
-        private string _originalUsername = "";
-        private string _username = "";
-        private string _realName = "";
-        private string _password = "";
-        private string _role = "Operator";
-        private bool _isEnabled = true;
-        private string _errorMessage = "";
+
+        [ObservableProperty] private bool _isEditMode;
+        [ObservableProperty] private string _originalUsername = "";
+        [ObservableProperty] private string _username = "";
+        [ObservableProperty] private string _realName = "";
+        [ObservableProperty] private string _password = "";
+        [ObservableProperty] private string _role = "Operator";
+        [ObservableProperty] private bool _isEnabled = true;
+        [ObservableProperty] private string _errorMessage = "";
 
         public ObservableCollection<string> Roles { get; } = new ObservableCollection<string>
         {
@@ -28,48 +29,6 @@ namespace TripleDetection.Presentation.ViewModels.Auth
             "Viewer"
         };
 
-        public bool IsEditMode
-        {
-            get => _isEditMode;
-            private set => SetProperty(ref _isEditMode, value);
-        }
-
-        public string Username
-        {
-            get => _username;
-            set { if (SetProperty(ref _username, value)) ErrorMessage = ""; }
-        }
-
-        public string RealName
-        {
-            get => _realName;
-            set { if (SetProperty(ref _realName, value)) ErrorMessage = ""; }
-        }
-
-        public string Password
-        {
-            get => _password;
-            set { if (SetProperty(ref _password, value)) ErrorMessage = ""; }
-        }
-
-        public string Role
-        {
-            get => _role;
-            set => SetProperty(ref _role, value);
-        }
-
-        public bool IsEnabled
-        {
-            get => _isEnabled;
-            set => SetProperty(ref _isEnabled, value);
-        }
-
-        public string ErrorMessage
-        {
-            get => _errorMessage;
-            set => SetProperty(ref _errorMessage, value);
-        }
-
         public string WindowTitle => IsEditMode ? "编辑用户" : "新增用户";
 
         public event EventHandler<bool> RequestClose;
@@ -77,18 +36,22 @@ namespace TripleDetection.Presentation.ViewModels.Auth
         public UserEditViewModel(User user = null, IUserService userService = null)
         {
             _userService = userService ?? throw new ArgumentNullException(nameof(userService));
-            _isEditMode = user != null;
+            IsEditMode = user != null;
 
             if (user != null)
             {
-                _originalUsername = user.Username;
-                _username = user.Username;
-                _realName = user.RealName;
-                _password = user.Password;
-                _role = user.Role;
-                _isEnabled = user.IsEnabled;
+                OriginalUsername = user.Username;
+                Username = user.Username;
+                RealName = user.RealName;
+                Password = user.Password;
+                Role = user.Role;
+                IsEnabled = user.IsEnabled;
             }
         }
+
+        partial void OnUsernameChanged(string value) => ErrorMessage = "";
+        partial void OnRealNameChanged(string value) => ErrorMessage = "";
+        partial void OnPasswordChanged(string value) => ErrorMessage = "";
 
         public bool Validate()
         {
@@ -129,7 +92,7 @@ namespace TripleDetection.Presentation.ViewModels.Auth
             else
             {
                 // For edit mode, check if username changed and new username exists
-                if (Username != _originalUsername)
+                if (Username != OriginalUsername)
                 {
                     var existing = _userService.GetByUsername(Username);
                     if (existing != null)

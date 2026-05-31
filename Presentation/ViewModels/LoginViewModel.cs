@@ -1,23 +1,23 @@
 using System;
 using System.Windows.Input;
-using Prism.Mvvm;
-using Prism.Commands;
+using CommunityToolkit.Mvvm;
 using TripleDetection.Application.Services;
 using TripleDetection.Domain.Entities;
 using TripleDetection.Domain;
 
 namespace TripleDetection.Presentation.ViewModels
 {
-    public class LoginViewModel : BindableBase
+    public class LoginViewModel : ObservableObject
     {
         private readonly IUserService _userService;
-        private string _username = string.Empty;
-        private string _password = string.Empty;
-        private string _errorMessage = string.Empty;
-        private bool _isLoading;
-        private bool _usernameHasError;
-        private bool _passwordHasError;
-        private string _logoPath;
+
+        [ObservableProperty] private string _username = string.Empty;
+        [ObservableProperty] private string _password = string.Empty;
+        [ObservableProperty] private string _errorMessage = string.Empty;
+        [ObservableProperty] private bool _isLoading;
+        [ObservableProperty] private bool _usernameHasError;
+        [ObservableProperty] private bool _passwordHasError;
+        [ObservableProperty] private string _logoPath;
 
         public LoginViewModel(IUserService userService)
         {
@@ -25,66 +25,22 @@ namespace TripleDetection.Presentation.ViewModels
             _logoPath = System.Configuration.ConfigurationManager.AppSettings["LoginLogoPath"]
                 ?? System.Configuration.ConfigurationManager.AppSettings["SystemLogoPath"];
 
-            LoginCommand = new DelegateCommand(ExecuteLogin, CanExecuteLogin)
-                .ObservesProperty(() => IsLoading)
-                .ObservesProperty(() => Username)
-                .ObservesProperty(() => Password);
+            LoginCommand = new RelayCommand(ExecuteLogin, CanExecuteLogin)
+                .ObserveProperty(nameof(IsLoading))
+                .ObserveProperty(nameof(Username))
+                .ObserveProperty(nameof(Password));
         }
 
-        public string Username
+        partial void OnUsernameChanged(string value)
         {
-            get => _username;
-            set
-            {
-                if (SetProperty(ref _username, value))
-                {
-                    UsernameHasError = false;
-                    ErrorMessage = string.Empty;
-                }
-            }
+            UsernameHasError = false;
+            ErrorMessage = string.Empty;
         }
 
-        public string Password
+        partial void OnPasswordChanged(string value)
         {
-            get => _password;
-            set
-            {
-                if (SetProperty(ref _password, value))
-                {
-                    PasswordHasError = false;
-                    ErrorMessage = string.Empty;
-                }
-            }
-        }
-
-        public string ErrorMessage
-        {
-            get => _errorMessage;
-            set => SetProperty(ref _errorMessage, value);
-        }
-
-        public bool IsLoading
-        {
-            get => _isLoading;
-            set => SetProperty(ref _isLoading, value);
-        }
-
-        public bool UsernameHasError
-        {
-            get => _usernameHasError;
-            set => SetProperty(ref _usernameHasError, value);
-        }
-
-        public bool PasswordHasError
-        {
-            get => _passwordHasError;
-            set => SetProperty(ref _passwordHasError, value);
-        }
-
-        public string LogoPath
-        {
-            get => _logoPath;
-            set => SetProperty(ref _logoPath, value);
+            PasswordHasError = false;
+            ErrorMessage = string.Empty;
         }
 
         public ICommand LoginCommand { get; }
