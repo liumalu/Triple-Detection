@@ -8,7 +8,7 @@ namespace TripleDetection.Application.SettingsServices;
 public class VmSettingsService
 {
     private readonly string _configPath;
-    private VmSettings _settings;
+    private VmSettings? _settings;
 
     public VmSettingsService()
     {

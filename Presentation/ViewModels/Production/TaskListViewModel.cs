@@ -1,8 +1,11 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Windows;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm;
+using TripleDetection.Domain;
 using TripleDetection.Domain.Entities;
+using TripleDetection.Domain.Entities.Queries;
 using TripleDetection.Application.Services;
 
 namespace TripleDetection.Presentation.ViewModels.Production
@@ -22,7 +25,7 @@ namespace TripleDetection.Presentation.ViewModels.Production
         [ObservableProperty] private int _pageSize = 20;
         [ObservableProperty] private int _totalCount = 0;
         [ObservableProperty] private int _totalPages = 0;
-        [ObservableProperty] private ProdTask _selectedTask;
+        [ObservableProperty] private ProdTask? _selectedTask;
 
         public ObservableCollection<ProdTask> Tasks { get; } = new ObservableCollection<ProdTask>();
         public ObservableCollection<Product> Products { get; } = new ObservableCollection<Product>();
@@ -76,7 +79,7 @@ namespace TripleDetection.Presentation.ViewModels.Production
                 ProductionDateTo = QueryProductionDateTo,
                 BatchNumber = QueryBatchNumber,
                 PageIndex = PageIndex,
-                PageSize = _pageSize,
+                PageSize = PageSize,
                 SortBy = "CreateAt",
                 SortDescending = true
             };
@@ -136,21 +139,21 @@ namespace TripleDetection.Presentation.ViewModels.Production
 
         public void DeleteTask(int id)
         {
-            _taskService.Delete(id, "admin", SessionManager.CurrentUserId);
+            _taskService.Delete(id, SessionManager.CurrentUserName ?? "Unknown", SessionManager.CurrentUserId);
             Search();
         }
 
         public void ApproveTask(int id)
         {
-            _taskService.Approve(id, "admin", SessionManager.CurrentUserId);
+            _taskService.Approve(id, SessionManager.CurrentUserName ?? "Unknown", SessionManager.CurrentUserId);
             Search();
         }
 
-        public void OpenEditWindow(ProdTask task = null)
+        public void OpenEditWindow(ProdTask? task = null)
         {
             var editVm = new TaskEditViewModel(task, _taskService, _productService);
             var editWindow = new Views.Production.TaskEditWindow { DataContext = editVm };
-            editWindow.Owner = Application.Current.MainWindow;
+            editWindow.Owner = System.Windows.Application.Current.MainWindow;
             if (editWindow.ShowDialog() == true)
             {
                 Search();

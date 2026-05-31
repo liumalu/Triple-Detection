@@ -24,30 +24,34 @@ namespace TripleDetection.Presentation.Views.Detection
         private readonly LoggingService _logService;
         private readonly MainViewModel _viewModel;
         private readonly VmIntegrationService _vmService;
-        private string _selectedSolPath;
+        private readonly ITaskService _taskService;
+        private readonly IProductService _productService;
+        private string? _selectedSolPath;
         private bool _isSolutionLoad = false;
         private bool _isContinuRun = false;
-        private VmProcedure _procedure;
-        private VMControls.Winform.Release.VmRenderControl _vmRender;
+        private VmProcedure? _procedure;
+        private VMControls.Winform.Release.VmRenderControl? _vmRender;
         private List<TaskEntity> _taskList = new List<TaskEntity>();
-        private TaskEntity _selectedTask;
+        private TaskEntity? _selectedTask;
         private int _okCount = 0;
         private int _ngCount = 0;
 
-        public DetectionView(MainViewModel viewModel, LoggingService logService)
+        public DetectionView(
+            MainViewModel viewModel,
+            LoggingService logService,
+            VmIntegrationService vmService,
+            ITaskService taskService,
+            IProductService productService,
+            IDetectionRecordService detectionRecordService)
         {
             InitializeComponent();
             DataContext = viewModel;
             _viewModel = viewModel;
             _logService = logService;
+            _vmService = vmService;
+            _taskService = taskService;
+            _productService = productService;
 
-            var detectionRecordService = new DetectionRecordService(
-                new SqliteRepositoryFactory(
-                    new SqliteConnectionFactory(
-                        $"Data Source={Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "tripledetection.db")}")
-                ).CreateDetectionRecordRepository()
-            );
-            _vmService = new VmIntegrationService(null, _logService, detectionRecordService);
             _vmService.OnDetectionResult += VmService_OnDetectionResult;
 
             LoadTasks();
@@ -56,7 +60,7 @@ namespace TripleDetection.Presentation.Views.Detection
             _logService.Log("检测页面已加载");
         }
 
-        private void VmService_OnDetectionResult(object sender, DetectionResult result)
+        private void VmService_OnDetectionResult(object? sender, DetectionResult result)
         {
             Dispatcher.Invoke(() =>
             {
@@ -66,8 +70,7 @@ namespace TripleDetection.Presentation.Views.Detection
 
         private void LoadTasks()
         {
-            var taskService = new TaskService();
-            var tasks = taskService.GetAll().Where(t => t.Status == Data.Entities.TaskStatus.Approved).ToList();
+            var tasks = _taskService.GetAll().Where(t => t.Status == Domain.Enums.TaskStatus.Approved).ToList();
             _taskList = tasks;
             cmbTaskSelect.Items.Clear();
             foreach (var task in tasks)
@@ -85,12 +88,13 @@ namespace TripleDetection.Presentation.Views.Detection
             if (cmbTaskSelect.SelectedItem == null) return;
 
             var selectedIndex = cmbTaskSelect.SelectedIndex;
+            if (selectedIndex < 0 || selectedIndex >= _taskList.Count) return;
+
             _selectedTask = _taskList[selectedIndex];
 
             _vmService.SetCurrentTaskContext(_selectedTask.Id, _selectedTask.ProductId, _selectedTask.BatchNumber);
 
-            var productService = new ProductService();
-            var product = productService.GetById(_selectedTask.ProductId);
+            var product = _productService.GetById(_selectedTask.ProductId);
 
             var productName = product?.Name ?? "--";
             var solFilePath = product?.SolFilePath ?? "--";
@@ -185,8 +189,7 @@ namespace TripleDetection.Presentation.Views.Detection
             {
                 if (_selectedTask != null)
                 {
-                    var productService = new ProductService();
-                    var product = productService.GetById(_selectedTask.ProductId);
+                    var product = _productService.GetById(_selectedTask.ProductId);
                     if (product != null && !string.IsNullOrEmpty(product.SolFilePath))
                     {
                         _selectedSolPath = product.SolFilePath;

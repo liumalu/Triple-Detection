@@ -4,12 +4,16 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using Microsoft.Win32;
+using VM.Core;
+using VM.PlatformSDKCS;
 using TripleDetection.Application.VmServices;
 using TripleDetection.Application.Services;
 using TripleDetection.Presentation.ViewModels.Detection;
 using TripleDetection.Presentation.Navigation;
 using TripleDetection.Presentation.Views.Detection;
 using MessageBox = System.Windows.MessageBox;
+using ConfigurationManager = System.Configuration.ConfigurationManager;
 
 namespace TripleDetection
 {
@@ -17,45 +21,66 @@ namespace TripleDetection
     {
         private readonly MainViewModel _viewModel;
         private readonly NavigationService _navigationService;
+        private readonly VmIntegrationService _vmService;
+        private readonly ImageStorageService _imageStorage;
+        private readonly LoggingService _logService;
 
-        private VmIntegrationService _vmService;
-        private ImageStorageService _imageStorage;
-        private LoggingService _logService;
-
-        private string _solPath;
-        private readonly string _okDir;
-        private readonly string _ngDir;
-        private string _selectedSolPath;
+        private string? _selectedSolPath;
         private bool _isSolutionLoad = false;
         private bool _isContinuRun = false;
-        private VmProcedure _procedure;
+        private VmProcedure? _procedure;
 
-        public MainWindow(MainViewModel viewModel, NavigationService navigationService)
+        public MainWindow(
+            MainViewModel viewModel,
+            NavigationService navigationService,
+            VmIntegrationService vmService,
+            ImageStorageService imageStorage,
+            LoggingService logService)
         {
-            InitializeComponent();
-            DataContext = viewModel;
-            _viewModel = viewModel;
-            _navigationService = navigationService;
-
-            _okDir = ConfigurationManager.AppSettings["OkImageDir"];
-            _ngDir = ConfigurationManager.AppSettings["NgImageDir"];
-            var logPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Log", "Message");
-
-            _imageStorage = new ImageStorageService(_okDir, _ngDir);
-            _logService = new LoggingService(logPath);
-            _vmService = new VmIntegrationService(_imageStorage);
-
-            _logService.OnLogAdded += (s, e) =>
+            try
             {
-                Dispatcher.Invoke(() => _viewModel.AddLog(e.Message));
-            };
+                InitializeComponent();
+                System.IO.File.AppendAllText(
+                    System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs", "startup.log"),
+                    $"\n[{DateTime.Now:HH:mm:ss}] MainWindow constructor started");
+                DataContext = viewModel;
+                _viewModel = viewModel;
+                _navigationService = navigationService;
+                _vmService = vmService;
+                _imageStorage = imageStorage;
+                _logService = logService;
 
-            VmSolution.OnWorkStatusEvent += VmSolution_OnWorkStatusEvent;
-            VmSolution.OnProcessStatusStartEvent += VmSolution_OnProcessStatusStartEvent;
-            VmSolution.OnProcessStatusStopEvent += VmSolution_OnProcessStatusStopEvent;
+                _logService.OnLogAdded += (s, e) =>
+                {
+                    Dispatcher.Invoke(() => _viewModel.AddLog(e.Message));
+                };
 
-            btnRender.Background = new System.Windows.Media.SolidColorBrush(
-                System.Windows.Media.Color.FromRgb(255, 140, 0));
+                System.IO.File.AppendAllText(
+                    System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs", "startup.log"),
+                    $"\n[{DateTime.Now:HH:mm:ss}] About to register VM events");
+
+                VmSolution.OnWorkStatusEvent += VmSolution_OnWorkStatusEvent;
+                VmSolution.OnProcessStatusStartEvent += VmSolution_OnProcessStatusStartEvent;
+                VmSolution.OnProcessStatusStopEvent += VmSolution_OnProcessStatusStopEvent;
+
+                System.IO.File.AppendAllText(
+                    System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs", "startup.log"),
+                    $"\n[{DateTime.Now:HH:mm:ss}] VM events registered, setting button background");
+
+                btnRender.Background = new System.Windows.Media.SolidColorBrush(
+                    System.Windows.Media.Color.FromRgb(255, 140, 0));
+
+                System.IO.File.AppendAllText(
+                    System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs", "startup.log"),
+                    $"\n[{DateTime.Now:HH:mm:ss}] MainWindow constructor complete");
+            }
+            catch (Exception ex)
+            {
+                System.IO.File.AppendAllText(
+                    System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs", "startup.log"),
+                    $"\n[{DateTime.Now:HH:mm:ss}] MainWindow constructor EXCEPTION: {ex}");
+                throw;
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -86,6 +111,8 @@ namespace TripleDetection
 
         private void ShowRenderControl()
         {
+            VmHost.Visibility = Visibility.Visible;
+            MainContentRegion.Visibility = Visibility.Collapsed;
             VmHost.Child = new VMControls.Winform.Release.VmRenderControl();
             if (_procedure != null)
             {
@@ -105,6 +132,8 @@ namespace TripleDetection
                 disposable.Dispose();
             }
             VmHost.Child = null;
+            VmHost.Visibility = Visibility.Collapsed;
+            MainContentRegion.Visibility = Visibility.Visible;
             btnConfig.Background = new System.Windows.Media.SolidColorBrush(
                 System.Windows.Media.Color.FromRgb(255, 140, 0));
             btnRender.Background = new System.Windows.Media.SolidColorBrush(
@@ -117,7 +146,7 @@ namespace TripleDetection
         {
             var dialog = new OpenFileDialog();
             dialog.Filter = "VM Sol File|*.sol*";
-            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (dialog.ShowDialog() == true)
             {
                 _selectedSolPath = dialog.FileName;
                 _isSolutionLoad = false;

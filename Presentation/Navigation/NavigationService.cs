@@ -11,7 +11,7 @@ public class NavigationService : INavigationService
     private ContentControl? _region;
 
     public string CurrentViewKey { get; private set; } = "";
-    public event Action<string> Navigated;
+    public event Action<string>? Navigated;
 
     public NavigationService(IServiceProvider serviceProvider)
     {

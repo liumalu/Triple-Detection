@@ -1,10 +1,12 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
 using Microsoft.Win32;
 using CommunityToolkit.Mvvm;
+using TripleDetection.Domain;
 using TripleDetection.Domain.Entities;
 using TripleDetection.Application.Services;
 using TripleDetection.Domain.Enums;
@@ -144,11 +146,11 @@ namespace TripleDetection.Presentation.ViewModels.Production
                 if (IsEditMode)
                 {
                     product.Id = ProductId;
-                    _productService.Update(product, "admin", SessionManager.CurrentUserId);
+                    _productService.Update(product, SessionManager.CurrentUserName ?? "Unknown", SessionManager.CurrentUserId);
                 }
                 else
                 {
-                    _productService.Create(product, "admin", SessionManager.CurrentUserId);
+                    _productService.Create(product, SessionManager.CurrentUserName ?? "Unknown", SessionManager.CurrentUserId);
                 }
                 System.Diagnostics.Debug.WriteLine($"[Save] 后台线程完成 | ProductId={product.Id}");
 

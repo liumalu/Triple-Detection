@@ -2,6 +2,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 using CommunityToolkit.Mvvm;
+using CommunityToolkit.Mvvm.ComponentModel;
 using TripleDetection.Domain.Entities;
 using TripleDetection.Application.Services;
 using TripleDetection.Domain;
@@ -33,7 +34,7 @@ namespace TripleDetection.Presentation.ViewModels.Auth
 
         public event EventHandler<bool> RequestClose;
 
-        public UserEditViewModel(User user = null, IUserService userService = null)
+        public UserEditViewModel(User? user = null, IUserService? userService = null)
         {
             _userService = userService ?? throw new ArgumentNullException(nameof(userService));
             IsEditMode = user != null;
@@ -126,14 +127,14 @@ namespace TripleDetection.Presentation.ViewModels.Auth
                 if (IsEditMode)
                 {
                     user.CreateAt = DateTime.Now;
-                    user.CreateBy = "admin";
-                    _userService.Update(user, "admin", SessionManager.CurrentUserId);
+                    user.CreateBy = SessionManager.CurrentUserName ?? "Unknown";
+                    _userService.Update(user, SessionManager.CurrentUserName ?? "Unknown", SessionManager.CurrentUserId);
                 }
                 else
                 {
                     user.CreateAt = DateTime.Now;
-                    user.CreateBy = "admin";
-                    _userService.Create(user, "admin", SessionManager.CurrentUserId);
+                    user.CreateBy = SessionManager.CurrentUserName ?? "Unknown";
+                    _userService.Create(user, SessionManager.CurrentUserName ?? "Unknown", SessionManager.CurrentUserId);
                 }
 
                 RequestClose?.Invoke(this, true);

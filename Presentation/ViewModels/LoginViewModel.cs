@@ -1,6 +1,8 @@
 using System;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using TripleDetection.Application.Services;
 using TripleDetection.Domain.Entities;
 using TripleDetection.Domain;
@@ -24,36 +26,29 @@ namespace TripleDetection.Presentation.ViewModels
             _userService = userService;
             _logoPath = System.Configuration.ConfigurationManager.AppSettings["LoginLogoPath"]
                 ?? System.Configuration.ConfigurationManager.AppSettings["SystemLogoPath"];
-
-            LoginCommand = new RelayCommand(ExecuteLogin, CanExecuteLogin)
-                .ObserveProperty(nameof(IsLoading))
-                .ObserveProperty(nameof(Username))
-                .ObserveProperty(nameof(Password));
         }
 
         partial void OnUsernameChanged(string value)
         {
             UsernameHasError = false;
             ErrorMessage = string.Empty;
+            LoginCommand.NotifyCanExecuteChanged();
         }
 
         partial void OnPasswordChanged(string value)
         {
             PasswordHasError = false;
             ErrorMessage = string.Empty;
+            LoginCommand.NotifyCanExecuteChanged();
         }
 
-        public ICommand LoginCommand { get; }
-
-        public event Action<User> LoginSucceeded;
-        public event Action OnLoginFailed;
-
-        private bool CanExecuteLogin()
+        partial void OnIsLoadingChanged(bool value)
         {
-            return !IsLoading && !string.IsNullOrWhiteSpace(Username) && !string.IsNullOrWhiteSpace(Password);
+            LoginCommand.NotifyCanExecuteChanged();
         }
 
-        private void ExecuteLogin()
+        [RelayCommand(CanExecute = nameof(CanExecuteLogin))]
+        private void Login()
         {
             UsernameHasError = string.IsNullOrWhiteSpace(Username);
             PasswordHasError = string.IsNullOrWhiteSpace(Password);
@@ -110,5 +105,13 @@ namespace TripleDetection.Presentation.ViewModels
                 IsLoading = false;
             }
         }
+
+        private bool CanExecuteLogin()
+        {
+            return !IsLoading && !string.IsNullOrWhiteSpace(Username) && !string.IsNullOrWhiteSpace(Password);
+        }
+
+        public event Action<User> LoginSucceeded;
+        public event Action OnLoginFailed;
     }
 }

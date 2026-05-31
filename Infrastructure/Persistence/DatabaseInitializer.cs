@@ -7,7 +7,7 @@ namespace TripleDetection.Infrastructure.Persistence;
 public static class DatabaseInitializer
 {
     private static readonly string DataDirectory = Path.Combine(
-        AppDomain.CurrentDomain.BaseDirectory, "Data");
+        AppDomain.CurrentDomain.BaseDirectory, "Config");
 
     private static readonly string DbPath = Path.Combine(
         DataDirectory, "tripledetection.db");
@@ -89,11 +89,11 @@ INSERT INTO Products (Name, Description, Status, IsDeleted, CreateAt, UpdateAt)
 VALUES ('OCR检测产品A', '用于OCR文字识别检测', 1, 0, '{now}', '{now}'),
 ('缺陷检测产品B', '用于表面缺陷检测', 1, 0, '{now}', '{now}'),
 ('尺寸测量产品C', '用于尺寸测量', 1, 0, '{now}', '{now}');
-INSERT INTO Tasks (Name, Status, IsEnabled, IsDeleted, CreateAt, UpdateAt)
-VALUES ('OCR检测任务-2025-05-01', 1, 1, 0, '{now}', '{now}'),
-('缺陷检测任务-2025-05-02', 1, 1, 0, '{now}', '{now}'),
-('尺寸测量任务-2025-05-03', 1, 1, 0, '{now}', '{now}'),
-('备料任务-待审核', 0, 1, 0, '{now}', '{now}');";
+INSERT INTO Tasks (Name, Status, IsDeleted, CreateAt, UpdateAt)
+VALUES ('OCR检测任务-2025-05-01', 1, 0, '{now}', '{now}'),
+('缺陷检测任务-2025-05-02', 1, 0, '{now}', '{now}'),
+('尺寸测量任务-2025-05-03', 1, 0, '{now}', '{now}'),
+('备料任务-待审核', 0, 0, '{now}', '{now}');";
         cmd.ExecuteNonQuery();
     }
 }

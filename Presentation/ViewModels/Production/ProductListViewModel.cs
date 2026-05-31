@@ -1,8 +1,11 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Windows;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm;
+using TripleDetection.Domain;
 using TripleDetection.Domain.Entities;
+using TripleDetection.Domain.Entities.Queries;
 using TripleDetection.Application.Services;
 
 namespace TripleDetection.Presentation.ViewModels.Production
@@ -124,11 +127,11 @@ namespace TripleDetection.Presentation.ViewModels.Production
             Search();
         }
 
-        public void OpenEditWindow(Product product = null)
+        public void OpenEditWindow(Product? product = null)
         {
             var editVm = new ProductEditViewModel(product, _productService);
             var editWindow = new Views.Production.ProductEditWindow { DataContext = editVm };
-            editWindow.Owner = Application.Current.MainWindow;
+            editWindow.Owner = System.Windows.Application.Current.MainWindow;
             if (editWindow.ShowDialog() == true)
             {
                 Search();

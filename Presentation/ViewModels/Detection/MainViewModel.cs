@@ -1,9 +1,12 @@
 using System;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm;
-using CommunityToolkit.Mvvm;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using TripleDetection.Presentation.Messages;
 using TripleDetection.Presentation.Navigation;
+using TripleDetection.Presentation.Models;
 
 namespace TripleDetection.Presentation.ViewModels.Detection
 {
@@ -56,12 +59,12 @@ namespace TripleDetection.Presentation.ViewModels.Detection
             set => SetProperty(ref _currentView, value);
         }
 
-        public DelegateCommand NavigateToProductCommand { get; }
+        public RelayCommand NavigateToProductCommand { get; }
 
         public MainViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
-            NavigateToProductCommand = new DelegateCommand(NavigateToProduct);
+            NavigateToProductCommand = new RelayCommand(NavigateToProduct);
 
             // Subscribe to messages via WeakReferenceMessenger
             WeakReferenceMessenger.Default.Register<LogAddedMessage>(this, (r, m) => AddLog(m.Message));

@@ -8,7 +8,7 @@ namespace TripleDetection.Application.SettingsServices;
 public class CommunicationSettingsService
 {
     private readonly string _configPath;
-    private CommunicationSettings _settings;
+    private CommunicationSettings? _settings;
 
     public CommunicationSettingsService()
     {

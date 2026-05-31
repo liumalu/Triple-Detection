@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using CommunityToolkit.Mvvm;
+using CommunityToolkit.Mvvm.Messaging;
 using VM.Core;
 using VM.PlatformSDKCS;
 using System.Drawing;
@@ -10,22 +11,21 @@ using TripleDetection.Domain.Entities;
 using TripleDetection.Application.Services;
 using TripleDetection.Presentation.Messages;
 using GlobalVariableModuleCs;
-using TripleDetection.App.Services.Detection;
 
 namespace TripleDetection.Application.VmServices
 {
     public class VmIntegrationService
     {
-        private VmProcedure _procedure;
+        private VmProcedure? _procedure;
         private ImageStorageService _imageStorage;
         private bool _isSolutionLoad = false;
         private LoggingService _logService;
         private IDetectionRecordService _detectionRecordService;
         private int _currentTaskId;
         private int _currentProductId;
-        private string _currentBatchNumber;
+        private string? _currentBatchNumber;
 
-        public event EventHandler<DetectionResult> OnDetectionResult;
+        public event EventHandler<DetectionResult>? OnDetectionResult;
 
         public VmIntegrationService(ImageStorageService imageStorage, LoggingService logService, IDetectionRecordService detectionRecordService)
         {
@@ -86,7 +86,7 @@ namespace TripleDetection.Application.VmServices
             _currentBatchNumber = batchNumber ?? "";
         }
 
-        public VmProcedure GetProcedure()
+        public VmProcedure? GetProcedure()
         {
             return _procedure;
         }
@@ -182,11 +182,11 @@ namespace TripleDetection.Application.VmServices
                             {
                                 TaskId = _currentTaskId,
                                 ProductId = _currentProductId,
-                                BatchNumber = result.BatchNumber,
+                                BatchNumber = result.BatchNumber ?? "",
                                 IsOK = result.IsOK,
-                                ProductionDate = result.ProductionDate,
-                                ExpirationDate = result.ExpirationDate,
-                                ImagePath = result.ImagePath,
+                                ProductionDate = result.ProductionDate ?? "",
+                                ExpirationDate = result.ExpirationDate ?? "",
+                                ImagePath = result.ImagePath ?? "",
                                 ElapsedMs = result.ElapsedMs,
                                 DetectionTime = DateTime.Now
                             };

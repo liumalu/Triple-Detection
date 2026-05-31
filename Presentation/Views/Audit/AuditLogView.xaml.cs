@@ -17,7 +17,7 @@ namespace TripleDetection.Presentation.Views.Audit
     {
         private readonly string _dbPath;
         private AuditLogQuery _currentQuery = new AuditLogQuery { PageIndex = 0, PageSize = 20 };
-        private IPagedResult<AuditLog> _currentResult;
+        private IPagedResult<AuditLog>? _currentResult;
 
         public AuditLogView()
         {
@@ -25,7 +25,7 @@ namespace TripleDetection.Presentation.Views.Audit
 
             _dbPath = System.IO.Path.Combine(
                 AppDomain.CurrentDomain.BaseDirectory,
-                "Data",
+                "Config",
                 "tripledetection.db");
 
             LoadUsers();
@@ -47,7 +47,7 @@ namespace TripleDetection.Presentation.Views.Audit
         private List<User> GetAllUsers()
         {
             var users = new List<User>();
-            using (var conn = new SQLiteConnection($"Data Source={_dbPath};Version=3;"))
+            using (var conn = new Microsoft.Data.Sqlite.SqliteConnection($"Data Source={_dbPath};Version=3;"))
             {
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
@@ -95,7 +95,7 @@ namespace TripleDetection.Presentation.Views.Audit
             var logs = new List<AuditLog>();
             long total = 0;
 
-            using (var conn = new SQLiteConnection($"Data Source={_dbPath};Version=3;"))
+            using (var conn = new Microsoft.Data.Sqlite.SqliteConnection($"Data Source={_dbPath};Version=3;"))
             {
                 conn.Open();
                 var where = BuildWhereClause(query);
@@ -148,7 +148,7 @@ namespace TripleDetection.Presentation.Views.Audit
             return string.Join(" AND ", conditions);
         }
 
-        private void AddQueryParams(SQLiteCommand cmd, AuditLogQuery query)
+        private void AddQueryParams(SqliteCommand cmd, AuditLogQuery query)
         {
             if (query.StartDate.HasValue)
                 cmd.Parameters.AddWithValue("@startDate", query.StartDate.Value.ToString("yyyy-MM-dd HH:mm:ss"));
@@ -278,7 +278,7 @@ namespace TripleDetection.Presentation.Views.Audit
         private IEnumerable<AuditLog> ExportLogs(AuditLogQuery query)
         {
             var logs = new List<AuditLog>();
-            using (var conn = new SQLiteConnection($"Data Source={_dbPath};Version=3;"))
+            using (var conn = new Microsoft.Data.Sqlite.SqliteConnection($"Data Source={_dbPath};Version=3;"))
             {
                 conn.Open();
                 var where = BuildWhereClause(query);

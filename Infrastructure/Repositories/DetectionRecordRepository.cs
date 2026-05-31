@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using Microsoft.Data.Sqlite;
 using TripleDetection.Domain.Entities;
@@ -11,7 +12,7 @@ namespace TripleDetection.Infrastructure.Repositories;
 
 public class DetectionRecordRepository : SqliteRepository<DetectionRecord>, IDetectionRecordRepository
 {
-    public DetectionRecordRepository(TripleDetectionDbContext context) : base(context) { }
+    public DetectionRecordRepository(DbConnection connection) : base(connection) { }
 
     public IPagedResult<DetectionRecord> Query(DetectionRecordQuery query)
     {
@@ -73,7 +74,7 @@ public class DetectionRecordRepository : SqliteRepository<DetectionRecord>, IDet
         if (query.IsOK.HasValue) cmd.Parameters.AddWithValue("@IsOK", query.IsOK.Value ? 1 : 0);
     }
 
-    private new List<T> ExecuteReader<T>(SqliteCommand cmd) where T : BaseEntity
+    private List<T> ExecuteReader<T>(SqliteCommand cmd) where T : BaseEntity
     {
         var results = new List<T>();
         using var reader = cmd.ExecuteReader();

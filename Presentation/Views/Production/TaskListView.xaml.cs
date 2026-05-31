@@ -2,6 +2,7 @@ using System.Windows;
 using System.Windows.Controls;
 using TripleDetection.Presentation.ViewModels;
 using TripleDetection.Presentation.ViewModels.Production;
+using TripleDetection.Application.Services;
 using TaskEntity = TripleDetection.Domain.Entities.ProdTask;
 
 namespace TripleDetection.Presentation.Views.Production
@@ -10,10 +11,10 @@ namespace TripleDetection.Presentation.Views.Production
     {
         private TaskListViewModel _viewModel;
 
-        public TaskListView()
+        public TaskListView(ITaskService taskService, IProductService productService)
         {
             InitializeComponent();
-            _viewModel = new TaskListViewModel();
+            _viewModel = new TaskListViewModel(taskService, productService);
             DataContext = _viewModel;
             Loaded += (s, e) => _viewModel.Search();
         }

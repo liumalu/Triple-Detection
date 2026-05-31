@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
 using TripleDetection.Domain.Entities;
 using TripleDetection.Domain.Entities.Queries;
 using TripleDetection.Domain.Repositories;
@@ -16,9 +18,9 @@ public class SqliteRepository<T> : IRepository<T> where T : BaseEntity
 {
     private readonly string _connectionString;
 
-    public SqliteRepository(TripleDetectionDbContext context)
+    public SqliteRepository(DbConnection connection)
     {
-        _connectionString = context.Database.GetConnectionString();
+        _connectionString = connection.ConnectionString;
     }
 
     protected string? ConnectionString => _connectionString;
@@ -38,14 +40,14 @@ public class SqliteRepository<T> : IRepository<T> where T : BaseEntity
     public IEnumerable<T> GetAll()
     {
         var sql = $"SELECT * FROM {GetTableName()} WHERE IsDeleted = 0";
-        return ExecuteQuery(sql, null);
+        return ExecuteQuery(sql, null!);
     }
 
     public IEnumerable<T> Find(Expression<Func<T, bool>> predicate)
     {
         var whereClause = TranslatePredicate(predicate);
         var sql = $"SELECT * FROM {GetTableName()} WHERE {whereClause} AND IsDeleted = 0";
-        return ExecuteQuery(sql, null);
+        return ExecuteQuery(sql, null!);
     }
 
     public void Add(T entity)
@@ -93,7 +95,7 @@ public class SqliteRepository<T> : IRepository<T> where T : BaseEntity
 
     public IPagedResult<T> Query(PagedQuery query)
     {
-        return QueryInternal(query, null);
+        return QueryInternal(query, null!);
     }
 
     private IPagedResult<T> QueryInternal(PagedQuery query, List<string> extraConditions)
@@ -135,13 +137,45 @@ public class SqliteRepository<T> : IRepository<T> where T : BaseEntity
                 var left = Visit(binary.Left);
                 var right = Visit(binary.Right);
                 var op = binary.NodeType == ExpressionType.Equal ? "=" : "!=";
-                return $"({left} {op} '{EscapeValue(right)}')";
+                return $"({left} {op} {right})";
             }
             if (binary.NodeType == ExpressionType.AndAlso) return $"({Visit(binary.Left)} AND {Visit(binary.Right)})";
             if (binary.NodeType == ExpressionType.OrElse) return $"({Visit(binary.Left)} OR {Visit(binary.Right)})";
         }
-        if (expr is MemberExpression member) return GetColumnName(member.Member as PropertyInfo);
-        if (expr is ConstantExpression constant) return constant.Value?.ToString() ?? "NULL";
+        if (expr is MemberExpression member)
+        {
+            // Handle closure-captured variables: member is a field of a closure class
+            if (member.Expression is ConstantExpression closureConstant)
+            {
+                var closure = closureConstant.Value;
+                if (closure != null)
+                {
+                    var fi = member.Member as System.Reflection.FieldInfo;
+                    if (fi != null)
+                    {
+                        var fieldValue = fi.GetValue(closure);
+                        var str = fieldValue?.ToString() ?? "";
+                        // Handle boolean field values
+                        if (str == "True" || str == "true") return "1";
+                        if (str == "False" || str == "false") return "0";
+                        return $"'{EscapeValue(str)}'";
+                    }
+                }
+            }
+            return GetColumnName(member.Member as PropertyInfo);
+        }
+        if (expr is ConstantExpression constant)
+        {
+            if (constant.Value == null) return "NULL";
+            var val = constant.Value.ToString();
+            System.IO.File.AppendAllText(
+                System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs", "sql_debug.log"),
+                $"  ConstantExpr val='{val}', type={constant.Type.Name}\n");
+            // Handle boolean constants: output 1/0 instead of 'True'/'False'
+            if (val == "True" || val == "true") return "1";
+            if (val == "False" || val == "false") return "0";
+            return $"'{EscapeValue(val)}'";
+        }
         if (expr is MethodCallExpression call && call.Method.Name == "Contains")
         {
             var obj = call.Object as MemberExpression;
@@ -150,13 +184,13 @@ public class SqliteRepository<T> : IRepository<T> where T : BaseEntity
         }
         if (expr is UnaryExpression unary && unary.NodeType == ExpressionType.Not)
         {
-            var member = unary.Operand as MemberExpression;
-            return $"({GetColumnName(member?.Member as PropertyInfo)} = 0 OR {GetColumnName(member?.Member as PropertyInfo)} = FALSE)";
+            var notExpr = unary.Operand as MemberExpression;
+            return $"({GetColumnName(notExpr?.Member as PropertyInfo)} = 0 OR {GetColumnName(notExpr?.Member as PropertyInfo)} = 0)";
         }
         return "1=1";
     }
 
-    private List<T> ExecuteQuery(string sql, object[] _, List<SqliteParameter> extraParams = null)
+    private List<T> ExecuteQuery(string sql, object[] _, List<SqliteParameter>? extraParams = null)
     {
         using var conn = new SqliteConnection(_connectionString);
         conn.Open();
@@ -180,6 +214,8 @@ public class SqliteRepository<T> : IRepository<T> where T : BaseEntity
         using var cmd = new SqliteCommand(sql, conn);
         var result = cmd.ExecuteScalar();
         if (result == null || result == DBNull.Value) return default(T)!;
+        // Handle Int64 -> Int32 conversion for SQLite
+        if (typeof(T) == typeof(int) && result is Int64 l) return (T)(object)(int)l;
         return (T)Convert.ChangeType(result, typeof(T));
     }
 
@@ -194,6 +230,8 @@ public class SqliteRepository<T> : IRepository<T> where T : BaseEntity
             if (prop == null || reader.IsDBNull(i)) continue;
             var value = reader.GetValue(i);
             if (prop.PropertyType == typeof(bool) && value is long l) prop.SetValue(entity, l != 0);
+            else if (prop.PropertyType == typeof(int) && value is Int64 il) prop.SetValue(entity, (int)il);
+            else if (prop.PropertyType == typeof(int?) && value is Int64 il2) prop.SetValue(entity, (int?)il2);
             else if (prop.PropertyType == typeof(DateTime?) || prop.PropertyType == typeof(DateTime)) prop.SetValue(entity, DateTime.Parse(value.ToString()!));
             else prop.SetValue(entity, value);
         }
@@ -226,7 +264,7 @@ public class SqliteRepository<T> : IRepository<T> where T : BaseEntity
     private string[] GetUpdateSets() =>
         GetTypeProperties().Select(p => p.Name).Concat(new[] { "UpdateAt", "UpdateBy" }).ToArray();
 
-    private void AddEntityParameters(SqliteCommand cmd, T entity, string[] excludeKeys = null)
+    private void AddEntityParameters(SqliteCommand cmd, T entity, string[]? excludeKeys = null)
     {
         excludeKeys ??= Array.Empty<string>();
         var now = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
@@ -245,6 +283,11 @@ public class SqliteRepository<T> : IRepository<T> where T : BaseEntity
 
     private PropertyInfo[] GetTypeProperties() =>
         typeof(T).GetProperties()
-            .Where(p => p.Name != "Id" && p.Name != "CreateBy" && p.Name != "UpdateBy" &&
-                        p.Name != "CreateAt" && p.Name != "UpdateAt" && p.Name != "IsDeleted").ToArray();
+            .Where(p => !ExcludedProperties.Contains(p.Name) && p.CanRead && p.CanWrite).ToArray();
+
+    private static readonly string[] ExcludedProperties = new[]
+    {
+        "Id", "CreateBy", "UpdateBy", "CreateAt", "UpdateAt", "IsDeleted",
+        "StatusText"
+    };
 }

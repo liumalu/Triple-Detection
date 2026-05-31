@@ -8,7 +8,7 @@ namespace TripleDetection.Application.SettingsServices;
 public class SystemSettingsService
 {
     private readonly string _configPath;
-    private SystemSettings _settings;
+    private SystemSettings? _settings;
 
     public SystemSettingsService()
     {

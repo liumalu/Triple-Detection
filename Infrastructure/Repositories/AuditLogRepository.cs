@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using Microsoft.Data.Sqlite;
 using TripleDetection.Domain.Entities;
@@ -11,7 +12,7 @@ namespace TripleDetection.Infrastructure.Repositories;
 
 public class AuditLogRepository : SqliteRepository<AuditLog>, IAuditLogRepository
 {
-    public AuditLogRepository(TripleDetectionDbContext context) : base(context) { }
+    public AuditLogRepository(DbConnection connection) : base(connection) { }
 
     public IPagedResult<AuditLog> Query(AuditLogQuery query)
     {
@@ -76,7 +77,7 @@ public class AuditLogRepository : SqliteRepository<AuditLog>, IAuditLogRepositor
         if (!string.IsNullOrEmpty(query.IpAddress)) cmd.Parameters.AddWithValue("@IpAddress", query.IpAddress);
     }
 
-    private new List<T> ExecuteReader<T>(SqliteCommand cmd) where T : BaseEntity
+    private List<T> ExecuteReader<T>(SqliteCommand cmd) where T : BaseEntity
     {
         var results = new List<T>();
         using var reader = cmd.ExecuteReader();

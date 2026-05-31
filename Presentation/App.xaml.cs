@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading;
 using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
+using TripleDetection;
 using TripleDetection.Application.Services;
 using TripleDetection.Application.SettingsServices;
 using TripleDetection.Application.VmServices;
@@ -23,12 +24,22 @@ using TripleDetection.Presentation.Views.Detection;
 using TripleDetection.Presentation.Views.Production;
 using TripleDetection.Presentation.Views.Settings;
 
-public partial class App : Application
+namespace TripleDetection.Presentation
+{
+public partial class App : System.Windows.Application
 {
     private IServiceProvider? _services;
     private static Mutex? _mutex;
 
     public static IServiceProvider Services => ((App)Current)._services!;
+
+    [STAThread]
+    public static void Main()
+    {
+        var app = new App();
+        app.InitializeComponent();
+        app.Run();
+    }
 
     protected override void OnStartup(StartupEventArgs e)
     {
@@ -47,24 +58,56 @@ public partial class App : Application
 
         // Show login window first
         var loginWindow = _services.GetRequiredService<LoginWindow>();
+        var logDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs");
+        System.IO.Directory.CreateDirectory(logDir);
+        System.IO.File.WriteAllText(
+            System.IO.Path.Combine(logDir, "startup.log"),
+            $"[{DateTime.Now:HH:mm:ss}] LoginWindow created, about to ShowDialog");
         var result = loginWindow.ShowDialog();
+        System.IO.File.AppendAllText(
+            System.IO.Path.Combine(logDir, "startup.log"),
+            $"\n[{DateTime.Now:HH:mm:ss}] ShowDialog returned: {result}");
+
         if (result != true) { Shutdown(); return; }
 
         // Then show main window
-        var mainWindow = _services.GetRequiredService<MainWindow>();
-        MainWindow = mainWindow;
-        mainWindow.Show();
-        mainWindow.WindowState = WindowState.Normal;
-        mainWindow.Activate();
+        try
+        {
+            var mainWindow = _services.GetRequiredService<MainWindow>();
+            System.IO.File.AppendAllText(
+                System.IO.Path.Combine(logDir, "startup.log"),
+                $"\n[{DateTime.Now:HH:mm:ss}] MainWindow created from DI");
+            MainWindow = mainWindow;
+            System.IO.File.AppendAllText(
+                System.IO.Path.Combine(logDir, "startup.log"),
+                $"\n[{DateTime.Now:HH:mm:ss}] MainWindow assigned to App.MainWindow, Visible={mainWindow.IsVisible}, WindowState={mainWindow.WindowState}");
+            mainWindow.Show();
+            System.IO.File.AppendAllText(
+                System.IO.Path.Combine(logDir, "startup.log"),
+                $"\n[{DateTime.Now:HH:mm:ss}] mainWindow.Show() called, IsVisible={mainWindow.IsVisible}");
+            mainWindow.WindowState = WindowState.Normal;
+            mainWindow.Activate();
+            System.IO.File.AppendAllText(
+                System.IO.Path.Combine(logDir, "startup.log"),
+                $"\n[{DateTime.Now:HH:mm:ss}] MainWindow shown and activated");
+        }
+        catch (Exception ex)
+        {
+            System.IO.File.AppendAllText(
+                System.IO.Path.Combine(logDir, "startup.log"),
+                $"\n[{DateTime.Now:HH:mm:ss}] Exception showing MainWindow: {ex}");
+            throw;
+        }
     }
 
     private void ConfigureServices(IServiceCollection services)
     {
         // Infrastructure
-        var dbPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "tripledetection.db");
+        var dbPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Config", "tripledetection.db");
         var connectionString = $"Data Source={dbPath}";
         services.AddSingleton<IDbConnectionFactory>(new SqliteConnectionFactory(connectionString));
         services.AddSingleton<IRepositoryFactory>(sp => new SqliteRepositoryFactory(sp.GetRequiredService<IDbConnectionFactory>()));
+        services.AddTransient(sp => sp.GetRequiredService<IDbConnectionFactory>().CreateConnection());
         services.AddTransient(typeof(IRepository<>), typeof(SqliteRepository<>));
         services.AddTransient<IAuditLogRepository, AuditLogRepository>();
         services.AddTransient<IDetectionRecordRepository, DetectionRecordRepository>();
@@ -87,6 +130,9 @@ public partial class App : Application
         services.AddTransient<SystemSettingsService>();
         services.AddTransient<DeviceControlSettingsService>();
         services.AddSingleton<SettingsSyncService>();
+
+        // Password Hash Service
+        services.AddSingleton<IPasswordHashService, PasswordHashService>();
 
         // Application Services (transient)
         services.AddTransient<IUserService, UserService>();
@@ -113,15 +159,15 @@ public partial class App : Application
 
         // Views (transient)
         services.AddTransient<LoginWindow>();
-        services.AddTransient<MainWindow>();
-        services.AddTransient<Views.Detection.DetectionView>();
+        services.AddTransient<TripleDetection.MainWindow>();
+        services.AddTransient<TripleDetection.Presentation.Views.Detection.DetectionView>();
     }
 
     private void InitializeDatabase()
     {
         try
         {
-            var dbPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "tripledetection.db");
+            var dbPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Config", "tripledetection.db");
             var dir = Path.GetDirectoryName(dbPath);
             if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
                 Directory.CreateDirectory(dir);
@@ -133,4 +179,5 @@ public partial class App : Application
             Shutdown(1);
         }
     }
+}
 }

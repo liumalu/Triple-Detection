@@ -2,7 +2,7 @@ using System;
 using System.Drawing;
 using System.IO;
 
-namespace TripleDetection.App.Services.Detection
+namespace TripleDetection.Application.VmServices
 {
     public class ImageStorageService
     {

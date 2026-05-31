@@ -1,0 +1,1235 @@
+适用于 .NET Framework MSBuild 版本 17.14.40+3e7442088
+生成启动时间为 2026/5/31 星期日 15:52:41。
+
+项目“D:\xcm\Triple-Detection\TripleDetection.csproj”在节点 1 上(Rebuild 个目标)。
+CoreClean:
+  正在删除文件“D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\TripleDetection.csproj.AssemblyReference.cache”。
+  正在删除文件“D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\App.baml”。
+  正在删除文件“D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\App\DashboardView.baml”。
+  正在删除文件“D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\App\LogsView.baml”。
+  正在删除文件“D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Audit\AuditLogView.baml”。
+  正在删除文件“D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Detection\DetectionHistoryView.baml”。
+  正在删除文件“D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Detection\DetectionView.baml”。
+  正在删除文件“D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\SettingsView.baml”。
+  正在删除文件“D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Settings\CommunicationSettingsView.baml”。
+  正在删除文件“D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Settings\DeviceControlSettingsView.baml”。
+  正在删除文件“D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Settings\SystemSettingsView.baml”。
+  正在删除文件“D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Settings\VmSettingsView.baml”。
+  正在删除文件“D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\App.g.cs”。
+  正在删除文件“D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\App\DashboardView.g.cs”。
+  正在删除文件“D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\App\LogsView.g.cs”。
+  正在删除文件“D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Audit\AuditLogView.g.cs”。
+  正在删除文件“D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Auth\UserEditWindow.g.cs”。
+  正在删除文件“D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Auth\UserManagementView.g.cs”。
+  正在删除文件“D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Detection\DetectionHistoryView.g.cs”。
+  正在删除文件“D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Detection\DetectionView.g.cs”。
+  正在删除文件“D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\LoginWindow.g.cs”。
+  正在删除文件“D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Production\ProductEditWindow.g.cs”。
+  正在删除文件“D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Production\ProductListView.g.cs”。
+  正在删除文件“D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Production\TaskEditWindow.g.cs”。
+  正在删除文件“D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Production\TaskListView.g.cs”。
+  正在删除文件“D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\SettingsView.g.cs”。
+  正在删除文件“D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Settings\CommunicationSettingsView.g.cs”。
+  正在删除文件“D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Settings\DeviceControlSettingsView.g.cs”。
+  正在删除文件“D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Settings\SystemSettingsView.g.cs”。
+  正在删除文件“D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Settings\VmSettingsView.g.cs”。
+  正在删除文件“D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\GeneratedInternalTypeHelper.g.cs”。
+  正在删除文件“D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\TripleDetection.App_MarkupCompile.cache”。
+  正在删除文件“D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\TripleDetection.App_MarkupCompile.lref”。
+  正在删除文件“D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\MainWindow.g.cs”。
+ResolveAssemblyReferences:
+  主引用“Apps.Data”。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“Apps.Data”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+          用于 SearchPath“{CandidateAssemblyFiles}”。
+          已考虑使用“Infrastructure\libs\VisionMaster\GlobalVariableModuleCs.dll”，
+  			但它的名称“GlobalVariableModuleCs”
+  			与预期名称“Apps.Data”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.AppData.dll”，
+  			但它的名称“VM.AppData”
+  			与预期名称“Apps.Data”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeBuild.dll”，
+  			但它的名称“VM.CodeBuild”
+  			与预期名称“Apps.Data”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeCompletion.dll”，
+  			但它的名称“VM.CodeCompletion”
+  			与预期名称“Apps.Data”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CommonData.dll”，
+  			但它的名称“VM.CommonData”
+  			与预期名称“Apps.Data”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CostomDialog.dll”，
+  			但它的名称“VM.CostomDialog”
+  			与预期名称“Apps.Data”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.PcUI.dll”，
+  			但它的名称“VM.PcUI”
+  			与预期名称“Apps.Data”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.User.dll”，
+  			但它的名称“VM.User”
+  			与预期名称“Apps.Data”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VMBaseControls.dll”，
+  			但它的名称“VMBaseControls”
+  			与预期名称“Apps.Data”不匹配。
+          用于 SearchPath“{HintPathFromItem}”。
+          已考虑使用“D:\xcm\Triple-Detection\Infrastructure\libs\Apps.Data.dll”，但它不存在。
+          用于 SearchPath“{RawFileName}”。
+          已考虑将“Apps.Data”视为文件名，但它不存在。
+  主引用“Apps.ErrorCode”。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“Apps.ErrorCode”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+          用于 SearchPath“{CandidateAssemblyFiles}”。
+          已考虑使用“Infrastructure\libs\VisionMaster\GlobalVariableModuleCs.dll”，
+  			但它的名称“GlobalVariableModuleCs”
+  			与预期名称“Apps.ErrorCode”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.AppData.dll”，
+  			但它的名称“VM.AppData”
+  			与预期名称“Apps.ErrorCode”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeBuild.dll”，
+  			但它的名称“VM.CodeBuild”
+  			与预期名称“Apps.ErrorCode”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeCompletion.dll”，
+  			但它的名称“VM.CodeCompletion”
+  			与预期名称“Apps.ErrorCode”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CommonData.dll”，
+  			但它的名称“VM.CommonData”
+  			与预期名称“Apps.ErrorCode”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CostomDialog.dll”，
+  			但它的名称“VM.CostomDialog”
+  			与预期名称“Apps.ErrorCode”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.PcUI.dll”，
+  			但它的名称“VM.PcUI”
+  			与预期名称“Apps.ErrorCode”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.User.dll”，
+  			但它的名称“VM.User”
+  			与预期名称“Apps.ErrorCode”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VMBaseControls.dll”，
+  			但它的名称“VMBaseControls”
+  			与预期名称“Apps.ErrorCode”不匹配。
+          用于 SearchPath“{HintPathFromItem}”。
+          已考虑使用“D:\xcm\Triple-Detection\Infrastructure\libs\Apps.ErrorCode.dll”，但它不存在。
+          用于 SearchPath“{RawFileName}”。
+          已考虑将“Apps.ErrorCode”视为文件名，但它不存在。
+  主引用“Apps.Interface”。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“Apps.Interface”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+          用于 SearchPath“{CandidateAssemblyFiles}”。
+          已考虑使用“Infrastructure\libs\VisionMaster\GlobalVariableModuleCs.dll”，
+  			但它的名称“GlobalVariableModuleCs”
+  			与预期名称“Apps.Interface”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.AppData.dll”，
+  			但它的名称“VM.AppData”
+  			与预期名称“Apps.Interface”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeBuild.dll”，
+  			但它的名称“VM.CodeBuild”
+  			与预期名称“Apps.Interface”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeCompletion.dll”，
+  			但它的名称“VM.CodeCompletion”
+  			与预期名称“Apps.Interface”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CommonData.dll”，
+  			但它的名称“VM.CommonData”
+  			与预期名称“Apps.Interface”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CostomDialog.dll”，
+  			但它的名称“VM.CostomDialog”
+  			与预期名称“Apps.Interface”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.PcUI.dll”，
+  			但它的名称“VM.PcUI”
+  			与预期名称“Apps.Interface”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.User.dll”，
+  			但它的名称“VM.User”
+  			与预期名称“Apps.Interface”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VMBaseControls.dll”，
+  			但它的名称“VMBaseControls”
+  			与预期名称“Apps.Interface”不匹配。
+          用于 SearchPath“{HintPathFromItem}”。
+          已考虑使用“D:\xcm\Triple-Detection\Infrastructure\libs\Apps.Interface.dll”，但它不存在。
+          用于 SearchPath“{RawFileName}”。
+          已考虑将“Apps.Interface”视为文件名，但它不存在。
+  主引用“Apps.Localization”。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“Apps.Localization”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+          用于 SearchPath“{CandidateAssemblyFiles}”。
+          已考虑使用“Infrastructure\libs\VisionMaster\GlobalVariableModuleCs.dll”，
+  			但它的名称“GlobalVariableModuleCs”
+  			与预期名称“Apps.Localization”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.AppData.dll”，
+  			但它的名称“VM.AppData”
+  			与预期名称“Apps.Localization”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeBuild.dll”，
+  			但它的名称“VM.CodeBuild”
+  			与预期名称“Apps.Localization”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeCompletion.dll”，
+  			但它的名称“VM.CodeCompletion”
+  			与预期名称“Apps.Localization”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CommonData.dll”，
+  			但它的名称“VM.CommonData”
+  			与预期名称“Apps.Localization”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CostomDialog.dll”，
+  			但它的名称“VM.CostomDialog”
+  			与预期名称“Apps.Localization”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.PcUI.dll”，
+  			但它的名称“VM.PcUI”
+  			与预期名称“Apps.Localization”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.User.dll”，
+  			但它的名称“VM.User”
+  			与预期名称“Apps.Localization”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VMBaseControls.dll”，
+  			但它的名称“VMBaseControls”
+  			与预期名称“Apps.Localization”不匹配。
+          用于 SearchPath“{HintPathFromItem}”。
+          已考虑使用“D:\xcm\Triple-Detection\Infrastructure\libs\Apps.Localization.dll”，但它不存在。
+          用于 SearchPath“{RawFileName}”。
+          已考虑将“Apps.Localization”视为文件名，但它不存在。
+  主引用“Apps.Log”。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“Apps.Log”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+          用于 SearchPath“{CandidateAssemblyFiles}”。
+          已考虑使用“Infrastructure\libs\VisionMaster\GlobalVariableModuleCs.dll”，
+  			但它的名称“GlobalVariableModuleCs”
+  			与预期名称“Apps.Log”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.AppData.dll”，
+  			但它的名称“VM.AppData”
+  			与预期名称“Apps.Log”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeBuild.dll”，
+  			但它的名称“VM.CodeBuild”
+  			与预期名称“Apps.Log”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeCompletion.dll”，
+  			但它的名称“VM.CodeCompletion”
+  			与预期名称“Apps.Log”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CommonData.dll”，
+  			但它的名称“VM.CommonData”
+  			与预期名称“Apps.Log”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CostomDialog.dll”，
+  			但它的名称“VM.CostomDialog”
+  			与预期名称“Apps.Log”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.PcUI.dll”，
+  			但它的名称“VM.PcUI”
+  			与预期名称“Apps.Log”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.User.dll”，
+  			但它的名称“VM.User”
+  			与预期名称“Apps.Log”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VMBaseControls.dll”，
+  			但它的名称“VMBaseControls”
+  			与预期名称“Apps.Log”不匹配。
+          用于 SearchPath“{HintPathFromItem}”。
+          已考虑使用“D:\xcm\Triple-Detection\Infrastructure\libs\Apps.Log.dll”，但它不存在。
+          用于 SearchPath“{RawFileName}”。
+          已考虑将“Apps.Log”视为文件名，但它不存在。
+  主引用“Apps.UIData”。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“Apps.UIData”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+          用于 SearchPath“{CandidateAssemblyFiles}”。
+          已考虑使用“Infrastructure\libs\VisionMaster\GlobalVariableModuleCs.dll”，
+  			但它的名称“GlobalVariableModuleCs”
+  			与预期名称“Apps.UIData”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.AppData.dll”，
+  			但它的名称“VM.AppData”
+  			与预期名称“Apps.UIData”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeBuild.dll”，
+  			但它的名称“VM.CodeBuild”
+  			与预期名称“Apps.UIData”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeCompletion.dll”，
+  			但它的名称“VM.CodeCompletion”
+  			与预期名称“Apps.UIData”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CommonData.dll”，
+  			但它的名称“VM.CommonData”
+  			与预期名称“Apps.UIData”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CostomDialog.dll”，
+  			但它的名称“VM.CostomDialog”
+  			与预期名称“Apps.UIData”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.PcUI.dll”，
+  			但它的名称“VM.PcUI”
+  			与预期名称“Apps.UIData”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.User.dll”，
+  			但它的名称“VM.User”
+  			与预期名称“Apps.UIData”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VMBaseControls.dll”，
+  			但它的名称“VMBaseControls”
+  			与预期名称“Apps.UIData”不匹配。
+          用于 SearchPath“{HintPathFromItem}”。
+          已考虑使用“D:\xcm\Triple-Detection\Infrastructure\libs\Apps.UIData.dll”，但它不存在。
+          用于 SearchPath“{RawFileName}”。
+          已考虑将“Apps.UIData”视为文件名，但它不存在。
+  主引用“Apps.UIHelper”。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“Apps.UIHelper”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+          用于 SearchPath“{CandidateAssemblyFiles}”。
+          已考虑使用“Infrastructure\libs\VisionMaster\GlobalVariableModuleCs.dll”，
+  			但它的名称“GlobalVariableModuleCs”
+  			与预期名称“Apps.UIHelper”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.AppData.dll”，
+  			但它的名称“VM.AppData”
+  			与预期名称“Apps.UIHelper”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeBuild.dll”，
+  			但它的名称“VM.CodeBuild”
+  			与预期名称“Apps.UIHelper”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeCompletion.dll”，
+  			但它的名称“VM.CodeCompletion”
+  			与预期名称“Apps.UIHelper”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CommonData.dll”，
+  			但它的名称“VM.CommonData”
+  			与预期名称“Apps.UIHelper”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CostomDialog.dll”，
+  			但它的名称“VM.CostomDialog”
+  			与预期名称“Apps.UIHelper”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.PcUI.dll”，
+  			但它的名称“VM.PcUI”
+  			与预期名称“Apps.UIHelper”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.User.dll”，
+  			但它的名称“VM.User”
+  			与预期名称“Apps.UIHelper”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VMBaseControls.dll”，
+  			但它的名称“VMBaseControls”
+  			与预期名称“Apps.UIHelper”不匹配。
+          用于 SearchPath“{HintPathFromItem}”。
+          已考虑使用“D:\xcm\Triple-Detection\Infrastructure\libs\Apps.UIHelper.dll”，但它不存在。
+          用于 SearchPath“{RawFileName}”。
+          已考虑将“Apps.UIHelper”视为文件名，但它不存在。
+  主引用“System.Windows.Interactivity”。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“System.Windows.Interactivity”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+          用于 SearchPath“{CandidateAssemblyFiles}”。
+          已考虑使用“Infrastructure\libs\VisionMaster\GlobalVariableModuleCs.dll”，
+  			但它的名称“GlobalVariableModuleCs”
+  			与预期名称“System.Windows.Interactivity”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.AppData.dll”，
+  			但它的名称“VM.AppData”
+  			与预期名称“System.Windows.Interactivity”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeBuild.dll”，
+  			但它的名称“VM.CodeBuild”
+  			与预期名称“System.Windows.Interactivity”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeCompletion.dll”，
+  			但它的名称“VM.CodeCompletion”
+  			与预期名称“System.Windows.Interactivity”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CommonData.dll”，
+  			但它的名称“VM.CommonData”
+  			与预期名称“System.Windows.Interactivity”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CostomDialog.dll”，
+  			但它的名称“VM.CostomDialog”
+  			与预期名称“System.Windows.Interactivity”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.PcUI.dll”，
+  			但它的名称“VM.PcUI”
+  			与预期名称“System.Windows.Interactivity”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.User.dll”，
+  			但它的名称“VM.User”
+  			与预期名称“System.Windows.Interactivity”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VMBaseControls.dll”，
+  			但它的名称“VMBaseControls”
+  			与预期名称“System.Windows.Interactivity”不匹配。
+          用于 SearchPath“{HintPathFromItem}”。
+          已考虑使用“D:\xcm\Triple-Detection\Infrastructure\libs\System.Windows.Interactivity.dll”，但它不存在。
+          用于 SearchPath“{RawFileName}”。
+          已考虑将“System.Windows.Interactivity”视为文件名，但它不存在。
+  主引用“VM.Compress”。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“VM.Compress”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+          用于 SearchPath“{CandidateAssemblyFiles}”。
+          已考虑使用“Infrastructure\libs\VisionMaster\GlobalVariableModuleCs.dll”，
+  			但它的名称“GlobalVariableModuleCs”
+  			与预期名称“VM.Compress”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.AppData.dll”，
+  			但它的名称“VM.AppData”
+  			与预期名称“VM.Compress”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeBuild.dll”，
+  			但它的名称“VM.CodeBuild”
+  			与预期名称“VM.Compress”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeCompletion.dll”，
+  			但它的名称“VM.CodeCompletion”
+  			与预期名称“VM.Compress”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CommonData.dll”，
+  			但它的名称“VM.CommonData”
+  			与预期名称“VM.Compress”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CostomDialog.dll”，
+  			但它的名称“VM.CostomDialog”
+  			与预期名称“VM.Compress”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.PcUI.dll”，
+  			但它的名称“VM.PcUI”
+  			与预期名称“VM.Compress”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.User.dll”，
+  			但它的名称“VM.User”
+  			与预期名称“VM.Compress”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VMBaseControls.dll”，
+  			但它的名称“VMBaseControls”
+  			与预期名称“VM.Compress”不匹配。
+          用于 SearchPath“{HintPathFromItem}”。
+          已考虑使用“D:\xcm\Triple-Detection\Infrastructure\libs\VM.Compress.dll”，但它不存在。
+          用于 SearchPath“{RawFileName}”。
+          已考虑将“VM.Compress”视为文件名，但它不存在。
+  主引用“VM.Controls”。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“VM.Controls”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+          用于 SearchPath“{CandidateAssemblyFiles}”。
+          已考虑使用“Infrastructure\libs\VisionMaster\GlobalVariableModuleCs.dll”，
+  			但它的名称“GlobalVariableModuleCs”
+  			与预期名称“VM.Controls”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.AppData.dll”，
+  			但它的名称“VM.AppData”
+  			与预期名称“VM.Controls”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeBuild.dll”，
+  			但它的名称“VM.CodeBuild”
+  			与预期名称“VM.Controls”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeCompletion.dll”，
+  			但它的名称“VM.CodeCompletion”
+  			与预期名称“VM.Controls”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CommonData.dll”，
+  			但它的名称“VM.CommonData”
+  			与预期名称“VM.Controls”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CostomDialog.dll”，
+  			但它的名称“VM.CostomDialog”
+  			与预期名称“VM.Controls”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.PcUI.dll”，
+  			但它的名称“VM.PcUI”
+  			与预期名称“VM.Controls”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.User.dll”，
+  			但它的名称“VM.User”
+  			与预期名称“VM.Controls”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VMBaseControls.dll”，
+  			但它的名称“VMBaseControls”
+  			与预期名称“VM.Controls”不匹配。
+          用于 SearchPath“{HintPathFromItem}”。
+          已考虑使用“D:\xcm\Triple-Detection\Infrastructure\libs\VM.Controls.dll”，但它不存在。
+          用于 SearchPath“{RawFileName}”。
+          已考虑将“VM.Controls”视为文件名，但它不存在。
+  主引用“VM.ExternalCall”。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“VM.ExternalCall”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+          用于 SearchPath“{CandidateAssemblyFiles}”。
+          已考虑使用“Infrastructure\libs\VisionMaster\GlobalVariableModuleCs.dll”，
+  			但它的名称“GlobalVariableModuleCs”
+  			与预期名称“VM.ExternalCall”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.AppData.dll”，
+  			但它的名称“VM.AppData”
+  			与预期名称“VM.ExternalCall”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeBuild.dll”，
+  			但它的名称“VM.CodeBuild”
+  			与预期名称“VM.ExternalCall”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeCompletion.dll”，
+  			但它的名称“VM.CodeCompletion”
+  			与预期名称“VM.ExternalCall”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CommonData.dll”，
+  			但它的名称“VM.CommonData”
+  			与预期名称“VM.ExternalCall”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CostomDialog.dll”，
+  			但它的名称“VM.CostomDialog”
+  			与预期名称“VM.ExternalCall”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.PcUI.dll”，
+  			但它的名称“VM.PcUI”
+  			与预期名称“VM.ExternalCall”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.User.dll”，
+  			但它的名称“VM.User”
+  			与预期名称“VM.ExternalCall”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VMBaseControls.dll”，
+  			但它的名称“VMBaseControls”
+  			与预期名称“VM.ExternalCall”不匹配。
+          用于 SearchPath“{HintPathFromItem}”。
+          已考虑使用“D:\xcm\Triple-Detection\Infrastructure\libs\VM.ExternalCall.dll”，但它不存在。
+          用于 SearchPath“{RawFileName}”。
+          已考虑将“VM.ExternalCall”视为文件名，但它不存在。
+  主引用“VM.Framework.Container”。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“VM.Framework.Container”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+          用于 SearchPath“{CandidateAssemblyFiles}”。
+          已考虑使用“Infrastructure\libs\VisionMaster\GlobalVariableModuleCs.dll”，
+  			但它的名称“GlobalVariableModuleCs”
+  			与预期名称“VM.Framework.Container”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.AppData.dll”，
+  			但它的名称“VM.AppData”
+  			与预期名称“VM.Framework.Container”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeBuild.dll”，
+  			但它的名称“VM.CodeBuild”
+  			与预期名称“VM.Framework.Container”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeCompletion.dll”，
+  			但它的名称“VM.CodeCompletion”
+  			与预期名称“VM.Framework.Container”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CommonData.dll”，
+  			但它的名称“VM.CommonData”
+  			与预期名称“VM.Framework.Container”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CostomDialog.dll”，
+  			但它的名称“VM.CostomDialog”
+  			与预期名称“VM.Framework.Container”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.PcUI.dll”，
+  			但它的名称“VM.PcUI”
+  			与预期名称“VM.Framework.Container”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.User.dll”，
+  			但它的名称“VM.User”
+  			与预期名称“VM.Framework.Container”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VMBaseControls.dll”，
+  			但它的名称“VMBaseControls”
+  			与预期名称“VM.Framework.Container”不匹配。
+          用于 SearchPath“{HintPathFromItem}”。
+          已考虑使用“D:\xcm\Triple-Detection\Infrastructure\libs\VM.Framework.Container.dll”，但它不存在。
+          用于 SearchPath“{RawFileName}”。
+          已考虑将“VM.Framework.Container”视为文件名，但它不存在。
+  主引用“VM.Util”。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“VM.Util”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+          用于 SearchPath“{CandidateAssemblyFiles}”。
+          已考虑使用“Infrastructure\libs\VisionMaster\GlobalVariableModuleCs.dll”，
+  			但它的名称“GlobalVariableModuleCs”
+  			与预期名称“VM.Util”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.AppData.dll”，
+  			但它的名称“VM.AppData”
+  			与预期名称“VM.Util”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeBuild.dll”，
+  			但它的名称“VM.CodeBuild”
+  			与预期名称“VM.Util”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeCompletion.dll”，
+  			但它的名称“VM.CodeCompletion”
+  			与预期名称“VM.Util”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CommonData.dll”，
+  			但它的名称“VM.CommonData”
+  			与预期名称“VM.Util”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CostomDialog.dll”，
+  			但它的名称“VM.CostomDialog”
+  			与预期名称“VM.Util”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.PcUI.dll”，
+  			但它的名称“VM.PcUI”
+  			与预期名称“VM.Util”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.User.dll”，
+  			但它的名称“VM.User”
+  			与预期名称“VM.Util”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VMBaseControls.dll”，
+  			但它的名称“VMBaseControls”
+  			与预期名称“VM.Util”不匹配。
+          用于 SearchPath“{HintPathFromItem}”。
+          已考虑使用“D:\xcm\Triple-Detection\Infrastructure\libs\VM.Util.dll”，但它不存在。
+          用于 SearchPath“{RawFileName}”。
+          已考虑将“VM.Util”视为文件名，但它不存在。
+  主引用“VM.Utility”。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“VM.Utility”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+          用于 SearchPath“{CandidateAssemblyFiles}”。
+          已考虑使用“Infrastructure\libs\VisionMaster\GlobalVariableModuleCs.dll”，
+  			但它的名称“GlobalVariableModuleCs”
+  			与预期名称“VM.Utility”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.AppData.dll”，
+  			但它的名称“VM.AppData”
+  			与预期名称“VM.Utility”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeBuild.dll”，
+  			但它的名称“VM.CodeBuild”
+  			与预期名称“VM.Utility”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeCompletion.dll”，
+  			但它的名称“VM.CodeCompletion”
+  			与预期名称“VM.Utility”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CommonData.dll”，
+  			但它的名称“VM.CommonData”
+  			与预期名称“VM.Utility”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CostomDialog.dll”，
+  			但它的名称“VM.CostomDialog”
+  			与预期名称“VM.Utility”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.PcUI.dll”，
+  			但它的名称“VM.PcUI”
+  			与预期名称“VM.Utility”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.User.dll”，
+  			但它的名称“VM.User”
+  			与预期名称“VM.Utility”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VMBaseControls.dll”，
+  			但它的名称“VMBaseControls”
+  			与预期名称“VM.Utility”不匹配。
+          用于 SearchPath“{HintPathFromItem}”。
+          已考虑使用“D:\xcm\Triple-Detection\Infrastructure\libs\VM.Utility.dll”，但它不存在。
+          用于 SearchPath“{RawFileName}”。
+          已考虑将“VM.Utility”视为文件名，但它不存在。
+  主引用“log4net”。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“log4net”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+          用于 SearchPath“{CandidateAssemblyFiles}”。
+          已考虑使用“Infrastructure\libs\VisionMaster\GlobalVariableModuleCs.dll”，
+  			但它的名称“GlobalVariableModuleCs”
+  			与预期名称“log4net”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.AppData.dll”，
+  			但它的名称“VM.AppData”
+  			与预期名称“log4net”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeBuild.dll”，
+  			但它的名称“VM.CodeBuild”
+  			与预期名称“log4net”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeCompletion.dll”，
+  			但它的名称“VM.CodeCompletion”
+  			与预期名称“log4net”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CommonData.dll”，
+  			但它的名称“VM.CommonData”
+  			与预期名称“log4net”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CostomDialog.dll”，
+  			但它的名称“VM.CostomDialog”
+  			与预期名称“log4net”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.PcUI.dll”，
+  			但它的名称“VM.PcUI”
+  			与预期名称“log4net”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.User.dll”，
+  			但它的名称“VM.User”
+  			与预期名称“log4net”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VMBaseControls.dll”，
+  			但它的名称“VMBaseControls”
+  			与预期名称“log4net”不匹配。
+          用于 SearchPath“{HintPathFromItem}”。
+          已考虑使用“D:\xcm\Triple-Detection\Infrastructure\libs\log4net.dll”，但它不存在。
+          用于 SearchPath“{RawFileName}”。
+          已考虑将“log4net”视为文件名，但它不存在。
+  主引用“Microsoft.CSharp”。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“Microsoft.CSharp”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+          用于 SearchPath“{CandidateAssemblyFiles}”。
+          已考虑使用“Infrastructure\libs\VisionMaster\GlobalVariableModuleCs.dll”，
+  			但它的名称“GlobalVariableModuleCs”
+  			与预期名称“Microsoft.CSharp”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.AppData.dll”，
+  			但它的名称“VM.AppData”
+  			与预期名称“Microsoft.CSharp”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeBuild.dll”，
+  			但它的名称“VM.CodeBuild”
+  			与预期名称“Microsoft.CSharp”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeCompletion.dll”，
+  			但它的名称“VM.CodeCompletion”
+  			与预期名称“Microsoft.CSharp”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CommonData.dll”，
+  			但它的名称“VM.CommonData”
+  			与预期名称“Microsoft.CSharp”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CostomDialog.dll”，
+  			但它的名称“VM.CostomDialog”
+  			与预期名称“Microsoft.CSharp”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.PcUI.dll”，
+  			但它的名称“VM.PcUI”
+  			与预期名称“Microsoft.CSharp”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.User.dll”，
+  			但它的名称“VM.User”
+  			与预期名称“Microsoft.CSharp”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VMBaseControls.dll”，
+  			但它的名称“VMBaseControls”
+  			与预期名称“Microsoft.CSharp”不匹配。
+          用于 SearchPath“{RawFileName}”。
+          已考虑将“Microsoft.CSharp”视为文件名，但它不存在。
+  主引用“System”。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“System”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+          用于 SearchPath“{CandidateAssemblyFiles}”。
+          已考虑使用“Infrastructure\libs\VisionMaster\GlobalVariableModuleCs.dll”，
+  			但它的名称“GlobalVariableModuleCs”
+  			与预期名称“System”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.AppData.dll”，
+  			但它的名称“VM.AppData”
+  			与预期名称“System”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeBuild.dll”，
+  			但它的名称“VM.CodeBuild”
+  			与预期名称“System”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeCompletion.dll”，
+  			但它的名称“VM.CodeCompletion”
+  			与预期名称“System”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CommonData.dll”，
+  			但它的名称“VM.CommonData”
+  			与预期名称“System”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CostomDialog.dll”，
+  			但它的名称“VM.CostomDialog”
+  			与预期名称“System”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.PcUI.dll”，
+  			但它的名称“VM.PcUI”
+  			与预期名称“System”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.User.dll”，
+  			但它的名称“VM.User”
+  			与预期名称“System”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VMBaseControls.dll”，
+  			但它的名称“VMBaseControls”
+  			与预期名称“System”不匹配。
+          用于 SearchPath“{RawFileName}”。
+          已考虑将“System”视为文件名，但它不存在。
+  主引用“System.Configuration”。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“System.Configuration”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+          用于 SearchPath“{CandidateAssemblyFiles}”。
+          已考虑使用“Infrastructure\libs\VisionMaster\GlobalVariableModuleCs.dll”，
+  			但它的名称“GlobalVariableModuleCs”
+  			与预期名称“System.Configuration”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.AppData.dll”，
+  			但它的名称“VM.AppData”
+  			与预期名称“System.Configuration”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeBuild.dll”，
+  			但它的名称“VM.CodeBuild”
+  			与预期名称“System.Configuration”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeCompletion.dll”，
+  			但它的名称“VM.CodeCompletion”
+  			与预期名称“System.Configuration”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CommonData.dll”，
+  			但它的名称“VM.CommonData”
+  			与预期名称“System.Configuration”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CostomDialog.dll”，
+  			但它的名称“VM.CostomDialog”
+  			与预期名称“System.Configuration”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.PcUI.dll”，
+  			但它的名称“VM.PcUI”
+  			与预期名称“System.Configuration”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.User.dll”，
+  			但它的名称“VM.User”
+  			与预期名称“System.Configuration”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VMBaseControls.dll”，
+  			但它的名称“VMBaseControls”
+  			与预期名称“System.Configuration”不匹配。
+          用于 SearchPath“{RawFileName}”。
+          已考虑将“System.Configuration”视为文件名，但它不存在。
+  主引用“System.Core”。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“System.Core”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+          用于 SearchPath“{CandidateAssemblyFiles}”。
+          已考虑使用“Infrastructure\libs\VisionMaster\GlobalVariableModuleCs.dll”，
+  			但它的名称“GlobalVariableModuleCs”
+  			与预期名称“System.Core”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.AppData.dll”，
+  			但它的名称“VM.AppData”
+  			与预期名称“System.Core”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeBuild.dll”，
+  			但它的名称“VM.CodeBuild”
+  			与预期名称“System.Core”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeCompletion.dll”，
+  			但它的名称“VM.CodeCompletion”
+  			与预期名称“System.Core”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CommonData.dll”，
+  			但它的名称“VM.CommonData”
+  			与预期名称“System.Core”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CostomDialog.dll”，
+  			但它的名称“VM.CostomDialog”
+  			与预期名称“System.Core”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.PcUI.dll”，
+  			但它的名称“VM.PcUI”
+  			与预期名称“System.Core”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.User.dll”，
+  			但它的名称“VM.User”
+  			与预期名称“System.Core”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VMBaseControls.dll”，
+  			但它的名称“VMBaseControls”
+  			与预期名称“System.Core”不匹配。
+          用于 SearchPath“{RawFileName}”。
+          已考虑将“System.Core”视为文件名，但它不存在。
+  主引用“System.Data”。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“System.Data”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+          用于 SearchPath“{CandidateAssemblyFiles}”。
+          已考虑使用“Infrastructure\libs\VisionMaster\GlobalVariableModuleCs.dll”，
+  			但它的名称“GlobalVariableModuleCs”
+  			与预期名称“System.Data”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.AppData.dll”，
+  			但它的名称“VM.AppData”
+  			与预期名称“System.Data”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeBuild.dll”，
+  			但它的名称“VM.CodeBuild”
+  			与预期名称“System.Data”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeCompletion.dll”，
+  			但它的名称“VM.CodeCompletion”
+  			与预期名称“System.Data”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CommonData.dll”，
+  			但它的名称“VM.CommonData”
+  			与预期名称“System.Data”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CostomDialog.dll”，
+  			但它的名称“VM.CostomDialog”
+  			与预期名称“System.Data”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.PcUI.dll”，
+  			但它的名称“VM.PcUI”
+  			与预期名称“System.Data”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.User.dll”，
+  			但它的名称“VM.User”
+  			与预期名称“System.Data”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VMBaseControls.dll”，
+  			但它的名称“VMBaseControls”
+  			与预期名称“System.Data”不匹配。
+          用于 SearchPath“{RawFileName}”。
+          已考虑将“System.Data”视为文件名，但它不存在。
+  主引用“System.Data.DataSetExtensions”。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“System.Data.DataSetExtensions”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+          用于 SearchPath“{CandidateAssemblyFiles}”。
+          已考虑使用“Infrastructure\libs\VisionMaster\GlobalVariableModuleCs.dll”，
+  			但它的名称“GlobalVariableModuleCs”
+  			与预期名称“System.Data.DataSetExtensions”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.AppData.dll”，
+  			但它的名称“VM.AppData”
+  			与预期名称“System.Data.DataSetExtensions”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeBuild.dll”，
+  			但它的名称“VM.CodeBuild”
+  			与预期名称“System.Data.DataSetExtensions”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeCompletion.dll”，
+  			但它的名称“VM.CodeCompletion”
+  			与预期名称“System.Data.DataSetExtensions”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CommonData.dll”，
+  			但它的名称“VM.CommonData”
+  			与预期名称“System.Data.DataSetExtensions”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CostomDialog.dll”，
+  			但它的名称“VM.CostomDialog”
+  			与预期名称“System.Data.DataSetExtensions”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.PcUI.dll”，
+  			但它的名称“VM.PcUI”
+  			与预期名称“System.Data.DataSetExtensions”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.User.dll”，
+  			但它的名称“VM.User”
+  			与预期名称“System.Data.DataSetExtensions”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VMBaseControls.dll”，
+  			但它的名称“VMBaseControls”
+  			与预期名称“System.Data.DataSetExtensions”不匹配。
+          用于 SearchPath“{RawFileName}”。
+          已考虑将“System.Data.DataSetExtensions”视为文件名，但它不存在。
+  主引用“System.Deployment”。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“System.Deployment”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+          用于 SearchPath“{CandidateAssemblyFiles}”。
+          已考虑使用“Infrastructure\libs\VisionMaster\GlobalVariableModuleCs.dll”，
+  			但它的名称“GlobalVariableModuleCs”
+  			与预期名称“System.Deployment”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.AppData.dll”，
+  			但它的名称“VM.AppData”
+  			与预期名称“System.Deployment”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeBuild.dll”，
+  			但它的名称“VM.CodeBuild”
+  			与预期名称“System.Deployment”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeCompletion.dll”，
+  			但它的名称“VM.CodeCompletion”
+  			与预期名称“System.Deployment”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CommonData.dll”，
+  			但它的名称“VM.CommonData”
+  			与预期名称“System.Deployment”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CostomDialog.dll”，
+  			但它的名称“VM.CostomDialog”
+  			与预期名称“System.Deployment”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.PcUI.dll”，
+  			但它的名称“VM.PcUI”
+  			与预期名称“System.Deployment”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.User.dll”，
+  			但它的名称“VM.User”
+  			与预期名称“System.Deployment”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VMBaseControls.dll”，
+  			但它的名称“VMBaseControls”
+  			与预期名称“System.Deployment”不匹配。
+          用于 SearchPath“{RawFileName}”。
+          已考虑将“System.Deployment”视为文件名，但它不存在。
+  主引用“System.Drawing”。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“System.Drawing”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+          用于 SearchPath“{CandidateAssemblyFiles}”。
+          已考虑使用“Infrastructure\libs\VisionMaster\GlobalVariableModuleCs.dll”，
+  			但它的名称“GlobalVariableModuleCs”
+  			与预期名称“System.Drawing”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.AppData.dll”，
+  			但它的名称“VM.AppData”
+  			与预期名称“System.Drawing”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeBuild.dll”，
+  			但它的名称“VM.CodeBuild”
+  			与预期名称“System.Drawing”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeCompletion.dll”，
+  			但它的名称“VM.CodeCompletion”
+  			与预期名称“System.Drawing”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CommonData.dll”，
+  			但它的名称“VM.CommonData”
+  			与预期名称“System.Drawing”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CostomDialog.dll”，
+  			但它的名称“VM.CostomDialog”
+  			与预期名称“System.Drawing”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.PcUI.dll”，
+  			但它的名称“VM.PcUI”
+  			与预期名称“System.Drawing”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.User.dll”，
+  			但它的名称“VM.User”
+  			与预期名称“System.Drawing”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VMBaseControls.dll”，
+  			但它的名称“VMBaseControls”
+  			与预期名称“System.Drawing”不匹配。
+          用于 SearchPath“{RawFileName}”。
+          已考虑将“System.Drawing”视为文件名，但它不存在。
+  主引用“System.Net.Http”。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“System.Net.Http”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+          用于 SearchPath“{CandidateAssemblyFiles}”。
+          已考虑使用“Infrastructure\libs\VisionMaster\GlobalVariableModuleCs.dll”，
+  			但它的名称“GlobalVariableModuleCs”
+  			与预期名称“System.Net.Http”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.AppData.dll”，
+  			但它的名称“VM.AppData”
+  			与预期名称“System.Net.Http”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeBuild.dll”，
+  			但它的名称“VM.CodeBuild”
+  			与预期名称“System.Net.Http”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeCompletion.dll”，
+  			但它的名称“VM.CodeCompletion”
+  			与预期名称“System.Net.Http”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CommonData.dll”，
+  			但它的名称“VM.CommonData”
+  			与预期名称“System.Net.Http”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CostomDialog.dll”，
+  			但它的名称“VM.CostomDialog”
+  			与预期名称“System.Net.Http”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.PcUI.dll”，
+  			但它的名称“VM.PcUI”
+  			与预期名称“System.Net.Http”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.User.dll”，
+  			但它的名称“VM.User”
+  			与预期名称“System.Net.Http”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VMBaseControls.dll”，
+  			但它的名称“VMBaseControls”
+  			与预期名称“System.Net.Http”不匹配。
+          用于 SearchPath“{RawFileName}”。
+          已考虑将“System.Net.Http”视为文件名，但它不存在。
+  主引用“System.Windows.Forms”。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“System.Windows.Forms”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+          用于 SearchPath“{CandidateAssemblyFiles}”。
+          已考虑使用“Infrastructure\libs\VisionMaster\GlobalVariableModuleCs.dll”，
+  			但它的名称“GlobalVariableModuleCs”
+  			与预期名称“System.Windows.Forms”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.AppData.dll”，
+  			但它的名称“VM.AppData”
+  			与预期名称“System.Windows.Forms”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeBuild.dll”，
+  			但它的名称“VM.CodeBuild”
+  			与预期名称“System.Windows.Forms”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeCompletion.dll”，
+  			但它的名称“VM.CodeCompletion”
+  			与预期名称“System.Windows.Forms”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CommonData.dll”，
+  			但它的名称“VM.CommonData”
+  			与预期名称“System.Windows.Forms”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CostomDialog.dll”，
+  			但它的名称“VM.CostomDialog”
+  			与预期名称“System.Windows.Forms”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.PcUI.dll”，
+  			但它的名称“VM.PcUI”
+  			与预期名称“System.Windows.Forms”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.User.dll”，
+  			但它的名称“VM.User”
+  			与预期名称“System.Windows.Forms”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VMBaseControls.dll”，
+  			但它的名称“VMBaseControls”
+  			与预期名称“System.Windows.Forms”不匹配。
+          用于 SearchPath“{RawFileName}”。
+          已考虑将“System.Windows.Forms”视为文件名，但它不存在。
+  主引用“System.Xml”。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“System.Xml”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+          用于 SearchPath“{CandidateAssemblyFiles}”。
+          已考虑使用“Infrastructure\libs\VisionMaster\GlobalVariableModuleCs.dll”，
+  			但它的名称“GlobalVariableModuleCs”
+  			与预期名称“System.Xml”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.AppData.dll”，
+  			但它的名称“VM.AppData”
+  			与预期名称“System.Xml”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeBuild.dll”，
+  			但它的名称“VM.CodeBuild”
+  			与预期名称“System.Xml”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeCompletion.dll”，
+  			但它的名称“VM.CodeCompletion”
+  			与预期名称“System.Xml”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CommonData.dll”，
+  			但它的名称“VM.CommonData”
+  			与预期名称“System.Xml”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CostomDialog.dll”，
+  			但它的名称“VM.CostomDialog”
+  			与预期名称“System.Xml”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.PcUI.dll”，
+  			但它的名称“VM.PcUI”
+  			与预期名称“System.Xml”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.User.dll”，
+  			但它的名称“VM.User”
+  			与预期名称“System.Xml”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VMBaseControls.dll”，
+  			但它的名称“VMBaseControls”
+  			与预期名称“System.Xml”不匹配。
+          用于 SearchPath“{RawFileName}”。
+          已考虑将“System.Xml”视为文件名，但它不存在。
+  主引用“System.Xml.Linq”。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“System.Xml.Linq”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+          用于 SearchPath“{CandidateAssemblyFiles}”。
+          已考虑使用“Infrastructure\libs\VisionMaster\GlobalVariableModuleCs.dll”，
+  			但它的名称“GlobalVariableModuleCs”
+  			与预期名称“System.Xml.Linq”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.AppData.dll”，
+  			但它的名称“VM.AppData”
+  			与预期名称“System.Xml.Linq”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeBuild.dll”，
+  			但它的名称“VM.CodeBuild”
+  			与预期名称“System.Xml.Linq”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeCompletion.dll”，
+  			但它的名称“VM.CodeCompletion”
+  			与预期名称“System.Xml.Linq”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CommonData.dll”，
+  			但它的名称“VM.CommonData”
+  			与预期名称“System.Xml.Linq”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CostomDialog.dll”，
+  			但它的名称“VM.CostomDialog”
+  			与预期名称“System.Xml.Linq”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.PcUI.dll”，
+  			但它的名称“VM.PcUI”
+  			与预期名称“System.Xml.Linq”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.User.dll”，
+  			但它的名称“VM.User”
+  			与预期名称“System.Xml.Linq”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VMBaseControls.dll”，
+  			但它的名称“VMBaseControls”
+  			与预期名称“System.Xml.Linq”不匹配。
+          用于 SearchPath“{RawFileName}”。
+          已考虑将“System.Xml.Linq”视为文件名，但它不存在。
+  主引用“PresentationCore”。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“PresentationCore”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+          用于 SearchPath“{CandidateAssemblyFiles}”。
+          已考虑使用“Infrastructure\libs\VisionMaster\GlobalVariableModuleCs.dll”，
+  			但它的名称“GlobalVariableModuleCs”
+  			与预期名称“PresentationCore”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.AppData.dll”，
+  			但它的名称“VM.AppData”
+  			与预期名称“PresentationCore”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeBuild.dll”，
+  			但它的名称“VM.CodeBuild”
+  			与预期名称“PresentationCore”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeCompletion.dll”，
+  			但它的名称“VM.CodeCompletion”
+  			与预期名称“PresentationCore”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CommonData.dll”，
+  			但它的名称“VM.CommonData”
+  			与预期名称“PresentationCore”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CostomDialog.dll”，
+  			但它的名称“VM.CostomDialog”
+  			与预期名称“PresentationCore”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.PcUI.dll”，
+  			但它的名称“VM.PcUI”
+  			与预期名称“PresentationCore”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.User.dll”，
+  			但它的名称“VM.User”
+  			与预期名称“PresentationCore”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VMBaseControls.dll”，
+  			但它的名称“VMBaseControls”
+  			与预期名称“PresentationCore”不匹配。
+          用于 SearchPath“{RawFileName}”。
+          已考虑将“PresentationCore”视为文件名，但它不存在。
+  主引用“PresentationFramework”。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“PresentationFramework”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+          用于 SearchPath“{CandidateAssemblyFiles}”。
+          已考虑使用“Infrastructure\libs\VisionMaster\GlobalVariableModuleCs.dll”，
+  			但它的名称“GlobalVariableModuleCs”
+  			与预期名称“PresentationFramework”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.AppData.dll”，
+  			但它的名称“VM.AppData”
+  			与预期名称“PresentationFramework”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeBuild.dll”，
+  			但它的名称“VM.CodeBuild”
+  			与预期名称“PresentationFramework”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeCompletion.dll”，
+  			但它的名称“VM.CodeCompletion”
+  			与预期名称“PresentationFramework”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CommonData.dll”，
+  			但它的名称“VM.CommonData”
+  			与预期名称“PresentationFramework”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CostomDialog.dll”，
+  			但它的名称“VM.CostomDialog”
+  			与预期名称“PresentationFramework”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.PcUI.dll”，
+  			但它的名称“VM.PcUI”
+  			与预期名称“PresentationFramework”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.User.dll”，
+  			但它的名称“VM.User”
+  			与预期名称“PresentationFramework”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VMBaseControls.dll”，
+  			但它的名称“VMBaseControls”
+  			与预期名称“PresentationFramework”不匹配。
+          用于 SearchPath“{RawFileName}”。
+          已考虑将“PresentationFramework”视为文件名，但它不存在。
+  主引用“WindowsBase”。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“WindowsBase”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+          用于 SearchPath“{CandidateAssemblyFiles}”。
+          已考虑使用“Infrastructure\libs\VisionMaster\GlobalVariableModuleCs.dll”，
+  			但它的名称“GlobalVariableModuleCs”
+  			与预期名称“WindowsBase”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.AppData.dll”，
+  			但它的名称“VM.AppData”
+  			与预期名称“WindowsBase”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeBuild.dll”，
+  			但它的名称“VM.CodeBuild”
+  			与预期名称“WindowsBase”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeCompletion.dll”，
+  			但它的名称“VM.CodeCompletion”
+  			与预期名称“WindowsBase”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CommonData.dll”，
+  			但它的名称“VM.CommonData”
+  			与预期名称“WindowsBase”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CostomDialog.dll”，
+  			但它的名称“VM.CostomDialog”
+  			与预期名称“WindowsBase”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.PcUI.dll”，
+  			但它的名称“VM.PcUI”
+  			与预期名称“WindowsBase”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.User.dll”，
+  			但它的名称“VM.User”
+  			与预期名称“WindowsBase”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VMBaseControls.dll”，
+  			但它的名称“VMBaseControls”
+  			与预期名称“WindowsBase”不匹配。
+          用于 SearchPath“{RawFileName}”。
+          已考虑将“WindowsBase”视为文件名，但它不存在。
+  主引用“System.Xaml”。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“System.Xaml”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+          用于 SearchPath“{CandidateAssemblyFiles}”。
+          已考虑使用“Infrastructure\libs\VisionMaster\GlobalVariableModuleCs.dll”，
+  			但它的名称“GlobalVariableModuleCs”
+  			与预期名称“System.Xaml”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.AppData.dll”，
+  			但它的名称“VM.AppData”
+  			与预期名称“System.Xaml”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeBuild.dll”，
+  			但它的名称“VM.CodeBuild”
+  			与预期名称“System.Xaml”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeCompletion.dll”，
+  			但它的名称“VM.CodeCompletion”
+  			与预期名称“System.Xaml”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CommonData.dll”，
+  			但它的名称“VM.CommonData”
+  			与预期名称“System.Xaml”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CostomDialog.dll”，
+  			但它的名称“VM.CostomDialog”
+  			与预期名称“System.Xaml”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.PcUI.dll”，
+  			但它的名称“VM.PcUI”
+  			与预期名称“System.Xaml”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.User.dll”，
+  			但它的名称“VM.User”
+  			与预期名称“System.Xaml”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VMBaseControls.dll”，
+  			但它的名称“VMBaseControls”
+  			与预期名称“System.Xaml”不匹配。
+          用于 SearchPath“{RawFileName}”。
+          已考虑将“System.Xaml”视为文件名，但它不存在。
+  主引用“WindowsFormsIntegration”。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“WindowsFormsIntegration”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+          用于 SearchPath“{CandidateAssemblyFiles}”。
+          已考虑使用“Infrastructure\libs\VisionMaster\GlobalVariableModuleCs.dll”，
+  			但它的名称“GlobalVariableModuleCs”
+  			与预期名称“WindowsFormsIntegration”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.AppData.dll”，
+  			但它的名称“VM.AppData”
+  			与预期名称“WindowsFormsIntegration”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeBuild.dll”，
+  			但它的名称“VM.CodeBuild”
+  			与预期名称“WindowsFormsIntegration”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CodeCompletion.dll”，
+  			但它的名称“VM.CodeCompletion”
+  			与预期名称“WindowsFormsIntegration”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CommonData.dll”，
+  			但它的名称“VM.CommonData”
+  			与预期名称“WindowsFormsIntegration”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.CostomDialog.dll”，
+  			但它的名称“VM.CostomDialog”
+  			与预期名称“WindowsFormsIntegration”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.PcUI.dll”，
+  			但它的名称“VM.PcUI”
+  			与预期名称“WindowsFormsIntegration”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VM.User.dll”，
+  			但它的名称“VM.User”
+  			与预期名称“WindowsFormsIntegration”不匹配。
+          已考虑使用“Infrastructure\libs\VisionMaster\VMBaseControls.dll”，
+  			但它的名称“VMBaseControls”
+  			与预期名称“WindowsFormsIntegration”不匹配。
+          用于 SearchPath“{RawFileName}”。
+          已考虑将“WindowsFormsIntegration”视为文件名，但它不存在。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3243: 无法解决“Microsoft.CSharp, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a”与“Microsoft.CSharp”之间的冲突。正在随意选择“Microsoft.CSharp, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a”。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  “Microsoft.CSharp, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a”与“Microsoft.CSharp”之间存在冲突。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3243: 无法解决“System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089”与“System”之间的冲突。正在随意选择“System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089”。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  “System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089”与“System”之间存在冲突。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3243: 无法解决“System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a”与“System.Configuration”之间的冲突。正在随意选择“System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a”。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  “System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a”与“System.Configuration”之间存在冲突。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3243: 无法解决“System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089”与“System.Core”之间的冲突。正在随意选择“System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089”。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  “System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089”与“System.Core”之间存在冲突。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3243: 无法解决“System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089”与“System.Data”之间的冲突。正在随意选择“System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089”。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  “System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089”与“System.Data”之间存在冲突。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3243: 无法解决“System.Data.DataSetExtensions, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089”与“System.Data.DataSetExtensions”之间的冲突。正在随意选择“System.Data.DataSetExtensions, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089”。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  “System.Data.DataSetExtensions, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089”与“System.Data.DataSetExtensions”之间存在冲突。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3243: 无法解决“System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a”与“System.Drawing”之间的冲突。正在随意选择“System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a”。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  “System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a”与“System.Drawing”之间存在冲突。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3243: 无法解决“System.Net.Http, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a”与“System.Net.Http”之间的冲突。正在随意选择“System.Net.Http, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a”。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  “System.Net.Http, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a”与“System.Net.Http”之间存在冲突。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3243: 无法解决“System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089”与“System.Xml”之间的冲突。正在随意选择“System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089”。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  “System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089”与“System.Xml”之间存在冲突。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3243: 无法解决“System.Xml.Linq, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089”与“System.Xml.Linq”之间的冲突。正在随意选择“System.Xml.Linq, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089”。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  “System.Xml.Linq, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089”与“System.Xml.Linq”之间存在冲突。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3243: 无法解决“PresentationCore, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35”与“PresentationCore”之间的冲突。正在随意选择“PresentationCore, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35”。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  “PresentationCore, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35”与“PresentationCore”之间存在冲突。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3243: 无法解决“PresentationFramework, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35”与“PresentationFramework”之间的冲突。正在随意选择“PresentationFramework, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35”。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  “PresentationFramework, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35”与“PresentationFramework”之间存在冲突。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3243: 无法解决“WindowsBase, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35”与“WindowsBase”之间的冲突。正在随意选择“WindowsBase, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35”。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  “WindowsBase, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35”与“WindowsBase”之间存在冲突。
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3243: 无法解决“System.Xaml, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089”与“System.Xaml”之间的冲突。正在随意选择“System.Xaml, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089”。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  “System.Xaml, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089”与“System.Xaml”之间存在冲突。
+GenerateTemporaryTargetAssembly:
+  正在将文件从“D:\xcm\Triple-Detection\obj\TripleDetection.csproj.nuget.g.props”复制到“D:\xcm\Triple-Detection\obj\TripleDetection_i2uex3cr_wpftmp.csproj.nuget.g.props”。
+  正在将文件从“D:\xcm\Triple-Detection\obj\TripleDetection.csproj.nuget.g.targets”复制到“D:\xcm\Triple-Detection\obj\TripleDetection_i2uex3cr_wpftmp.csproj.nuget.g.targets”。
+  正在将文件从“D:\xcm\Triple-Detection\obj\TripleDetection.csproj.nuget.dgspec.json”复制到“D:\xcm\Triple-Detection\obj\TripleDetection_i2uex3cr_wpftmp.csproj.nuget.dgspec.json”。
+项目“D:\xcm\Triple-Detection\TripleDetection.csproj”(1)正在节点 1 上生成“D:\xcm\Triple-Detection\TripleDetection_i2uex3cr_wpftmp.csproj”(2) (_CompileTemporaryAssembly 个目标)。
+GenerateTargetFrameworkMonikerAttribute:
+正在跳过目标“GenerateTargetFrameworkMonikerAttribute”，因为所有输出文件相对于输入文件而言都是最新的。
+CoreGenerateAssemblyInfo:
+  由于属性类型未知，无法推断参数 "#1" 的类型。该值将被视作字符串。
+  由于属性类型未知，无法推断参数 "#1" 的类型。该值将被视作字符串。
+_GenerateSourceLinkFile:
+  正在更新 Source Link 文件 "obj\Debug\net8.0-windows\TripleDetection_i2uex3cr_wpftmp.sourcelink.json"。
+CoreCompile:
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Roslyn\csc.exe /noconfig /unsafe- /checked- /nowarn:1701,1702,1701,1702 /fullpaths /nostdlib+ /platform:x64 /errorreport:prompt /warn:8 /define:TRACE;DEBUG;NET;NET8_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NET7_0_OR_GREATER;NET8_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER /highentropyva+ /nullable:enable /reference:"C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.27\ref\net8.0\Accessibility.dll" /reference:"C:\Program Files\VisionMaster4.2.0\Development\V4.x\ComControls\Assembly\Apps.BaseData.dll" /reference:"C:\Program Files\VisionMaster4.2.0\Development\V4.x\ComControls\Assembly\Apps.ColorFun.dll" /reference:"C:\Program Files\VisionMaster4.2.0\Development\V4.x\ComControls\Assembly\Apps.PcUI.dll" /reference:"C:\Program Files\VisionMaster4.2.0\Development\V4.x\ComControls\Assembly\Apps.XmlParser.dll" /reference:"C:\Program Files\VisionMaster4.2.0\Development\V4.x\ComControls\Assembly\Apps.XmlUI.dll" /reference:C:\Users\Administrator\.nuget\packages\communitytoolkit.mvvm\8.4.2\lib\net8.0\CommunityToolkit.Mvvm.dll /reference:"C:\Program Files\VisionMaster4.2.0\Development\V4.x\ComControls\Assembly\DirectoryBrowser.dll" /reference:"C:\Program Files\VisionMaster4.2.0\Development\V4.x\ComControls\Assembly\Frontend.Base.dll" /reference:"C:\Program Files\VisionMaster4.2.0\Development\V4.x\ComControls\Assembly\FrontendUI.WPF.dll" /reference:"C:\Program Files\VisionMaster4.2.0\Development\V4.x\ComControls\Assembly\GateWay.Base.Xml.dll" /reference:"C:\Program Files\VisionMaster4.2.0\Development\V4.x\ComControls\Assembly\GateWay.Compress.dll" /reference:"C:\Program Files\VisionMaster4.2.0\Development\V4.x\ComControls\Assembly\GateWay.Control.dll" /reference:"C:\Program Files\VisionMaster4.2.0\Development\V4.x\ComControls\Assembly\GateWay.CostomDialog.dll" /reference:"C:\Program Files\VisionMaster4.2.0\Development\V4.x\ComControls\Assembly\GateWay.Data.dll" /reference:D:\xcm\Triple-Detection\Infrastructure\libs\VisionMaster\GlobalVariableModuleCs.dll /reference:"C:\Program Files\VisionMaster4.2.0\Development\V4.x\Libraries\win64\C#\iMVS-6000PlatformSDKCS.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\Microsoft.CSharp.dll" /reference:C:\Users\Administrator\.nuget\packages\microsoft.data.sqlite.core\8.0.11\lib\net8.0\Microsoft.Data.Sqlite.dll /reference:C:\Users\Administrator\.nuget\packages\microsoft.entityframeworkcore.abstractions\8.0.11\lib\net8.0\Microsoft.EntityFrameworkCore.Abstractions.dll /reference:C:\Users\Administrator\.nuget\packages\microsoft.entityframeworkcore\8.0.11\lib\net8.0\Microsoft.EntityFrameworkCore.dll /reference:C:\Users\Administrator\.nuget\packages\microsoft.entityframeworkcore.relational\8.0.11\lib\net8.0\Microsoft.EntityFrameworkCore.Relational.dll /reference:C:\Users\Administrator\.nuget\packages\microsoft.entityframeworkcore.sqlite.core\8.0.11\lib\net8.0\Microsoft.EntityFrameworkCore.Sqlite.dll /reference:C:\Users\Administrator\.nuget\packages\microsoft.extensions.caching.abstractions\8.0.0\lib\net8.0\Microsoft.Extensions.Caching.Abstractions.dll /reference:C:\Users\Administrator\.nuget\packages\microsoft.extensions.caching.memory\8.0.1\lib\net8.0\Microsoft.Extensions.Caching.Memory.dll /reference:C:\Users\Administrator\.nuget\packages\microsoft.extensions.configuration.abstractions\8.0.0\lib\net8.0\Microsoft.Extensions.Configuration.Abstractions.dll /reference:C:\Users\Administrator\.nuget\packages\microsoft.extensions.dependencyinjection.abstractions\8.0.2\lib\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll /reference:C:\Users\Administrator\.nuget\packages\microsoft.extensions.dependencyinjection\8.0.1\lib\net8.0\Microsoft.Extensions.DependencyInjection.dll /reference:C:\Users\Administrator\.nuget\packages\microsoft.extensions.dependencymodel\8.0.2\lib\net8.0\Microsoft.Extensions.DependencyModel.dll /reference:C:\Users\Administrator\.nuget\packages\microsoft.extensions.logging.abstractions\8.0.2\lib\net8.0\Microsoft.Extensions.Logging.Abstractions.dll /reference:C:\Users\Administrator\.nuget\packages\microsoft.extensions.logging\8.0.1\lib\net8.0\Microsoft.Extensions.Logging.dll /reference:C:\Users\Administrator\.nuget\packages\microsoft.extensions.options\8.0.2\lib\net8.0\Microsoft.Extensions.Options.dll /reference:C:\Users\Administrator\.nuget\packages\microsoft.extensions.primitives\8.0.0\lib\net8.0\Microsoft.Extensions.Primitives.dll /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\Microsoft.VisualBasic.Core.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\Microsoft.VisualBasic.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\Microsoft.Win32.Primitives.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.27\ref\net8.0\Microsoft.Win32.Registry.AccessControl.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\Microsoft.Win32.Registry.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.27\ref\net8.0\Microsoft.Win32.SystemEvents.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\mscorlib.dll" /reference:"C:\Program Files\VisionMaster4.2.0\Development\V4.x\ComControls\Assembly\Mvvm.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\netstandard.dll" /reference:C:\Users\Administrator\.nuget\packages\newtonsoft.json\13.0.3\lib\net6.0\Newtonsoft.Json.dll /reference:"C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.27\ref\net8.0\PresentationCore.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.27\ref\net8.0\PresentationFramework.Aero.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.27\ref\net8.0\PresentationFramework.Aero2.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.27\ref\net8.0\PresentationFramework.AeroLite.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.27\ref\net8.0\PresentationFramework.Classic.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.27\ref\net8.0\PresentationFramework.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.27\ref\net8.0\PresentationFramework.Luna.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.27\ref\net8.0\PresentationFramework.Royale.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.27\ref\net8.0\PresentationUI.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.27\ref\net8.0\ReachFramework.dll" /reference:C:\Users\Administrator\.nuget\packages\sqlitepclraw.bundle_e_sqlite3\2.1.6\lib\netstandard2.0\SQLitePCLRaw.batteries_v2.dll /reference:C:\Users\Administrator\.nuget\packages\sqlitepclraw.core\2.1.6\lib\netstandard2.0\SQLitePCLRaw.core.dll /reference:C:\Users\Administrator\.nuget\packages\sqlitepclraw.provider.e_sqlite3\2.1.6\lib\net6.0-windows7.0\SQLitePCLRaw.provider.e_sqlite3.dll /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.AppContext.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Buffers.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.27\ref\net8.0\System.CodeDom.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Collections.Concurrent.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Collections.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Collections.Immutable.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Collections.NonGeneric.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Collections.Specialized.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.ComponentModel.Annotations.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.ComponentModel.DataAnnotations.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.ComponentModel.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.ComponentModel.EventBasedAsync.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.ComponentModel.Primitives.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.ComponentModel.TypeConverter.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.27\ref\net8.0\System.Configuration.ConfigurationManager.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Configuration.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Console.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Core.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Data.Common.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Data.DataSetExtensions.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Data.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Diagnostics.Contracts.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Diagnostics.Debug.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Diagnostics.DiagnosticSource.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.27\ref\net8.0\System.Diagnostics.EventLog.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Diagnostics.FileVersionInfo.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.27\ref\net8.0\System.Diagnostics.PerformanceCounter.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Diagnostics.Process.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Diagnostics.StackTrace.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Diagnostics.TextWriterTraceListener.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Diagnostics.Tools.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Diagnostics.TraceSource.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Diagnostics.Tracing.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.27\ref\net8.0\System.DirectoryServices.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.dll" /reference:C:\Users\Administrator\.nuget\packages\system.drawing.common\8.0.10\lib\net8.0\System.Drawing.Common.dll /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Drawing.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Drawing.Primitives.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Dynamic.Runtime.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Formats.Asn1.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Formats.Tar.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Globalization.Calendars.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Globalization.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Globalization.Extensions.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.IO.Compression.Brotli.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.IO.Compression.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.IO.Compression.FileSystem.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.IO.Compression.ZipFile.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.IO.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.IO.FileSystem.AccessControl.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.IO.FileSystem.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.IO.FileSystem.DriveInfo.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.IO.FileSystem.Primitives.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.IO.FileSystem.Watcher.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.IO.IsolatedStorage.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.IO.MemoryMappedFiles.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.27\ref\net8.0\System.IO.Packaging.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.IO.Pipes.AccessControl.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.IO.Pipes.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.IO.UnmanagedMemoryStream.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Linq.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Linq.Expressions.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Linq.Parallel.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Linq.Queryable.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Memory.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Net.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Net.Http.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Net.Http.Json.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Net.HttpListener.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Net.Mail.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Net.NameResolution.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Net.NetworkInformation.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Net.Ping.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Net.Primitives.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Net.Quic.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Net.Requests.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Net.Security.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Net.ServicePoint.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Net.Sockets.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Net.WebClient.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Net.WebHeaderCollection.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Net.WebProxy.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Net.WebSockets.Client.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Net.WebSockets.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Numerics.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Numerics.Vectors.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.ObjectModel.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.27\ref\net8.0\System.Printing.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Reflection.DispatchProxy.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Reflection.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Reflection.Emit.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Reflection.Emit.ILGeneration.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Reflection.Emit.Lightweight.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Reflection.Extensions.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Reflection.Metadata.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Reflection.Primitives.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Reflection.TypeExtensions.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.27\ref\net8.0\System.Resources.Extensions.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Resources.Reader.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Resources.ResourceManager.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Resources.Writer.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Runtime.CompilerServices.Unsafe.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Runtime.CompilerServices.VisualC.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Runtime.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Runtime.Extensions.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Runtime.Handles.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Runtime.InteropServices.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Runtime.InteropServices.JavaScript.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Runtime.InteropServices.RuntimeInformation.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Runtime.Intrinsics.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Runtime.Loader.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Runtime.Numerics.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Runtime.Serialization.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Runtime.Serialization.Formatters.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Runtime.Serialization.Json.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Runtime.Serialization.Primitives.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Runtime.Serialization.Xml.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Security.AccessControl.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Security.Claims.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Security.Cryptography.Algorithms.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Security.Cryptography.Cng.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Security.Cryptography.Csp.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Security.Cryptography.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Security.Cryptography.Encoding.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Security.Cryptography.OpenSsl.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.27\ref\net8.0\System.Security.Cryptography.Pkcs.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Security.Cryptography.Primitives.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.27\ref\net8.0\System.Security.Cryptography.ProtectedData.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Security.Cryptography.X509Certificates.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.27\ref\net8.0\System.Security.Cryptography.Xml.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Security.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.27\ref\net8.0\System.Security.Permissions.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Security.Principal.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Security.Principal.Windows.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Security.SecureString.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.ServiceModel.Web.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.ServiceProcess.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Text.Encoding.CodePages.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Text.Encoding.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Text.Encoding.Extensions.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Text.Encodings.Web.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Text.Json.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Text.RegularExpressions.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.27\ref\net8.0\System.Threading.AccessControl.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Threading.Channels.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Threading.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Threading.Overlapped.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Threading.Tasks.Dataflow.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Threading.Tasks.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Threading.Tasks.Extensions.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Threading.Tasks.Parallel.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Threading.Thread.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Threading.ThreadPool.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Threading.Timer.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Transactions.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Transactions.Local.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.ValueTuple.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Web.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Web.HttpUtility.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.27\ref\net8.0\System.Windows.Controls.Ribbon.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Windows.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.27\ref\net8.0\System.Windows.Extensions.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.27\ref\net8.0\System.Windows.Input.Manipulations.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.27\ref\net8.0\System.Windows.Presentation.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.27\ref\net8.0\System.Xaml.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Xml.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Xml.Linq.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Xml.ReaderWriter.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Xml.Serialization.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Xml.XDocument.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Xml.XmlDocument.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Xml.XmlSerializer.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Xml.XPath.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\ref\net8.0\System.Xml.XPath.XDocument.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.27\ref\net8.0\UIAutomationClient.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.27\ref\net8.0\UIAutomationClientSideProviders.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.27\ref\net8.0\UIAutomationProvider.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.27\ref\net8.0\UIAutomationTypes.dll" /reference:"C:\Program Files\VisionMaster4.2.0\Development\V4.x\ComControls\Assembly\VM.Core.dll" /reference:"C:\Program Files\VisionMaster4.2.0\Development\V4.x\ComControls\Assembly\VM.PlatformSDKCS.dll" /reference:"C:\Program Files\VisionMaster4.2.0\Development\V4.x\ComControls\Assembly\VMControls.Interface.dll" /reference:"C:\Program Files\VisionMaster4.2.0\Development\V4.x\ComControls\Assembly\VMControls.RenderInterface.dll" /reference:"C:\Program Files\VisionMaster4.2.0\Development\V4.x\ComControls\Assembly\VMControls.Winform.Release.dll" /reference:"C:\Program Files\VisionMaster4.2.0\Development\V4.x\ComControls\Assembly\VMControls.WPF.Release.dll" /reference:"C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.27\ref\net8.0\WindowsBase.dll" /debug+ /debug:portable /filealign:512 /optimize- /out:obj\Debug\net8.0-windows\TripleDetection.App.dll /refout:obj\Debug\net8.0-windows\refint\TripleDetection.App.dll /target:winexe /warnaserror- /utf8output /deterministic+ /sourcelink:obj\Debug\net8.0-windows\TripleDetection_i2uex3cr_wpftmp.sourcelink.json /langversion:12.0 /embed:D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\App.g.cs /embed:D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\MainWindow.g.cs /embed:D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\App\DashboardView.g.cs /embed:D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\App\LogsView.g.cs /embed:D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Audit\AuditLogView.g.cs /embed:D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Auth\UserEditWindow.g.cs /embed:D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Auth\UserManagementView.g.cs /embed:D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Detection\DetectionHistoryView.g.cs /embed:D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Detection\DetectionView.g.cs /embed:D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\LoginWindow.g.cs /embed:D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Production\ProductEditWindow.g.cs /embed:D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Production\ProductListView.g.cs /embed:D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Production\TaskEditWindow.g.cs /embed:D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Production\TaskListView.g.cs /embed:D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\SettingsView.g.cs /embed:D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Settings\CommunicationSettingsView.g.cs /embed:D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Settings\DeviceControlSettingsView.g.cs /embed:D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Settings\SystemSettingsView.g.cs /embed:D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Settings\VmSettingsView.g.cs /embed:D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\GeneratedInternalTypeHelper.g.cs /embed:"obj\Debug\net8.0-windows\.NETCoreApp,Version=v8.0.AssemblyAttributes.cs" /embed:obj\Debug\net8.0-windows\TripleDetection_i2uex3cr_wpftmp.AssemblyInfo.cs /analyzerconfig:obj\Debug\net8.0-windows\TripleDetection_i2uex3cr_wpftmp.GeneratedMSBuildEditorConfig.editorconfig /analyzerconfig:"C:\Program Files\dotnet\sdk\9.0.314\Sdks\Microsoft.NET.Sdk\analyzers\build\config\analysislevel_8_default.globalconfig" /analyzer:"C:\Program Files\dotnet\sdk\9.0.314\Sdks\Microsoft.NET.Sdk\targets\..\analyzers\Microsoft.CodeAnalysis.CSharp.NetAnalyzers.dll" /analyzer:"C:\Program Files\dotnet\sdk\9.0.314\Sdks\Microsoft.NET.Sdk\targets\..\analyzers\Microsoft.CodeAnalysis.NetAnalyzers.dll" /analyzer:C:\Users\Administrator\.nuget\packages\communitytoolkit.mvvm\8.4.2\analyzers\dotnet\roslyn4.12\cs\CommunityToolkit.Mvvm.CodeFixers.dll /analyzer:C:\Users\Administrator\.nuget\packages\communitytoolkit.mvvm\8.4.2\analyzers\dotnet\roslyn4.12\cs\CommunityToolkit.Mvvm.SourceGenerators.dll /analyzer:C:\Users\Administrator\.nuget\packages\microsoft.codeanalysis.analyzers\3.3.3\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll /analyzer:C:\Users\Administrator\.nuget\packages\microsoft.codeanalysis.analyzers\3.3.3\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll /analyzer:C:\Users\Administrator\.nuget\packages\microsoft.entityframeworkcore.analyzers\8.0.11\analyzers\dotnet\cs\Microsoft.EntityFrameworkCore.Analyzers.dll /analyzer:C:\Users\Administrator\.nuget\packages\microsoft.extensions.logging.abstractions\8.0.2\analyzers\dotnet\roslyn4.4\cs\Microsoft.Extensions.Logging.Generators.dll /analyzer:C:\Users\Administrator\.nuget\packages\microsoft.extensions.options\8.0.2\analyzers\dotnet\roslyn4.4\cs\Microsoft.Extensions.Options.SourceGeneration.dll /analyzer:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\analyzers/dotnet/cs/Microsoft.Interop.ComInterfaceGenerator.dll" /analyzer:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\analyzers/dotnet/cs/Microsoft.Interop.JavaScript.JSImportGenerator.dll" /analyzer:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\analyzers/dotnet/cs/Microsoft.Interop.LibraryImportGenerator.dll" /analyzer:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\analyzers/dotnet/cs/Microsoft.Interop.SourceGeneration.dll" /analyzer:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\analyzers/dotnet/cs/System.Text.Json.SourceGeneration.dll" /analyzer:"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.27\analyzers/dotnet/cs/System.Text.RegularExpressions.Generator.dll" Application\Services\AuditLogService.cs Application\Services\DetectionRecordService.cs Application\Services\IAuditLogService.cs Application\Services\IDetectionRecordService.cs Application\Services\IProductService.cs Application\Services\ITaskService.cs Application\Services\IUserService.cs Application\Services\LoggingService.cs Application\Services\PasswordHashService.cs Application\Services\ProductService.cs Application\Services\TaskService.cs Application\Services\UserService.cs Application\SettingsServices\CommunicationSettingsService.cs Application\SettingsServices\DeviceControlSettingsService.cs Application\SettingsServices\SystemSettingsService.cs Application\SettingsServices\VmSettingsService.cs Application\VmServices\ImageStorageService.cs Application\VmServices\SettingsSyncService.cs Application\VmServices\VmIntegrationService.cs Domain\Entities\AuditLog.cs Domain\Entities\BaseEntity.cs Domain\Entities\DetectionRecord.cs Domain\Entities\ProdTask.cs Domain\Entities\Product.cs Domain\Entities\Queries\AuditLogQuery.cs Domain\Entities\Queries\DetectionRecordQuery.cs Domain\Entities\Queries\IPagedResult.cs Domain\Entities\Queries\PagedQuery.cs Domain\Entities\Queries\ProductQuery.cs Domain\Entities\Queries\TaskQuery.cs Domain\Entities\Queries\UserQuery.cs Domain\Entities\SystemConfig.cs Domain\Entities\User.cs Domain\Enums\Enums.cs Domain\Repositories\IDbConnectionFactory.cs Domain\Repositories\IRepository.cs Domain\Repositories\IRepositoryFactory.cs Domain\Repositories\IUnitOfWork.cs Domain\SessionManager.cs Infrastructure\Exceptions\DbException.cs Infrastructure\Exceptions\ValidationException.cs Infrastructure\JsonHelper.cs Infrastructure\Persistence\Configurations\AuditLogConfiguration.cs Infrastructure\Persistence\Configurations\DetectionRecordConfiguration.cs Infrastructure\Persistence\Configurations\ProdTaskConfiguration.cs Infrastructure\Persistence\Configurations\ProductConfiguration.cs Infrastructure\Persistence\Configurations\SystemConfigConfiguration.cs Infrastructure\Persistence\Configurations\UserConfiguration.cs Infrastructure\Persistence\DatabaseInitializer.cs Infrastructure\Persistence\SqliteConnectionFactory.cs Infrastructure\Persistence\SqliteUnitOfWork.cs Infrastructure\Persistence\TripleDetectionDbContext.cs Infrastructure\Repositories\AuditLogRepository.cs Infrastructure\Repositories\DetectionRecordRepository.cs Infrastructure\Repositories\IAuditLogRepository.cs Infrastructure\Repositories\IDetectionRecordRepository.cs Infrastructure\Repositories\SqliteRepository.cs Infrastructure\Repositories\SqliteRepositoryFactory.cs Presentation\App.xaml.cs Presentation\Converters\LoginButtonTextConverter.cs Presentation\Converters\StringToVisibilityConverter.cs Presentation\Converters\TabConverters.cs Presentation\DatabaseConfig.cs Presentation\MainWindow.xaml.cs Presentation\Messages\ActiveViewChangedMessage.cs Presentation\Messages\DetectionResultMessage.cs Presentation\Messages\LogAddedMessage.cs Presentation\Messages\ViewClosedMessage.cs Presentation\Messages\ViewOpenedMessage.cs Presentation\Models\CommunicationSettings.cs Presentation\Models\DetectionResult.cs Presentation\Models\DeviceControlSettings.cs Presentation\Models\SystemSettings.cs Presentation\Models\VmSettings.cs Presentation\Navigation\INavigationService.cs Presentation\Navigation\NavigationService.cs Presentation\ViewModels\Auth\UserEditViewModel.cs Presentation\ViewModels\Auth\UserManagementViewModel.cs Presentation\ViewModels\Detection\MainViewModel.cs Presentation\ViewModels\LoginViewModel.cs Presentation\ViewModels\Production\ProductEditViewModel.cs Presentation\ViewModels\Production\ProductListViewModel.cs Presentation\ViewModels\Production\TaskEditViewModel.cs Presentation\ViewModels\Production\TaskListViewModel.cs Presentation\ViewModels\Settings\SettingsShellViewModel.cs Presentation\ViewModels\TabItemViewModel.cs Presentation\Views\App\DashboardView.xaml.cs Presentation\Views\App\LogsView.xaml.cs Presentation\Views\Audit\AuditLogView.xaml.cs Presentation\Views\Auth\UserEditWindow.xaml.cs Presentation\Views\Auth\UserManagementView.xaml.cs Presentation\Views\Detection\DetectionHistoryView.xaml.cs Presentation\Views\Detection\DetectionView.xaml.cs Presentation\Views\LoginWindow.xaml.cs Presentation\Views\Production\ProductEditWindow.xaml.cs Presentation\Views\Production\ProductListView.xaml.cs Presentation\Views\Production\TaskEditWindow.xaml.cs Presentation\Views\Production\TaskListView.xaml.cs Presentation\Views\SettingsView.xaml.cs Presentation\Views\Settings\CommunicationSettingsView.xaml.cs Presentation\Views\Settings\DeviceControlSettingsView.xaml.cs Presentation\Views\Settings\SystemSettingsView.xaml.cs Presentation\Views\Settings\VmSettingsView.xaml.cs D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\App.g.cs D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\MainWindow.g.cs D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\App\DashboardView.g.cs D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\App\LogsView.g.cs D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Audit\AuditLogView.g.cs D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Auth\UserEditWindow.g.cs D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Auth\UserManagementView.g.cs D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Detection\DetectionHistoryView.g.cs D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Detection\DetectionView.g.cs D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\LoginWindow.g.cs D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Production\ProductEditWindow.g.cs D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Production\ProductListView.g.cs D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Production\TaskEditWindow.g.cs D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Production\TaskListView.g.cs D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\SettingsView.g.cs D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Settings\CommunicationSettingsView.g.cs D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Settings\DeviceControlSettingsView.g.cs D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Settings\SystemSettingsView.g.cs D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\Presentation\Views\Settings\VmSettingsView.g.cs D:\xcm\Triple-Detection\obj\Debug\net8.0-windows\GeneratedInternalTypeHelper.g.cs "obj\Debug\net8.0-windows\.NETCoreApp,Version=v8.0.AssemblyAttributes.cs" obj\Debug\net8.0-windows\TripleDetection_i2uex3cr_wpftmp.AssemblyInfo.cs /warnaserror+:NU1605,SYSLIB0011
+D:\xcm\Triple-Detection\Infrastructure\Repositories\SqliteRepository.cs(176,29): warning CS0693: 类型参数“T”与外部类型“SqliteRepository<T>”中的类型参数同名 [D:\xcm\Triple-Detection\TripleDetection_i2uex3cr_wpftmp.csproj]
+D:\xcm\Triple-Detection\Infrastructure\Repositories\SqliteRepository.cs(186,24): warning CS0693: 类型参数“T”与外部类型“SqliteRepository<T>”中的类型参数同名 [D:\xcm\Triple-Detection\TripleDetection_i2uex3cr_wpftmp.csproj]
+D:\xcm\Triple-Detection\Infrastructure\Repositories\AuditLogRepository.cs(79,25): warning CS0109: 成员“AuditLogRepository.ExecuteReader<T>(SqliteCommand)”不会隐藏可访问成员。不需要关键字 new。 [D:\xcm\Triple-Detection\TripleDetection_i2uex3cr_wpftmp.csproj]
+D:\xcm\Triple-Detection\Presentation\ViewModels\Auth\UserEditViewModel.cs(37,46): warning CS8625: 无法将 null 字面量转换为非 null 的引用类型。 [D:\xcm\Triple-Detection\TripleDetection_i2uex3cr_wpftmp.csproj]
+D:\xcm\Triple-Detection\Presentation\ViewModels\Auth\UserEditViewModel.cs(37,79): warning CS8625: 无法将 null 字面量转换为非 null 的引用类型。 [D:\xcm\Triple-Detection\TripleDetection_i2uex3cr_wpftmp.csproj]
+D:\xcm\Triple-Detection\Infrastructure\Repositories\DetectionRecordRepository.cs(76,25): warning CS0109: 成员“DetectionRecordRepository.ExecuteReader<T>(SqliteCommand)”不会隐藏可访问成员。不需要关键字 new。 [D:\xcm\Triple-Detection\TripleDetection_i2uex3cr_wpftmp.csproj]
+D:\xcm\Triple-Detection\Infrastructure\Repositories\SqliteRepository.cs(159,94): warning CS8625: 无法将 null 字面量转换为非 null 的引用类型。 [D:\xcm\Triple-Detection\TripleDetection_i2uex3cr_wpftmp.csproj]
+D:\xcm\Triple-Detection\Infrastructure\Repositories\SqliteRepository.cs(229,90): warning CS8625: 无法将 null 字面量转换为非 null 的引用类型。 [D:\xcm\Triple-Detection\TripleDetection_i2uex3cr_wpftmp.csproj]
+D:\xcm\Triple-Detection\Presentation\MainWindow.xaml.cs(311,51): error CS0246: 未能找到类型或命名空间名“ImvsSdkDefine”(是否缺少 using 指令或程序集引用?) [D:\xcm\Triple-Detection\TripleDetection_i2uex3cr_wpftmp.csproj]
+D:\xcm\Triple-Detection\Presentation\MainWindow.xaml.cs(384,59): error CS0246: 未能找到类型或命名空间名“ImvsSdkDefine”(是否缺少 using 指令或程序集引用?) [D:\xcm\Triple-Detection\TripleDetection_i2uex3cr_wpftmp.csproj]
+D:\xcm\Triple-Detection\Presentation\MainWindow.xaml.cs(398,58): error CS0246: 未能找到类型或命名空间名“ImvsSdkDefine”(是否缺少 using 指令或程序集引用?) [D:\xcm\Triple-Detection\TripleDetection_i2uex3cr_wpftmp.csproj]
+D:\xcm\Triple-Detection\Presentation\MainWindow.xaml.cs(31,17): error CS0246: 未能找到类型或命名空间名“VmProcedure”(是否缺少 using 指令或程序集引用?) [D:\xcm\Triple-Detection\TripleDetection_i2uex3cr_wpftmp.csproj]
+D:\xcm\Triple-Detection\Presentation\ViewModels\Auth\UserManagementViewModel.cs(181,48): warning CS8625: 无法将 null 字面量转换为非 null 的引用类型。 [D:\xcm\Triple-Detection\TripleDetection_i2uex3cr_wpftmp.csproj]
+D:\xcm\Triple-Detection\Presentation\ViewModels\Production\ProductListViewModel.cs(128,54): warning CS8625: 无法将 null 字面量转换为非 null 的引用类型。 [D:\xcm\Triple-Detection\TripleDetection_i2uex3cr_wpftmp.csproj]
+D:\xcm\Triple-Detection\Presentation\ViewModels\Production\TaskListViewModel.cs(150,52): warning CS8625: 无法将 null 字面量转换为非 null 的引用类型。 [D:\xcm\Triple-Detection\TripleDetection_i2uex3cr_wpftmp.csproj]
+  CompilerServer: server - server processed compilation - TripleDetection_i2uex3cr_wpftmp (net8.0-windows)
+已完成生成项目“D:\xcm\Triple-Detection\TripleDetection_i2uex3cr_wpftmp.csproj”(_CompileTemporaryAssembly 个目标)的操作 - 失败。
+已完成生成项目“D:\xcm\Triple-Detection\TripleDetection.csproj”(Rebuild 个目标)的操作 - 失败。
+
+生成失败。
+
+“D:\xcm\Triple-Detection\TripleDetection.csproj”(Rebuild 目标) (1) ->
+(ResolveAssemblyReferences 目标) -> 
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“Apps.Data”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“Apps.ErrorCode”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“Apps.Interface”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“Apps.Localization”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“Apps.Log”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“Apps.UIData”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“Apps.UIHelper”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“System.Windows.Interactivity”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“VM.Compress”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“VM.Controls”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“VM.ExternalCall”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“VM.Framework.Container”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“VM.Util”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“VM.Utility”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“log4net”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“Microsoft.CSharp”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“System”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“System.Configuration”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“System.Core”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“System.Data”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“System.Data.DataSetExtensions”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“System.Deployment”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“System.Drawing”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“System.Net.Http”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“System.Windows.Forms”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“System.Xml”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“System.Xml.Linq”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“PresentationCore”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“PresentationFramework”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“WindowsBase”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“System.Xaml”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3245: 未能解析此引用。未能找到程序集“WindowsFormsIntegration”。请检查磁盘上是否存在该程序集。 如果您的代码需要此引用，则可能出现编译错误。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3243: 无法解决“Microsoft.CSharp, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a”与“Microsoft.CSharp”之间的冲突。正在随意选择“Microsoft.CSharp, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a”。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3243: 无法解决“System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089”与“System”之间的冲突。正在随意选择“System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089”。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3243: 无法解决“System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a”与“System.Configuration”之间的冲突。正在随意选择“System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a”。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3243: 无法解决“System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089”与“System.Core”之间的冲突。正在随意选择“System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089”。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3243: 无法解决“System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089”与“System.Data”之间的冲突。正在随意选择“System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089”。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3243: 无法解决“System.Data.DataSetExtensions, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089”与“System.Data.DataSetExtensions”之间的冲突。正在随意选择“System.Data.DataSetExtensions, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089”。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3243: 无法解决“System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a”与“System.Drawing”之间的冲突。正在随意选择“System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a”。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3243: 无法解决“System.Net.Http, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a”与“System.Net.Http”之间的冲突。正在随意选择“System.Net.Http, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a”。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3243: 无法解决“System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089”与“System.Xml”之间的冲突。正在随意选择“System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089”。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3243: 无法解决“System.Xml.Linq, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089”与“System.Xml.Linq”之间的冲突。正在随意选择“System.Xml.Linq, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089”。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3243: 无法解决“PresentationCore, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35”与“PresentationCore”之间的冲突。正在随意选择“PresentationCore, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35”。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3243: 无法解决“PresentationFramework, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35”与“PresentationFramework”之间的冲突。正在随意选择“PresentationFramework, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35”。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3243: 无法解决“WindowsBase, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35”与“WindowsBase”之间的冲突。正在随意选择“WindowsBase, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35”。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2433,5): warning MSB3243: 无法解决“System.Xaml, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089”与“System.Xaml”之间的冲突。正在随意选择“System.Xaml, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089”。 [D:\xcm\Triple-Detection\TripleDetection.csproj]
+
+
+“D:\xcm\Triple-Detection\TripleDetection.csproj”(Rebuild 目标) (1) ->
+“D:\xcm\Triple-Detection\TripleDetection_i2uex3cr_wpftmp.csproj”(_CompileTemporaryAssembly 目标) (2) ->
+(CoreCompile 目标) -> 
+  D:\xcm\Triple-Detection\Infrastructure\Repositories\SqliteRepository.cs(176,29): warning CS0693: 类型参数“T”与外部类型“SqliteRepository<T>”中的类型参数同名 [D:\xcm\Triple-Detection\TripleDetection_i2uex3cr_wpftmp.csproj]
+  D:\xcm\Triple-Detection\Infrastructure\Repositories\SqliteRepository.cs(186,24): warning CS0693: 类型参数“T”与外部类型“SqliteRepository<T>”中的类型参数同名 [D:\xcm\Triple-Detection\TripleDetection_i2uex3cr_wpftmp.csproj]
+  D:\xcm\Triple-Detection\Infrastructure\Repositories\AuditLogRepository.cs(79,25): warning CS0109: 成员“AuditLogRepository.ExecuteReader<T>(SqliteCommand)”不会隐藏可访问成员。不需要关键字 new。 [D:\xcm\Triple-Detection\TripleDetection_i2uex3cr_wpftmp.csproj]
+  D:\xcm\Triple-Detection\Presentation\ViewModels\Auth\UserEditViewModel.cs(37,46): warning CS8625: 无法将 null 字面量转换为非 null 的引用类型。 [D:\xcm\Triple-Detection\TripleDetection_i2uex3cr_wpftmp.csproj]
+  D:\xcm\Triple-Detection\Presentation\ViewModels\Auth\UserEditViewModel.cs(37,79): warning CS8625: 无法将 null 字面量转换为非 null 的引用类型。 [D:\xcm\Triple-Detection\TripleDetection_i2uex3cr_wpftmp.csproj]
+  D:\xcm\Triple-Detection\Infrastructure\Repositories\DetectionRecordRepository.cs(76,25): warning CS0109: 成员“DetectionRecordRepository.ExecuteReader<T>(SqliteCommand)”不会隐藏可访问成员。不需要关键字 new。 [D:\xcm\Triple-Detection\TripleDetection_i2uex3cr_wpftmp.csproj]
+  D:\xcm\Triple-Detection\Infrastructure\Repositories\SqliteRepository.cs(159,94): warning CS8625: 无法将 null 字面量转换为非 null 的引用类型。 [D:\xcm\Triple-Detection\TripleDetection_i2uex3cr_wpftmp.csproj]
+  D:\xcm\Triple-Detection\Infrastructure\Repositories\SqliteRepository.cs(229,90): warning CS8625: 无法将 null 字面量转换为非 null 的引用类型。 [D:\xcm\Triple-Detection\TripleDetection_i2uex3cr_wpftmp.csproj]
+  D:\xcm\Triple-Detection\Presentation\ViewModels\Auth\UserManagementViewModel.cs(181,48): warning CS8625: 无法将 null 字面量转换为非 null 的引用类型。 [D:\xcm\Triple-Detection\TripleDetection_i2uex3cr_wpftmp.csproj]
+  D:\xcm\Triple-Detection\Presentation\ViewModels\Production\ProductListViewModel.cs(128,54): warning CS8625: 无法将 null 字面量转换为非 null 的引用类型。 [D:\xcm\Triple-Detection\TripleDetection_i2uex3cr_wpftmp.csproj]
+  D:\xcm\Triple-Detection\Presentation\ViewModels\Production\TaskListViewModel.cs(150,52): warning CS8625: 无法将 null 字面量转换为非 null 的引用类型。 [D:\xcm\Triple-Detection\TripleDetection_i2uex3cr_wpftmp.csproj]
+
+
+“D:\xcm\Triple-Detection\TripleDetection.csproj”(Rebuild 目标) (1) ->
+“D:\xcm\Triple-Detection\TripleDetection_i2uex3cr_wpftmp.csproj”(_CompileTemporaryAssembly 目标) (2) ->
+(CoreCompile 目标) -> 
+  D:\xcm\Triple-Detection\Presentation\MainWindow.xaml.cs(311,51): error CS0246: 未能找到类型或命名空间名“ImvsSdkDefine”(是否缺少 using 指令或程序集引用?) [D:\xcm\Triple-Detection\TripleDetection_i2uex3cr_wpftmp.csproj]
+  D:\xcm\Triple-Detection\Presentation\MainWindow.xaml.cs(384,59): error CS0246: 未能找到类型或命名空间名“ImvsSdkDefine”(是否缺少 using 指令或程序集引用?) [D:\xcm\Triple-Detection\TripleDetection_i2uex3cr_wpftmp.csproj]
+  D:\xcm\Triple-Detection\Presentation\MainWindow.xaml.cs(398,58): error CS0246: 未能找到类型或命名空间名“ImvsSdkDefine”(是否缺少 using 指令或程序集引用?) [D:\xcm\Triple-Detection\TripleDetection_i2uex3cr_wpftmp.csproj]
+  D:\xcm\Triple-Detection\Presentation\MainWindow.xaml.cs(31,17): error CS0246: 未能找到类型或命名空间名“VmProcedure”(是否缺少 using 指令或程序集引用?) [D:\xcm\Triple-Detection\TripleDetection_i2uex3cr_wpftmp.csproj]
+
+    57 个警告
+    4 个错误
+
+已用时间 00:00:09.37

@@ -1,8 +1,11 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Windows;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm;
+using TripleDetection.Domain;
 using TripleDetection.Domain.Entities;
+using TripleDetection.Domain.Entities.Queries;
 using TripleDetection.Application.Services;
 
 namespace TripleDetection.Presentation.ViewModels.Auth
@@ -18,7 +21,7 @@ namespace TripleDetection.Presentation.ViewModels.Auth
         [ObservableProperty] private int _pageSize = 20;
         [ObservableProperty] private int _totalCount = 0;
         [ObservableProperty] private int _totalPages = 0;
-        [ObservableProperty] private User _selectedUser;
+        [ObservableProperty] private User? _selectedUser;
 
         public ObservableCollection<User> Users { get; } = new ObservableCollection<User>();
 
@@ -116,7 +119,7 @@ namespace TripleDetection.Presentation.ViewModels.Auth
         {
             try
             {
-                _userService.Delete(username, "admin", SessionManager.CurrentUserId);
+                _userService.Delete(username, SessionManager.CurrentUserName ?? "Unknown", SessionManager.CurrentUserId);
                 Search();
             }
             catch (Exception ex)
@@ -129,7 +132,7 @@ namespace TripleDetection.Presentation.ViewModels.Auth
         {
             try
             {
-                _userService.Enable(username, "admin", SessionManager.CurrentUserId);
+                _userService.Enable(username, SessionManager.CurrentUserName ?? "Unknown", SessionManager.CurrentUserId);
                 Search();
             }
             catch (Exception ex)
@@ -142,7 +145,7 @@ namespace TripleDetection.Presentation.ViewModels.Auth
         {
             try
             {
-                _userService.Disable(username, "admin", SessionManager.CurrentUserId);
+                _userService.Disable(username, SessionManager.CurrentUserName ?? "Unknown", SessionManager.CurrentUserId);
                 Search();
             }
             catch (Exception ex)
@@ -155,7 +158,7 @@ namespace TripleDetection.Presentation.ViewModels.Auth
         {
             try
             {
-                _userService.Lock(username, "admin", SessionManager.CurrentUserId);
+                _userService.Lock(username, SessionManager.CurrentUserName ?? "Unknown", SessionManager.CurrentUserId);
                 Search();
             }
             catch (Exception ex)
@@ -168,7 +171,7 @@ namespace TripleDetection.Presentation.ViewModels.Auth
         {
             try
             {
-                _userService.Unlock(username, "admin", SessionManager.CurrentUserId);
+                _userService.Unlock(username, SessionManager.CurrentUserName ?? "Unknown", SessionManager.CurrentUserId);
                 Search();
             }
             catch (Exception ex)
@@ -177,11 +180,11 @@ namespace TripleDetection.Presentation.ViewModels.Auth
             }
         }
 
-        public void OpenEditWindow(User user = null)
+        public void OpenEditWindow(User? user = null)
         {
             var editVm = new UserEditViewModel(user, _userService);
             var editWindow = new Views.Auth.UserEditWindow { DataContext = editVm };
-            editWindow.Owner = Application.Current.MainWindow;
+            editWindow.Owner = System.Windows.Application.Current.MainWindow;
             if (editWindow.ShowDialog() == true)
             {
                 Search();

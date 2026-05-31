@@ -8,7 +8,7 @@ namespace TripleDetection.Application.SettingsServices;
 public class DeviceControlSettingsService
 {
     private readonly string _configPath;
-    private DeviceControlSettings _settings;
+    private DeviceControlSettings? _settings;
 
     public DeviceControlSettingsService()
     {

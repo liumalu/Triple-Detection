@@ -1,14 +1,16 @@
 using System;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using TripleDetection.Domain.Entities;
 using TripleDetection.Domain.Repositories;
+using TripleDetection.Infrastructure.Repositories;
 
 namespace TripleDetection.Infrastructure.Persistence;
 
 public class SqliteUnitOfWork : IUnitOfWork
 {
     private readonly TripleDetectionDbContext _context;
-    private Microsoft.EntityFrameworkCore.Storage.IDbContextTransaction _transaction;
+    private Microsoft.EntityFrameworkCore.Storage.IDbContextTransaction? _transaction;
     private bool _disposed;
     private readonly Dictionary<Type, object> _repositories = new Dictionary<Type, object>();
 
@@ -66,7 +68,7 @@ public class SqliteUnitOfWork : IUnitOfWork
         var entityType = typeof(T);
         if (!_repositories.ContainsKey(entityType))
         {
-            _repositories[entityType] = new SqliteRepository<T>(_context);
+            _repositories[entityType] = new SqliteRepository<T>(_context.Database.GetDbConnection());
         }
         return (IRepository<T>)_repositories[entityType];
     }

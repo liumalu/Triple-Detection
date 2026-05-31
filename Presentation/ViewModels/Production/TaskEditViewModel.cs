@@ -1,7 +1,9 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Windows;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm;
+using TripleDetection.Domain;
 using TripleDetection.Domain.Entities;
 using TripleDetection.Application.Services;
 using TripleDetection.Domain.Enums;
@@ -160,13 +162,13 @@ namespace TripleDetection.Presentation.ViewModels.Production
             if (IsEditMode)
             {
                 task.Id = TaskId;
-                task.CreateBy = "admin";
+                task.CreateBy = SessionManager.CurrentUserName ?? "Unknown";
                 task.CreateAt = DateTime.Now;
-                _taskService.Update(task, "admin", SessionManager.CurrentUserId);
+                _taskService.Update(task, SessionManager.CurrentUserName ?? "Unknown", SessionManager.CurrentUserId);
             }
             else
             {
-                _taskService.Create(task, "admin", SessionManager.CurrentUserId);
+                _taskService.Create(task, SessionManager.CurrentUserName ?? "Unknown", SessionManager.CurrentUserId);
             }
 
             RequestClose?.Invoke(this, true);

@@ -20,7 +20,7 @@ public class UserService : IUserService
         _hashService = hashService ?? new PasswordHashService();
     }
 
-    public User Authenticate(string username, string password)
+    public User? Authenticate(string username, string password)
     {
         var user = _repository.Find(u => u.Username == username && u.IsEnabled && !u.IsLocked).FirstOrDefault();
         if (user == null) return null;
@@ -52,8 +52,8 @@ public class UserService : IUserService
     }
 
     public IEnumerable<User> GetAll() => _repository.GetAll();
-    public User GetByUsername(string username) => _repository.Find(u => u.Username == username).FirstOrDefault();
-    public User GetById(int id) => _repository.GetById(id);
+    public User? GetByUsername(string username) => _repository.Find(u => u.Username == username).FirstOrDefault();
+    public User? GetById(int id) => _repository.GetById(id);
 
     public void Create(User user, string createBy, int currentUserId)
     {

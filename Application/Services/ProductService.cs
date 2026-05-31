@@ -18,7 +18,7 @@ public class ProductService : IProductService
     }
 
     public IEnumerable<Product> GetAll() => _repository.GetAll();
-    public Product GetById(int id) => _repository.GetById(id);
+    public Product? GetById(int id) => _repository.GetById(id);
 
     public void Create(Product product, string createBy, int currentUserId)
     {

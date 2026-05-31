@@ -1,12 +1,13 @@
 using System.Windows.Input;
 using CommunityToolkit.Mvvm;
 
+using CommunityToolkit.Mvvm.ComponentModel;
 namespace TripleDetection.Presentation.ViewModels
 {
     public partial class TabItemViewModel : ObservableObject
     {
-        [ObservableProperty] private string _tag;
-        [ObservableProperty] private string _displayName;
+        [ObservableProperty] private string? _tag;
+        [ObservableProperty] private string? _displayName;
         [ObservableProperty] private bool _isActive;
         [ObservableProperty] private bool _isClosable = true;
 
@@ -22,7 +23,7 @@ namespace TripleDetection.Presentation.ViewModels
             set => SetProperty(ref _closeCommand, value);
         }
 
-        private ICommand _selectCommand;
-        private ICommand _closeCommand;
+        private ICommand? _selectCommand;
+        private ICommand? _closeCommand;
     }
 }

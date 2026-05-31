@@ -1,5 +1,7 @@
 using System;
 using CommunityToolkit.Mvvm;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using TripleDetection.Application.SettingsServices;
 using TripleDetection.Application.VmServices;
 
@@ -8,7 +10,7 @@ namespace TripleDetection.Presentation.ViewModels.Settings
     public partial class SettingsShellViewModel : ObservableObject
     {
         [ObservableProperty] private string _currentCategory = "Communication";
-        [ObservableProperty] private object _currentView;
+        [ObservableProperty] private object? _currentView;
 
         private readonly CommunicationSettingsService _commService;
         private readonly VmSettingsService _vmService;

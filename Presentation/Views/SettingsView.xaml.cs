@@ -2,6 +2,7 @@ using System.Windows;
 using System.Windows.Controls;
 using TripleDetection.Presentation.ViewModels.Settings;
 using TripleDetection.Application.SettingsServices;
+using TripleDetection.Application.VmServices;
 
 namespace TripleDetection.Presentation.Views
 {
@@ -15,15 +16,21 @@ namespace TripleDetection.Presentation.Views
 
         private readonly Button[] _navButtons;
 
-        public SettingsView()
+        public SettingsView(
+            CommunicationSettingsService commService,
+            VmSettingsService vmService,
+            SystemSettingsService sysService,
+            DeviceControlSettingsService deviceService,
+            SettingsSyncService syncService)
         {
             InitializeComponent();
 
-            _commService = new CommunicationSettingsService();
-            _vmService = new VmSettingsService();
-            _sysService = new SystemSettingsService();
-            _deviceService = new DeviceControlSettingsService();
-            _viewModel = new SettingsShellViewModel();
+            _commService = commService;
+            _vmService = vmService;
+            _sysService = sysService;
+            _deviceService = deviceService;
+
+            _viewModel = new SettingsShellViewModel(commService, vmService, sysService, deviceService);
 
             _navButtons = new[] { btnCommunication, btnVmSettings, btnSystem, btnDeviceControl };
 

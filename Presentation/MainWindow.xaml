@@ -1,6 +1,7 @@
 <Window x:Class="TripleDetection.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:wfh="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
         xmlns:local="clr-namespace:TripleDetection"
         Title="Triple Detection - Phase 1 MVP"
         Height="750" Width="1284"
@@ -92,7 +93,10 @@
 
         <!-- Center content area -->
         <Border Grid.Column="0" Grid.Row="1" Margin="5" BorderBrush="#606060" BorderThickness="1">
-            <ContentControl x:Name="MainContentRegion"/>
+            <Grid>
+                <ContentControl x:Name="MainContentRegion"/>
+                <WindowsFormsHost x:Name="VmHost" Visibility="Collapsed"/>
+            </Grid>
         </Border>
 
         <!-- Right sidebar -->
