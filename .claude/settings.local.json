@@ -315,7 +315,8 @@
       "Bash(rm -f \"D:/xcm/Triple-Detection/bin/Debug/net8.0-windows/logs/startup.log\")",
       "Bash(cat \"D:/xcm/Triple-Detection/bin/Debug/net8.0-windows/logs/startup.log\")",
       "Bash(powershell -Command \"Get-Content 'Presentation/Resources/Styles.xaml' -Raw\")",
-      "Bash(powershell *)"
+      "Bash(powershell *)",
+      "Bash(taskkill //F //IM TripleDetection.exe)"
     ],
     "additionalDirectories": [
       "D:\\xcm\\Triple-Detection\\TripleDetection.App\\bin\\Debug\\log\\SDK",

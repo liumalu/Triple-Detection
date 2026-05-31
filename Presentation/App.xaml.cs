@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Windows;
+using System.Windows.Interop;
 using Microsoft.Extensions.DependencyInjection;
 using TripleDetection;
 using TripleDetection.Application.Services;
@@ -43,6 +44,9 @@ public partial class App : System.Windows.Application
 
     protected override void OnStartup(StartupEventArgs e)
     {
+        // Set shutdown mode first - before showing any window
+        this.ShutdownMode = ShutdownMode.OnExplicitShutdown;
+
         _mutex = new Mutex(true, "TripleDetectionApp_SingleInstance", out bool createdNew);
         if (!createdNew)
         {
@@ -62,7 +66,8 @@ public partial class App : System.Windows.Application
         System.IO.Directory.CreateDirectory(logDir);
         System.IO.File.WriteAllText(
             System.IO.Path.Combine(logDir, "startup.log"),
-            $"[{DateTime.Now:HH:mm:ss}] LoginWindow created, about to ShowDialog");
+            $"[{DateTime.Now:HH:mm:ss}] LoginWindow created");
+
         var result = loginWindow.ShowDialog();
         System.IO.File.AppendAllText(
             System.IO.Path.Combine(logDir, "startup.log"),
@@ -71,33 +76,27 @@ public partial class App : System.Windows.Application
         if (result != true) { Shutdown(); return; }
 
         // Then show main window
-        try
-        {
-            var mainWindow = _services.GetRequiredService<MainWindow>();
-            System.IO.File.AppendAllText(
-                System.IO.Path.Combine(logDir, "startup.log"),
-                $"\n[{DateTime.Now:HH:mm:ss}] MainWindow created from DI");
-            MainWindow = mainWindow;
-            System.IO.File.AppendAllText(
-                System.IO.Path.Combine(logDir, "startup.log"),
-                $"\n[{DateTime.Now:HH:mm:ss}] MainWindow assigned to App.MainWindow, Visible={mainWindow.IsVisible}, WindowState={mainWindow.WindowState}");
-            mainWindow.Show();
-            System.IO.File.AppendAllText(
-                System.IO.Path.Combine(logDir, "startup.log"),
-                $"\n[{DateTime.Now:HH:mm:ss}] mainWindow.Show() called, IsVisible={mainWindow.IsVisible}");
-            mainWindow.WindowState = WindowState.Normal;
-            mainWindow.Activate();
-            System.IO.File.AppendAllText(
-                System.IO.Path.Combine(logDir, "startup.log"),
-                $"\n[{DateTime.Now:HH:mm:ss}] MainWindow shown and activated");
-        }
-        catch (Exception ex)
-        {
-            System.IO.File.AppendAllText(
-                System.IO.Path.Combine(logDir, "startup.log"),
-                $"\n[{DateTime.Now:HH:mm:ss}] Exception showing MainWindow: {ex}");
-            throw;
-        }
+        var mainWindow = _services.GetRequiredService<MainWindow>();
+        System.IO.File.AppendAllText(
+            System.IO.Path.Combine(logDir, "startup.log"),
+            $"\n[{DateTime.Now:HH:mm:ss}] MainWindow created from DI");
+
+        MainWindow = mainWindow;
+        System.IO.File.AppendAllText(
+            System.IO.Path.Combine(logDir, "startup.log"),
+            $"\n[{DateTime.Now:HH:mm:ss}] MainWindow assigned to App.MainWindow");
+
+        // Now show the main window
+        mainWindow.Show();
+        System.IO.File.AppendAllText(
+            System.IO.Path.Combine(logDir, "startup.log"),
+            $"\n[{DateTime.Now:HH:mm:ss}] mainWindow.Show() called");
+
+        // Keep app alive
+        this.ShutdownMode = ShutdownMode.OnMainWindowClose;
+        System.IO.File.AppendAllText(
+            System.IO.Path.Combine(logDir, "startup.log"),
+            $"\n[{DateTime.Now:HH:mm:ss}] ShutdownMode set to OnMainWindowClose");
     }
 
     private void ConfigureServices(IServiceCollection services)

@@ -85,10 +85,33 @@ namespace TripleDetection
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            _logService.Log("Application started");
-            _navigationService.SetRegion(MainContentRegion);
-            _navigationService.RegisterRoute("Detection", typeof(DetectionView));
-            _navigationService.NavigateTo<DetectionView>("Detection");
+            try
+            {
+                System.IO.File.AppendAllText(
+                    System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs", "startup.log"),
+                    $"\n[{DateTime.Now:HH:mm:ss}] Window_Loaded STARTED");
+
+                _logService.Log("Application started");
+                _navigationService.SetRegion(MainContentRegion);
+                _navigationService.RegisterRoute("Detection", typeof(DetectionView));
+
+                System.IO.File.AppendAllText(
+                    System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs", "startup.log"),
+                    $"\n[{DateTime.Now:HH:mm:ss}] About to call NavigateTo<DetectionView>");
+
+                _navigationService.NavigateTo<DetectionView>("Detection");
+
+                System.IO.File.AppendAllText(
+                    System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs", "startup.log"),
+                    $"\n[{DateTime.Now:HH:mm:ss}] Window_Loaded COMPLETE, Visibility={this.Visibility}, WindowState={this.WindowState}");
+            }
+            catch (Exception ex)
+            {
+                System.IO.File.AppendAllText(
+                    System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs", "startup.log"),
+                    $"\n[{DateTime.Now:HH:mm:ss}] Window_Loaded EXCEPTION: {ex}");
+                MessageBox.Show($"Window_Loaded error: {ex.Message}", "Error");
+            }
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

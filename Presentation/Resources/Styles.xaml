@@ -1,6 +1,5 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:TripleDetection.Presentation.Converters">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!-- 颜色定义 -->
     <Color x:Key="PrimaryColor">#4FD1C5</Color>
@@ -20,12 +19,6 @@
     <SolidColorBrush x:Key="TabInactiveBrush" Color="#E8E8E8"/>
     <SolidColorBrush x:Key="TabActiveTextBrush" Color="#1A202C"/>
     <SolidColorBrush x:Key="TabInactiveTextBrush" Color="#999999"/>
-
-    <local:TabActiveConverter x:Key="TabActiveConverter"/>
-    <local:TabActiveTextConverter x:Key="TabActiveTextConverter"/>
-    <local:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
-    <local:LoginButtonTextConverter x:Key="LoginButtonTextConverter"/>
-    <local:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
 
     <!-- 导航按钮样式 -->
     <Style x:Key="NavButtonStyle" TargetType="Button">

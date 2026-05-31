@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS Products (
     IsDeleted INTEGER NOT NULL DEFAULT 0, CreateAt TEXT NOT NULL, UpdateAt TEXT NOT NULL,
     CreateBy TEXT, UpdateBy TEXT
 );
-CREATE TABLE IF NOT EXISTS Tasks (
+CREATE TABLE IF NOT EXISTS ProdTasks (
     Id INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT NOT NULL, ProductId INTEGER,
     Status INTEGER NOT NULL DEFAULT 0, CreatedBy TEXT, ReviewedBy TEXT, ReviewedAt TEXT,
     ProductionDate TEXT, ExpirationDate TEXT, BatchNumber TEXT,
@@ -89,7 +89,7 @@ INSERT INTO Products (Name, Description, Status, IsDeleted, CreateAt, UpdateAt)
 VALUES ('OCR检测产品A', '用于OCR文字识别检测', 1, 0, '{now}', '{now}'),
 ('缺陷检测产品B', '用于表面缺陷检测', 1, 0, '{now}', '{now}'),
 ('尺寸测量产品C', '用于尺寸测量', 1, 0, '{now}', '{now}');
-INSERT INTO Tasks (Name, Status, IsDeleted, CreateAt, UpdateAt)
+INSERT INTO ProdTasks (Name, Status, IsDeleted, CreateAt, UpdateAt)
 VALUES ('OCR检测任务-2025-05-01', 1, 0, '{now}', '{now}'),
 ('缺陷检测任务-2025-05-02', 1, 0, '{now}', '{now}'),
 ('尺寸测量任务-2025-05-03', 1, 0, '{now}', '{now}'),

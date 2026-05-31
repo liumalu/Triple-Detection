@@ -116,7 +116,8 @@
 ### 失败处理
 - **DI 容器异常：** 检查 `Presentation/App.xaml.cs` 中的 `RegisterTypes` 和 `RegisterSingleton`
 - **数据库异常：** 确认 `Config/tripledetection.db` 存在，EF Core 迁移已执行
-- **VM DLL 异常：** 检查 `AppDomain.CurrentDomain_AssemblyResolve` 是否正确处理 `Infrastructure/libs/VisionMaster/` 下的 DLL
+- **VM DLL 异常：** 检查 `AppDomain.
+CurrentDomain_AssemblyResolve` 是否正确处理 `Infrastructure/libs/VisionMaster/` 下的 DLL
 - **窗口不显示：** 检查 `App.xaml.cs` 中 `CreateShell()` 是否返回 `LoginWindow` 或 `MainWindow`
 - **进程卡死：** 在 VS 中按 Break 调试，查看主线程卡在哪一步
 
