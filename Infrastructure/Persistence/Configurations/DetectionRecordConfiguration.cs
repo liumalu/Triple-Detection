@@ -14,9 +14,6 @@ public class DetectionRecordConfiguration : IEntityTypeConfiguration<DetectionRe
         builder.Property(d => d.ProductionDate).HasMaxLength(50);
         builder.Property(d => d.ExpirationDate).HasMaxLength(50);
         builder.Property(d => d.ImagePath).HasMaxLength(500);
-        builder.HasOne(d => d.Task)
-            .WithMany()
-            .HasForeignKey(d => d.TaskId)
-            .OnDelete(DeleteBehavior.Restrict);
+        builder.Property(d => d.TaskId).IsRequired();
     }
 }

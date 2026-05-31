@@ -14,9 +14,6 @@ public class ProdTaskConfiguration : IEntityTypeConfiguration<ProdTask>
         builder.Property(t => t.CreatedBy).HasMaxLength(100);
         builder.Property(t => t.ReviewedBy).HasMaxLength(100);
         builder.Property(t => t.BatchNumber).HasMaxLength(50);
-        builder.HasOne(t => t.Product)
-            .WithMany()
-            .HasForeignKey(t => t.ProductId)
-            .OnDelete(DeleteBehavior.Restrict);
+        builder.Property(t => t.ProductId).IsRequired();
     }
 }
