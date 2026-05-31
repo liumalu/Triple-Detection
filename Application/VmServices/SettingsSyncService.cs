@@ -1,5 +1,5 @@
 using System;
-using TripleDetection.Models;
+using TripleDetection.Presentation.Models;
 using iMVS_6000PlatformSDKCS.SyncPlatformSDKCS;
 
 namespace TripleDetection.Application.VmServices

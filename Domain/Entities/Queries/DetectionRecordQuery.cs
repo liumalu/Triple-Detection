@@ -1,3 +1,5 @@
+using System;
+
 namespace TripleDetection.Domain.Entities.Queries;
 
 public class DetectionRecordQuery : PagedQuery

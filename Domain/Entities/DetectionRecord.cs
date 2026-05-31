@@ -1,3 +1,5 @@
+using System;
+
 namespace TripleDetection.Domain.Entities;
 
 public class DetectionRecord : BaseEntity

@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using CommunityToolkit.Mvvm.Messenger;
+using CommunityToolkit.Mvvm;
 using VM.Core;
 using VM.PlatformSDKCS;
 using System.Drawing;
-using TripleDetection.Models;
+using TripleDetection.Presentation.Models;
 using TripleDetection.Domain.Entities;
 using TripleDetection.Application.Services;
 using TripleDetection.Presentation.Messages;

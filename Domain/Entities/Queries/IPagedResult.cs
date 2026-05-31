@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+
 namespace TripleDetection.Domain.Entities.Queries;
 
 public interface IPagedResult<T>

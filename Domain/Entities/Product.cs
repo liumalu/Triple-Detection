@@ -1,3 +1,6 @@
+using System;
+using TripleDetection.Domain.Enums;
+
 namespace TripleDetection.Domain.Entities;
 
 public class Product : BaseEntity
