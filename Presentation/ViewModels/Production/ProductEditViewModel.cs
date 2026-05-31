@@ -11,7 +11,7 @@ using TripleDetection.Domain.Enums;
 
 namespace TripleDetection.Presentation.ViewModels.Production
 {
-    public class ProductEditViewModel : ObservableObject
+    public partial class ProductEditViewModel : ObservableObject
     {
         private readonly IProductService _productService;
 

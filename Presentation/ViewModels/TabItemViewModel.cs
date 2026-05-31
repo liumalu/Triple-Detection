@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm;
 
 namespace TripleDetection.Presentation.ViewModels
 {
-    public class TabItemViewModel : ObservableObject
+    public partial class TabItemViewModel : ObservableObject
     {
         [ObservableProperty] private string _tag;
         [ObservableProperty] private string _displayName;

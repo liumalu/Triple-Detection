@@ -1,13 +1,13 @@
 using System;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm;
-using CommunityToolkit.Mvvm.Messenger;
+using CommunityToolkit.Mvvm;
 using TripleDetection.Presentation.Messages;
 using TripleDetection.Presentation.Navigation;
 
 namespace TripleDetection.Presentation.ViewModels.Detection
 {
-    public class MainViewModel : ObservableObject
+    public partial class MainViewModel : ObservableObject
     {
         private string _resultText = "--";
         private string _resultBackground = "#808080";

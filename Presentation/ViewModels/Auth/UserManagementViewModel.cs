@@ -7,7 +7,7 @@ using TripleDetection.Application.Services;
 
 namespace TripleDetection.Presentation.ViewModels.Auth
 {
-    public class UserManagementViewModel : ObservableObject
+    public partial class UserManagementViewModel : ObservableObject
     {
         private readonly IUserService _userService;
 

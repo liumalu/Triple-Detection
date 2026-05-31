@@ -7,7 +7,7 @@ using TripleDetection.Domain;
 
 namespace TripleDetection.Presentation.ViewModels
 {
-    public class LoginViewModel : ObservableObject
+    public partial class LoginViewModel : ObservableObject
     {
         private readonly IUserService _userService;
 

@@ -10,6 +10,7 @@ using TripleDetection.Domain.Entities;
 using TripleDetection.Application.Services;
 using TripleDetection.Presentation.Messages;
 using GlobalVariableModuleCs;
+using TripleDetection.App.Services.Detection;
 
 namespace TripleDetection.Application.VmServices
 {

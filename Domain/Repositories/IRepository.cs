@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using TripleDetection.Domain.Entities;
+using TripleDetection.Domain.Entities.Queries;
 
 namespace TripleDetection.Domain.Repositories;
 

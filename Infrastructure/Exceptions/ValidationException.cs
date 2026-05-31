@@ -1,3 +1,5 @@
+using System;
+
 namespace TripleDetection.Infrastructure.Exceptions;
 
 public class ValidationException : Exception

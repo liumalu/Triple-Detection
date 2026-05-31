@@ -7,7 +7,7 @@ using TripleDetection.Application.Services;
 
 namespace TripleDetection.Presentation.ViewModels.Production
 {
-    public class TaskListViewModel : ObservableObject
+    public partial class TaskListViewModel : ObservableObject
     {
         private readonly ITaskService _taskService;
         private readonly IProductService _productService;

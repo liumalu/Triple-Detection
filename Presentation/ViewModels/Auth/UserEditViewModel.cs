@@ -8,7 +8,7 @@ using TripleDetection.Domain;
 
 namespace TripleDetection.Presentation.ViewModels.Auth
 {
-    public class UserEditViewModel : ObservableObject
+    public partial class UserEditViewModel : ObservableObject
     {
         private readonly IUserService _userService;
 

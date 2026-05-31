@@ -1,3 +1,4 @@
+using System;
 using TripleDetection.Domain.Entities;
 
 namespace TripleDetection.Domain.Repositories;

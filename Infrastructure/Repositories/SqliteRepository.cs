@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using Microsoft.Data.Sqlite;
 using TripleDetection.Domain.Entities;
+using TripleDetection.Domain.Entities.Queries;
 using TripleDetection.Domain.Repositories;
 using TripleDetection.Infrastructure.Exceptions;
 using TripleDetection.Infrastructure.Persistence;

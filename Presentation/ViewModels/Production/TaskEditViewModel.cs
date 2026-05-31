@@ -8,7 +8,7 @@ using TripleDetection.Domain.Enums;
 
 namespace TripleDetection.Presentation.ViewModels.Production
 {
-    public class TaskEditViewModel : ObservableObject
+    public partial class TaskEditViewModel : ObservableObject
     {
         private readonly ITaskService _taskService;
         private readonly IProductService _productService;

@@ -5,7 +5,7 @@ using TripleDetection.Application.VmServices;
 
 namespace TripleDetection.Presentation.ViewModels.Settings
 {
-    public class SettingsShellViewModel : ObservableObject
+    public partial class SettingsShellViewModel : ObservableObject
     {
         [ObservableProperty] private string _currentCategory = "Communication";
         [ObservableProperty] private object _currentView;

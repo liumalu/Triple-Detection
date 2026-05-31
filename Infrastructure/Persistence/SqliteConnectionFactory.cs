@@ -1,6 +1,7 @@
 using System;
 using System.Data.Common;
 using Microsoft.Data.Sqlite;
+using TripleDetection.Domain.Repositories;
 
 namespace TripleDetection.Infrastructure.Persistence;
 
