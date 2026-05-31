@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Prism.Events;
+using CommunityToolkit.Mvvm.Messenger;
 using VM.Core;
 using VM.PlatformSDKCS;
 using System.Drawing;
-using TripleDetection.Events;
 using TripleDetection.Models;
 using TripleDetection.Domain.Entities;
 using TripleDetection.Application.Services;
+using TripleDetection.Presentation.Messages;
 using GlobalVariableModuleCs;
 
 namespace TripleDetection.Application.VmServices
@@ -20,19 +20,17 @@ namespace TripleDetection.Application.VmServices
         private bool _isSolutionLoad = false;
         private LoggingService _logService;
         private IDetectionRecordService _detectionRecordService;
-        private IEventAggregator _eventAggregator;
         private int _currentTaskId;
         private int _currentProductId;
         private string _currentBatchNumber;
 
         public event EventHandler<DetectionResult> OnDetectionResult;
 
-        public VmIntegrationService(ImageStorageService imageStorage, LoggingService logService, IDetectionRecordService detectionRecordService, IEventAggregator eventAggregator = null)
+        public VmIntegrationService(ImageStorageService imageStorage, LoggingService logService, IDetectionRecordService detectionRecordService)
         {
             _imageStorage = imageStorage;
             _logService = logService;
             _detectionRecordService = detectionRecordService;
-            _eventAggregator = eventAggregator;
             VmSolution.OnWorkStatusEvent += VmSolution_OnWorkStatusEvent;
         }
 
@@ -170,8 +168,8 @@ namespace TripleDetection.Application.VmServices
                         var result = ParseResult(strResult);
                         result.ElapsedMs = _stopwatch.ElapsedMilliseconds;
 
-                        // Publish via EventAggregator (preferred)
-                        _eventAggregator?.GetEvent<DetectionResultEvent>().Publish(result);
+                        // Publish via WeakReferenceMessenger (preferred)
+                        WeakReferenceMessenger.Default.Send(new DetectionResultMessage(result));
 
                         // Legacy event (backward compatibility)
                         OnDetectionResult?.Invoke(this, result);
