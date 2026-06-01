@@ -88,6 +88,9 @@ namespace TripleDetection.Presentation.ViewModels.Production
             Tasks.Clear();
             foreach (var item in result.Items)
             {
+                // 填充 ProductName 以便 UI 绑定
+                var product = _productService.GetById(item.ProductId);
+                item.ProductName = product?.Name ?? "";
                 Tasks.Add(item);
             }
             TotalCount = result.TotalCount;

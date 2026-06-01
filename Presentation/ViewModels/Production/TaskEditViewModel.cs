@@ -1,5 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm;
@@ -68,6 +69,13 @@ namespace TripleDetection.Presentation.ViewModels.Production
             Products.Clear();
             foreach (var product in _productService.GetAll())
             {
+                // 只加载启用状态且方案文件存在的产品
+                if (product.Status != ProductStatus.Active)
+                    continue;
+                if (string.IsNullOrWhiteSpace(product.SolFilePath))
+                    continue;
+                if (!System.IO.File.Exists(product.SolFilePath))
+                    continue;
                 Products.Add(product);
             }
         }

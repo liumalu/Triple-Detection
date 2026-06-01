@@ -6,6 +6,41 @@
 
 ---
 
+## 实现约束
+
+### 架构约束
+
+1. **领域层（Domain）不得依赖基础设施层**
+   - `IRepository<T>` 等仓储接口定义在 `Domain/Repositories/` 下
+   - 不得在领域层中引入具体查询类型（如 `ProductQuery`、`TaskQuery`）的引用
+   - 查询参数通过 `PagedQuery` 基类传递，特定查询类型的分发在 Infrastructure 层内部处理
+
+2. **基础设施层（Infrastructure）内部处理特定查询类型分发**
+   - `SqliteRepository.Query(PagedQuery)` 内部通过 `is` 模式匹配分发到具体查询方法
+   - 不得将 `Query(TaskQuery)`、`Query(ProductQuery)` 等方法暴露到 `IRepository<T>` 接口
+   - 示例：
+     ```csharp
+     // ✅ 正确：在 Infrastructure 内部处理分发
+     public IPagedResult<T> Query(PagedQuery query)
+     {
+         if (query is ProductQuery pq) return Query(pq);
+         if (query is TaskQuery tq) return Query(tq);
+         return QueryInternal(query, null!);
+     }
+     
+     // ❌ 错误：在领域层接口中声明特定查询方法
+     public interface IRepository<T>
+     {
+         IPagedResult<T> Query(TaskQuery query); // 侵入领域层
+     }
+     ```
+
+3. **计算属性不得持久化**
+   - UI 绑定用的计算属性（如 `ProdTask.ProductName`）不应存储到数据库
+   - 应在 ViewModel 层通过查询结果后填充，避免数据冗余和不一致
+
+---
+
 ## 节点 1：构建验证（编译检查）
 
 > 本节点验证项目可完整编译，无编译错误和缺失依赖。所有后续节点依赖编译通过后方可执行。
@@ -334,7 +369,7 @@ CurrentDomain_AssemblyResolve` 是否正确处理 `Infrastructure/libs/VisionMas
 ### 4.1 程序集（Assembly）加载验证
 
 #### 执行步骤
-1. 启动应用，以 admin 登录，进入 MainWindow
+1. 启动应用，以 admin 登录，点击检测执行,进入检测执行页面，加载方案，查看检测视图
 2. 打开检测视图（此时 VisionMaster SDK 被首次调用）
 3. 打开 VS **输出窗口**，切换到「调试」选项卡
 4. 过滤关键词 `AssemblyLoad`、`FileNotFoundException`、`VM.`、`iMVS`
@@ -769,7 +804,7 @@ CurrentDomain_AssemblyResolve` 是否正确处理 `Infrastructure/libs/VisionMas
 | 4.2 方案文件加载 | 待执行 | - | - | - |
 | 4.3 全局变量设置 | 待执行 | - | - | - |
 | 4.4 检测回调 | 待执行 | - | - | - |
-| 4.5 资源清理 | 待执行 | - | - | - |
+| 4.5 资源清理 | 代码实现完成，待运行时验证 | 2026-06-01 | Malu | 实现：DetectionView Unloaded 时停止连续检测；Dispose 时完整清理 VmRenderControl 和事件订阅；VmIntegrationService.Cleanup() 关闭 VmSolution.Instance.CloseSolution() |
 | 5.1 文件存在性 | 待执行 | - | - | - |
 | 5.2 表结构 | 待执行 | - | - | - |
 | 5.3 种子数据 | 待执行 | - | - | - |

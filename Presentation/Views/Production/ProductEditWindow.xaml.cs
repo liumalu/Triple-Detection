@@ -23,6 +23,8 @@ namespace TripleDetection.Presentation.Views.Production
         {
             if (DataContext is ProductEditViewModel vm)
             {
+                // Attach handler BEFORE Save() to avoid race condition
+                // Save() is async (Task.Run), so RequestClose may fire before handler is attached
                 vm.RequestClose += (s, result) =>
                 {
                     if (result)

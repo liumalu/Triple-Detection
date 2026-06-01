@@ -47,6 +47,25 @@ public partial class App : System.Windows.Application
         // Set shutdown mode first - before showing any window
         this.ShutdownMode = ShutdownMode.OnExplicitShutdown;
 
+        // Setup VisionMaster DLL resolver before anything else
+        AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
+        {
+            var name = new System.Reflection.AssemblyName(args.Name).Name;
+            if (name == null) return null;
+
+            // Try local libs path first
+            var localPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Infrastructure", "libs", "VisionMaster", name + ".dll");
+            if (File.Exists(localPath))
+                return System.Reflection.Assembly.LoadFrom(localPath);
+
+            // Try VisionMaster installation directory
+            var vmPath = Path.Combine(@"C:\Program Files\VisionMaster4.2.0\Development\V4.x\Libraries\win64\C#", name + ".dll");
+            if (File.Exists(vmPath))
+                return System.Reflection.Assembly.LoadFrom(vmPath);
+
+            return null;
+        };
+
         _mutex = new Mutex(true, "TripleDetectionApp_SingleInstance", out bool createdNew);
         if (!createdNew)
         {
@@ -82,21 +101,12 @@ public partial class App : System.Windows.Application
             $"\n[{DateTime.Now:HH:mm:ss}] MainWindow created from DI");
 
         MainWindow = mainWindow;
-        System.IO.File.AppendAllText(
-            System.IO.Path.Combine(logDir, "startup.log"),
-            $"\n[{DateTime.Now:HH:mm:ss}] MainWindow assigned to App.MainWindow");
 
         // Now show the main window
         mainWindow.Show();
-        System.IO.File.AppendAllText(
-            System.IO.Path.Combine(logDir, "startup.log"),
-            $"\n[{DateTime.Now:HH:mm:ss}] mainWindow.Show() called");
 
         // Keep app alive
         this.ShutdownMode = ShutdownMode.OnMainWindowClose;
-        System.IO.File.AppendAllText(
-            System.IO.Path.Combine(logDir, "startup.log"),
-            $"\n[{DateTime.Now:HH:mm:ss}] ShutdownMode set to OnMainWindowClose");
     }
 
     private void ConfigureServices(IServiceCollection services)
@@ -160,6 +170,13 @@ public partial class App : System.Windows.Application
         services.AddTransient<LoginWindow>();
         services.AddTransient<TripleDetection.MainWindow>();
         services.AddTransient<TripleDetection.Presentation.Views.Detection.DetectionView>();
+        services.AddTransient<TripleDetection.Presentation.Views.App.DashboardView>();
+        services.AddTransient<TripleDetection.Presentation.Views.App.LogsView>();
+        services.AddTransient<TripleDetection.Presentation.Views.Production.ProductListView>();
+        services.AddTransient<TripleDetection.Presentation.Views.Production.TaskListView>();
+        services.AddTransient<TripleDetection.Presentation.Views.Audit.AuditLogView>();
+        services.AddTransient<TripleDetection.Presentation.Views.Auth.UserManagementView>();
+        services.AddTransient<TripleDetection.Presentation.Views.SettingsView>();
     }
 
     private void InitializeDatabase()

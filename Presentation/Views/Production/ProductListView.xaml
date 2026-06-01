@@ -83,7 +83,7 @@
                     <DataGridTextColumn Header="产品名称" Binding="{Binding Name}" Width="150"/>
                     <DataGridTextColumn Header="有效期类型" Binding="{Binding ValidType}" Width="80"/>
                     <DataGridTextColumn Header="有效期" Binding="{Binding ValidPeriod}" Width="80"/>
-                    <DataGridTextColumn Header="状态" Binding="{Binding Status}" Width="80"/>
+                    <DataGridTextColumn Header="状态" Binding="{Binding Status, Converter={StaticResource ProductStatusConverter}}" Width="80"/>
                     <DataGridTextColumn Header="方案文件" Binding="{Binding SolFilePath}" Width="200"/>
                     <DataGridTextColumn Header="创建时间" Binding="{Binding CreateAt, StringFormat='yyyy-MM-dd HH:mm'}" Width="150"/>
                     <DataGridTemplateColumn Header="操作" Width="120">

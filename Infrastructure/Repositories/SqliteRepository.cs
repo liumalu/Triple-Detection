@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -56,7 +57,7 @@ public class SqliteRepository<T> : IRepository<T> where T : BaseEntity
         conn.Open();
         var columns = GetInsertColumns();
         var values = GetInsertValues(entity);
-        var sql = $"INSERT INTO {GetTableName()} ({string.Join(", ", columns)}) VALUES ({string.Join(", ", values.Select(c => "@" + c))})";
+        var sql = $"INSERT INTO {GetTableName()} ({string.Join(", ", columns)}) VALUES ({string.Join(", ", values)})";
         using var cmd = new SqliteCommand(sql, conn);
         AddEntityParameters(cmd, entity);
         cmd.ExecuteNonQuery();
@@ -95,7 +96,53 @@ public class SqliteRepository<T> : IRepository<T> where T : BaseEntity
 
     public IPagedResult<T> Query(PagedQuery query)
     {
+        if (query is ProductQuery pq)
+        {
+            return Query(pq);
+        }
+        if (query is TaskQuery tq)
+        {
+            return Query(tq);
+        }
         return QueryInternal(query, null!);
+    }
+
+    public IPagedResult<T> Query(ProductQuery query)
+    {
+        var conditions = new List<string>();
+
+        if (!string.IsNullOrWhiteSpace(query.Code))
+            conditions.Add($"Code LIKE '%{EscapeValue(query.Code)}%'");
+        if (!string.IsNullOrWhiteSpace(query.Name))
+            conditions.Add($"Name LIKE '%{EscapeValue(query.Name)}%'");
+        if (query.Status.HasValue)
+            conditions.Add($"Status = {query.Status.Value}");
+        if (query.CreateAtFrom.HasValue)
+            conditions.Add($"CreateAt >= '{query.CreateAtFrom.Value:yyyy-MM-dd}'");
+        if (query.CreateAtTo.HasValue)
+            conditions.Add($"CreateAt <= '{query.CreateAtTo.Value:yyyy-MM-dd}'");
+
+        return QueryInternal(query, conditions);
+    }
+
+    public IPagedResult<T> Query(TaskQuery query)
+    {
+        var conditions = new List<string>();
+
+        if (!string.IsNullOrWhiteSpace(query.Name))
+            conditions.Add($"Name LIKE '%{EscapeValue(query.Name)}%'");
+        if (query.ProductId.HasValue)
+            conditions.Add($"ProductId = {query.ProductId.Value}");
+        if (query.Status.HasValue)
+            conditions.Add($"Status = {query.Status.Value}");
+        if (query.ProductionDateFrom.HasValue)
+            conditions.Add($"ProductionDate >= '{query.ProductionDateFrom.Value:yyyy-MM-dd}'");
+        if (query.ProductionDateTo.HasValue)
+            conditions.Add($"ProductionDate <= '{query.ProductionDateTo.Value:yyyy-MM-dd}'");
+        if (!string.IsNullOrWhiteSpace(query.BatchNumber))
+            conditions.Add($"BatchNumber LIKE '%{EscapeValue(query.BatchNumber)}%'");
+
+        return QueryInternal(query, conditions);
     }
 
     private IPagedResult<T> QueryInternal(PagedQuery query, List<string> extraConditions)
@@ -168,9 +215,6 @@ public class SqliteRepository<T> : IRepository<T> where T : BaseEntity
         {
             if (constant.Value == null) return "NULL";
             var val = constant.Value.ToString();
-            System.IO.File.AppendAllText(
-                System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs", "sql_debug.log"),
-                $"  ConstantExpr val='{val}', type={constant.Type.Name}\n");
             // Handle boolean constants: output 1/0 instead of 'True'/'False'
             if (val == "True" || val == "true") return "1";
             if (val == "False" || val == "false") return "0";
@@ -232,6 +276,7 @@ public class SqliteRepository<T> : IRepository<T> where T : BaseEntity
             if (prop.PropertyType == typeof(bool) && value is long l) prop.SetValue(entity, l != 0);
             else if (prop.PropertyType == typeof(int) && value is Int64 il) prop.SetValue(entity, (int)il);
             else if (prop.PropertyType == typeof(int?) && value is Int64 il2) prop.SetValue(entity, (int?)il2);
+            else if (prop.PropertyType.IsEnum && value is Int64 el) prop.SetValue(entity, Enum.ToObject(prop.PropertyType, (int)el));
             else if (prop.PropertyType == typeof(DateTime?) || prop.PropertyType == typeof(DateTime)) prop.SetValue(entity, DateTime.Parse(value.ToString()!));
             else prop.SetValue(entity, value);
         }
@@ -256,7 +301,7 @@ public class SqliteRepository<T> : IRepository<T> where T : BaseEntity
 
     private IEnumerable<string> GetInsertValues(T entity)
     {
-        yield return "@CreateAt"; yield return "@UpdateAt"; yield return "0";
+        yield return "@CreateAt"; yield return "@UpdateAt"; yield return "@IsDeleted";
         yield return "@CreateBy"; yield return "@UpdateBy";
         foreach (var prop in GetTypeProperties()) yield return "@" + prop.Name;
     }
@@ -270,6 +315,7 @@ public class SqliteRepository<T> : IRepository<T> where T : BaseEntity
         var now = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         cmd.Parameters.AddWithValue("@CreateAt", entity.CreateAt == default ? now : entity.CreateAt.ToString("yyyy-MM-dd HH:mm:ss"));
         cmd.Parameters.AddWithValue("@UpdateAt", now);
+        cmd.Parameters.AddWithValue("@IsDeleted", 0);
         cmd.Parameters.AddWithValue("@CreateBy", entity.CreateBy ?? "");
         cmd.Parameters.AddWithValue("@UpdateBy", entity.UpdateBy ?? "");
         foreach (var prop in GetTypeProperties())
@@ -288,6 +334,6 @@ public class SqliteRepository<T> : IRepository<T> where T : BaseEntity
     private static readonly string[] ExcludedProperties = new[]
     {
         "Id", "CreateBy", "UpdateBy", "CreateAt", "UpdateAt", "IsDeleted",
-        "StatusText"
+        "StatusText", "ProductName"
     };
 }

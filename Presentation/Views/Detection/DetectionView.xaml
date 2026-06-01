@@ -5,120 +5,254 @@
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="120"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="160"/>
+            <RowDefinition Height="120"/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="350"/>
-        </Grid.ColumnDefinitions>
 
-        <!-- 左侧：VisionMaster 显示区域 -->
-        <Border Grid.Row="0" Grid.Column="0" Margin="5" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1">
-            <Grid>
-                <Border x:Name="VmRenderHost" Background="#F5F5F5"/>
-                <TextBlock Text="VisionMaster 显示区域" Foreground="{StaticResource TextSecondaryBrush}"
-                           HorizontalAlignment="Center" VerticalAlignment="Center"
-                           FontSize="14" IsHitTestVisible="False"/>
-            </Grid>
-        </Border>
+        <!-- ==================== Row 0: Task Selection (60%) + Statistics (40%) ==================== -->
+        <Grid Grid.Row="0" Margin="5,5,5,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
 
-        <!-- 右侧：VM 操作面板 -->
-        <Border Grid.Row="0" Grid.Column="1" Margin="0,5,5,5" Background="{StaticResource CardBackgroundBrush}" Padding="16">
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <StackPanel>
-                    <!-- 任务选择 -->
-                    <TextBlock Text="任务选择" FontSize="14" FontWeight="Bold" Foreground="{StaticResource PrimaryBrush}" Margin="0,0,0,8"/>
-                    <ComboBox x:Name="cmbTaskSelect" Width="300" Margin="0,0,0,12"
-                             SelectionChanged="CmbTask_SelectionChanged"/>
-                    <!-- 已选任务信息 -->
-                    <TextBlock Text="已选任务信息" FontSize="14" FontWeight="Bold" Foreground="{StaticResource PrimaryBrush}" Margin="0,0,0,8"/>
-                    <Border Background="White" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" Padding="12" Margin="0,0,0,12">
-                        <StackPanel>
-                            <TextBlock x:Name="txtProduct" Text="产品: --" Foreground="{StaticResource TextPrimaryBrush}" Margin="0,2"/>
-                            <TextBlock x:Name="txtBatch" Text="批次: --" Foreground="{StaticResource TextPrimaryBrush}" Margin="0,2"/>
-                            <TextBlock x:Name="txtProductionDate" Text="生产日期: --" Foreground="{StaticResource TextPrimaryBrush}" Margin="0,2"/>
-                            <TextBlock x:Name="txtExpirationDate" Text="有效期至: --" Foreground="{StaticResource TextPrimaryBrush}" Margin="0,2"/>
-                            <TextBlock x:Name="txtSolFilePath" Text="方案路径: --" Foreground="{StaticResource TextPrimaryBrush}" Margin="0,2" TextWrapping="Wrap"/>
+            <!-- Task Selection (60%) -->
+            <Border Grid.Column="0" Background="{StaticResource CardBackgroundBrush}" Padding="12">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- 第一行：任务选择 + 产品 + 方案路径 -->
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="任务选择:" VerticalAlignment="Center" Margin="0,0,8,0"
+                               Foreground="{StaticResource TextSecondaryBrush}"/>
+                    <ComboBox Grid.Row="0" Grid.Column="1" x:Name="cmbTaskSelect"
+                              SelectionChanged="CmbTask_SelectionChanged" VerticalAlignment="Center" HorizontalAlignment="Left" Width="180"/>
+
+                    <TextBlock Grid.Row="0" Grid.Column="2" Text="产品:" VerticalAlignment="Center" Margin="16,0,8,0"
+                               Foreground="{StaticResource TextSecondaryBrush}"/>
+                    <TextBox Grid.Row="0" Grid.Column="3" x:Name="txtProduct" Text="--" IsReadOnly="True"
+                             Background="Transparent" BorderThickness="0" VerticalAlignment="Center"
+                             Foreground="{StaticResource TextPrimaryBrush}"/>
+
+                    <TextBlock Grid.Row="0" Grid.Column="4" Text="方案路径:" VerticalAlignment="Center" Margin="16,0,8,0"
+                               Foreground="{StaticResource TextSecondaryBrush}"/>
+                    <TextBox Grid.Row="0" Grid.Column="5" x:Name="txtSolFilePath" Text="--" IsReadOnly="True"
+                             Background="Transparent" BorderThickness="0" VerticalAlignment="Center"
+                             Foreground="{StaticResource TextPrimaryBrush}" TextWrapping="Wrap"/>
+
+                    <!-- 第二行：批号 + 生产日期 + 有效期至 -->
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="批号:" VerticalAlignment="Center" Margin="0,8,8,0"
+                               Foreground="{StaticResource TextSecondaryBrush}"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtBatch" Text="--" IsReadOnly="True"
+                             Background="Transparent" BorderThickness="0" VerticalAlignment="Center" Margin="0,8,0,0"
+                             Foreground="{StaticResource TextPrimaryBrush}"/>
+
+                    <TextBlock Grid.Row="1" Grid.Column="2" Text="生产日期:" VerticalAlignment="Center" Margin="16,8,8,0"
+                               Foreground="{StaticResource TextSecondaryBrush}"/>
+                    <TextBox Grid.Row="1" Grid.Column="3" x:Name="txtProductionDate" Text="--" IsReadOnly="True"
+                             Background="Transparent" BorderThickness="0" VerticalAlignment="Center" Margin="0,8,0,0"
+                             Foreground="{StaticResource TextPrimaryBrush}"/>
+
+                    <TextBlock Grid.Row="1" Grid.Column="4" Text="有效期至:" VerticalAlignment="Center" Margin="16,8,8,0"
+                               Foreground="{StaticResource TextSecondaryBrush}"/>
+                    <TextBox Grid.Row="1" Grid.Column="5" x:Name="txtExpirationDate" Text="--" IsReadOnly="True"
+                             Background="Transparent" BorderThickness="0" VerticalAlignment="Center" Margin="0,8,0,0"
+                             Foreground="{StaticResource TextPrimaryBrush}"/>
+                </Grid>
+            </Border>
+
+            <!-- Statistics (40%) -->
+            <Border Grid.Column="1" Margin="0,0,0,0" Background="{StaticResource CardBackgroundBrush}" Padding="12">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Border Grid.Column="0" Background="White" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" Margin="0,0,4,0">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Text="OK" Foreground="#00C000" FontSize="12" HorizontalAlignment="Center"/>
+                            <TextBlock x:Name="txtOkCount" Text="0" Foreground="#00C000" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </Border>
-                    <!-- 方案操作 -->
-                    <TextBlock Text="方案操作" FontSize="14" FontWeight="Bold" Foreground="{StaticResource PrimaryBrush}" Margin="0,0,0,8"/>
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-                        <Button x:Name="btnSelectSol" Content="选择方案" Click="BtnSelectSol_Click"
-                                Style="{StaticResource PrimaryButtonStyle}" Margin="0,0,8,0"/>
-                        <Button x:Name="btnLoadSol" Content="加载方案" Click="BtnLoadSol_Click"
-                                Style="{StaticResource PrimaryButtonStyle}"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-                        <Button x:Name="btnSaveSol" Content="三期ToVM" Click="BtnSaveSol_Click"
-                                Style="{StaticResource PrimaryButtonStyle}" Margin="0,0,8,0"/>
-                        <Button x:Name="btnLoadFromVm" Content="三期FromVM" Click="BtnLoadFromVm_Click"
-                                Style="{StaticResource PrimaryButtonStyle}"/>
-                    </StackPanel>
-
-                    <!-- 流程操作 -->
-                    <TextBlock Text="流程操作" FontSize="14" FontWeight="Bold" Foreground="{StaticResource PrimaryBrush}" Margin="0,0,0,8"/>
-                    <StackPanel Margin="0,0,0,12">
-                        <ComboBox x:Name="cmbProcedure" Width="200" Margin="0,0,0,8"
-                                  SelectionChanged="CmbProcedure_SelectionChanged"/>
-                        <StackPanel Orientation="Horizontal">
-                            <Button x:Name="btnRunOnce" Content="单次运行" Click="BtnTaskRun_Click"
-                                    Style="{StaticResource PrimaryButtonStyle}" Margin="0,0,8,0"/>
-                            <Button x:Name="btnContiRun" Content="连续运行" Click="BtnTaskPause_Click"
-                                    Style="{StaticResource PrimaryButtonStyle}"/>
+                    <Border Grid.Column="1" Background="White" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" Margin="4,0,4,0">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Text="NG" Foreground="#FF0000" FontSize="12" HorizontalAlignment="Center"/>
+                            <TextBlock x:Name="txtNgCount" Text="0" Foreground="#FF0000" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
                         </StackPanel>
-                    </StackPanel>
+                    </Border>
+                    <Border Grid.Column="2" Background="White" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" Margin="4,0,4,0">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Text="Pass" Foreground="{StaticResource PrimaryBrush}" FontSize="12" HorizontalAlignment="Center"/>
+                            <TextBlock x:Name="txtPassRate" Text="--" Foreground="{StaticResource TextPrimaryBrush}" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Grid.Column="3" Background="White" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" Margin="4,0,0,0">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Text="Total" Foreground="{StaticResource TextSecondaryBrush}" FontSize="12" HorizontalAlignment="Center"/>
+                            <TextBlock x:Name="txtTotalCount" Text="0" Foreground="{StaticResource TextPrimaryBrush}" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Border>
+        </Grid>
 
-                    <!-- 检测统计 -->
-                    <TextBlock Text="检测统计" FontSize="14" FontWeight="Bold" Foreground="{StaticResource PrimaryBrush}" Margin="0,0,0,8"/>
-                    <Border Background="White" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" Padding="12" Margin="0,0,0,12">
-                        <StackPanel>
-                            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                                <TextBlock x:Name="txtOkCount" Text="OK: 0" Foreground="#00C000" Margin="0,0,16,0"/>
-                                <TextBlock x:Name="txtNgCount" Text="NG: 0" Foreground="#FF0000"/>
+        <!-- ==================== Row 1: VM Display (78%) + Detection Results (22%) ==================== -->
+        <Grid Grid.Row="1" Margin="5,5,5,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="78*"/>
+                <ColumnDefinition Width="22*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- VM Display (78%) -->
+            <Border Grid.Column="0" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1">
+                <Grid>
+                    <Border x:Name="VmRenderHost" Background="#F5F5F5"/>
+                    <TextBlock Text="VisionMaster 显示区域" Foreground="{StaticResource TextSecondaryBrush}"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"
+                               FontSize="14" IsHitTestVisible="False"/>
+                </Grid>
+            </Border>
+
+            <!-- Detection Results (22%) -->
+            <Border Grid.Column="1" Margin="0,0,0,0" Background="{StaticResource CardBackgroundBrush}" Padding="8">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- 本次结果 - 图标展示 -->
+                    <Border Grid.Row="0" x:Name="borderCurrentResult" Background="White" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" Padding="8" Margin="0,0,0,8">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <!-- OK/NG 图标 -->
+                            <Border Grid.Column="0" Width="50" Height="50" CornerRadius="25" Margin="0,0,12,0">
+                                <Border.Background>
+                                    <SolidColorBrush x:Name="brsResultIcon" Color="#808080"/>
+                                </Border.Background>
+                                <TextBlock x:Name="txtResultIcon" Text="--" FontSize="20" FontWeight="Bold"
+                                           Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <!-- 结果文字 -->
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock Text="本次结果" FontSize="12" Foreground="{StaticResource TextSecondaryBrush}"/>
+                                <TextBlock x:Name="txtCurrentResult" Text="--" FontSize="24" FontWeight="Bold"
+                                           Foreground="{StaticResource TextPrimaryBrush}"/>
                             </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <!-- 结果日志 - 带独立标题 -->
+                    <Border Grid.Row="1" Background="White" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Border Grid.Row="0" Background="{StaticResource CardBackgroundBrush}" Padding="8,6">
+                                <TextBlock Text="结果日志" FontSize="12" FontWeight="Bold" Foreground="{StaticResource PrimaryBrush}"/>
+                            </Border>
+                            <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                                <ListBox x:Name="lstDetectionLogs" Background="White" Foreground="{StaticResource TextPrimaryBrush}"
+                                         BorderThickness="0" FontFamily="Consolas" FontSize="10" Padding="4"/>
+                            </ScrollViewer>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!-- ==================== Row 2: Operation Panel (78%) + Operation Logs (22%) ==================== -->
+        <Grid Grid.Row="2" Margin="5,5,5,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="78*"/>
+                <ColumnDefinition Width="22*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Operation Panel (78%) -->
+            <Border Grid.Column="0" Background="{StaticResource CardBackgroundBrush}" Padding="8">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- 第一块：方案操作 -->
+                    <Border Grid.Column="0" Background="White" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" Margin="0,0,4,0" Padding="8">
+                        <StackPanel>
+                            <TextBlock Text="方案操作" FontSize="12" FontWeight="Bold" Foreground="{StaticResource PrimaryBrush}" Margin="0,0,0,8"/>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="合格率: " Foreground="{StaticResource TextSecondaryBrush}"/>
-                                <TextBlock x:Name="txtPassRate" Text="--" Foreground="{StaticResource TextPrimaryBrush}"/>
+                                <Button x:Name="btnSelectSol" Content="选择方案" Click="BtnSelectSol_Click"
+                                        Style="{StaticResource PrimaryButtonStyle}" Margin="0,0,4,0" Padding="8,4"/>
+                                <Button x:Name="btnLoadSol" Content="加载方案" Click="BtnLoadSol_Click"
+                                        Style="{StaticResource PrimaryButtonStyle}" Padding="8,4"/>
                             </StackPanel>
                         </StackPanel>
                     </Border>
 
-                    <!-- 操作日志 -->
-                    <TextBlock Text="操作日志" FontSize="14" FontWeight="Bold" Foreground="{StaticResource PrimaryBrush}" Margin="0,0,0,8"/>
-                    <Border Background="White" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" Padding="8" Height="120">
-                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
-                        <ListBox x:Name="lstLogs" Background="White" Foreground="{StaticResource TextPrimaryBrush}"
-                                 BorderThickness="0" FontFamily="Consolas" FontSize="11"/>
+                    <!-- 第二块：三期参数（不显示 BN/Mfg/EXP） -->
+                    <Border Grid.Column="1" Background="White" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" Margin="4,0,4,0" Padding="8">
+                        <StackPanel>
+                            <TextBlock Text="三期参数" FontSize="12" FontWeight="Bold" Foreground="{StaticResource PrimaryBrush}" Margin="0,0,0,8"/>
+                            <StackPanel Orientation="Horizontal">
+                                <Button x:Name="btnSaveSol" Content="三期ToVM" Click="BtnSaveSol_Click"
+                                        Style="{StaticResource PrimaryButtonStyle}" Margin="0,0,4,0" Padding="8,4"/>
+                                <Button x:Name="btnLoadFromVm" Content="三期FromVM" Click="BtnLoadFromVm_Click"
+                                        Style="{StaticResource PrimaryButtonStyle}" Padding="8,4"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- 第三块：工序选择 -->
+                    <Border Grid.Column="2" Background="White" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" Margin="4,0,0,0" Padding="8">
+                        <StackPanel>
+                            <TextBlock Text="工序选择" FontSize="12" FontWeight="Bold" Foreground="{StaticResource PrimaryBrush}" Margin="0,0,0,8"/>
+                            <ComboBox x:Name="cmbProcedure" Margin="0,0,0,8" SelectionChanged="CmbProcedure_SelectionChanged"/>
+                            <StackPanel Orientation="Horizontal">
+                                <Button x:Name="btnRunOnce" Content="单次运行" Click="BtnTaskRun_Click"
+                                        Style="{StaticResource PrimaryButtonStyle}" Margin="0,0,4,0" Padding="8,4"/>
+                                <Button x:Name="btnContiRun" Content="连续运行" Click="BtnTaskPause_Click"
+                                        Style="{StaticResource PrimaryButtonStyle}" Padding="8,4"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- Operation Logs (22%) -->
+            <Border Grid.Column="1" Margin="0,0,0,0" Background="{StaticResource CardBackgroundBrush}" Padding="8">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="操作日志" FontSize="12" FontWeight="Bold" Foreground="{StaticResource PrimaryBrush}" Margin="0,0,0,8"/>
+                    <Border Grid.Row="1" Background="White" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" Padding="4">
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                            <ListBox x:Name="lstLogs" Background="White" Foreground="{StaticResource TextPrimaryBrush}"
+                                     BorderThickness="0" FontFamily="Consolas" FontSize="10"/>
                         </ScrollViewer>
                     </Border>
-                </StackPanel>
-            </ScrollViewer>
-        </Border>
-
-        <!-- 底部：检测结果 -->
-        <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="5,0,5,5" Background="{StaticResource CardBackgroundBrush}" Padding="12">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="120"/>
-                </Grid.ColumnDefinitions>
-
-                <!-- 检测结果列表 -->
-                <Border Grid.Column="0" Background="White" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" Padding="8" Margin="0,0,12,0">
-                    <ListBox x:Name="lstDetectionLogs" Background="White" Foreground="{StaticResource TextPrimaryBrush}"
-                             BorderThickness="0" FontFamily="Consolas" FontSize="11"/>
-                </Border>
-
-                <!-- 当次结果 OK/NG 大字 -->
-                <Border Grid.Column="1" Background="White" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1">
-                    <Viewbox>
-                        <TextBlock x:Name="txtCurrentResult" Text="--" Foreground="{StaticResource TextPrimaryBrush}"
-                                   FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                    </Viewbox>
-                </Border>
-            </Grid>
-        </Border>
+                </Grid>
+            </Border>
+        </Grid>
     </Grid>
 </UserControl>

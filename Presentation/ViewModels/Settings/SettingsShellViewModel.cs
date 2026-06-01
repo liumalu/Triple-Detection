@@ -63,16 +63,16 @@ namespace TripleDetection.Presentation.ViewModels.Settings
             switch (category)
             {
                 case "Communication":
-                    CurrentView = new Views.Settings.CommunicationSettingsView(_commService);
+                    CurrentView = new Views.Settings.CommunicationSettingsView();
                     break;
                 case "VmSettings":
-                    CurrentView = new Views.Settings.VmSettingsView(_vmService);
+                    CurrentView = new Views.Settings.VmSettingsView();
                     break;
                 case "System":
-                    CurrentView = new Views.Settings.SystemSettingsView(_sysService);
+                    CurrentView = new Views.Settings.SystemSettingsView();
                     break;
                 case "DeviceControl":
-                    CurrentView = new Views.Settings.DeviceControlSettingsView(_deviceService);
+                    CurrentView = new Views.Settings.DeviceControlSettingsView();
                     break;
             }
         }

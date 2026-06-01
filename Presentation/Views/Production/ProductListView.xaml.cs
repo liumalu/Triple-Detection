@@ -19,7 +19,28 @@ namespace TripleDetection.Presentation.Views.Production
 
         private void BtnSearch_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.Search();
+            var vm = ViewModel;
+            var conditions = new System.Text.StringBuilder();
+            conditions.AppendLine("查询条件确认");
+            conditions.AppendLine("-------------");
+            if (!string.IsNullOrWhiteSpace(vm.QueryCode))
+                conditions.AppendLine($"产品编码: {vm.QueryCode}");
+            if (!string.IsNullOrWhiteSpace(vm.QueryName))
+                conditions.AppendLine($"产品名称: {vm.QueryName}");
+            if (vm.QueryStatus.HasValue)
+                conditions.AppendLine($"状态: {(vm.QueryStatus == 1 ? "启用" : "停用")}");
+            if (vm.QueryCreateAtFrom.HasValue)
+                conditions.AppendLine($"创建日期从: {vm.QueryCreateAtFrom:yyyy-MM-dd}");
+            if (vm.QueryCreateAtTo.HasValue)
+                conditions.AppendLine($"创建日期至: {vm.QueryCreateAtTo:yyyy-MM-dd}");
+            if (string.IsNullOrEmpty(conditions.ToString().Replace("查询条件确认", "").Replace("-------------", "").Trim()))
+                conditions.AppendLine("(无查询条件 - 查询全部)");
+
+            var result = MessageBox.Show(conditions.ToString(), "确认查询", MessageBoxButton.OKCancel, MessageBoxImage.Question);
+            if (result == MessageBoxResult.OK)
+            {
+                vm.Search();
+            }
         }
 
         private void BtnReset_Click(object sender, RoutedEventArgs e)

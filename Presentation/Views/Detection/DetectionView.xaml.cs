@@ -19,8 +19,9 @@ using TripleDetection.Infrastructure.Persistence;
 
 namespace TripleDetection.Presentation.Views.Detection
 {
-    public partial class DetectionView : UserControl
+    public partial class DetectionView : UserControl, IDisposable
     {
+        private bool _isDisposed = false;
         private readonly LoggingService _logService;
         private readonly MainViewModel _viewModel;
         private readonly VmIntegrationService _vmService;
@@ -56,6 +57,8 @@ namespace TripleDetection.Presentation.Views.Detection
 
             LoadTasks();
             SubscribeToLogs();
+
+            this.Unloaded += DetectionView_Unloaded;
 
             _logService.Log("检测页面已加载");
         }
@@ -99,13 +102,13 @@ namespace TripleDetection.Presentation.Views.Detection
             var productName = product?.Name ?? "--";
             var solFilePath = product?.SolFilePath ?? "--";
 
-            txtProduct.Text = $"产品: {productName}";
-            txtBatch.Text = $"批次: {_selectedTask.BatchNumber ?? "--"}";
-            txtProductionDate.Text = $"生产日期: {_selectedTask.ProductionDate:yyyy-MM-dd}";
+            txtProduct.Text = productName;
+            txtBatch.Text = _selectedTask.BatchNumber ?? "--";
+            txtProductionDate.Text = _selectedTask.ProductionDate.ToString("yyyy-MM-dd");
             txtExpirationDate.Text = _selectedTask.ExpirationDate.HasValue
-                ? $"有效期至: {_selectedTask.ExpirationDate.Value:yyyy-MM-dd}"
-                : "有效期至: --";
-            txtSolFilePath.Text = $"方案路径: {solFilePath}";
+                ? _selectedTask.ExpirationDate.Value.ToString("yyyy-MM-dd")
+                : "--";
+            txtSolFilePath.Text = string.IsNullOrEmpty(solFilePath) ? "--" : solFilePath;
 
             _logService.Log($"已选择任务: {_selectedTask.Name}");
         }
@@ -115,6 +118,14 @@ namespace TripleDetection.Presentation.Views.Detection
             Dispatcher.Invoke(() =>
             {
                 var status = result.IsOK ? "OK" : "NG";
+
+                // 更新本次结果图标
+                txtResultIcon.Text = status;
+                brsResultIcon.Color = result.IsOK
+                    ? System.Windows.Media.Color.FromRgb(0, 192, 0)
+                    : System.Windows.Media.Color.FromRgb(255, 0, 0);
+
+                // 更新结果文字
                 txtCurrentResult.Text = status;
                 txtCurrentResult.Foreground = result.IsOK
                     ? new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(0, 192, 0))
@@ -126,8 +137,9 @@ namespace TripleDetection.Presentation.Views.Detection
 
                 if (result.IsOK) _okCount++;
                 else _ngCount++;
-                txtOkCount.Text = $"OK: {_okCount}";
-                txtNgCount.Text = $"NG: {_ngCount}";
+                txtOkCount.Text = _okCount.ToString();
+                txtNgCount.Text = _ngCount.ToString();
+                txtTotalCount.Text = (_okCount + _ngCount).ToString();
 
                 var logEntry = $"[{DateTime.Now:HH:mm:ss}] {_selectedTask?.Name}: {status} | 批号={result.BatchNumber} | 生产日期={result.ProductionDate} | 有效期至={result.ExpirationDate} | 耗时={result.ElapsedMs}ms";
                 lstDetectionLogs.Items.Insert(0, logEntry);
@@ -138,15 +150,17 @@ namespace TripleDetection.Presentation.Views.Detection
 
         private void SubscribeToLogs()
         {
-            _logService.OnLogAdded += (s, entry) =>
+            _logService.OnLogAdded += OnLogAdded;
+        }
+
+        private void OnLogAdded(object? sender, LogEntry entry)
+        {
+            Dispatcher.Invoke(() =>
             {
-                Dispatcher.Invoke(() =>
-                {
-                    lstLogs.Items.Insert(0, $"[{DateTime.Now:HH:mm:ss}] {entry.Message}");
-                    if (lstLogs.Items.Count > 100)
-                        lstLogs.Items.RemoveAt(lstLogs.Items.Count - 1);
-                });
-            };
+                lstLogs.Items.Insert(0, $"[{DateTime.Now:HH:mm:ss}] {entry.Message}");
+                if (lstLogs.Items.Count > 100)
+                    lstLogs.Items.RemoveAt(lstLogs.Items.Count - 1);
+            });
         }
 
         private void InitVmRender()
@@ -211,7 +225,16 @@ namespace TripleDetection.Presentation.Views.Detection
                     _isSolutionLoad = false;
                 }
 
-                _vmService.LoadSolution(_selectedSolPath);
+                try
+                {
+                    _vmService.LoadSolution(_selectedSolPath);
+                }
+                catch (Exception loadEx)
+                {
+                    _logService.Log($"加载方案异常: {loadEx.GetType().Name} - {loadEx.Message}");
+                    MessageBox.Show($"加载方案异常: {loadEx.Message}\n\n方案路径: {_selectedSolPath}", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
                 _isSolutionLoad = true;
 
                 _logService.Log("加载方案成功!");
@@ -394,6 +417,45 @@ namespace TripleDetection.Presentation.Views.Detection
                 else
                     _logService.Log($"连续运行切换失败: {ex.Message}");
             }
+        }
+
+        private void DetectionView_Unloaded(object sender, RoutedEventArgs e)
+        {
+            if (_vmService != null && _vmService.IsContinuousRun)
+            {
+                _vmService.Stop();
+                _isContinuRun = false;
+                _logService.Log("[DetectionView] 连续检测已停止（切换视图）");
+            }
+        }
+
+        public void Dispose()
+        {
+            if (!_isDisposed)
+            {
+                CleanupFull();
+                _isDisposed = true;
+            }
+        }
+
+        private void CleanupFull()
+        {
+            if (_vmService != null)
+            {
+                _vmService.Stop();
+                _vmService.OnDetectionResult -= VmService_OnDetectionResult;
+            }
+
+            if (_vmRender != null)
+            {
+                VmRenderHost.Child = null;
+                _vmRender.Dispose();
+                _vmRender = null;
+            }
+
+            _logService.OnLogAdded -= OnLogAdded;
+
+            _logService.Log("DetectionView 资源已清理");
         }
     }
 }

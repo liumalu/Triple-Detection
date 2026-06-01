@@ -62,16 +62,16 @@ namespace TripleDetection.Presentation.Views
             switch (category)
             {
                 case "Communication":
-                    ContentArea.Content = new Settings.CommunicationSettingsView(_commService);
+                    ContentArea.Content = new Settings.CommunicationSettingsView();
                     break;
                 case "VmSettings":
-                    ContentArea.Content = new Settings.VmSettingsView(_vmService);
+                    ContentArea.Content = new Settings.VmSettingsView();
                     break;
                 case "System":
-                    ContentArea.Content = new Settings.SystemSettingsView(_sysService);
+                    ContentArea.Content = new Settings.SystemSettingsView();
                     break;
                 case "DeviceControl":
-                    ContentArea.Content = new Settings.DeviceControlSettingsView(_deviceService);
+                    ContentArea.Content = new Settings.DeviceControlSettingsView();
                     break;
             }
         }

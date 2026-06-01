@@ -37,13 +37,22 @@ namespace TripleDetection.Application.VmServices
 
         public void LoadSolution(string solPath)
         {
-            VmSolution.Load(solPath);
-            _isSolutionLoad = true;
-
-            ProcessInfoList processList = VmSolution.Instance.GetAllProcedureList();
-            if (processList.nNum > 0)
+            try
             {
-                _procedure = VmSolution.Instance[processList.astProcessInfo[0].strProcessName] as VmProcedure;
+                VmSolution.Load(solPath);
+                _isSolutionLoad = true;
+
+                ProcessInfoList processList = VmSolution.Instance.GetAllProcedureList();
+                if (processList.nNum > 0)
+                {
+                    _procedure = VmSolution.Instance[processList.astProcessInfo[0].strProcessName] as VmProcedure;
+                }
+            }
+            catch (Exception ex)
+            {
+                _isSolutionLoad = false;
+                _logService?.Log($"[VmIntegrationService] 加载方案异常: {ex.GetType().Name} - {ex.Message}");
+                throw;
             }
         }
 
@@ -59,6 +68,33 @@ namespace TripleDetection.Application.VmServices
             {
                 _procedure.ContinuousRunEnable = false;
             }
+        }
+
+        public void StopContinuousRun()
+        {
+            if (_procedure != null)
+            {
+                _procedure.ContinuousRunEnable = false;
+            }
+            _logService?.Log("[VmIntegrationService] 连续运行已停止");
+        }
+
+        public void Cleanup()
+        {
+            StopContinuousRun();
+
+            try
+            {
+                VmSolution.Instance.CloseSolution();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"VmSolution.Close 异常: {ex.Message}");
+            }
+
+            VmSolution.OnWorkStatusEvent -= VmSolution_OnWorkStatusEvent;
+
+            _logService?.Log("[VmIntegrationService] VM 资源已清理");
         }
 
         public bool IsContinuousRun => _procedure?.ContinuousRunEnable ?? false;
@@ -105,19 +141,63 @@ namespace TripleDetection.Application.VmServices
             return names;
         }
 
+        private const string DefaultGlobalVariableToolName = "全局变量1";
+
         public void SetGlobalVariableString(string name, string value)
         {
-            if (_procedure != null)
+            if (_procedure == null)
             {
-                // var gvTool = _procedure.Modules["GlobalVariable"] as GlobalVariableModuleTool;
-                var gvTool =  VmSolution.Instance["全局变量1"] as GlobalVariableModuleTool;
-                if (gvTool != null)
+                _logService?.Log($"[VM GlobalVariable] SetGlobalVar(\"{name}\"): _procedure is null, skip");
+                return;
+            }
+
+            GlobalVariableModuleTool? gvTool = GetGlobalVariableTool();
+            if (gvTool == null)
+            {
+                _logService?.Log($"[VM GlobalVariable] SetGlobalVar(\"{name}\"): gvTool is null, skip");
+                return;
+            }
+
+            string defaultValue = gvTool.GetGlobalVar(name) ?? "null";
+            gvTool.SetGlobalVar(name, value);
+            _logService?.Log($"[VM GlobalVariable] {name}: '{defaultValue}' -> '{value}'");
+        }
+
+        private static readonly string[] CommonGlobalVariableNames = new[]
+        {
+            "全局变量1",
+            "全局变量",
+            "GlobalVariable",
+            "全局变量模块"
+        };
+
+        private GlobalVariableModuleTool? GetGlobalVariableTool()
+        {
+            if (_procedure == null)
+                return null;
+
+            // 优先从当前流程的 Modules 中通过名称匹配查找（兼容不同命名）
+            foreach (var name in CommonGlobalVariableNames)
+            {
+                if (_procedure.Modules[name] is GlobalVariableModuleTool gv)
                 {
-                    string defaultValue = gvTool.GetGlobalVar(name) ?? "null";
-                    gvTool.SetGlobalVar(name, value);
-                    _logService?.Log($"[VM GlobalVariable] {name}: '{defaultValue}' -> '{value}'");
+                    _logService?.Log($"[VM GlobalVariable] Found via procedure.Modules[\"{name}\"]");
+                    return gv;
                 }
             }
+
+            // 备选：从 VmSolution.Instance 用常见名称列表逐一查找
+            foreach (var name in CommonGlobalVariableNames)
+            {
+                if (VmSolution.Instance[name] is GlobalVariableModuleTool gv)
+                {
+                    _logService?.Log($"[VM GlobalVariable] Found via VmSolution.Instance[\"{name}\"]");
+                    return gv;
+                }
+            }
+
+            _logService?.Log($"[VM GlobalVariable] No GlobalVariableModuleTool found, tried: {string.Join(", ", CommonGlobalVariableNames)}");
+            return null;
         }
 
         private Stopwatch _stopwatch = new Stopwatch();

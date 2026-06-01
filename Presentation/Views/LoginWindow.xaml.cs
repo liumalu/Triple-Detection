@@ -25,6 +25,11 @@ namespace TripleDetection.Presentation.Views
             LoadLogo();
             LoadSystemName();
 
+            // Pre-fill admin credentials
+            UsernameTextBox.Text = "admin";
+            PasswordBox.Password = "admin123";
+            _viewModel.Password = "admin123";
+
             UsernameTextBox.Focus();
         }
 

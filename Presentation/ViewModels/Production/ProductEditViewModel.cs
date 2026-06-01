@@ -117,15 +117,8 @@ namespace TripleDetection.Presentation.ViewModels.Production
 
         public void Save()
         {
-            System.Diagnostics.Debug.WriteLine($"[Save] 节点1-开始校验 | Code={Code}, Name={Name}, SolFilePath={SolFilePath}, ValidPeriod={ValidPeriod}");
             if (!Validate())
-            {
-                System.Diagnostics.Debug.WriteLine($"[Save] 节点1-校验失败 | ErrorMessage={ErrorMessage}");
                 return;
-            }
-            System.Diagnostics.Debug.WriteLine($"[Save] 节点1-校验通过");
-
-            System.Diagnostics.Debug.WriteLine($"[Save] 节点2-UI数据 | Code={Code}, Name={Name}, Description={Description}, SolFilePath={SolFilePath}, Status={Status}");
 
             var product = new Product
             {
@@ -137,28 +130,34 @@ namespace TripleDetection.Presentation.ViewModels.Production
                 SolFilePath = SolFilePath,
                 Status = Status
             };
-            System.Diagnostics.Debug.WriteLine($"[Save] 节点3-构建Product对象 | Code={product.Code}, Name={product.Name}, SolFilePath={product.SolFilePath}");
 
-            System.Diagnostics.Debug.WriteLine($"[Save] 节点4-开始数据库存储...");
             Task.Run(() =>
             {
-                System.Diagnostics.Debug.WriteLine($"[Save] 后台线程开始...");
-                if (IsEditMode)
+                try
                 {
-                    product.Id = ProductId;
-                    _productService.Update(product, SessionManager.CurrentUserName ?? "Unknown", SessionManager.CurrentUserId);
-                }
-                else
-                {
-                    _productService.Create(product, SessionManager.CurrentUserName ?? "Unknown", SessionManager.CurrentUserId);
-                }
-                System.Diagnostics.Debug.WriteLine($"[Save] 后台线程完成 | ProductId={product.Id}");
+                    if (IsEditMode)
+                    {
+                        product.Id = ProductId;
+                        _productService.Update(product, SessionManager.CurrentUserName ?? "Unknown", SessionManager.CurrentUserId);
+                    }
+                    else
+                    {
+                        _productService.Create(product, SessionManager.CurrentUserName ?? "Unknown", SessionManager.CurrentUserId);
+                    }
 
-                System.Windows.Application.Current.Dispatcher.Invoke(() =>
+                    System.Windows.Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        RequestClose?.Invoke(this, true);
+                    });
+                }
+                catch (Exception ex)
                 {
-                    System.Diagnostics.Debug.WriteLine($"[Save] UI线程回调完成");
-                    RequestClose?.Invoke(this, true);
-                });
+                    System.Diagnostics.Debug.WriteLine($"[Save] 保存失败: {ex.Message}");
+                    System.Windows.Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        ErrorMessage = "保存失败: " + ex.Message;
+                    });
+                }
             });
         }
 
