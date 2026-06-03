@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Triple-Detection is an Apache 2.0 licensed visual inspection system built with WPF + VisionMaster SDK, organized under a **DDD four-layer architecture** within a single .NET 8 project.
+Triple-Detection is an Apache 2.0 licensed visual inspection system built with WPF + VisionMaster SDK, organized under a **DDD four-layer architecture** within a single **.NET Framework 4.8** project.
 
 ## Architecture
 
@@ -21,8 +21,9 @@ TripleDetection/
 │   └── SettingsServices/     ← VmSettingsService, CommunicationSettingsService, SystemSettingsService, DeviceControlSettingsService
 ├── Infrastructure/            # 基础设施层 — Data access (implements Domain repository interfaces)
 │   ├── Persistence/          ← TripleDetectionDbContext, SqliteUnitOfWork, DatabaseInitializer, Connection factories
-│   ├── Persistence/Configurations/  ← EF Core Fluent API entity configurations
+│   ├── Persistence/Configurations/  ← EF Fluent API entity configurations
 │   ├── Repositories/         ← SqliteRepository<T>, AuditLogRepository, DetectionRecordRepository
+│   ├── IO/                   ← ModbusTcpIOService (IO 模块 Modbus TCP 通信)
 │   └── Exceptions/           ← DbException, ValidationException
 └── Presentation/             # 表现层 — WPF UI with Prism.DryIoc DI
     ├── ViewModels/           ← LoginViewModel, MainViewModel, Auth/, Production/, Settings/
@@ -46,19 +47,20 @@ Infrastructure implements Domain repository interfaces, referenced at runtime vi
 
 ## Language Version Constraint
 
-**C# 12 is required.** All `.csproj` files must specify:
+**C# 7.3 is required** (matching .NET Framework 4.8 / VS 2022). All `.csproj` files must specify:
 ```xml
-<LangVersion>12.0</LangVersion>
+<LangVersion>7.3</LangVersion>
 ```
 
-Do NOT use C# 13+ features (e.g., alias any-type with `using` statements,Regex#). The project targets .NET 8.
+Do NOT use C# 8+ features (e.g., static interface members, records, init-only setters). The project targets .NET Framework 4.8.
 
 ## Tech Stack
 
-- **.NET 8** (`net8.0-windows`, x64)
+- **.NET Framework 4.8** (`net48`, x64)
 - **WPF** — Presentation layer UI framework
-- **Prism.DryIoc 9.0.537** — MVVM, DI container, navigation, PubSubEvents
-- **Entity Framework Core 8.0.11** (SQLite provider) — DbContext + Fluent API
+- **Prism.DryIoc 8.1.97** — MVVM, DI container, navigation, PubSubEvents
+- **Entity Framework 6.4.4** (SQLite provider) — DbContext + Fluent API
+- **NModbus 2.1.0** — Modbus TCP IO module communication
 - **Newtonsoft.Json 13.0.3** — JSON serialization for settings
 - **VisionMaster SDK v4.2.0** — Machine vision platform SDK
 
@@ -73,7 +75,7 @@ Do NOT use C# 13+ features (e.g., alias any-type with `using` statements,Regex#)
 | Task service | `Application/Services/TaskService.cs` | Task workflow (Pending→Approved→Running→Completed) |
 | Auth | `Presentation/ViewModels/LoginViewModel.cs` | User authentication |
 | Audit log | `Application/Services/AuditLogService.cs` | Operation audit logging |
-| DbContext | `Infrastructure/Persistence/TripleDetectionDbContext.cs` | EF Core 8 SQLite context |
+| DbContext | `Infrastructure/Persistence/TripleDetectionDbContext.cs` | EF 6 SQLite context (coexists with raw ADO) |
 | Repositories | `Infrastructure/Repositories/SqliteRepository.cs` | Raw ADO.NET repository (actively used) |
 
 ## VisionMaster SDK
@@ -85,7 +87,7 @@ Do NOT use C# 13+ features (e.g., alias any-type with `using` statements,Regex#)
 
 ## Database
 
-- **Engine:** SQLite (via EF Core 8 + raw ADO.NET)
+- **Engine:** SQLite (via System.Data.SQLite 1.0.118 + raw ADO.NET)
 - **Location:** `Config/tripledetection.db`
 - **Tables:** Users, Products, Tasks, DetectionRecords, AuditLogs, SystemConfigs
 - **Pattern:** Soft delete (`IsDeleted`) on all entities
@@ -109,7 +111,7 @@ Do NOT use C# 13+ features (e.g., alias any-type with `using` statements,Regex#)
    - Read `GetOutputString()` — comma-separated: `IsOK, BatchNumber, ProductionDate, ExpirationDate`
    - Update UI with OK/NG/pass rate
    - Save `DetectionRecord` asynchronously
-   - Publish `DetectionResultEvent` via Prism `IEventAggregator`
+   - Publish `DetectionResultEvent` via WeakReferenceMessenger
 
 ### Task Workflow
 ```
@@ -134,8 +136,9 @@ Note: No FK constraints at DB level — ProductId/TaskId columns exist but no EF
 
 ## Important Notes
 
-1. **Dual repository layer:** EF Core `TripleDetectionDbContext` coexists with raw ADO `SqliteRepository<T>`. The raw ADO repository has specialized query methods and is the actively used implementation for paged queries and exports.
+1. **Dual repository layer:** EF `TripleDetectionDbContext` coexists with raw ADO `SqliteRepository<T>`. The raw ADO repository has specialized query methods and is the actively used implementation for paged queries and exports.
 2. **No IUnitOfWork on DbContext:** `SqliteUnitOfWork` implements `IUnitOfWork`, not `TripleDetectionDbContext`.
 3. **Soft delete everywhere:** All `Delete()` calls set `IsDeleted=true`, filtered in all queries.
-4. **No navigation properties:** Entities reference each other by ID only — no EF Core navigation properties configured.
+4. **No navigation properties:** Entities reference each other by ID only — no EF navigation properties configured.
 5. **VisionMaster SDK loaded at runtime:** Assembly resolver handles `AppDomain.CurrentDomain_AssemblyResolve` for VM DLLs.
+6. **IO integration:** `IIODeviceService` (Domain) → `ModbusTcpIOService` (Infrastructure) → `RejectService` (Application). IO connection is established when DetectionView loads.
