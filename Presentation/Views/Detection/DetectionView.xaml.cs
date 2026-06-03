@@ -16,6 +16,8 @@ using TaskEntity = TripleDetection.Domain.Entities.ProdTask;
 using GlobalVariableModuleCs;
 using TripleDetection.Infrastructure.Repositories;
 using TripleDetection.Infrastructure.Persistence;
+using TripleDetection.Infrastructure.IO;
+using IRejectService = TripleDetection.Application.Services.IRejectService;
 
 namespace TripleDetection.Presentation.Views.Detection
 {
@@ -27,15 +29,18 @@ namespace TripleDetection.Presentation.Views.Detection
         private readonly VmIntegrationService _vmService;
         private readonly ITaskService _taskService;
         private readonly IProductService _productService;
-        private string? _selectedSolPath;
+        private string _selectedSolPath;
         private bool _isSolutionLoad = false;
         private bool _isContinuRun = false;
-        private VmProcedure? _procedure;
-        private VMControls.Winform.Release.VmRenderControl? _vmRender;
+        private VmProcedure _procedure;
+        private VMControls.Winform.Release.VmRenderControl _vmRender;
         private List<TaskEntity> _taskList = new List<TaskEntity>();
-        private TaskEntity? _selectedTask;
+        private TaskEntity _selectedTask;
         private int _okCount = 0;
         private int _ngCount = 0;
+        private readonly ModbusTcpIOService _ioService;
+        private readonly DeviceControlSettings _deviceSettings;
+        private readonly IRejectService _rejectService;
 
         public DetectionView(
             MainViewModel viewModel,
@@ -43,7 +48,10 @@ namespace TripleDetection.Presentation.Views.Detection
             VmIntegrationService vmService,
             ITaskService taskService,
             IProductService productService,
-            IDetectionRecordService detectionRecordService)
+            IDetectionRecordService detectionRecordService,
+            ModbusTcpIOService ioService,
+            DeviceControlSettings deviceSettings,
+            IRejectService rejectService)
         {
             InitializeComponent();
             DataContext = viewModel;
@@ -52,6 +60,9 @@ namespace TripleDetection.Presentation.Views.Detection
             _vmService = vmService;
             _taskService = taskService;
             _productService = productService;
+            _ioService = ioService;
+            _deviceSettings = deviceSettings;
+            _rejectService = rejectService;
 
             _vmService.OnDetectionResult += VmService_OnDetectionResult;
 
@@ -61,9 +72,34 @@ namespace TripleDetection.Presentation.Views.Detection
             this.Unloaded += DetectionView_Unloaded;
 
             _logService.Log("检测页面已加载");
+
+            InitIOConnection();
         }
 
-        private void VmService_OnDetectionResult(object? sender, DetectionResult result)
+        private async void InitIOConnection()
+        {
+            try
+            {
+                await _ioService.ConnectAsync(
+                    _deviceSettings.ModbusTcpIp,
+                    _deviceSettings.ModbusTcpPort);
+                _logService.Log($"[DetectionView] IO 模块已连接 {_deviceSettings.ModbusTcpIp}:{_deviceSettings.ModbusTcpPort}");
+            }
+            catch (Exception ex)
+            {
+                _logService.Log($"[DetectionView] IO 模块连接失败: {ex.Message}");
+                if (_deviceSettings.RequireIOConnectionToStartTask)
+                {
+                    System.Windows.MessageBox.Show(
+                        $"IO 模块连接失败（{_deviceSettings.ModbusTcpIp}:{_deviceSettings.ModbusTcpPort}），检测将无法触发剔除。",
+                        "IO 连接异常",
+                        System.Windows.MessageBoxButton.OK,
+                        System.Windows.MessageBoxImage.Warning);
+                }
+            }
+        }
+
+        private void VmService_OnDetectionResult(object sender, DetectionResult result)
         {
             Dispatcher.Invoke(() =>
             {
@@ -153,7 +189,7 @@ namespace TripleDetection.Presentation.Views.Detection
             _logService.OnLogAdded += OnLogAdded;
         }
 
-        private void OnLogAdded(object? sender, LogEntry entry)
+        private void OnLogAdded(object sender, LogEntry entry)
         {
             Dispatcher.Invoke(() =>
             {
@@ -421,6 +457,9 @@ namespace TripleDetection.Presentation.Views.Detection
 
         private void DetectionView_Unloaded(object sender, RoutedEventArgs e)
         {
+            _ioService.Disconnect();
+            _logService.Log("[DetectionView] IO 模块已断开");
+
             if (_vmService != null && _vmService.IsContinuousRun)
             {
                 _vmService.Stop();
