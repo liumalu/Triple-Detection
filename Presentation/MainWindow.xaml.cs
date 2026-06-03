@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
-using Microsoft.Extensions.DependencyInjection;
+using Prism.Ioc;
 using TripleDetection.Application.Services;
 using TripleDetection.Application.VmServices;
+using TripleDetection.Domain.Repositories;
 using TripleDetection.Presentation.ViewModels.Detection;
 using TripleDetection.Presentation.Navigation;
 using MessageBox = System.Windows.MessageBox;
@@ -17,7 +18,10 @@ namespace TripleDetection
         private readonly MainViewModel _viewModel;
         private readonly NavigationService _navigationService;
         private readonly LoggingService _logService;
+        private readonly IContainerProvider _container;
         private readonly DispatcherTimer _clockTimer;
+        private DispatcherTimer _ioStatusTimer;
+        private IIODeviceService _ioService;
 
         private bool _isNavExpanded = true;
         private readonly Dictionary<string, Button> _navButtons = new Dictionary<string, Button>();
@@ -26,7 +30,8 @@ namespace TripleDetection
         public MainWindow(
             MainViewModel viewModel,
             NavigationService navigationService,
-            LoggingService logService)
+            LoggingService logService,
+            IContainerProvider container)
         {
             InitializeComponent();
 
@@ -34,6 +39,7 @@ namespace TripleDetection
             _viewModel = viewModel;
             _navigationService = navigationService;
             _logService = logService;
+            _container = container;
 
             // Initialize navigation buttons
             _navButtons["Dashboard"] = btnNavDashboard;
@@ -51,6 +57,12 @@ namespace TripleDetection
             };
             _clockTimer.Tick += (s, e) => txtTime.Text = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             _clockTimer.Start();
+
+            // Setup IO status timer
+            _ioService = (IIODeviceService)Prism.Ioc.IocLocator.Current.GetService(typeof(IIODeviceService));
+            _ioStatusTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(2) };
+            _ioStatusTimer.Tick += (s, args) => UpdateIOStatus();
+            _ioStatusTimer.Start();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -73,9 +85,19 @@ namespace TripleDetection
                 $"\n[{DateTime.Now:HH:mm:ss}] NavigateTo(Dashboard) completed");
         }
 
+        private void UpdateIOStatus()
+        {
+            if (_ioService == null) return;
+            txtIOStatus.Text = _ioService.IsConnected ? "IO: 已连接" : "IO: 未连接";
+            txtIOStatus.Foreground = _ioService.IsConnected
+                ? new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(72, 187, 120))
+                : new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(229, 62, 62));
+        }
+
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             _clockTimer.Stop();
+            _ioStatusTimer?.Stop();
 
             var result = MessageBox.Show("确认退出系统？", "确认",
                 MessageBoxButton.YesNo, MessageBoxImage.Question);
@@ -93,8 +115,7 @@ namespace TripleDetection
             }
             _openViews.Clear();
 
-            var vmService = TripleDetection.Presentation.App.Services.GetRequiredService<VmIntegrationService>();
-            vmService.Cleanup();
+            _logService.Log("User logged out");
 
             _logService.Log("User logged out");
         }
@@ -129,19 +150,35 @@ namespace TripleDetection
                 return;
             }
 
-            // Create new view using DI
-            var services = TripleDetection.Presentation.App.Services;
-            UserControl view = pageName switch
+// Create new view using DI
+            UserControl view;
+            switch (pageName)
             {
-                "Dashboard" => services.GetRequiredService<TripleDetection.Presentation.Views.App.DashboardView>(),
-                "Detection" => services.GetRequiredService<TripleDetection.Presentation.Views.Detection.DetectionView>(),
-                "Products" => services.GetRequiredService<TripleDetection.Presentation.Views.Production.ProductListView>(),
-                "Tasks" => services.GetRequiredService<TripleDetection.Presentation.Views.Production.TaskListView>(),
-                "Audit" => services.GetRequiredService<TripleDetection.Presentation.Views.Audit.AuditLogView>(),
-                "Users" => services.GetRequiredService<TripleDetection.Presentation.Views.Auth.UserManagementView>(),
-                "Settings" => services.GetRequiredService<TripleDetection.Presentation.Views.SettingsView>(),
-                _ => services.GetRequiredService<TripleDetection.Presentation.Views.App.DashboardView>()
-            };
+                case "Dashboard":
+                    view = _container.Resolve<TripleDetection.Presentation.Views.App.DashboardView>();
+                    break;
+                case "Detection":
+                    view = _container.Resolve<TripleDetection.Presentation.Views.Detection.DetectionView>();
+                    break;
+                case "Products":
+                    view = _container.Resolve<TripleDetection.Presentation.Views.Production.ProductListView>();
+                    break;
+                case "Tasks":
+                    view = _container.Resolve<TripleDetection.Presentation.Views.Production.TaskListView>();
+                    break;
+                case "Audit":
+                    view = _container.Resolve<TripleDetection.Presentation.Views.Audit.AuditLogView>();
+                    break;
+                case "Users":
+                    view = _container.Resolve<TripleDetection.Presentation.Views.Auth.UserManagementView>();
+                    break;
+                case "Settings":
+                    view = _container.Resolve<TripleDetection.Presentation.Views.SettingsView>();
+                    break;
+                default:
+                    view = _container.Resolve<TripleDetection.Presentation.Views.App.DashboardView>();
+                    break;
+            }
 
             _openViews[pageName] = view;
             MainContentRegion.Content = view;

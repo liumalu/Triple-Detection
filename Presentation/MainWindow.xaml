@@ -111,6 +111,8 @@
                            VerticalAlignment="Center" Margin="16,0" FontSize="11"/>
                 <TextBlock Grid.Column="1" x:Name="txtTime" Text="" Foreground="#A0AEC0"
                            VerticalAlignment="Center" Margin="16,0" FontSize="11"/>
+                <TextBlock x:Name="txtIOStatus" Text="IO: 未连接" Foreground="#A0AEC0"
+                           VerticalAlignment="Center" Margin="16,0,0,0" FontSize="11"/>
             </Grid>
         </Border>
     </Grid>
