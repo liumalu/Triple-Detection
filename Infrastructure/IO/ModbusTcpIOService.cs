@@ -47,14 +47,16 @@ namespace TripleDetection.Infrastructure.IO
                 throw new InvalidOperationException("ModbusTCP 未连接，请先调用 ConnectAsync");
 
             const int maxRetries = 3;
-            Exception? lastEx = null;
+            Exception lastEx = null;
 
             for (int attempt = 1; attempt <= maxRetries; attempt++)
             {
                 try
                 {
-                    // NModbus 地址从 0 开始，内部自动 -1
-                    await _master.WriteSingleCoilAsync((ushort)(coilAddress - 1), value, ct);
+                    // NModbus4: WriteSingleCoilAsync(byte slaveAddress, ushort coilAddress, ushort coilValue)
+                    // Modbus convention: 0xFF00 = ON, 0x0000 = OFF
+                    // Try bool parameter
+                    await _master.WriteSingleCoilAsync(1, (ushort)(coilAddress - 1), value);
                     return;
                 }
                 catch (Exception ex)
@@ -71,7 +73,7 @@ namespace TripleDetection.Infrastructure.IO
             }
 
             _logService.Log($"[ModbusTCP] WriteCoil 最终失败（已重试 {maxRetries} 次）: {lastEx?.Message}");
-            throw lastEx!;
+            throw lastEx;
         }
 
         public async Task<bool> ReadDiscreteInputAsync(int inputAddress, CancellationToken ct = default)
@@ -80,13 +82,13 @@ namespace TripleDetection.Infrastructure.IO
                 throw new InvalidOperationException("ModbusTCP 未连接");
 
             const int maxRetries = 3;
-            Exception? lastEx = null;
+            Exception lastEx = null;
 
             for (int attempt = 1; attempt <= maxRetries; attempt++)
             {
                 try
                 {
-                    bool[] result = await _master.ReadInputsAsync((ushort)(inputAddress - 1), 1, ct);
+                    bool[] result = await _master.ReadInputsAsync(1, (ushort)(inputAddress - 1), 1);
                     return result[0];
                 }
                 catch (Exception ex)
@@ -103,7 +105,7 @@ namespace TripleDetection.Infrastructure.IO
             }
 
             _logService.Log($"[ModbusTCP] ReadInput 最终失败（已重试 {maxRetries} 次）: {lastEx?.Message}");
-            throw lastEx!;
+            throw lastEx;
         }
 
         public async Task<bool[]> ReadDiscreteInputsAsync(int startAddress, int count, CancellationToken ct = default)
@@ -112,13 +114,13 @@ namespace TripleDetection.Infrastructure.IO
                 throw new InvalidOperationException("ModbusTCP 未连接");
 
             const int maxRetries = 3;
-            Exception? lastEx = null;
+            Exception lastEx = null;
 
             for (int attempt = 1; attempt <= maxRetries; attempt++)
             {
                 try
                 {
-                    return await _master.ReadInputsAsync((ushort)(startAddress - 1), (ushort)count, ct);
+                    return await _master.ReadInputsAsync(1, (ushort)(startAddress - 1), (ushort)count);
                 }
                 catch (Exception ex)
                 {
@@ -134,7 +136,7 @@ namespace TripleDetection.Infrastructure.IO
             }
 
             _logService.Log($"[ModbusTCP] ReadInputs 最终失败（已重试 {maxRetries} 次）: {lastEx?.Message}");
-            throw lastEx!;
+            throw lastEx;
         }
 
         public void Disconnect()

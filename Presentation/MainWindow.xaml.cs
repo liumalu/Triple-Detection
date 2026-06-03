@@ -59,7 +59,7 @@ namespace TripleDetection
             _clockTimer.Start();
 
             // Setup IO status timer
-            _ioService = (IIODeviceService)Prism.Ioc.IocLocator.Current.GetService(typeof(IIODeviceService));
+            _ioService = _container.Resolve<IIODeviceService>();
             _ioStatusTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(2) };
             _ioStatusTimer.Tick += (s, args) => UpdateIOStatus();
             _ioStatusTimer.Start();

@@ -1,8 +1,11 @@
 using System;
 using System.IO;
-using Microsoft.Data.Sqlite;
+using System.Data.SQLite;
+using System.Security.Cryptography;
+using System.Text;
 
-namespace TripleDetection.Infrastructure.Persistence;
+namespace TripleDetection.Infrastructure.Persistence
+{
 
 public static class DatabaseInitializer
 {
@@ -24,10 +27,12 @@ public static class DatabaseInitializer
     {
         var dbFilePath = DbPath;
         if (File.Exists(dbFilePath)) return;
-        using var conn = new SqliteConnection($"Data Source={dbFilePath}");
-        conn.Open();
-        using var cmd = conn.CreateCommand();
-        cmd.CommandText = @"
+        using (var conn = new SQLiteConnection($"Data Source={dbFilePath}"))
+        {
+            conn.Open();
+            using (var cmd = conn.CreateCommand())
+            {
+                cmd.CommandText = @"
 CREATE TABLE IF NOT EXISTS Products (
     Id INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT NOT NULL, Description TEXT,
     Code TEXT, SolFilePath TEXT, ValidType INTEGER, ValidPeriod INTEGER, Status INTEGER,
@@ -68,32 +73,72 @@ CREATE TABLE IF NOT EXISTS AuditLogs (
     Details TEXT, IpAddress TEXT,
     IsDeleted INTEGER NOT NULL DEFAULT 0, CreateAt TEXT NOT NULL, UpdateAt TEXT NOT NULL,
     CreateBy TEXT, UpdateBy TEXT
-);";
-        cmd.ExecuteNonQuery();
+);
+CREATE INDEX IF NOT EXISTS idx_users_deleted ON Users(IsDeleted);
+CREATE INDEX IF NOT EXISTS idx_tasks_status ON ProdTasks(Status);
+CREATE INDEX IF NOT EXISTS idx_tasks_productid ON ProdTasks(ProductId);
+CREATE INDEX IF NOT EXISTS idx_tasks_deleted ON ProdTasks(IsDeleted);
+CREATE INDEX IF NOT EXISTS idx_auditlogs_userid ON AuditLogs(UserId);
+CREATE INDEX IF NOT EXISTS idx_auditlogs_deleted ON AuditLogs(IsDeleted);
+CREATE INDEX IF NOT EXISTS idx_detectionrecords_taskid ON DetectionRecords(TaskId);
+CREATE INDEX IF NOT EXISTS idx_detectionrecords_productid ON DetectionRecords(ProductId);
+CREATE INDEX IF NOT EXISTS idx_detectionrecords_deleted ON DetectionRecords(IsDeleted);
+CREATE INDEX IF NOT EXISTS idx_products_code ON Products(Code);
+CREATE INDEX IF NOT EXISTS idx_products_deleted ON Products(IsDeleted);
+";
+                cmd.ExecuteNonQuery();
+            }
+        }
     }
 
     public static void SeedInitialData()
     {
-        using var conn = new SqliteConnection($"Data Source={DbPath}");
-        conn.Open();
-        using var cmd = conn.CreateCommand();
-        cmd.CommandText = "SELECT COUNT(*) FROM Users";
-        var count = Convert.ToInt64(cmd.ExecuteScalar());
-        if (count > 0) return;
+        using (var conn = new SQLiteConnection($"Data Source={DbPath}"))
+        {
+            conn.Open();
+            using (var cmd = conn.CreateCommand())
+            {
+                cmd.CommandText = "SELECT COUNT(*) FROM Users";
+                var count = Convert.ToInt64(cmd.ExecuteScalar());
+                if (count > 0) return;
 
-        var now = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss");
-        cmd.CommandText = $@"
-INSERT INTO Users (Username, RealName, Password, Role, IsEnabled, IsDeleted, CreateAt, UpdateAt)
-VALUES ('admin', 'Administrator', 'admin123', 'Admin', 1, 0, '{now}', '{now}');
-INSERT INTO Products (Name, Description, Status, IsDeleted, CreateAt, UpdateAt)
-VALUES ('OCR检测产品A', '用于OCR文字识别检测', 1, 0, '{now}', '{now}'),
-('缺陷检测产品B', '用于表面缺陷检测', 1, 0, '{now}', '{now}'),
-('尺寸测量产品C', '用于尺寸测量', 1, 0, '{now}', '{now}');
-INSERT INTO ProdTasks (Name, Status, IsDeleted, CreateAt, UpdateAt)
-VALUES ('OCR检测任务-2025-05-01', 1, 0, '{now}', '{now}'),
-('缺陷检测任务-2025-05-02', 1, 0, '{now}', '{now}'),
-('尺寸测量任务-2025-05-03', 1, 0, '{now}', '{now}'),
-('备料任务-待审核', 0, 0, '{now}', '{now}');";
-        cmd.ExecuteNonQuery();
+                var now = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss");
+
+                // Generate password hash for admin (salt: TriD4dminS4lt==, password: admin123)
+                var salt = "TriD4dminS4lt==";
+                var passwordHash = ComputeSha256Hash(salt + "admin123");
+
+                // Insert admin user with hashed password
+                cmd.CommandText = $@"
+INSERT INTO Users (Username, RealName, Password, PasswordSalt, PasswordHash, Role, IsEnabled, IsDeleted, CreateAt, UpdateAt)
+VALUES ('admin', 'Administrator', '', '{salt}', '{passwordHash}', 'Admin', 1, 0, '{now}', '{now}');
+INSERT INTO Products (Name, Description, Code, Status, IsDeleted, CreateAt, UpdateAt)
+VALUES
+('OCR检测产品A', '用于OCR文字识别检测', 'OCR-2025-001', 1, 0, '{now}', '{now}'),
+('缺陷检测产品B', '用于表面缺陷检测', 'DEF-2025-001', 1, 0, '{now}', '{now}'),
+('尺寸测量产品C', '用于尺寸测量', 'DIM-2025-001', 1, 0, '{now}', '{now}');
+INSERT INTO ProdTasks (Name, ProductId, ProductName, Status, IsDeleted, CreateAt, UpdateAt)
+VALUES
+('OCR检测任务-2025-05-01', 1, 'OCR检测产品A', 1, 0, '{now}', '{now}'),
+('缺陷检测任务-2025-05-02', 2, '缺陷检测产品B', 1, 0, '{now}', '{now}'),
+('尺寸测量任务-2025-05-03', 3, '尺寸测量产品C', 1, 0, '{now}', '{now}'),
+('备料任务-待审核', 1, 'OCR检测产品A', 0, 0, '{now}', '{now}'),
+('质检任务-执行中', 2, '缺陷检测产品B', 2, 0, '{now}', '{now}'),
+('入库任务-已完成', 3, '尺寸测量产品C', 3, 0, '{now}', '{now}');
+";
+                cmd.ExecuteNonQuery();
+            }
+        }
     }
+
+    private static string ComputeSha256Hash(string input)
+    {
+        using (var sha256 = SHA256.Create())
+        {
+            var bytes = Encoding.UTF8.GetBytes(input);
+            var hash = sha256.ComputeHash(bytes);
+            return Convert.ToBase64String(hash);
+        }
+    }
+}
 }

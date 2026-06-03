@@ -222,7 +222,7 @@ namespace TripleDetection.Presentation
                 // 建立 RejectService 对 VmIntegrationService 的事件订阅
                 var vmService = Container.Resolve<VmIntegrationService>();
                 var rejectService = Container.Resolve<IRejectService>();
-                vmService.OnDetectionResult += rejectService.OnDetectionResultReceived;
+                vmService.OnDetectionResult += (sender, detectionResult) => rejectService.OnDetectionResultReceived(detectionResult);
 
                 File.AppendAllText(Path.Combine(logDir, "startup.log"), $"\n[{DateTime.Now:HH:mm:ss}] MainWindow created from DI");
 
