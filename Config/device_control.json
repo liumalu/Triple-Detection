@@ -1,0 +1,15 @@
+{
+  "LightSourceType": "LED",
+  "CaptureDelayMs": 100,
+  "CaptureFeedbackTimeoutMs": 5000,
+  "RejectDelayMs": 50,
+  "RejectDurationMs": 200,
+  "ConsecutiveRejectsToStopLine": 10,
+  "ModbusTcpIp": "192.168.1.100",
+  "ModbusTcpPort": 502,
+  "RejectCoilAddress": 1,
+  "LineStopCoilAddress": 2,
+  "ConnectionTimeoutMs": 3000,
+  "EnableLineStopOnConsecutiveRejects": false,
+  "RequireIOConnectionToStartTask": false
+}
