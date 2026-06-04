@@ -135,6 +135,9 @@ namespace TripleDetection.Presentation
             containerRegistry.Register<IAuditLogService, AuditLogService>();
             containerRegistry.Register<IDetectionRecordService, DetectionRecordService>();
 
+            // Statistics Service
+            containerRegistry.RegisterSingleton<IStatisticsService, StatisticsService>();
+
             // Navigation service
             containerRegistry.RegisterSingleton<NavigationService>();
             containerRegistry.RegisterSingleton<INavigationService>(sp => sp.Resolve<NavigationService>());
