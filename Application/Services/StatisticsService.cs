@@ -44,15 +44,17 @@ WHERE UserId = @UserId AND CreateAt >= @StartDate AND CreateAt <= @EndDate AND I
                 {
                     if (reader.Read())
                     {
-                        return new UserActivityStatistics
+                        var lastActivityStr = reader.GetString(4);
+                        var stats = new UserActivityStatistics
                         {
                             UserId = userId,
                             TotalOperations = reader.GetInt32(0),
                             LoginCount = reader.GetInt32(1),
                             TaskOperations = reader.GetInt32(2),
                             DetectionOperations = reader.GetInt32(3),
-                            LastActivityAt = DateTime.Parse(reader.GetString(4))
+                            LastActivityAt = string.IsNullOrEmpty(lastActivityStr) ? DateTime.MinValue : DateTime.Parse(lastActivityStr)
                         };
+                        return stats;
                     }
                 }
                 return new UserActivityStatistics { UserId = userId };
@@ -255,8 +257,8 @@ WHERE DetectionTime >= @StartDate AND DetectionTime <= @EndDate AND IsDeleted = 
                             OkCount = ok,
                             NgCount = ng,
                             PassRate = total > 0 ? Math.Round((double)ok / total * 100, 2) : 0,
-                            MinPassRate = 0,
-                            MaxPassRate = 0
+                            MinPassRate = total > 0 ? Math.Round((double)ok / total * 100, 2) : 0,
+                            MaxPassRate = total > 0 ? Math.Round((double)ok / total * 100, 2) : 0
                         };
                     }
                 }
