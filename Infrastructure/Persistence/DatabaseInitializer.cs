@@ -124,7 +124,7 @@ VALUES
 ('OCR检测产品A', '用于OCR文字识别检测', 'OCR-2025-001', 1, 0, '{now}', '{now}'),
 ('缺陷检测产品B', '用于表面缺陷检测', 'DEF-2025-001', 1, 0, '{now}', '{now}'),
 ('尺寸测量产品C', '用于尺寸测量', 'DIM-2025-001', 1, 0, '{now}', '{now}');
-INSERT INTO ProdTasks (Name, ProductId, ProductName, Status, IsDeleted, CreateAt, UpdateAt)
+INSERT INTO ProdTasks (TaskName, ProductId, ProductName, Status, IsDeleted, CreateAt, UpdateAt)
 VALUES
 ('OCR检测任务-2025-05-01', 1, 'OCR检测产品A', 1, 0, '{now}', '{now}'),
 ('缺陷检测任务-2025-05-02', 2, '缺陷检测产品B', 1, 0, '{now}', '{now}'),
