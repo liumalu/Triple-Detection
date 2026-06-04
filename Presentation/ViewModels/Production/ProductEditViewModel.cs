@@ -216,8 +216,8 @@ namespace TripleDetection.Presentation.ViewModels.Production
                     else
                     {
                         _productService.Create(product, SessionManager.CurrentUserName ?? "Unknown", SessionManager.CurrentUserId);
-                        _auditLogService.Log(currentUserId, "PRODUCT_CREATE", "Product", product.Id,
-                            JsonConvert.SerializeObject(new { productId = product.Id, productCode = product.Code }));
+                        _auditLogService.Log(currentUserId, "PRODUCT_CREATE", "Product", 0,
+                            JsonConvert.SerializeObject(new { productCode = product.Code }));
                     }
 
                     System.Windows.Application.Current.Dispatcher.Invoke(() =>

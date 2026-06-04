@@ -189,7 +189,7 @@ namespace TripleDetection.Presentation.ViewModels.Production
 
         public void DeleteProduct(int id)
         {
-            _productService.Delete(id, "admin", SessionManager.CurrentUserId);
+            _productService.Delete(id, SessionManager.CurrentUserName ?? "Unknown", SessionManager.CurrentUserId);
             _auditLogService.Log(SessionManager.CurrentUserId, "PRODUCT_DELETE", "Product", id,
                 JsonConvert.SerializeObject(new { productId = id }));
             Search();
