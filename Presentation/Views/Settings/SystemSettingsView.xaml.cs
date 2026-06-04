@@ -10,13 +10,9 @@ namespace TripleDetection.Presentation.Views.Settings
         public SystemSettingsView()
         {
             InitializeComponent();
-            var dbPath = System.IO.Path.Combine(
-                System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) ?? "",
-                "Config",
-                "tripledetection.db");
             var vm = new SystemSettingsViewModel(
-                new SystemSettingsService(),
-                new AuditLogService(new TripleDetection.Infrastructure.Repositories.AuditLogRepository($"Data Source={dbPath}")));
+                (SystemSettingsService)Prism.Ioc.ContainerLocator.Container.Resolve(typeof(SystemSettingsService)),
+                (IAuditLogService)Prism.Ioc.ContainerLocator.Container.Resolve(typeof(IAuditLogService)));
             DataContext = vm;
             vm.Load();
         }
