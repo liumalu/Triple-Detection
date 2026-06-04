@@ -1,7 +1,87 @@
 <UserControl x:Class="TripleDetection.Presentation.Views.Settings.SystemSettingsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Grid>
-        <TextBlock x:Name="ContentArea" Text="" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#666"/>
-    </Grid>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel MaxWidth="700" HorizontalAlignment="Left" Margin="20">
+
+            <!-- 日志设置 -->
+            <TextBlock Text="日志设置" FontSize="14" FontWeight="SemiBold" Margin="0,0,0,10"/>
+
+            <Grid Margin="0,0,0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="140"/>
+                    <ColumnDefinition Width="280"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="保存方式:" VerticalAlignment="Center" Margin="0,0,10,5"/>
+                <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding LogSaveMethodOptions}" SelectedItem="{Binding LogSaveMethod}" Margin="0,0,10,5"/>
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="日志保留天数:" VerticalAlignment="Center" Margin="0,0,10,5"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding LogRetentionDays, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,10,5"/>
+
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="导出路径:" VerticalAlignment="Center" Margin="0,0,10,5"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding LogExportPath, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,10,5"/>
+                <Button Grid.Row="2" Grid.Column="2" Content="浏览.." Command="{Binding BrowseLogPathCommand}" CommandParameter="LogExportPath" Margin="0,0,10,5" Padding="8,2"/>
+
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="自动清理日志:" VerticalAlignment="Center" Margin="0,0,10,5"/>
+                <CheckBox Grid.Row="3" Grid.Column="1" IsChecked="{Binding AutoCleanLog}" VerticalAlignment="Center" Margin="0,0,10,5"/>
+            </Grid>
+
+            <!-- 生产信息 -->
+            <TextBlock Text="生产信息" FontSize="14" FontWeight="SemiBold" Margin="0,0,0,10"/>
+
+            <Grid Margin="0,0,0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="140"/>
+                    <ColumnDefinition Width="280"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="工厂代码:" VerticalAlignment="Center" Margin="0,0,10,5"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding FactoryCode, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,10,5"/>
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="生产线:" VerticalAlignment="Center" Margin="0,0,10,5"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ProductionLine, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,10,5"/>
+            </Grid>
+
+            <!-- 数据管理 -->
+            <TextBlock Text="数据管理" FontSize="14" FontWeight="SemiBold" Margin="0,0,0,10"/>
+
+            <Grid Margin="0,0,0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="140"/>
+                    <ColumnDefinition Width="280"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="数据库备份路径:" VerticalAlignment="Center" Margin="0,0,10,5"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding DbBackupRoot, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,10,5"/>
+                <Button Grid.Row="0" Grid.Column="2" Content="浏览.." Command="{Binding BrowseBackupPathCommand}" CommandParameter="DbBackupRoot" Margin="0,0,10,5" Padding="8,2"/>
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="图片保留数量:" VerticalAlignment="Center" Margin="0,0,10,5"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ImageRetentionCount, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,10,5"/>
+
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="自动清理图片:" VerticalAlignment="Center" Margin="0,0,10,5"/>
+                <CheckBox Grid.Row="2" Grid.Column="1" IsChecked="{Binding AutoCleanImages}" VerticalAlignment="Center" Margin="0,0,10,5"/>
+            </Grid>
+
+            <!-- Save Button -->
+            <Button Content="保存" Command="{Binding SaveCommand}" HorizontalAlignment="Left" Padding="20,5"/>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>
