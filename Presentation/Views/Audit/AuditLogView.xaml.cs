@@ -50,32 +50,47 @@ namespace TripleDetection.Presentation.Views.Audit
 
         private void LoadData()
         {
-            _currentQuery.StartDate = dpStartDate.SelectedDate;
-            _currentQuery.EndDate = dpEndDate.SelectedDate?.AddDays(1);
-            if (cmbUser.SelectedValue != null && (int)cmbUser.SelectedValue != 0)
-                _currentQuery.UserId = (int)cmbUser.SelectedValue;
-            if (!string.IsNullOrEmpty(cmbAction.Text))
-                _currentQuery.Action = cmbAction.Text;
-            if (!string.IsNullOrEmpty(txtKeyword.Text))
-                _currentQuery.Keyword = txtKeyword.Text;
+            try
+            {
+                _currentQuery.StartDate = dpStartDate.SelectedDate;
+                _currentQuery.EndDate = dpEndDate.SelectedDate?.AddDays(1);
+                if (cmbUser.SelectedValue != null && (int)cmbUser.SelectedValue != 0)
+                    _currentQuery.UserId = (int)cmbUser.SelectedValue;
+                if (!string.IsNullOrEmpty(cmbAction.Text))
+                    _currentQuery.Action = cmbAction.Text;
+                if (!string.IsNullOrEmpty(txtKeyword.Text))
+                    _currentQuery.Keyword = txtKeyword.Text;
 
-            var result = _auditLogService.Query(_currentQuery);
-            dgLogs.ItemsSource = result.Items;
-            int totalPages = (int)Math.Ceiling((double)result.TotalCount / _currentQuery.PageSize);
-            _totalPages = totalPages > 0 ? totalPages : 1;
-            txtPageInfo.Text = $"{_currentQuery.PageIndex} / {_totalPages}";
+                var result = _auditLogService.Query(_currentQuery);
+                dgLogs.ItemsSource = result.Items;
+                int totalPages = (int)Math.Ceiling((double)result.TotalCount / _currentQuery.PageSize);
+                _totalPages = totalPages > 0 ? totalPages : 1;
+                txtPageInfo.Text = $"{_currentQuery.PageIndex} / {_totalPages}";
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"LoadData failed: {ex.Message}");
+                MessageBox.Show("加载数据失败: " + ex.Message, "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void LoadCharts()
         {
-            var startDate = dpStartDate.SelectedDate ?? DateTime.Today.AddDays(-7);
-            var endDate = (dpEndDate.SelectedDate ?? DateTime.Today).AddDays(1);
+            try
+            {
+                var startDate = dpStartDate.SelectedDate ?? DateTime.Today.AddDays(-7);
+                var endDate = (dpEndDate.SelectedDate ?? DateTime.Today).AddDays(1);
 
-            var distribution = _statisticsService.GetActionDistribution(startDate, endDate);
-            icActionDistribution.ItemsSource = distribution;
+                var distribution = _statisticsService.GetActionDistribution(startDate, endDate);
+                icActionDistribution.ItemsSource = distribution;
 
-            var trend = _statisticsService.GetDailyOperationTrend(startDate, endDate);
-            icDailyTrend.ItemsSource = trend;
+                var trend = _statisticsService.GetDailyOperationTrend(startDate, endDate);
+                icDailyTrend.ItemsSource = trend;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"LoadCharts failed: {ex.Message}");
+            }
         }
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
