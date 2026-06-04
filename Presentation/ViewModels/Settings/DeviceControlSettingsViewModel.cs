@@ -21,6 +21,7 @@ namespace TripleDetection.Presentation.ViewModels.Settings
         {
             _service = service;
             _auditLogService = auditLogService;
+            SaveCommand = new DelegateCommand(ExecuteSave);
         }
 
         // === 采集参数 ===
@@ -121,8 +122,7 @@ namespace TripleDetection.Presentation.ViewModels.Settings
         public string[] LightSourceTypeOptions => new[] { "LED", "Halogen", "Laser" };
 
         // === Commands ===
-        private DelegateCommand _saveCommand;
-        public DelegateCommand SaveCommand => _saveCommand ?? (_saveCommand = new DelegateCommand(ExecuteSave));
+        public DelegateCommand SaveCommand { get; private set; }
 
         public void Load()
         {
@@ -140,71 +140,85 @@ namespace TripleDetection.Presentation.ViewModels.Settings
             RejectCoilAddress = _original.RejectCoilAddress;
             LineStopCoilAddress = _original.LineStopCoilAddress;
             ConnectionTimeoutMs = _original.ConnectionTimeoutMs;
+            SaveCommand.RaiseCanExecuteChanged();
         }
 
         private void ExecuteSave()
         {
-            var newSettings = new DeviceControlSettings
+            try
             {
-                LightSourceType = LightSourceType,
-                CaptureDelayMs = CaptureDelayMs,
-                CaptureFeedbackTimeoutMs = CaptureFeedbackTimeoutMs,
-                RejectDelayMs = RejectDelayMs,
-                RejectDurationMs = RejectDurationMs,
-                ConsecutiveRejectsToStopLine = ConsecutiveRejectsToStopLine,
-                EnableLineStopOnConsecutiveRejects = EnableLineStopOnConsecutiveRejects,
-                RequireIOConnectionToStartTask = RequireIOConnectionToStartTask,
-                ModbusTcpIp = ModbusTcpIp,
-                ModbusTcpPort = ModbusTcpPort,
-                RejectCoilAddress = RejectCoilAddress,
-                LineStopCoilAddress = LineStopCoilAddress,
-                ConnectionTimeoutMs = ConnectionTimeoutMs
-            };
+                var newSettings = new DeviceControlSettings
+                {
+                    LightSourceType = LightSourceType,
+                    CaptureDelayMs = CaptureDelayMs,
+                    CaptureFeedbackTimeoutMs = CaptureFeedbackTimeoutMs,
+                    RejectDelayMs = RejectDelayMs,
+                    RejectDurationMs = RejectDurationMs,
+                    ConsecutiveRejectsToStopLine = ConsecutiveRejectsToStopLine,
+                    EnableLineStopOnConsecutiveRejects = EnableLineStopOnConsecutiveRejects,
+                    RequireIOConnectionToStartTask = RequireIOConnectionToStartTask,
+                    ModbusTcpIp = ModbusTcpIp,
+                    ModbusTcpPort = ModbusTcpPort,
+                    RejectCoilAddress = RejectCoilAddress,
+                    LineStopCoilAddress = LineStopCoilAddress,
+                    ConnectionTimeoutMs = ConnectionTimeoutMs
+                };
 
-            _service.Save(newSettings);
+                _service.Save(newSettings);
 
-            var changes = BuildChangedFieldsJson(newSettings);
-            var userId = SessionManager.CurrentUserId;
-            _auditLogService.Log(userId, "SETTINGS_UPDATE", "DeviceControl", 0, changes);
+                var changes = BuildChangedFieldsJson(newSettings);
+                var userId = SessionManager.CurrentUserId;
+                _auditLogService.Log(userId, "SETTINGS_UPDATE", "DeviceControl", 0, changes);
 
-            System.Windows.MessageBox.Show("保存成功", "提示",
-                System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+                System.Windows.MessageBox.Show("保存成功", "提示",
+                    System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
 
-            Load();
+                Load();
+                SaveCommand.RaiseCanExecuteChanged();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show($"保存失败: {ex.Message}", "错误",
+                    System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+            }
         }
 
         private string BuildChangedFieldsJson(DeviceControlSettings newSettings)
         {
-            var changes = new System.Collections.Generic.Dictionary<string, object>();
+            var changes = new System.Collections.Generic.List<string>();
 
             if (_original.LightSourceType != newSettings.LightSourceType)
-                changes["LightSourceType"] = newSettings.LightSourceType;
+                changes.Add("LightSourceType");
             if (_original.CaptureDelayMs != newSettings.CaptureDelayMs)
-                changes["CaptureDelayMs"] = newSettings.CaptureDelayMs;
+                changes.Add("CaptureDelayMs");
             if (_original.CaptureFeedbackTimeoutMs != newSettings.CaptureFeedbackTimeoutMs)
-                changes["CaptureFeedbackTimeoutMs"] = newSettings.CaptureFeedbackTimeoutMs;
+                changes.Add("CaptureFeedbackTimeoutMs");
             if (_original.RejectDelayMs != newSettings.RejectDelayMs)
-                changes["RejectDelayMs"] = newSettings.RejectDelayMs;
+                changes.Add("RejectDelayMs");
             if (_original.RejectDurationMs != newSettings.RejectDurationMs)
-                changes["RejectDurationMs"] = newSettings.RejectDurationMs;
+                changes.Add("RejectDurationMs");
             if (_original.ConsecutiveRejectsToStopLine != newSettings.ConsecutiveRejectsToStopLine)
-                changes["ConsecutiveRejectsToStopLine"] = newSettings.ConsecutiveRejectsToStopLine;
+                changes.Add("ConsecutiveRejectsToStopLine");
             if (_original.EnableLineStopOnConsecutiveRejects != newSettings.EnableLineStopOnConsecutiveRejects)
-                changes["EnableLineStopOnConsecutiveRejects"] = newSettings.EnableLineStopOnConsecutiveRejects;
+                changes.Add("EnableLineStopOnConsecutiveRejects");
             if (_original.RequireIOConnectionToStartTask != newSettings.RequireIOConnectionToStartTask)
-                changes["RequireIOConnectionToStartTask"] = newSettings.RequireIOConnectionToStartTask;
+                changes.Add("RequireIOConnectionToStartTask");
             if (_original.ModbusTcpIp != newSettings.ModbusTcpIp)
-                changes["ModbusTcpIp"] = newSettings.ModbusTcpIp;
+                changes.Add("ModbusTcpIp");
             if (_original.ModbusTcpPort != newSettings.ModbusTcpPort)
-                changes["ModbusTcpPort"] = newSettings.ModbusTcpPort;
+                changes.Add("ModbusTcpPort");
             if (_original.RejectCoilAddress != newSettings.RejectCoilAddress)
-                changes["RejectCoilAddress"] = newSettings.RejectCoilAddress;
+                changes.Add("RejectCoilAddress");
             if (_original.LineStopCoilAddress != newSettings.LineStopCoilAddress)
-                changes["LineStopCoilAddress"] = newSettings.LineStopCoilAddress;
+                changes.Add("LineStopCoilAddress");
             if (_original.ConnectionTimeoutMs != newSettings.ConnectionTimeoutMs)
-                changes["ConnectionTimeoutMs"] = newSettings.ConnectionTimeoutMs;
+                changes.Add("ConnectionTimeoutMs");
 
-            return JsonConvert.SerializeObject(changes);
+            return JsonConvert.SerializeObject(new
+            {
+                category = "DeviceControl",
+                changes = changes
+            });
         }
     }
 }
