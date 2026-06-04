@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Win32;
+using Newtonsoft.Json;
 using VM.Core;
 using TripleDetection.Application.VmServices;
 using TripleDetection.Application.Services;
@@ -18,6 +19,7 @@ using TripleDetection.Infrastructure.Repositories;
 using TripleDetection.Infrastructure.Persistence;
 using TripleDetection.Infrastructure.IO;
 using IRejectService = TripleDetection.Application.Services.IRejectService;
+using SessionManager = TripleDetection.Domain.SessionManager;
 
 namespace TripleDetection.Presentation.Views.Detection
 {
@@ -29,6 +31,8 @@ namespace TripleDetection.Presentation.Views.Detection
         private readonly VmIntegrationService _vmService;
         private readonly ITaskService _taskService;
         private readonly IProductService _productService;
+        private readonly IDetectionRecordService _detectionRecordService;
+        private readonly IAuditLogService _auditLogService;
         private string _selectedSolPath;
         private bool _isSolutionLoad = false;
         private bool _isContinuRun = false;
@@ -38,6 +42,7 @@ namespace TripleDetection.Presentation.Views.Detection
         private TaskEntity _selectedTask;
         private int _okCount = 0;
         private int _ngCount = 0;
+        private TaskEntity _activeTaskAtRun;
         private readonly ModbusTcpIOService _ioService;
         private readonly DeviceControlSettings _deviceSettings;
         private readonly IRejectService _rejectService;
@@ -49,6 +54,7 @@ namespace TripleDetection.Presentation.Views.Detection
             ITaskService taskService,
             IProductService productService,
             IDetectionRecordService detectionRecordService,
+            IAuditLogService auditLogService,
             ModbusTcpIOService ioService,
             DeviceControlSettings deviceSettings,
             IRejectService rejectService)
@@ -60,6 +66,8 @@ namespace TripleDetection.Presentation.Views.Detection
             _vmService = vmService;
             _taskService = taskService;
             _productService = productService;
+            _detectionRecordService = detectionRecordService;
+            _auditLogService = auditLogService;
             _ioService = ioService;
             _deviceSettings = deviceSettings;
             _rejectService = rejectService;
@@ -181,6 +189,18 @@ namespace TripleDetection.Presentation.Views.Detection
                 lstDetectionLogs.Items.Insert(0, logEntry);
                 if (lstDetectionLogs.Items.Count > 100)
                     lstDetectionLogs.Items.RemoveAt(lstDetectionLogs.Items.Count - 1);
+
+                // Audit log after detection result is received
+                var taskForAudit = _activeTaskAtRun ?? _selectedTask;
+                _auditLogService.Log(SessionManager.CurrentUserId, "DETECTION_RUN", "Detection", 0,
+                    JsonConvert.SerializeObject(new {
+                        taskId = taskForAudit?.Id ?? 0,
+                        taskName = taskForAudit?.Name ?? "",
+                        result = status,
+                        batchNumber = result.BatchNumber,
+                        elapsedMs = result.ElapsedMs
+                    }));
+                _activeTaskAtRun = null;
             });
         }
 
@@ -416,6 +436,12 @@ namespace TripleDetection.Presentation.Views.Detection
 
             try
             {
+                _activeTaskAtRun = _selectedTask;
+                _auditLogService.Log(SessionManager.CurrentUserId, "DETECTION_RUN", "Detection", 0,
+                    JsonConvert.SerializeObject(new {
+                        taskId = _selectedTask?.Id ?? 0,
+                        taskName = _selectedTask?.Name ?? ""
+                    }));
                 _vmService.RunOnce();
                 _logService.Log("单次运行已触发，等待结果回调...");
             }
@@ -440,6 +466,23 @@ namespace TripleDetection.Presentation.Views.Detection
             try
             {
                 bool newState = !_vmService.IsContinuousRun;
+                if (newState)
+                {
+                    _auditLogService.Log(SessionManager.CurrentUserId, "DETECTION_CONTINUOUS_START", "Detection", 0,
+                        JsonConvert.SerializeObject(new {
+                            taskId = _selectedTask?.Id ?? 0,
+                            taskName = _selectedTask?.Name ?? ""
+                        }));
+                }
+                else
+                {
+                    _auditLogService.Log(SessionManager.CurrentUserId, "DETECTION_CONTINUOUS_STOP", "Detection", 0,
+                        JsonConvert.SerializeObject(new {
+                            taskId = _selectedTask?.Id ?? 0,
+                            taskName = _selectedTask?.Name ?? "",
+                            totalDetections = _okCount + _ngCount
+                        }));
+                }
                 _vmService.SetContinuousRun(newState);
                 _isContinuRun = newState;
                 _logService.Log($"连续运行: {newState}");
