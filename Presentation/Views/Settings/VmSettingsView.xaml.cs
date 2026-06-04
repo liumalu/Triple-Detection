@@ -1,14 +1,20 @@
 using System.Windows.Controls;
+using TripleDetection.Presentation.ViewModels.Settings;
+using TripleDetection.Application.SettingsServices;
+using TripleDetection.Application.Services;
+
 namespace TripleDetection.Presentation.Views.Settings
 {
     public partial class VmSettingsView : UserControl
     {
-        public VmSettingsView() : this((string)null) { }
-
-        public VmSettingsView(string placeholder)
+        public VmSettingsView()
         {
             InitializeComponent();
-            ContentArea.Text = "VisionMaster设置功能待建设";
+            var vm = new VmSettingsViewModel(
+                (VmSettingsService)Prism.Ioc.ContainerLocator.Container.Resolve(typeof(VmSettingsService)),
+                (IAuditLogService)Prism.Ioc.ContainerLocator.Container.Resolve(typeof(IAuditLogService)));
+            vm.Load();
+            DataContext = vm;
         }
     }
 }
