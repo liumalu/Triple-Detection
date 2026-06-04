@@ -153,6 +153,10 @@ namespace TripleDetection.Presentation
             containerRegistry.Register<TaskListViewModel>();
             containerRegistry.Register<TaskEditViewModel>();
             containerRegistry.Register<SettingsShellViewModel>();
+            containerRegistry.Register<CommunicationSettingsViewModel>();
+            containerRegistry.Register<VmSettingsViewModel>();
+            containerRegistry.Register<SystemSettingsViewModel>();
+            containerRegistry.Register<DeviceControlSettingsViewModel>();
 
             // Views (transient) - registered for manual creation via Container.Resolve
             containerRegistry.Register<LoginWindow>();
