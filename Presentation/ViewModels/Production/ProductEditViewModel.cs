@@ -1,11 +1,11 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using CommunityToolkit.Mvvm.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
 using Microsoft.Win32;
-using CommunityToolkit.Mvvm;
+using Newtonsoft.Json;
+using Prism.Mvvm;
 using TripleDetection.Domain;
 using TripleDetection.Domain.Entities;
 using TripleDetection.Application.Services;
@@ -13,20 +13,92 @@ using TripleDetection.Domain.Enums;
 
 namespace TripleDetection.Presentation.ViewModels.Production
 {
-    public partial class ProductEditViewModel : ObservableObject
+    public partial class ProductEditViewModel : ViewModelBase
     {
         private readonly IProductService _productService;
+        private readonly IAuditLogService _auditLogService;
 
-        [ObservableProperty] private bool _isEditMode;
-        [ObservableProperty] private int _productId;
-        [ObservableProperty] private string _code = "";
-        [ObservableProperty] private string _name = "";
-        [ObservableProperty] private string _description = "";
-        [ObservableProperty] private ValidType _validType = ValidType.Year;
-        [ObservableProperty] private int _validPeriod = 1;
-        [ObservableProperty] private string _solFilePath = "";
-        [ObservableProperty] private ProductStatus _status = ProductStatus.Active;
-        [ObservableProperty] private string _errorMessage = "";
+        private bool _isEditMode;
+        public bool IsEditMode
+        {
+            get => _isEditMode;
+            set => SetProperty(ref _isEditMode, value);
+        }
+
+        private int _productId;
+        public int ProductId
+        {
+            get => _productId;
+            set => SetProperty(ref _productId, value);
+        }
+
+        private string _code = "";
+        public string Code
+        {
+            get => _code;
+            set
+            {
+                if (SetProperty(ref _code, value))
+                    ErrorMessage = "";
+            }
+        }
+
+        private string _name = "";
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                if (SetProperty(ref _name, value))
+                    ErrorMessage = "";
+            }
+        }
+
+        private string _description = "";
+        public string Description
+        {
+            get => _description;
+            set => SetProperty(ref _description, value);
+        }
+
+        private ValidType _validType = ValidType.Year;
+        public ValidType ValidType
+        {
+            get => _validType;
+            set => SetProperty(ref _validType, value);
+        }
+
+        private int _validPeriod = 1;
+        public int ValidPeriod
+        {
+            get => _validPeriod;
+            set => SetProperty(ref _validPeriod, value);
+        }
+
+        private string _solFilePath = "";
+        public string SolFilePath
+        {
+            get => _solFilePath;
+            set
+            {
+                if (SetProperty(ref _solFilePath, value))
+                    ErrorMessage = "";
+            }
+        }
+
+        private ProductStatus _status = ProductStatus.Active;
+        public ProductStatus Status
+        {
+            get => _status;
+            set => SetProperty(ref _status, value);
+        }
+
+        private string _errorMessage = "";
+        public string ErrorMessage
+        {
+            get => _errorMessage;
+            set => SetProperty(ref _errorMessage, value);
+        }
 
         public ObservableCollection<ValidType> ValidTypes { get; } = new ObservableCollection<ValidType>
         {
@@ -45,9 +117,10 @@ namespace TripleDetection.Presentation.ViewModels.Production
 
         public event EventHandler<bool> RequestClose;
 
-        public ProductEditViewModel(Product product, IProductService productService)
+        public ProductEditViewModel(Product product, IProductService productService, IAuditLogService auditLogService)
         {
             _productService = productService;
+            _auditLogService = auditLogService;
             if (product != null)
             {
                 IsEditMode = true;
@@ -61,10 +134,6 @@ namespace TripleDetection.Presentation.ViewModels.Production
                 Status = product.Status;
             }
         }
-
-        partial void OnCodeChanged(string value) => ErrorMessage = "";
-        partial void OnNameChanged(string value) => ErrorMessage = "";
-        partial void OnSolFilePathChanged(string value) => ErrorMessage = "";
 
         public void BrowseSolFile()
         {
@@ -131,6 +200,8 @@ namespace TripleDetection.Presentation.ViewModels.Production
                 Status = Status
             };
 
+            int currentUserId = SessionManager.CurrentUserId;
+
             Task.Run(() =>
             {
                 try
@@ -139,10 +210,14 @@ namespace TripleDetection.Presentation.ViewModels.Production
                     {
                         product.Id = ProductId;
                         _productService.Update(product, SessionManager.CurrentUserName ?? "Unknown", SessionManager.CurrentUserId);
+                        _auditLogService.Log(currentUserId, "PRODUCT_UPDATE", "Product", product.Id,
+                            JsonConvert.SerializeObject(new { productId = product.Id, productCode = product.Code }));
                     }
                     else
                     {
                         _productService.Create(product, SessionManager.CurrentUserName ?? "Unknown", SessionManager.CurrentUserId);
+                        _auditLogService.Log(currentUserId, "PRODUCT_CREATE", "Product", product.Id,
+                            JsonConvert.SerializeObject(new { productId = product.Id, productCode = product.Code }));
                     }
 
                     System.Windows.Application.Current.Dispatcher.Invoke(() =>

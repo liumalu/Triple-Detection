@@ -2,8 +2,8 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm;
+using Newtonsoft.Json;
+using Prism.Mvvm;
 using TripleDetection.Domain;
 using TripleDetection.Domain.Entities;
 using TripleDetection.Domain.Entities.Queries;
@@ -11,38 +11,102 @@ using TripleDetection.Application.Services;
 
 namespace TripleDetection.Presentation.ViewModels.Production
 {
-    public partial class ProductListViewModel : ObservableObject
+    public partial class ProductListViewModel : ViewModelBase
     {
         private readonly IProductService _productService;
+        private readonly IAuditLogService _auditLogService;
 
-        [ObservableProperty] private string _queryCode = "";
-        [ObservableProperty] private string _queryName = "";
-        [ObservableProperty] private int? _queryStatus;
-        [ObservableProperty] private DateTime? _queryCreateAtFrom;
-        [ObservableProperty] private DateTime? _queryCreateAtTo;
-        [ObservableProperty] private int _pageIndex = 0;
-        [ObservableProperty] private int _pageSize = 20;
-        [ObservableProperty] private int _totalCount = 0;
-        [ObservableProperty] private int _totalPages = 0;
-        [ObservableProperty] private Product _selectedProduct;
+        private string _queryCode = "";
+        private string _queryName = "";
+        private int? _queryStatus = default(int?);
+        private DateTime? _queryCreateAtFrom = default(DateTime?);
+        private DateTime? _queryCreateAtTo = default(DateTime?);
+        private int _pageIndex = 0;
+        private int _pageSize = 20;
+        private int _totalCount = 0;
+        private int _totalPages = 0;
+        private Product _selectedProduct = null;
 
         public ObservableCollection<Product> Products { get; } = new ObservableCollection<Product>();
 
-        partial void OnPageIndexChanged(int value)
+        public string QueryCode
         {
-            OnPropertyChanged(nameof(CurrentPageDisplay));
+            get => _queryCode;
+            set => SetProperty(ref _queryCode, value);
         }
 
-        partial void OnTotalCountChanged(int value)
+        public string QueryName
         {
-            OnPropertyChanged(nameof(TotalPagesDisplay));
+            get => _queryName;
+            set => SetProperty(ref _queryName, value);
         }
 
-        partial void OnTotalPagesChanged(int value)
+        public int? QueryStatus
         {
-            OnPropertyChanged(nameof(TotalPagesDisplay));
-            OnPropertyChanged(nameof(HasNextPage));
-            OnPropertyChanged(nameof(HasPreviousPage));
+            get => _queryStatus;
+            set => SetProperty(ref _queryStatus, value);
+        }
+
+        public DateTime? QueryCreateAtFrom
+        {
+            get => _queryCreateAtFrom;
+            set => SetProperty(ref _queryCreateAtFrom, value);
+        }
+
+        public DateTime? QueryCreateAtTo
+        {
+            get => _queryCreateAtTo;
+            set => SetProperty(ref _queryCreateAtTo, value);
+        }
+
+        public int PageIndex
+        {
+            get => _pageIndex;
+            set
+            {
+                if (SetProperty(ref _pageIndex, value))
+                {
+                    OnPropertyChanged(nameof(CurrentPageDisplay));
+                }
+            }
+        }
+
+        public int PageSize
+        {
+            get => _pageSize;
+            set => SetProperty(ref _pageSize, value);
+        }
+
+        public int TotalCount
+        {
+            get => _totalCount;
+            set
+            {
+                if (SetProperty(ref _totalCount, value))
+                {
+                    OnPropertyChanged(nameof(TotalPagesDisplay));
+                }
+            }
+        }
+
+        public int TotalPages
+        {
+            get => _totalPages;
+            set
+            {
+                if (SetProperty(ref _totalPages, value))
+                {
+                    OnPropertyChanged(nameof(TotalPagesDisplay));
+                    OnPropertyChanged(nameof(HasNextPage));
+                    OnPropertyChanged(nameof(HasPreviousPage));
+                }
+            }
+        }
+
+        public Product SelectedProduct
+        {
+            get => _selectedProduct;
+            set => SetProperty(ref _selectedProduct, value);
         }
 
         public string TotalPagesDisplay => $"共 {TotalCount} 条";
@@ -50,9 +114,10 @@ namespace TripleDetection.Presentation.ViewModels.Production
         public bool HasNextPage => PageIndex < TotalPages - 1;
         public bool HasPreviousPage => PageIndex > 0;
 
-        public ProductListViewModel(IProductService productService)
+        public ProductListViewModel(IProductService productService, IAuditLogService auditLogService)
         {
             _productService = productService;
+            _auditLogService = auditLogService;
         }
 
         public void Search()
@@ -125,12 +190,14 @@ namespace TripleDetection.Presentation.ViewModels.Production
         public void DeleteProduct(int id)
         {
             _productService.Delete(id, "admin", SessionManager.CurrentUserId);
+            _auditLogService.Log(SessionManager.CurrentUserId, "PRODUCT_DELETE", "Product", id,
+                JsonConvert.SerializeObject(new { productId = id }));
             Search();
         }
 
-        public void OpenEditWindow(Product? product = null)
+        public void OpenEditWindow(Product product = null)
         {
-            var editVm = new ProductEditViewModel(product, _productService);
+            var editVm = new ProductEditViewModel(product, _productService, _auditLogService);
             var editWindow = new Views.Production.ProductEditWindow { DataContext = editVm };
             editWindow.Owner = System.Windows.Application.Current.MainWindow;
             if (editWindow.ShowDialog() == true)

@@ -10,10 +10,10 @@ namespace TripleDetection.Presentation.Views.Production
     {
         private ProductListViewModel ViewModel => (ProductListViewModel)DataContext;
 
-        public ProductListView(IProductService productService)
+        public ProductListView(IProductService productService, IAuditLogService auditLogService)
         {
             InitializeComponent();
-            DataContext = new ProductListViewModel(productService);
+            DataContext = new ProductListViewModel(productService, auditLogService);
             Loaded += (s, e) => ViewModel.Search();
         }
 
