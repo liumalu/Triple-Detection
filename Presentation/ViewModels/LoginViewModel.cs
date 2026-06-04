@@ -126,6 +126,8 @@ namespace TripleDetection.Presentation.ViewModels
                 if (!user.IsEnabled)
                 {
                     ErrorMessage = "账号已被禁用";
+                    _auditLogService.Log(0, "LOGIN_FAILED", "User", 0,
+                        JsonConvert.SerializeObject(new { username = Username, reason = "account disabled" }));
                     OnLoginFailed?.Invoke();
                     return;
                 }
@@ -133,6 +135,8 @@ namespace TripleDetection.Presentation.ViewModels
                 if (user.IsLocked)
                 {
                     ErrorMessage = "账号已被锁定";
+                    _auditLogService.Log(0, "LOGIN_FAILED", "User", 0,
+                        JsonConvert.SerializeObject(new { username = Username, reason = "account locked" }));
                     OnLoginFailed?.Invoke();
                     return;
                 }
