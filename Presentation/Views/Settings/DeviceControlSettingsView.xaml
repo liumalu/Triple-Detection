@@ -1,7 +1,109 @@
 <UserControl x:Class="TripleDetection.Presentation.Views.Settings.DeviceControlSettingsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Grid>
-        <TextBlock x:Name="ContentArea" Text="" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#666"/>
-    </Grid>
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel MaxWidth="700" HorizontalAlignment="Left" Margin="10">
+            <!-- 采集参数 -->
+            <TextBlock Text="采集参数" FontSize="16" FontWeight="Bold" Margin="0,0,0,10"/>
+            <Grid Margin="10,0,0,15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="160"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="光源类型:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
+                <ComboBox Grid.Row="0" Grid.Column="1" Height="24"
+                          ItemsSource="{Binding LightSourceTypeOptions}"
+                          SelectedItem="{Binding LightSourceType}" Width="200" HorizontalAlignment="Left"/>
+
+                <TextBlock Text="采集延迟(ms):" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Height="24" Width="200" HorizontalAlignment="Left"
+                         Text="{Binding CaptureDelayMs, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Text="采集反馈超时(ms):" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Height="24" Width="200" HorizontalAlignment="Left"
+                         Text="{Binding CaptureFeedbackTimeoutMs, UpdateSourceTrigger=PropertyChanged}"/>
+            </Grid>
+
+            <!-- 剔除参数 -->
+            <TextBlock Text="剔除参数" FontSize="16" FontWeight="Bold" Margin="0,10,0,10"/>
+            <Grid Margin="10,0,0,15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="160"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="剔除延迟(ms):" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Height="24" Width="200" HorizontalAlignment="Left"
+                         Text="{Binding RejectDelayMs, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Text="剔除持续时间(ms):" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Height="24" Width="200" HorizontalAlignment="Left"
+                         Text="{Binding RejectDurationMs, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Text="连续剔除次数:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Height="24" Width="200" HorizontalAlignment="Left"
+                         Text="{Binding ConsecutiveRejectsToStopLine, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <CheckBox Content="启用连续剔除停止产线" Grid.Row="3" Grid.Column="1"
+                          IsChecked="{Binding EnableLineStopOnConsecutiveRejects}" VerticalAlignment="Center" Margin="0,2,0,0"/>
+
+                <CheckBox Content="任务启动前要求IO连接" Grid.Row="4" Grid.Column="1"
+                          IsChecked="{Binding RequireIOConnectionToStartTask}" VerticalAlignment="Center" Margin="0,2,0,0"/>
+            </Grid>
+
+            <!-- Modbus TCP -->
+            <TextBlock Text="Modbus TCP" FontSize="16" FontWeight="Bold" Margin="0,10,0,10"/>
+            <Grid Margin="10,0,0,15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="160"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="IP地址:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Height="24" Width="200" HorizontalAlignment="Left"
+                         Text="{Binding ModbusTcpIp, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Text="端口:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Height="24" Width="200" HorizontalAlignment="Left"
+                         Text="{Binding ModbusTcpPort, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Text="剔除继电器地址:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Height="24" Width="200" HorizontalAlignment="Left"
+                         Text="{Binding RejectCoilAddress, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Text="产线停止地址:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="3" Grid.Column="1" Height="24" Width="200" HorizontalAlignment="Left"
+                         Text="{Binding LineStopCoilAddress, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Text="连接超时(ms):" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="4" Grid.Column="1" Height="24" Width="200" HorizontalAlignment="Left"
+                         Text="{Binding ConnectionTimeoutMs, UpdateSourceTrigger=PropertyChanged}"/>
+            </Grid>
+
+            <!-- 保存按钮 -->
+            <Button Content="保存设置" Height="32" Width="120" Margin="0,15,0,0"
+                    Command="{Binding SaveCommand}" HorizontalAlignment="Left"/>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>
