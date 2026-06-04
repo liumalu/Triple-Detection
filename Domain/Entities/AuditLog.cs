@@ -1,4 +1,5 @@
-namespace TripleDetection.Domain.Entities;
+namespace TripleDetection.Domain.Entities
+{
 
 public class AuditLog : BaseEntity
 {
@@ -9,4 +10,12 @@ public class AuditLog : BaseEntity
     public int ObjectId { get; set; }
     public string Details { get; set; } = string.Empty;
     public string IpAddress { get; set; } = string.Empty;
+
+    // NEW: For efficient SQL queries on status transitions
+    public string FromStatus { get; set; } = string.Empty;
+    public string ToStatus { get; set; } = string.Empty;
+
+    // NEW: Link to related records (e.g., DetectionRecord.Id)
+    public int? RelatedRecordId { get; set; }
+}
 }
