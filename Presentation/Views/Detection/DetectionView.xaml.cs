@@ -42,7 +42,6 @@ namespace TripleDetection.Presentation.Views.Detection
         private TaskEntity _selectedTask;
         private int _okCount = 0;
         private int _ngCount = 0;
-        private TaskEntity _activeTaskAtRun;
         private readonly ModbusTcpIOService _ioService;
         private readonly DeviceControlSettings _deviceSettings;
         private readonly IRejectService _rejectService;
@@ -191,7 +190,7 @@ namespace TripleDetection.Presentation.Views.Detection
                     lstDetectionLogs.Items.RemoveAt(lstDetectionLogs.Items.Count - 1);
 
                 // Audit log after detection result is received
-                var taskForAudit = _activeTaskAtRun ?? _selectedTask;
+                var taskForAudit = _selectedTask;
                 _auditLogService.Log(SessionManager.CurrentUserId, "DETECTION_RUN", "Detection", 0,
                     JsonConvert.SerializeObject(new {
                         taskId = taskForAudit?.Id ?? 0,
@@ -200,7 +199,6 @@ namespace TripleDetection.Presentation.Views.Detection
                         batchNumber = result.BatchNumber,
                         elapsedMs = result.ElapsedMs
                     }));
-                _activeTaskAtRun = null;
             });
         }
 
@@ -436,12 +434,6 @@ namespace TripleDetection.Presentation.Views.Detection
 
             try
             {
-                _activeTaskAtRun = _selectedTask;
-                _auditLogService.Log(SessionManager.CurrentUserId, "DETECTION_RUN", "Detection", 0,
-                    JsonConvert.SerializeObject(new {
-                        taskId = _selectedTask?.Id ?? 0,
-                        taskName = _selectedTask?.Name ?? ""
-                    }));
                 _vmService.RunOnce();
                 _logService.Log("单次运行已触发，等待结果回调...");
             }
