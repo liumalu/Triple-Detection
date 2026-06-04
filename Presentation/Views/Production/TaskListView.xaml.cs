@@ -11,10 +11,10 @@ namespace TripleDetection.Presentation.Views.Production
     {
         private TaskListViewModel _viewModel;
 
-        public TaskListView(ITaskService taskService, IProductService productService)
+        public TaskListView(ITaskService taskService, IProductService productService, IAuditLogService auditLogService)
         {
             InitializeComponent();
-            _viewModel = new TaskListViewModel(taskService, productService);
+            _viewModel = new TaskListViewModel(taskService, productService, auditLogService);
             DataContext = _viewModel;
             Loaded += (s, e) => _viewModel.Search();
         }

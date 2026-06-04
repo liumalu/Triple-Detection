@@ -1,24 +1,23 @@
 using System;
-using CommunityToolkit.Mvvm;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
+using Prism.Mvvm;
+using Prism.Commands;
 using TripleDetection.Application.SettingsServices;
 using TripleDetection.Application.VmServices;
 
 namespace TripleDetection.Presentation.ViewModels.Settings
 {
-    public partial class SettingsShellViewModel : ObservableObject
+    public partial class SettingsShellViewModel : ViewModelBase
     {
-        [ObservableProperty] private string _currentCategory = "Communication";
-        [ObservableProperty] private object? _currentView;
+        private string _currentCategory = "Communication";
+        private object _currentView;
 
         private readonly CommunicationSettingsService _commService;
         private readonly VmSettingsService _vmService;
         private readonly SystemSettingsService _sysService;
         private readonly DeviceControlSettingsService _deviceService;
 
-        public IRelayCommand<string> NavigateCommand { get; }
-        public IRelayCommand SyncCommand { get; }
+        public DelegateCommand<string> NavigateCommand { get; }
+        public DelegateCommand SyncCommand { get; }
 
         public SettingsShellViewModel(
             CommunicationSettingsService commService,
@@ -31,19 +30,32 @@ namespace TripleDetection.Presentation.ViewModels.Settings
             _sysService = sysService;
             _deviceService = deviceService;
 
-            NavigateCommand = new RelayCommand<string>(NavigateTo);
-            SyncCommand = new RelayCommand(SyncToVm);
+            NavigateCommand = new DelegateCommand<string>(NavigateTo);
+            SyncCommand = new DelegateCommand(SyncToVm);
 
             // Initialize with Communication view
             NavigateTo("Communication");
         }
 
-        partial void OnCurrentCategoryChanged(string value)
+        public string CurrentCategory
         {
-            OnPropertyChanged(nameof(IsCommunicationActive));
-            OnPropertyChanged(nameof(IsVmSettingsActive));
-            OnPropertyChanged(nameof(IsSystemActive));
-            OnPropertyChanged(nameof(IsDeviceControlActive));
+            get => _currentCategory;
+            set
+            {
+                if (SetProperty(ref _currentCategory, value))
+                {
+                    OnPropertyChanged(nameof(IsCommunicationActive));
+                    OnPropertyChanged(nameof(IsVmSettingsActive));
+                    OnPropertyChanged(nameof(IsSystemActive));
+                    OnPropertyChanged(nameof(IsDeviceControlActive));
+                }
+            }
+        }
+
+        public object CurrentView
+        {
+            get => _currentView;
+            set => SetProperty(ref _currentView, value);
         }
 
         public bool IsCommunicationActive => CurrentCategory == "Communication";

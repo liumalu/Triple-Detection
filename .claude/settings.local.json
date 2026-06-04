@@ -349,7 +349,16 @@
       "Bash(\"C:\\\\Program Files\\\\Microsoft Visual Studio\\\\2022\\\\Community\\\\MSBuild\\\\Current\\\\Bin\\\\MSBuild.exe\" D:\\\\xcm\\\\Triple-Detection\\\\TripleDetection.csproj -t:Rebuild -p:Configuration=Debug)",
       "Bash(MSBuild.exe \"D:/xcm/Triple-Detection/TripleDetection.csproj\" -t:Rebuild -p:Configuration=Debug -v:m)",
       "Bash(\"/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"D:/xcm/Triple-Detection/TripleDetection.csproj\" -t:Rebuild -p:Configuration=Debug -v:m)",
-      "Bash(D:/xcm/Triple-Detection/bin/Debug/net8.0-windows/TripleDetection.exe *)"
+      "Bash(D:/xcm/Triple-Detection/bin/Debug/net8.0-windows/TripleDetection.exe *)",
+      "WebSearch",
+      "Bash(\"C:\\\\Program Files\\\\Microsoft Visual Studio\\\\2022\\\\Community\\\\MSBuild\\\\Current\\\\Bin\\\\MSBuild.exe\" D:/xcm/Triple-Detection/TripleDetection.csproj -t:Rebuild -p:Configuration=Debug)",
+      "Bash(dotnet newtonsoft.json.dll --list)",
+      "Bash(\"C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" D:/xcm/Triple-Detection/TripleDetection.csproj -t:Build -p:Configuration=Debug -v:d)",
+      "Bash(\"C:/Program Files \\(x86\\)/Microsoft Visual Studio/Installer/vswhere.exe\" -latest -products * -requires Microsoft.ComponentManagement.WorkloadPackager)",
+      "Bash(taskkill /F /PID 10540)",
+      "Bash(taskkill *)",
+      "Bash(\"C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" D:/xcm/Triple-Detection/TripleDetection.csproj -t:Build -p:Configuration=Debug -v:m)",
+      "Bash(dotnet package *)"
     ],
     "additionalDirectories": [
       "D:\\xcm\\Triple-Detection\\TripleDetection.App\\bin\\Debug\\log\\SDK",

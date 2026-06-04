@@ -133,8 +133,8 @@ namespace TripleDetection.Presentation.Views
             _viewModel.Username = UsernameTextBox.Text;
             _viewModel.Password = PasswordBox.Password;
 
-            if (_viewModel.LoginCommand.CanExecute(null))
-                _viewModel.LoginCommand.Execute(null);
+            if (_viewModel.LoginCommand.CanExecute())
+                _viewModel.LoginCommand.Execute();
         }
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)

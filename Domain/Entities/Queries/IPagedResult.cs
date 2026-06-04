@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
 
-namespace TripleDetection.Domain.Entities.Queries;
+namespace TripleDetection.Domain.Entities.Queries
+{
 
 public interface IPagedResult<T>
 {
@@ -31,4 +32,5 @@ public class PagedResult<T> : IPagedResult<T>
         PageIndex = pageIndex;
         PageSize = pageSize;
     }
+}
 }

@@ -1,7 +1,8 @@
 using System;
 using TripleDetection.Domain.Enums;
 
-namespace TripleDetection.Domain.Entities;
+namespace TripleDetection.Domain.Entities
+{
 
 public class Product : BaseEntity
 {
@@ -12,4 +13,5 @@ public class Product : BaseEntity
     public ValidType ValidType { get; set; } = ValidType.Year;
     public int ValidPeriod { get; set; } = 1;
     public ProductStatus Status { get; set; } = ProductStatus.Active;
+}
 }

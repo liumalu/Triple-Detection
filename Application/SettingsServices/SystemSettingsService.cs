@@ -3,12 +3,13 @@ using System.IO;
 using TripleDetection.Infrastructure;
 using TripleDetection.Presentation.Models;
 
-namespace TripleDetection.Application.SettingsServices;
+namespace TripleDetection.Application.SettingsServices
+{
 
 public class SystemSettingsService
 {
     private readonly string _configPath;
-    private SystemSettings? _settings;
+    private SystemSettings _settings;
 
     public SystemSettingsService()
     {
@@ -26,4 +27,5 @@ public class SystemSettingsService
         _settings = settings;
         JsonHelper.Save(settings, _configPath);
     }
+}
 }

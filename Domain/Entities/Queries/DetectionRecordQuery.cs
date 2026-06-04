@@ -1,6 +1,7 @@
 using System;
 
-namespace TripleDetection.Domain.Entities.Queries;
+namespace TripleDetection.Domain.Entities.Queries
+{
 
 public class DetectionRecordQuery : PagedQuery
 {
@@ -10,4 +11,5 @@ public class DetectionRecordQuery : PagedQuery
     public int? ProductId { get; set; }
     public string BatchNumber { get; set; } = string.Empty;
     public bool? IsOK { get; set; }
+}
 }

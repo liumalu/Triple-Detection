@@ -1,19 +1,20 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Data.Entity.ModelConfiguration;
 using TripleDetection.Domain.Entities;
 
-namespace TripleDetection.Infrastructure.Persistence.Configurations;
-
-public class ProdTaskConfiguration : IEntityTypeConfiguration<ProdTask>
+namespace TripleDetection.Infrastructure.Persistence.Configurations
 {
-    public void Configure(EntityTypeBuilder<ProdTask> builder)
+
+public class ProdTaskConfiguration : EntityTypeConfiguration<ProdTask>
+{
+    public ProdTaskConfiguration()
     {
-        builder.ToTable("Tasks");
-        builder.HasKey(t => t.Id);
-        builder.Property(t => t.Name).HasMaxLength(200);
-        builder.Property(t => t.CreatedBy).HasMaxLength(100);
-        builder.Property(t => t.ReviewedBy).HasMaxLength(100);
-        builder.Property(t => t.BatchNumber).HasMaxLength(50);
-        builder.Property(t => t.ProductId).IsRequired();
+        ToTable("Tasks");
+        HasKey(t => t.Id);
+        Property(t => t.Name).HasMaxLength(200);
+        Property(t => t.CreatedBy).HasMaxLength(100);
+        Property(t => t.ReviewedBy).HasMaxLength(100);
+        Property(t => t.BatchNumber).HasMaxLength(50);
+        Property(t => t.ProductId).IsRequired();
     }
+}
 }

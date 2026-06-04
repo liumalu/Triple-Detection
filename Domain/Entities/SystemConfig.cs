@@ -1,4 +1,5 @@
-namespace TripleDetection.Domain.Entities;
+namespace TripleDetection.Domain.Entities
+{
 
 public class SystemConfig : BaseEntity
 {
@@ -6,4 +7,5 @@ public class SystemConfig : BaseEntity
     public string Key { get; set; } = string.Empty;
     public string Value { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
+}
 }

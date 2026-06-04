@@ -2,7 +2,8 @@ using System.Collections.Generic;
 using TripleDetection.Domain.Entities;
 using TripleDetection.Domain.Entities.Queries;
 
-namespace TripleDetection.Application.Services;
+namespace TripleDetection.Application.Services
+{
 
 public interface IAuditLogService
 {
@@ -11,4 +12,5 @@ public interface IAuditLogService
     IPagedResult<AuditLog> Query(AuditLogQuery query);
     IEnumerable<AuditLog> Export(AuditLogQuery query);
     IEnumerable<AuditLog> GetByUserId(int userId);
+}
 }

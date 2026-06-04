@@ -1,6 +1,7 @@
 using System;
 
-namespace TripleDetection.Domain.Entities.Queries;
+namespace TripleDetection.Domain.Entities.Queries
+{
 
 public class ProductQuery : PagedQuery
 {
@@ -9,4 +10,5 @@ public class ProductQuery : PagedQuery
     public int? Status { get; set; }
     public DateTime? CreateAtFrom { get; set; }
     public DateTime? CreateAtTo { get; set; }
+}
 }

@@ -1,6 +1,7 @@
 using System;
 
-namespace TripleDetection.Domain.Entities.Queries;
+namespace TripleDetection.Domain.Entities.Queries
+{
 
 public class TaskQuery : PagedQuery
 {
@@ -10,4 +11,5 @@ public class TaskQuery : PagedQuery
     public DateTime? ProductionDateFrom { get; set; }
     public DateTime? ProductionDateTo { get; set; }
     public string BatchNumber { get; set; } = string.Empty;
+}
 }

@@ -5,7 +5,8 @@ using TripleDetection.Domain.Entities.Queries;
 using TripleDetection.Domain.Enums;
 using TripleDetection.Domain.Repositories;
 
-namespace TripleDetection.Application.Services;
+namespace TripleDetection.Application.Services
+{
 
 public class TaskService : ITaskService
 {
@@ -20,7 +21,7 @@ public class TaskService : ITaskService
 
     public IEnumerable<ProdTask> GetAll() => _repository.GetAll();
     public IEnumerable<ProdTask> GetByStatus(TaskStatus status) => _repository.Find(x => x.Status == status);
-    public ProdTask? GetById(int id) => _repository.GetById(id);
+    public ProdTask GetById(int id) => _repository.GetById(id);
 
     public void Create(ProdTask task, string createBy, int currentUserId)
     {
@@ -85,4 +86,5 @@ public class TaskService : ITaskService
 
     public IPagedResult<ProdTask> Query(PagedQuery query) => _repository.Query(query);
     public IPagedResult<ProdTask> Query(TaskQuery query) => _repository.Query(query);
+}
 }

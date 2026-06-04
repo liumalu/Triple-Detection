@@ -4,7 +4,8 @@ using TripleDetection.Domain.Entities;
 using TripleDetection.Domain.Entities.Queries;
 using TripleDetection.Domain.Repositories;
 
-namespace TripleDetection.Application.Services;
+namespace TripleDetection.Application.Services
+{
 
 public class ProductService : IProductService
 {
@@ -18,7 +19,7 @@ public class ProductService : IProductService
     }
 
     public IEnumerable<Product> GetAll() => _repository.GetAll();
-    public Product? GetById(int id) => _repository.GetById(id);
+    public Product GetById(int id) => _repository.GetById(id);
 
     public void Create(Product product, string createBy, int currentUserId)
     {
@@ -54,4 +55,5 @@ public class ProductService : IProductService
 
     public IPagedResult<Product> Query(PagedQuery query) => _repository.Query(query);
     public IPagedResult<Product> Query(ProductQuery query) => _repository.Query(query);
+}
 }

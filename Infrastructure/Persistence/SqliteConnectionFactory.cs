@@ -1,9 +1,10 @@
 using System;
 using System.Data.Common;
-using Microsoft.Data.Sqlite;
+using System.Data.SQLite;
 using TripleDetection.Domain.Repositories;
 
-namespace TripleDetection.Infrastructure.Persistence;
+namespace TripleDetection.Infrastructure.Persistence
+{
 
 public class SqliteConnectionFactory : IDbConnectionFactory
 {
@@ -16,6 +17,7 @@ public class SqliteConnectionFactory : IDbConnectionFactory
 
     public DbConnection CreateConnection()
     {
-        return new SqliteConnection(_connectionString);
+        return new SQLiteConnection(_connectionString);
     }
+}
 }

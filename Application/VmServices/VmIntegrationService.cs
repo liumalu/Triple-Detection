@@ -1,31 +1,28 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using CommunityToolkit.Mvvm;
-using CommunityToolkit.Mvvm.Messaging;
 using VM.Core;
 using VM.PlatformSDKCS;
 using System.Drawing;
 using TripleDetection.Presentation.Models;
 using TripleDetection.Domain.Entities;
 using TripleDetection.Application.Services;
-using TripleDetection.Presentation.Messages;
 using GlobalVariableModuleCs;
 
 namespace TripleDetection.Application.VmServices
 {
     public class VmIntegrationService
     {
-        private VmProcedure? _procedure;
+        private VmProcedure _procedure;
         private ImageStorageService _imageStorage;
         private bool _isSolutionLoad = false;
         private LoggingService _logService;
         private IDetectionRecordService _detectionRecordService;
         private int _currentTaskId;
         private int _currentProductId;
-        private string? _currentBatchNumber;
+        private string _currentBatchNumber;
 
-        public event EventHandler<DetectionResult>? OnDetectionResult;
+        public event EventHandler<DetectionResult> OnDetectionResult;
 
         public VmIntegrationService(ImageStorageService imageStorage, LoggingService logService, IDetectionRecordService detectionRecordService)
         {
@@ -122,7 +119,7 @@ namespace TripleDetection.Application.VmServices
             _currentBatchNumber = batchNumber ?? "";
         }
 
-        public VmProcedure? GetProcedure()
+        public VmProcedure GetProcedure()
         {
             return _procedure;
         }
@@ -151,7 +148,7 @@ namespace TripleDetection.Application.VmServices
                 return;
             }
 
-            GlobalVariableModuleTool? gvTool = GetGlobalVariableTool();
+            var gvTool = GetGlobalVariableTool();
             if (gvTool == null)
             {
                 _logService?.Log($"[VM GlobalVariable] SetGlobalVar(\"{name}\"): gvTool is null, skip");
@@ -171,7 +168,7 @@ namespace TripleDetection.Application.VmServices
             "全局变量模块"
         };
 
-        private GlobalVariableModuleTool? GetGlobalVariableTool()
+        private GlobalVariableModuleTool GetGlobalVariableTool()
         {
             if (_procedure == null)
                 return null;
@@ -249,10 +246,6 @@ namespace TripleDetection.Application.VmServices
                         var result = ParseResult(strResult);
                         result.ElapsedMs = _stopwatch.ElapsedMilliseconds;
 
-                        // Publish via WeakReferenceMessenger (preferred)
-                        WeakReferenceMessenger.Default.Send(new DetectionResultMessage(result));
-
-                        // Legacy event (backward compatibility)
                         OnDetectionResult?.Invoke(this, result);
 
                         // 保存 DetectionRecord（非阻塞，异常吞噬）

@@ -1,7 +1,8 @@
-using Microsoft.EntityFrameworkCore;
+using System.Data.Entity;
 using TripleDetection.Domain.Entities;
 
-namespace TripleDetection.Infrastructure.Persistence;
+namespace TripleDetection.Infrastructure.Persistence
+{
 
 public class TripleDetectionDbContext : DbContext
 {
@@ -10,22 +11,19 @@ public class TripleDetectionDbContext : DbContext
     public TripleDetectionDbContext(string connectionString)
     {
         _connectionString = connectionString;
+        Database.SetInitializer<TripleDetectionDbContext>(null);
     }
 
-    public DbSet<User> Users => Set<User>();
-    public DbSet<Product> Products => Set<Product>();
-    public DbSet<ProdTask> ProdTasks => Set<ProdTask>();
-    public DbSet<DetectionRecord> DetectionRecords => Set<DetectionRecord>();
-    public DbSet<AuditLog> AuditLogs => Set<AuditLog>();
-    public DbSet<SystemConfig> SystemConfigs => Set<SystemConfig>();
+    public DbSet<User> Users { get; set; }
+    public DbSet<Product> Products { get; set; }
+    public DbSet<ProdTask> ProdTasks { get; set; }
+    public DbSet<DetectionRecord> DetectionRecords { get; set; }
+    public DbSet<AuditLog> AuditLogs { get; set; }
+    public DbSet<SystemConfig> SystemConfigs { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    protected override void OnModelCreating(DbModelBuilder modelBuilder)
     {
-        optionsBuilder.UseSqlite(_connectionString);
+        modelBuilder.Configurations.AddFromAssembly(typeof(TripleDetectionDbContext).Assembly);
     }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(TripleDetectionDbContext).Assembly);
-    }
+}
 }

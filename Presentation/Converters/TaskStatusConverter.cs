@@ -5,18 +5,22 @@ using TripleDetection.Domain.Enums;
 
 namespace TripleDetection.Presentation.Converters
 {
-    public class ProductStatusConverter : IValueConverter
+    public class TaskStatusConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is ProductStatus status)
+            if (value is TaskStatus status)
             {
                 switch (status)
                 {
-                    case ProductStatus.Active:
-                        return "启用";
-                    case ProductStatus.Inactive:
-                        return "停用";
+                    case TaskStatus.Pending:
+                        return "待审核";
+                    case TaskStatus.Approved:
+                        return "已审核";
+                    case TaskStatus.Running:
+                        return "执行中";
+                    case TaskStatus.Completed:
+                        return "已完成";
                     default:
                         return status.ToString();
                 }
@@ -26,7 +30,7 @@ namespace TripleDetection.Presentation.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is ProductStatus status)
+            if (value is TaskStatus status)
                 return status;
             return value;
         }

@@ -89,7 +89,7 @@
                     <DataGridTextColumn Header="生产日期" Binding="{Binding ProductionDate, StringFormat='yyyy-MM-dd'}" Width="100"/>
                     <DataGridTextColumn Header="有效期至" Binding="{Binding ExpirationDate, StringFormat='yyyy-MM-dd'}" Width="100"/>
                     <DataGridTextColumn Header="批次号" Binding="{Binding BatchNumber}" Width="100"/>
-                    <DataGridTextColumn Header="状态" Binding="{Binding Status}" Width="80"/>
+                    <DataGridTextColumn Header="状态" Binding="{Binding Status, Converter={StaticResource TaskStatusConverter}}" Width="80"/>
                     <DataGridTextColumn Header="提交人" Binding="{Binding CreateBy}" Width="80"/>
                     <DataGridTextColumn Header="审核人" Binding="{Binding ReviewedBy}" Width="80"/>
                     <DataGridTextColumn Header="创建时间" Binding="{Binding CreateAt, StringFormat='yyyy-MM-dd HH:mm'}" Width="150"/>

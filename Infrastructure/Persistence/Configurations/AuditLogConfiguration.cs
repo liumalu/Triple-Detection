@@ -1,19 +1,20 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Data.Entity.ModelConfiguration;
 using TripleDetection.Domain.Entities;
 
-namespace TripleDetection.Infrastructure.Persistence.Configurations;
-
-public class AuditLogConfiguration : IEntityTypeConfiguration<AuditLog>
+namespace TripleDetection.Infrastructure.Persistence.Configurations
 {
-    public void Configure(EntityTypeBuilder<AuditLog> builder)
+
+public class AuditLogConfiguration : EntityTypeConfiguration<AuditLog>
+{
+    public AuditLogConfiguration()
     {
-        builder.ToTable("AuditLogs");
-        builder.HasKey(a => a.Id);
-        builder.Property(a => a.UserName).HasMaxLength(200);
-        builder.Property(a => a.Action).HasMaxLength(50);
-        builder.Property(a => a.ObjectType).HasMaxLength(50);
-        builder.Property(a => a.Details).HasMaxLength(1000);
-        builder.Property(a => a.IpAddress).HasMaxLength(50);
+        ToTable("AuditLogs");
+        HasKey(a => a.Id);
+        Property(a => a.UserName).HasMaxLength(200);
+        Property(a => a.Action).HasMaxLength(50);
+        Property(a => a.ObjectType).HasMaxLength(50);
+        Property(a => a.Details).HasMaxLength(1000);
+        Property(a => a.IpAddress).HasMaxLength(50);
     }
+}
 }

@@ -1,17 +1,16 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.Messaging;
-using TripleDetection.Presentation.Messages;
 
-namespace TripleDetection.Application.Services;
+namespace TripleDetection.Application.Services
+{
 
 public class LoggingService
 {
     private readonly string _logPath;
     private readonly object _lockObj = new object();
 
-    public event EventHandler<LogEntry>? OnLogAdded;
+    public event EventHandler<LogEntry> OnLogAdded;
 
     public LoggingService(string logPath)
     {
@@ -43,7 +42,6 @@ public class LoggingService
     {
         var entry = new LogEntry { Timestamp = DateTime.Now, Message = message };
         OnLogAdded?.Invoke(this, entry);
-        WeakReferenceMessenger.Default.Send(new LogAddedMessage(message));
         Task.Run(() => SaveLog(entry));
     }
 
@@ -71,4 +69,5 @@ public class LogEntry
 {
     public DateTime Timestamp { get; set; }
     public string Message { get; set; } = "";
+}
 }

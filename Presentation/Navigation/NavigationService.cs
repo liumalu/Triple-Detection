@@ -2,16 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
 
-namespace TripleDetection.Presentation.Navigation;
+namespace TripleDetection.Presentation.Navigation
+{
 
 public class NavigationService : INavigationService
 {
-    private readonly Dictionary<string, Type> _routes = new();
+    private readonly Dictionary<string, Type> _routes = new Dictionary<string, Type>();
     private readonly IServiceProvider _serviceProvider;
-    private ContentControl? _region;
+    private ContentControl _region;
 
     public string CurrentViewKey { get; private set; } = "";
-    public event Action<string>? Navigated;
+    public event Action<string> Navigated;
 
     public NavigationService(IServiceProvider serviceProvider)
     {
@@ -48,9 +49,11 @@ public class NavigationService : INavigationService
         if (!_routes.TryGetValue(key, out var viewType) || viewType != typeof(TView))
             throw new InvalidOperationException($"Route key '{key}' does not match view type {typeof(TView).Name}");
 
-        var view = (TView)_serviceProvider.GetService(typeof(TView))!;
+        var view = (TView)_serviceProvider.GetService(typeof(TView));
         _region.Content = view;
         CurrentViewKey = key;
-        Navigated?.Invoke(key);
+        var handler = Navigated;
+        if (handler != null) handler(key);
     }
+}
 }

@@ -1,7 +1,8 @@
 using System;
 using TripleDetection.Infrastructure.Persistence;
 
-namespace TripleDetection.Presentation;
+namespace TripleDetection.Presentation
+{
 
 public static class DatabaseConfig
 {
@@ -9,4 +10,5 @@ public static class DatabaseConfig
     {
         DatabaseInitializer.Initialize();
     }
+}
 }

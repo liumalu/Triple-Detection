@@ -1,89 +1,107 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
+using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using Microsoft.Data.Sqlite;
-using Microsoft.EntityFrameworkCore;
 using TripleDetection.Domain.Entities;
 using TripleDetection.Domain.Entities.Queries;
 using TripleDetection.Domain.Repositories;
 using TripleDetection.Infrastructure.Exceptions;
 using TripleDetection.Infrastructure.Persistence;
 
-namespace TripleDetection.Infrastructure.Repositories;
+namespace TripleDetection.Infrastructure.Repositories
+{
 
 public class SqliteRepository<T> : IRepository<T> where T : BaseEntity
 {
     private readonly string _connectionString;
 
-    public SqliteRepository(DbConnection connection)
+    public SqliteRepository(string connectionString)
     {
-        _connectionString = connection.ConnectionString;
+        _connectionString = connectionString;
     }
 
-    protected string? ConnectionString => _connectionString;
+    protected string ConnectionString => _connectionString;
 
-    public T? GetById(int id)
+    public T GetById(int id)
     {
-        using var conn = new SqliteConnection(_connectionString);
-        conn.Open();
-        var sql = $"SELECT * FROM {GetTableName()} WHERE Id = @Id AND IsDeleted = 0";
-        using var cmd = new SqliteCommand(sql, conn);
-        cmd.Parameters.AddWithValue("@Id", id);
-        using var reader = cmd.ExecuteReader();
-        if (reader.Read()) return MapRow<T>(reader);
-        return null;
+        using (var conn = new SQLiteConnection(_connectionString))
+        {
+            conn.Open();
+            var sql = $"SELECT * FROM {GetTableName()} WHERE Id = @Id AND IsDeleted = 0";
+            using (var cmd = new SQLiteCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@Id", id);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read()) return MapRow<T>(reader);
+                }
+            }
+        }
+        return default(T);
     }
 
     public IEnumerable<T> GetAll()
     {
         var sql = $"SELECT * FROM {GetTableName()} WHERE IsDeleted = 0";
-        return ExecuteQuery(sql, null!);
+        return ExecuteQuery(sql, null);
     }
 
     public IEnumerable<T> Find(Expression<Func<T, bool>> predicate)
     {
         var whereClause = TranslatePredicate(predicate);
         var sql = $"SELECT * FROM {GetTableName()} WHERE {whereClause} AND IsDeleted = 0";
-        return ExecuteQuery(sql, null!);
+        return ExecuteQuery(sql, null);
     }
 
     public void Add(T entity)
     {
-        using var conn = new SqliteConnection(_connectionString);
-        conn.Open();
-        var columns = GetInsertColumns();
-        var values = GetInsertValues(entity);
-        var sql = $"INSERT INTO {GetTableName()} ({string.Join(", ", columns)}) VALUES ({string.Join(", ", values)})";
-        using var cmd = new SqliteCommand(sql, conn);
-        AddEntityParameters(cmd, entity);
-        cmd.ExecuteNonQuery();
+        using (var conn = new SQLiteConnection(_connectionString))
+        {
+            conn.Open();
+            var columns = GetInsertColumns();
+            var values = GetInsertValues(entity);
+            var sql = $"INSERT INTO {GetTableName()} ({string.Join(", ", columns)}) VALUES ({string.Join(", ", values)})";
+            using (var cmd = new SQLiteCommand(sql, conn))
+            {
+                AddEntityParameters(cmd, entity);
+                cmd.ExecuteNonQuery();
+            }
+        }
     }
 
     public void Update(T entity)
     {
-        using var conn = new SqliteConnection(_connectionString);
-        conn.Open();
-        var sets = GetUpdateSets();
-        var sql = $"UPDATE {GetTableName()} SET {string.Join(", ", sets.Select(c => c + " = @" + c))} WHERE Id = @Id";
-        using var cmd = new SqliteCommand(sql, conn);
-        cmd.Parameters.AddWithValue("@Id", entity.Id);
-        AddEntityParameters(cmd, entity, excludeKeys: new[] { "Id", "CreateBy", "CreateAt" });
-        cmd.ExecuteNonQuery();
+        using (var conn = new SQLiteConnection(_connectionString))
+        {
+            conn.Open();
+            var sets = GetUpdateSets();
+            var sql = $"UPDATE {GetTableName()} SET {string.Join(", ", sets.Select(c => c + " = @" + c))} WHERE Id = @Id";
+            using (var cmd = new SQLiteCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@Id", entity.Id);
+                AddEntityParameters(cmd, entity, excludeKeys: new[] { "Id", "CreateBy", "CreateAt" });
+                cmd.ExecuteNonQuery();
+            }
+        }
     }
 
     public void Delete(int id)
     {
-        using var conn = new SqliteConnection(_connectionString);
-        conn.Open();
-        var sql = $"UPDATE {GetTableName()} SET IsDeleted = 1, UpdateAt = @Now WHERE Id = @Id";
-        using var cmd = new SqliteCommand(sql, conn);
-        cmd.Parameters.AddWithValue("@Id", id);
-        cmd.Parameters.AddWithValue("@Now", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
-        cmd.ExecuteNonQuery();
+        using (var conn = new SQLiteConnection(_connectionString))
+        {
+            conn.Open();
+            var sql = $"UPDATE {GetTableName()} SET IsDeleted = 1, UpdateAt = @Now WHERE Id = @Id";
+            using (var cmd = new SQLiteCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@Id", id);
+                cmd.Parameters.AddWithValue("@Now", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+                cmd.ExecuteNonQuery();
+            }
+        }
     }
 
     public int Count() => ExecuteScalar<int>($"SELECT COUNT(*) FROM {GetTableName()} WHERE IsDeleted = 0");
@@ -104,7 +122,7 @@ public class SqliteRepository<T> : IRepository<T> where T : BaseEntity
         {
             return Query(tq);
         }
-        return QueryInternal(query, null!);
+        return QueryInternal(query, null);
     }
 
     public IPagedResult<T> Query(ProductQuery query)
@@ -159,18 +177,23 @@ public class SqliteRepository<T> : IRepository<T> where T : BaseEntity
         var dataSql = $"SELECT * FROM {GetTableName()} WHERE {whereClause} AND IsDeleted = 0 ORDER BY {orderClause} LIMIT @PageSize OFFSET @Offset";
         var countSql = $"SELECT COUNT(*) FROM {GetTableName()} WHERE {whereClause} AND IsDeleted = 0";
 
-        using var conn = new SqliteConnection(_connectionString);
-        conn.Open();
-        int total;
-        using (var cmd = new SqliteCommand(countSql, conn)) { total = Convert.ToInt32(cmd.ExecuteScalar()); }
-        List<T> items;
-        using (var cmd = new SqliteCommand(dataSql, conn))
+        using (var conn = new SQLiteConnection(_connectionString))
         {
-            cmd.Parameters.AddWithValue("@PageSize", query.PageSize);
-            cmd.Parameters.AddWithValue("@Offset", offset);
-            items = ExecuteReader(cmd);
+            conn.Open();
+            int total;
+            using (var cmd = new SQLiteCommand(countSql, conn))
+            {
+                total = Convert.ToInt32(cmd.ExecuteScalar());
+            }
+            List<T> items;
+            using (var cmd = new SQLiteCommand(dataSql, conn))
+            {
+                cmd.Parameters.AddWithValue("@PageSize", query.PageSize);
+                cmd.Parameters.AddWithValue("@Offset", offset);
+                items = ExecuteReader(cmd);
+            }
+            return new PagedResult<T>(items, total, query.PageIndex, query.PageSize);
         }
-        return new PagedResult<T>(items, total, query.PageIndex, query.PageSize);
     }
 
     private string TranslatePredicate(Expression<Func<T, bool>> predicate) => Visit(predicate.Body);
@@ -191,18 +214,16 @@ public class SqliteRepository<T> : IRepository<T> where T : BaseEntity
         }
         if (expr is MemberExpression member)
         {
-            // Handle closure-captured variables: member is a field of a closure class
             if (member.Expression is ConstantExpression closureConstant)
             {
                 var closure = closureConstant.Value;
                 if (closure != null)
                 {
-                    var fi = member.Member as System.Reflection.FieldInfo;
+                    var fi = member.Member as FieldInfo;
                     if (fi != null)
                     {
                         var fieldValue = fi.GetValue(closure);
-                        var str = fieldValue?.ToString() ?? "";
-                        // Handle boolean field values
+                        var str = fieldValue != null ? fieldValue.ToString() : "";
                         if (str == "True" || str == "true") return "1";
                         if (str == "False" || str == "false") return "0";
                         return $"'{EscapeValue(str)}'";
@@ -215,7 +236,6 @@ public class SqliteRepository<T> : IRepository<T> where T : BaseEntity
         {
             if (constant.Value == null) return "NULL";
             var val = constant.Value.ToString();
-            // Handle boolean constants: output 1/0 instead of 'True'/'False'
             if (val == "True" || val == "true") return "1";
             if (val == "False" || val == "false") return "0";
             return $"'{EscapeValue(val)}'";
@@ -224,46 +244,57 @@ public class SqliteRepository<T> : IRepository<T> where T : BaseEntity
         {
             var obj = call.Object as MemberExpression;
             var arg = call.Arguments[0] as ConstantExpression;
-            return $"{GetColumnName(obj?.Member as PropertyInfo)} LIKE '%{EscapeValue(arg.Value?.ToString())}%'";
+            var objName = obj != null ? GetColumnName(obj.Member as PropertyInfo) : "";
+            var argStr = arg != null && arg.Value != null ? arg.Value.ToString() : "";
+            return $"{objName} LIKE '%{EscapeValue(argStr)}%'";
         }
         if (expr is UnaryExpression unary && unary.NodeType == ExpressionType.Not)
         {
             var notExpr = unary.Operand as MemberExpression;
-            return $"({GetColumnName(notExpr?.Member as PropertyInfo)} = 0 OR {GetColumnName(notExpr?.Member as PropertyInfo)} = 0)";
+            var colName = GetColumnName(notExpr != null ? notExpr.Member as PropertyInfo : null);
+            return $"({colName} = 0 OR {colName} = 0)";
         }
         return "1=1";
     }
 
-    private List<T> ExecuteQuery(string sql, object[] _, List<SqliteParameter>? extraParams = null)
+    private List<T> ExecuteQuery(string sql, object[] extraParams)
     {
-        using var conn = new SqliteConnection(_connectionString);
-        conn.Open();
-        using var cmd = new SqliteCommand(sql, conn);
-        if (extraParams != null) foreach (var p in extraParams) cmd.Parameters.Add(p);
-        return ExecuteReader(cmd);
+        using (var conn = new SQLiteConnection(_connectionString))
+        {
+            conn.Open();
+            using (var cmd = new SQLiteCommand(sql, conn))
+            {
+                return ExecuteReader(cmd);
+            }
+        }
     }
 
-    protected List<T> ExecuteReader(SqliteCommand cmd)
+    protected List<T> ExecuteReader(SQLiteCommand cmd)
     {
         var results = new List<T>();
-        using var reader = cmd.ExecuteReader();
-        while (reader.Read()) results.Add(MapRow<T>(reader));
+        using (var reader = cmd.ExecuteReader())
+        {
+            while (reader.Read()) results.Add(MapRow<T>(reader));
+        }
         return results;
     }
 
     private T ExecuteScalar<T>(string sql)
     {
-        using var conn = new SqliteConnection(_connectionString);
-        conn.Open();
-        using var cmd = new SqliteCommand(sql, conn);
-        var result = cmd.ExecuteScalar();
-        if (result == null || result == DBNull.Value) return default(T)!;
-        // Handle Int64 -> Int32 conversion for SQLite
-        if (typeof(T) == typeof(int) && result is Int64 l) return (T)(object)(int)l;
-        return (T)Convert.ChangeType(result, typeof(T));
+        using (var conn = new SQLiteConnection(_connectionString))
+        {
+            conn.Open();
+            using (var cmd = new SQLiteCommand(sql, conn))
+            {
+                var result = cmd.ExecuteScalar();
+                if (result == null || result == DBNull.Value) return default(T);
+                if (typeof(T) == typeof(int) && result is Int64 l) return (T)(object)(int)l;
+                return (T)Convert.ChangeType(result, typeof(T));
+            }
+        }
     }
 
-    protected T MapRow<T>(SqliteDataReader reader) where T : BaseEntity
+    protected T MapRow<T>(SQLiteDataReader reader) where T : BaseEntity
     {
         var entity = Activator.CreateInstance<T>();
         var type = typeof(T);
@@ -277,7 +308,7 @@ public class SqliteRepository<T> : IRepository<T> where T : BaseEntity
             else if (prop.PropertyType == typeof(int) && value is Int64 il) prop.SetValue(entity, (int)il);
             else if (prop.PropertyType == typeof(int?) && value is Int64 il2) prop.SetValue(entity, (int?)il2);
             else if (prop.PropertyType.IsEnum && value is Int64 el) prop.SetValue(entity, Enum.ToObject(prop.PropertyType, (int)el));
-            else if (prop.PropertyType == typeof(DateTime?) || prop.PropertyType == typeof(DateTime)) prop.SetValue(entity, DateTime.Parse(value.ToString()!));
+            else if (prop.PropertyType == typeof(DateTime?) || prop.PropertyType == typeof(DateTime)) prop.SetValue(entity, DateTime.Parse(value.ToString()));
             else prop.SetValue(entity, value);
         }
         return entity;
@@ -291,9 +322,13 @@ public class SqliteRepository<T> : IRepository<T> where T : BaseEntity
         return name + "s";
     }
 
-    private string GetColumnName(PropertyInfo prop) => prop?.Name ?? "";
+    private string GetColumnName(PropertyInfo prop) => prop != null ? prop.Name : "";
 
-    private string EscapeValue(object value) => value?.ToString()?.Replace("'", "''") ?? "";
+    private string EscapeValue(object value)
+    {
+        var str = value != null ? value.ToString() : "";
+        return str.Replace("'", "''");
+    }
 
     private string[] GetInsertColumns() =>
         new[] { "CreateAt", "UpdateAt", "IsDeleted", "CreateBy", "UpdateBy" }
@@ -301,7 +336,7 @@ public class SqliteRepository<T> : IRepository<T> where T : BaseEntity
 
     private IEnumerable<string> GetInsertValues(T entity)
     {
-        yield return "@CreateAt"; yield return "@UpdateAt"; yield return "@IsDeleted";
+        yield return "@CreateAt"; yield return "@UpdateAt"; yield return "0";
         yield return "@CreateBy"; yield return "@UpdateBy";
         foreach (var prop in GetTypeProperties()) yield return "@" + prop.Name;
     }
@@ -309,11 +344,11 @@ public class SqliteRepository<T> : IRepository<T> where T : BaseEntity
     private string[] GetUpdateSets() =>
         GetTypeProperties().Select(p => p.Name).Concat(new[] { "UpdateAt", "UpdateBy" }).ToArray();
 
-    private void AddEntityParameters(SqliteCommand cmd, T entity, string[]? excludeKeys = null)
+    private void AddEntityParameters(SQLiteCommand cmd, T entity, string[] excludeKeys = null)
     {
-        excludeKeys ??= Array.Empty<string>();
+        if (excludeKeys == null) excludeKeys = new string[0];
         var now = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-        cmd.Parameters.AddWithValue("@CreateAt", entity.CreateAt == default ? now : entity.CreateAt.ToString("yyyy-MM-dd HH:mm:ss"));
+        cmd.Parameters.AddWithValue("@CreateAt", entity.CreateAt == default(DateTime) ? now : entity.CreateAt.ToString("yyyy-MM-dd HH:mm:ss"));
         cmd.Parameters.AddWithValue("@UpdateAt", now);
         cmd.Parameters.AddWithValue("@IsDeleted", 0);
         cmd.Parameters.AddWithValue("@CreateBy", entity.CreateBy ?? "");
@@ -322,7 +357,7 @@ public class SqliteRepository<T> : IRepository<T> where T : BaseEntity
         {
             if (excludeKeys.Contains(prop.Name)) continue;
             var val = prop.GetValue(entity);
-            if (prop.PropertyType == typeof(bool)) val = (bool)val! ? 1 : 0;
+            if (prop.PropertyType == typeof(bool)) val = (bool)val ? 1 : 0;
             cmd.Parameters.AddWithValue("@" + prop.Name, val ?? DBNull.Value);
         }
     }
@@ -336,4 +371,5 @@ public class SqliteRepository<T> : IRepository<T> where T : BaseEntity
         "Id", "CreateBy", "UpdateBy", "CreateAt", "UpdateAt", "IsDeleted",
         "StatusText", "ProductName"
     };
+}
 }

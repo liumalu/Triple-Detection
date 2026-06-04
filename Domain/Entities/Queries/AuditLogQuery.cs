@@ -1,6 +1,7 @@
 using System;
 
-namespace TripleDetection.Domain.Entities.Queries;
+namespace TripleDetection.Domain.Entities.Queries
+{
 
 public class AuditLogQuery : PagedQuery
 {
@@ -11,4 +12,5 @@ public class AuditLogQuery : PagedQuery
     public string ObjectType { get; set; } = string.Empty;
     public string Keyword { get; set; } = string.Empty;
     public string IpAddress { get; set; } = string.Empty;
+}
 }

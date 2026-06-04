@@ -1,23 +1,20 @@
 using System;
 using System.Collections.ObjectModel;
-using CommunityToolkit.Mvvm;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-using TripleDetection.Presentation.Messages;
+using Prism.Mvvm;
+using Prism.Commands;
 using TripleDetection.Presentation.Navigation;
 using TripleDetection.Presentation.Models;
 
 namespace TripleDetection.Presentation.ViewModels.Detection
 {
-    public partial class MainViewModel : ObservableObject
+    public class MainViewModel : ViewModelBase
     {
         private string _resultText = "--";
         private string _resultBackground = "#808080";
         private string _details = "Detection details will appear here";
         private bool _isImageViewActive = true;
         private string _selectedProcedure = "";
-        private object _currentView;
+        private object _currentView = null;
         private readonly INavigationService _navigationService;
 
         public ObservableCollection<string> LogMessages { get; } = new ObservableCollection<string>();
@@ -59,21 +56,12 @@ namespace TripleDetection.Presentation.ViewModels.Detection
             set => SetProperty(ref _currentView, value);
         }
 
-        public RelayCommand NavigateToProductCommand { get; }
+        public DelegateCommand NavigateToProductCommand { get; }
 
         public MainViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
-            NavigateToProductCommand = new RelayCommand(NavigateToProduct);
-
-            // Subscribe to messages via WeakReferenceMessenger
-            WeakReferenceMessenger.Default.Register<LogAddedMessage>(this, (r, m) => AddLog(m.Message));
-            WeakReferenceMessenger.Default.Register<DetectionResultMessage>(this, (r, m) => OnDetectionResult(m.Result));
-        }
-
-        private void OnLogAdded(string message)
-        {
-            AddLog(message);
+            NavigateToProductCommand = new DelegateCommand(NavigateToProduct);
         }
 
         private void NavigateToProduct()
@@ -96,7 +84,7 @@ namespace TripleDetection.Presentation.ViewModels.Detection
             ResultHistory.Add(result);
         }
 
-        private void OnDetectionResult(DetectionResult result)
+        public void OnDetectionResult(DetectionResult result)
         {
             // Handle detection result
         }

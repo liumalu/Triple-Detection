@@ -1,66 +1,43 @@
 using System;
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using TripleDetection.Domain.Entities;
 using TripleDetection.Domain.Repositories;
 using TripleDetection.Infrastructure.Repositories;
 
-namespace TripleDetection.Infrastructure.Persistence;
+namespace TripleDetection.Infrastructure.Persistence
+{
 
 public class SqliteUnitOfWork : IUnitOfWork
 {
-    private readonly TripleDetectionDbContext _context;
-    private Microsoft.EntityFrameworkCore.Storage.IDbContextTransaction? _transaction;
+    private readonly string _connectionString;
     private bool _disposed;
     private readonly Dictionary<Type, object> _repositories = new Dictionary<Type, object>();
 
     public SqliteUnitOfWork(string connectionString)
     {
-        _context = new TripleDetectionDbContext(connectionString);
+        _connectionString = connectionString;
     }
 
-    public bool IsInTransaction => _transaction != null;
+    public bool IsInTransaction => false;
 
     public void BeginTransaction()
     {
-        if (_transaction != null)
-            throw new InvalidOperationException("A transaction is already in progress.");
-        _transaction = _context.Database.BeginTransaction();
+        throw new NotImplementedException("Transaction not supported in raw ADO.NET implementation");
     }
 
     public void Commit()
     {
-        if (_transaction == null)
-            throw new InvalidOperationException("No transaction in progress.");
-        try
-        {
-            _context.SaveChanges();
-            _transaction.Commit();
-        }
-        catch
-        {
-            Rollback();
-            throw;
-        }
-        finally
-        {
-            _transaction.Dispose();
-            _transaction = null;
-        }
+        throw new NotImplementedException("Transaction not supported in raw ADO.NET implementation");
     }
 
     public void Rollback()
     {
-        if (_transaction == null)
-            throw new InvalidOperationException("No transaction in progress.");
-        _transaction.Rollback();
-        _transaction.Dispose();
-        _transaction = null;
+        throw new NotImplementedException("Transaction not supported in raw ADO.NET implementation");
     }
 
     public int SaveChanges()
     {
-        return _context.SaveChanges();
+        return 0;
     }
 
     public IRepository<T> GetRepository<T>() where T : BaseEntity
@@ -68,7 +45,7 @@ public class SqliteUnitOfWork : IUnitOfWork
         var entityType = typeof(T);
         if (!_repositories.ContainsKey(entityType))
         {
-            _repositories[entityType] = new SqliteRepository<T>(_context.Database.GetDbConnection());
+            _repositories[entityType] = new SqliteRepository<T>(_connectionString);
         }
         return (IRepository<T>)_repositories[entityType];
     }
@@ -85,10 +62,9 @@ public class SqliteUnitOfWork : IUnitOfWork
         {
             if (disposing)
             {
-                _transaction?.Dispose();
-                _context?.Dispose();
             }
             _disposed = true;
         }
     }
+}
 }

@@ -1,7 +1,8 @@
 using System;
 using TripleDetection.Domain.Enums;
 
-namespace TripleDetection.Domain.Entities;
+namespace TripleDetection.Domain.Entities
+{
 
 public class ProdTask : BaseEntity
 {
@@ -15,4 +16,5 @@ public class ProdTask : BaseEntity
     public DateTime ProductionDate { get; set; }
     public DateTime? ExpirationDate { get; set; }
     public string BatchNumber { get; set; } = string.Empty;
+}
 }

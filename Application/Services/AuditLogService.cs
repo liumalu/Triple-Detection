@@ -6,7 +6,8 @@ using TripleDetection.Domain.Entities;
 using TripleDetection.Domain.Entities.Queries;
 using TripleDetection.Domain.Repositories;
 
-namespace TripleDetection.Application.Services;
+namespace TripleDetection.Application.Services
+{
 
 public class AuditLogService : IAuditLogService
 {
@@ -52,4 +53,5 @@ public class AuditLogService : IAuditLogService
     {
         return _repository.Find(x => x.UserId == userId && !x.IsDeleted).OrderByDescending(x => x.CreateAt);
     }
+}
 }

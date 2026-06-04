@@ -1,6 +1,7 @@
 using System;
 
-namespace TripleDetection.Domain.Entities;
+namespace TripleDetection.Domain.Entities
+{
 
 public class User : BaseEntity
 {
@@ -23,4 +24,5 @@ public class User : BaseEntity
             return "正常";
         }
     }
+}
 }

@@ -1,4 +1,5 @@
-namespace TripleDetection.Domain.Entities.Queries;
+namespace TripleDetection.Domain.Entities.Queries
+{
 
 public class PagedQuery
 {
@@ -6,4 +7,5 @@ public class PagedQuery
     public int PageSize { get; set; } = 20;
     public string SortBy { get; set; } = "Id";
     public bool SortDescending { get; set; } = true;
+}
 }

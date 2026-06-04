@@ -1,18 +1,19 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Data.Entity.ModelConfiguration;
 using TripleDetection.Domain.Entities;
 
-namespace TripleDetection.Infrastructure.Persistence.Configurations;
-
-public class ProductConfiguration : IEntityTypeConfiguration<Product>
+namespace TripleDetection.Infrastructure.Persistence.Configurations
 {
-    public void Configure(EntityTypeBuilder<Product> builder)
+
+public class ProductConfiguration : EntityTypeConfiguration<Product>
+{
+    public ProductConfiguration()
     {
-        builder.ToTable("Products");
-        builder.HasKey(p => p.Id);
-        builder.Property(p => p.Code).HasMaxLength(50);
-        builder.Property(p => p.Name).HasMaxLength(200);
-        builder.Property(p => p.Description).HasMaxLength(1000);
-        builder.Property(p => p.SolFilePath).HasMaxLength(500);
+        ToTable("Products");
+        HasKey(p => p.Id);
+        Property(p => p.Code).HasMaxLength(50);
+        Property(p => p.Name).HasMaxLength(200);
+        Property(p => p.Description).HasMaxLength(1000);
+        Property(p => p.SolFilePath).HasMaxLength(500);
     }
+}
 }

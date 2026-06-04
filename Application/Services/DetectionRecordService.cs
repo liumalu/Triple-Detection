@@ -3,7 +3,8 @@ using TripleDetection.Domain.Entities;
 using TripleDetection.Domain.Entities.Queries;
 using TripleDetection.Domain.Repositories;
 
-namespace TripleDetection.Application.Services;
+namespace TripleDetection.Application.Services
+{
 
 public class DetectionRecordService : IDetectionRecordService
 {
@@ -17,4 +18,5 @@ public class DetectionRecordService : IDetectionRecordService
     public void Save(DetectionRecord record) => _repository.Add(record);
     public IPagedResult<DetectionRecord> Query(DetectionRecordQuery query) => _repository.Query(query);
     public IEnumerable<DetectionRecord> Export(DetectionRecordQuery query) => _repository.Export(query);
+}
 }

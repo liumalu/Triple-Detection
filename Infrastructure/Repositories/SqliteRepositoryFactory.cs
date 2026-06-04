@@ -1,11 +1,12 @@
 using System;
 using System.Data.Common;
-using Microsoft.Data.Sqlite;
+using System.Data.SQLite;
 using TripleDetection.Domain.Entities;
 using TripleDetection.Domain.Repositories;
 using TripleDetection.Infrastructure.Persistence;
 
-namespace TripleDetection.Infrastructure.Repositories;
+namespace TripleDetection.Infrastructure.Repositories
+{
 
 public class SqliteRepositoryFactory : IRepositoryFactory
 {
@@ -27,24 +28,27 @@ public class SqliteRepositoryFactory : IRepositoryFactory
     public IRepository<T> CreateRepository<T>() where T : BaseEntity
     {
         var connection = _connectionFactory.CreateConnection();
-        return new SqliteRepository<T>(connection);
+        return new SqliteRepository<T>(connection.ConnectionString);
     }
 
     public IAuditLogRepository CreateAuditLogRepository()
     {
         var connection = _connectionFactory.CreateConnection();
-        return new AuditLogRepository(connection);
+        return new AuditLogRepository(connection.ConnectionString);
     }
 
     public IDetectionRecordRepository CreateDetectionRecordRepository()
     {
         var connection = _connectionFactory.CreateConnection();
-        return new DetectionRecordRepository(connection);
+        return new DetectionRecordRepository(connection.ConnectionString);
     }
 
     private string GetConnectionString()
     {
-        using var conn = _connectionFactory.CreateConnection();
-        return conn.ConnectionString;
+        using (var conn = _connectionFactory.CreateConnection())
+        {
+            return conn.ConnectionString;
+        }
     }
+}
 }

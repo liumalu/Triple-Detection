@@ -3,12 +3,13 @@ using System.IO;
 using TripleDetection.Infrastructure;
 using TripleDetection.Presentation.Models;
 
-namespace TripleDetection.Application.SettingsServices;
+namespace TripleDetection.Application.SettingsServices
+{
 
 public class CommunicationSettingsService
 {
     private readonly string _configPath;
-    private CommunicationSettings? _settings;
+    private CommunicationSettings _settings;
 
     public CommunicationSettingsService()
     {
@@ -28,4 +29,5 @@ public class CommunicationSettingsService
     }
 
     public string GetConfigPath() => _configPath;
+}
 }

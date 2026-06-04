@@ -1,18 +1,19 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Data.Entity.ModelConfiguration;
 using TripleDetection.Domain.Entities;
 
-namespace TripleDetection.Infrastructure.Persistence.Configurations;
-
-public class SystemConfigConfiguration : IEntityTypeConfiguration<SystemConfig>
+namespace TripleDetection.Infrastructure.Persistence.Configurations
 {
-    public void Configure(EntityTypeBuilder<SystemConfig> builder)
+
+public class SystemConfigConfiguration : EntityTypeConfiguration<SystemConfig>
+{
+    public SystemConfigConfiguration()
     {
-        builder.ToTable("SystemConfigs");
-        builder.HasKey(s => s.Id);
-        builder.Property(s => s.Category).HasMaxLength(100);
-        builder.Property(s => s.Key).HasMaxLength(100);
-        builder.Property(s => s.Value).HasMaxLength(1000);
-        builder.Property(s => s.Description).HasMaxLength(500);
+        ToTable("SystemConfigs");
+        HasKey(s => s.Id);
+        Property(s => s.Category).HasMaxLength(100);
+        Property(s => s.Key).HasMaxLength(100);
+        Property(s => s.Value).HasMaxLength(1000);
+        Property(s => s.Description).HasMaxLength(500);
     }
+}
 }

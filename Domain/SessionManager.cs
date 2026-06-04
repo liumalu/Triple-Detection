@@ -1,6 +1,7 @@
 using System;
 
-namespace TripleDetection.Domain;
+namespace TripleDetection.Domain
+{
 
 public static class SessionManager
 {
@@ -31,4 +32,5 @@ public static class SessionManager
         CurrentUserName = "system";
         CurrentIpAddress = "127.0.0.1";
     }
+}
 }

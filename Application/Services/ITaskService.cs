@@ -3,7 +3,8 @@ using TripleDetection.Domain.Entities;
 using TripleDetection.Domain.Entities.Queries;
 using TripleDetection.Domain.Enums;
 
-namespace TripleDetection.Application.Services;
+namespace TripleDetection.Application.Services
+{
 
 public interface ITaskService
 {
@@ -17,4 +18,5 @@ public interface ITaskService
     void Delete(int id, string updateBy, int currentUserId);
     IPagedResult<ProdTask> Query(PagedQuery query);
     IPagedResult<ProdTask> Query(TaskQuery query);
+}
 }

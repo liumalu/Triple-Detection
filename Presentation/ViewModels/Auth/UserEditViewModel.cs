@@ -1,26 +1,86 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
-using CommunityToolkit.Mvvm;
-using CommunityToolkit.Mvvm.ComponentModel;
+using Prism.Mvvm;
 using TripleDetection.Domain.Entities;
 using TripleDetection.Application.Services;
 using TripleDetection.Domain;
 
 namespace TripleDetection.Presentation.ViewModels.Auth
 {
-    public partial class UserEditViewModel : ObservableObject
+    public class UserEditViewModel : ViewModelBase
     {
         private readonly IUserService _userService;
 
-        [ObservableProperty] private bool _isEditMode;
-        [ObservableProperty] private string _originalUsername = "";
-        [ObservableProperty] private string _username = "";
-        [ObservableProperty] private string _realName = "";
-        [ObservableProperty] private string _password = "";
-        [ObservableProperty] private string _role = "Operator";
-        [ObservableProperty] private bool _isEnabled = true;
-        [ObservableProperty] private string _errorMessage = "";
+        private bool _isEditMode;
+        private string _originalUsername = "";
+        private string _username = "";
+        private string _realName = "";
+        private string _password = "";
+        private string _role = "Operator";
+        private bool _isEnabled = true;
+        private string _errorMessage = "";
+
+        public bool IsEditMode
+        {
+            get => _isEditMode;
+            set => SetProperty(ref _isEditMode, value);
+        }
+
+        public string OriginalUsername
+        {
+            get => _originalUsername;
+            set => SetProperty(ref _originalUsername, value);
+        }
+
+        public string Username
+        {
+            get => _username;
+            set
+            {
+                if (SetProperty(ref _username, value))
+                    ErrorMessage = "";
+            }
+        }
+
+        public string RealName
+        {
+            get => _realName;
+            set
+            {
+                if (SetProperty(ref _realName, value))
+                    ErrorMessage = "";
+            }
+        }
+
+        public string Password
+        {
+            get => _password;
+            set
+            {
+                if (SetProperty(ref _password, value))
+                    ErrorMessage = "";
+            }
+        }
+
+        public string Role
+        {
+            get => _role;
+            set => SetProperty(ref _role, value);
+        }
+
+        public bool IsEnabled
+        {
+            get => _isEnabled;
+            set => SetProperty(ref _isEnabled, value);
+        }
+
+        public string ErrorMessage
+        {
+            get => _errorMessage;
+            set => SetProperty(ref _errorMessage, value);
+        }
 
         public ObservableCollection<string> Roles { get; } = new ObservableCollection<string>
         {
@@ -34,12 +94,12 @@ namespace TripleDetection.Presentation.ViewModels.Auth
 
         public event EventHandler<bool> RequestClose;
 
-        public UserEditViewModel(User? user = null, IUserService? userService = null)
+        public UserEditViewModel(User user = default(User), IUserService userService = default(IUserService))
         {
             _userService = userService ?? throw new ArgumentNullException(nameof(userService));
-            IsEditMode = user != null;
+            IsEditMode = !EqualityComparer<User>.Default.Equals(user, default(User));
 
-            if (user != null)
+            if (!EqualityComparer<User>.Default.Equals(user, default(User)))
             {
                 OriginalUsername = user.Username;
                 Username = user.Username;
@@ -49,10 +109,6 @@ namespace TripleDetection.Presentation.ViewModels.Auth
                 IsEnabled = user.IsEnabled;
             }
         }
-
-        partial void OnUsernameChanged(string value) => ErrorMessage = "";
-        partial void OnRealNameChanged(string value) => ErrorMessage = "";
-        partial void OnPasswordChanged(string value) => ErrorMessage = "";
 
         public bool Validate()
         {

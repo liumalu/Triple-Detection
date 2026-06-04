@@ -1,8 +1,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Windows;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm;
+using Prism.Mvvm;
 using TripleDetection.Domain;
 using TripleDetection.Domain.Entities;
 using TripleDetection.Domain.Entities.Queries;
@@ -10,52 +9,123 @@ using TripleDetection.Application.Services;
 
 namespace TripleDetection.Presentation.ViewModels.Production
 {
-    public partial class TaskListViewModel : ObservableObject
+    public partial class TaskListViewModel : ViewModelBase
     {
         private readonly ITaskService _taskService;
         private readonly IProductService _productService;
+        private readonly IAuditLogService _auditLogService;
 
-        [ObservableProperty] private string _queryName = "";
-        [ObservableProperty] private int? _queryProductId;
-        [ObservableProperty] private int? _queryStatus;
-        [ObservableProperty] private DateTime? _queryProductionDateFrom;
-        [ObservableProperty] private DateTime? _queryProductionDateTo;
-        [ObservableProperty] private string _queryBatchNumber = "";
-        [ObservableProperty] private int _pageIndex = 0;
-        [ObservableProperty] private int _pageSize = 20;
-        [ObservableProperty] private int _totalCount = 0;
-        [ObservableProperty] private int _totalPages = 0;
-        [ObservableProperty] private ProdTask? _selectedTask;
+        private string _queryName = "";
+        private int? _queryProductId = default(int?);
+        private int? _queryStatus = default(int?);
+        private DateTime? _queryProductionDateFrom = default(DateTime?);
+        private DateTime? _queryProductionDateTo = default(DateTime?);
+        private string _queryBatchNumber = "";
+        private int _pageIndex = 0;
+        private int _pageSize = 20;
+        private int _totalCount = 0;
+        private int _totalPages = 0;
+        private ProdTask _selectedTask = null;
+
+        public string QueryName
+        {
+            get => _queryName;
+            set => SetProperty(ref _queryName, value);
+        }
+
+        public int? QueryProductId
+        {
+            get => _queryProductId;
+            set => SetProperty(ref _queryProductId, value);
+        }
+
+        public int? QueryStatus
+        {
+            get => _queryStatus;
+            set => SetProperty(ref _queryStatus, value);
+        }
+
+        public DateTime? QueryProductionDateFrom
+        {
+            get => _queryProductionDateFrom;
+            set => SetProperty(ref _queryProductionDateFrom, value);
+        }
+
+        public DateTime? QueryProductionDateTo
+        {
+            get => _queryProductionDateTo;
+            set => SetProperty(ref _queryProductionDateTo, value);
+        }
+
+        public string QueryBatchNumber
+        {
+            get => _queryBatchNumber;
+            set => SetProperty(ref _queryBatchNumber, value);
+        }
+
+        public int PageIndex
+        {
+            get => _pageIndex;
+            set
+            {
+                if (SetProperty(ref _pageIndex, value))
+                {
+                    OnPropertyChanged(nameof(CurrentPageDisplay));
+                }
+            }
+        }
+
+        public int PageSize
+        {
+            get => _pageSize;
+            set => SetProperty(ref _pageSize, value);
+        }
+
+        public int TotalCount
+        {
+            get => _totalCount;
+            set
+            {
+                if (SetProperty(ref _totalCount, value))
+                {
+                    OnPropertyChanged(nameof(TotalPagesDisplay));
+                }
+            }
+        }
+
+        public int TotalPages
+        {
+            get => _totalPages;
+            set
+            {
+                if (SetProperty(ref _totalPages, value))
+                {
+                    OnPropertyChanged(nameof(TotalPagesDisplay));
+                    OnPropertyChanged(nameof(HasNextPage));
+                    OnPropertyChanged(nameof(HasPreviousPage));
+                }
+            }
+        }
+
+        public ProdTask SelectedTask
+        {
+            get => _selectedTask;
+            set => SetProperty(ref _selectedTask, value);
+        }
 
         public ObservableCollection<ProdTask> Tasks { get; } = new ObservableCollection<ProdTask>();
         public ObservableCollection<Product> Products { get; } = new ObservableCollection<Product>();
-
-        partial void OnPageIndexChanged(int value)
-        {
-            OnPropertyChanged(nameof(CurrentPageDisplay));
-        }
-
-        partial void OnTotalCountChanged(int value)
-        {
-            OnPropertyChanged(nameof(TotalPagesDisplay));
-        }
-
-        partial void OnTotalPagesChanged(int value)
-        {
-            OnPropertyChanged(nameof(TotalPagesDisplay));
-            OnPropertyChanged(nameof(HasNextPage));
-            OnPropertyChanged(nameof(HasPreviousPage));
-        }
 
         public string TotalPagesDisplay => $"共 {TotalCount} 条";
         public string CurrentPageDisplay => $"{PageIndex + 1} / {TotalPages} 页";
         public bool HasNextPage => PageIndex < TotalPages - 1;
         public bool HasPreviousPage => PageIndex > 0;
 
-        public TaskListViewModel(ITaskService taskService, IProductService productService)
+        public TaskListViewModel(ITaskService taskService, IProductService productService, IAuditLogService auditLogService)
         {
             _taskService = taskService;
             _productService = productService;
+            _auditLogService = auditLogService;
             LoadProducts();
         }
 
@@ -149,12 +219,15 @@ namespace TripleDetection.Presentation.ViewModels.Production
         public void ApproveTask(int id)
         {
             _taskService.Approve(id, SessionManager.CurrentUserName ?? "Unknown", SessionManager.CurrentUserId);
+            var task = _taskService.GetById(id);
+            _auditLogService?.Log(SessionManager.CurrentUserId, "TASK_APPROVE", "ProdTask", id,
+                Newtonsoft.Json.JsonConvert.SerializeObject(new { taskId = id, taskName = task?.Name }));
             Search();
         }
 
-        public void OpenEditWindow(ProdTask? task = null)
+        public void OpenEditWindow(ProdTask task = null)
         {
-            var editVm = new TaskEditViewModel(task, _taskService, _productService);
+            var editVm = new TaskEditViewModel(task, _taskService, _productService, _auditLogService);
             var editWindow = new Views.Production.TaskEditWindow { DataContext = editVm };
             editWindow.Owner = System.Windows.Application.Current.MainWindow;
             if (editWindow.ShowDialog() == true)

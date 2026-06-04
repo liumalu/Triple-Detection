@@ -1,6 +1,7 @@
 using TripleDetection.Domain.Entities;
 
-namespace TripleDetection.Domain.Repositories;
+namespace TripleDetection.Domain.Repositories
+{
 
 public enum DatabaseProviderType
 {
@@ -16,4 +17,5 @@ public interface IRepositoryFactory
     IUnitOfWork CreateUnitOfWork();
     IRepository<T> CreateRepository<T>() where T : BaseEntity;
     DatabaseProviderType ProviderType { get; }
+}
 }

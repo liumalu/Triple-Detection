@@ -2,11 +2,12 @@ using System;
 using System.IO;
 using Newtonsoft.Json;
 
-namespace TripleDetection.Infrastructure;
+namespace TripleDetection.Infrastructure
+{
 
 public static class JsonHelper
 {
-    public static T? Load<T>(string filePath) where T : class
+    public static T Load<T>(string filePath) where T : class
     {
         try
         {
@@ -36,4 +37,5 @@ public static class JsonHelper
             System.Diagnostics.Debug.WriteLine($"[JsonHelper.Save] ERROR: {ex.Message}");
         }
     }
+}
 }

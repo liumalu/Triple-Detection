@@ -1,7 +1,8 @@
 using System;
 using TripleDetection.Domain.Entities;
 
-namespace TripleDetection.Domain.Repositories;
+namespace TripleDetection.Domain.Repositories
+{
 
 public interface IUnitOfWork : IDisposable
 {
@@ -11,4 +12,5 @@ public interface IUnitOfWork : IDisposable
     IRepository<T> GetRepository<T>() where T : BaseEntity;
     int SaveChanges();
     bool IsInTransaction { get; }
+}
 }

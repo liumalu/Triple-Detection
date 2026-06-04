@@ -1,6 +1,7 @@
 using System;
 
-namespace TripleDetection.Presentation.Navigation;
+namespace TripleDetection.Presentation.Navigation
+{
 
 public interface INavigationService
 {
@@ -10,4 +11,5 @@ public interface INavigationService
     event Action<string> Navigated;
     void SetRegion(System.Windows.Controls.ContentControl region);
     void RegisterRoute(string key, System.Type viewType);
+}
 }

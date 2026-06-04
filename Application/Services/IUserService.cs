@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using System.Linq;
 using TripleDetection.Domain.Entities;
 using TripleDetection.Domain.Entities.Queries;
 
-namespace TripleDetection.Application.Services;
+namespace TripleDetection.Application.Services
+{
 
 public interface IUserService
 {
@@ -19,4 +19,5 @@ public interface IUserService
     void Lock(string username, string updateBy, int currentUserId);
     void Unlock(string username, string updateBy, int currentUserId);
     IPagedResult<User> Query(UserQuery query);
+}
 }

@@ -2,7 +2,8 @@ using System.Collections.Generic;
 using TripleDetection.Domain.Entities;
 using TripleDetection.Domain.Entities.Queries;
 
-namespace TripleDetection.Application.Services;
+namespace TripleDetection.Application.Services
+{
 
 public interface IProductService
 {
@@ -13,4 +14,5 @@ public interface IProductService
     void Delete(int id, string updateBy, int currentUserId);
     IPagedResult<Product> Query(PagedQuery query);
     IPagedResult<Product> Query(ProductQuery query);
+}
 }

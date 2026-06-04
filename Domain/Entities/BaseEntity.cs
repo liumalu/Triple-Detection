@@ -1,6 +1,7 @@
 using System;
 
-namespace TripleDetection.Domain.Entities;
+namespace TripleDetection.Domain.Entities
+{
 
 public abstract class BaseEntity
 {
@@ -10,4 +11,5 @@ public abstract class BaseEntity
     public DateTime CreateAt { get; set; } = DateTime.Now;
     public DateTime UpdateAt { get; set; } = DateTime.Now;
     public bool IsDeleted { get; set; } = false;
+}
 }

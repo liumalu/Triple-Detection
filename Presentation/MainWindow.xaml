@@ -95,7 +95,16 @@
 
             <!-- Main Content Region -->
             <Border Grid.Column="1" Background="#404040">
-                <ContentControl x:Name="MainContentRegion"/>
+                <TabControl x:Name="mainTabControl" Background="Transparent" BorderThickness="0">
+                    <TabControl.ItemContainerStyle>
+                        <Style TargetType="TabItem">
+                            <Setter Property="Background" Value="#2D3748"/>
+                            <Setter Property="Foreground" Value="#A0AEC0"/>
+                            <Setter Property="Padding" Value="12,6"/>
+                            <Setter Property="FontSize" Value="12"/>
+                        </Style>
+                    </TabControl.ItemContainerStyle>
+                </TabControl>
             </Border>
         </Grid>
 

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Win32;
-using Microsoft.Data.Sqlite;
+using System.Data.SQLite;
 using TripleDetection.Domain.Entities;
 using TripleDetection.Domain.Entities.Queries;
 using TripleDetection.Application.Services;
@@ -16,7 +16,7 @@ namespace TripleDetection.Presentation.Views.Detection
     {
         private readonly string _dbPath;
         private DetectionRecordQuery _currentQuery = new DetectionRecordQuery { PageIndex = 0, PageSize = 20 };
-        private IPagedResult<DetectionRecord>? _currentResult;
+        private IPagedResult<DetectionRecord> _currentResult;
 
         public DetectionHistoryView()
         {
@@ -42,7 +42,7 @@ namespace TripleDetection.Presentation.Views.Detection
             var records = new List<DetectionRecord>();
             long total = 0;
 
-            using (var conn = new Microsoft.Data.Sqlite.SqliteConnection($"Data Source={_dbPath};Version=3;"))
+            using (var conn = new SQLiteConnection($"Data Source={_dbPath};Version=3;"))
             {
                 conn.Open();
                 var where = BuildWhereClause(query);
@@ -95,7 +95,7 @@ namespace TripleDetection.Presentation.Views.Detection
             return string.Join(" AND ", conditions);
         }
 
-        private void AddQueryParams(SqliteCommand cmd, DetectionRecordQuery query)
+        private void AddQueryParams(SQLiteCommand cmd, DetectionRecordQuery query)
         {
             if (query.StartDate.HasValue)
                 cmd.Parameters.AddWithValue("@startDate", query.StartDate.Value.ToString("yyyy-MM-dd HH:mm:ss"));
@@ -111,7 +111,7 @@ namespace TripleDetection.Presentation.Views.Detection
                 cmd.Parameters.AddWithValue("@isOK", query.IsOK.Value ? 1 : 0);
         }
 
-        private DetectionRecord ReadRecord(SqliteDataReader reader)
+        private DetectionRecord ReadRecord(SQLiteDataReader reader)
         {
             return new DetectionRecord
             {
@@ -124,9 +124,9 @@ namespace TripleDetection.Presentation.Views.Detection
                 ExpirationDate = reader["ExpirationDate"] == DBNull.Value ? null : reader["ExpirationDate"].ToString(),
                 ImagePath = reader["ImagePath"] == DBNull.Value ? null : reader["ImagePath"].ToString(),
                 ElapsedMs = Convert.ToInt64(reader["ElapsedMs"]),
-                DetectionTime = reader["DetectionTime"] == DBNull.Value ? DateTime.MinValue : DateTime.Parse(reader["DetectionTime"]!.ToString()!),
-                CreateAt = reader["CreateAt"] == DBNull.Value ? DateTime.MinValue : DateTime.Parse(reader["CreateAt"]!.ToString()!),
-                UpdateAt = reader["UpdateAt"] == DBNull.Value ? DateTime.MinValue : DateTime.Parse(reader["UpdateAt"]!.ToString()!),
+                DetectionTime = reader["DetectionTime"] == DBNull.Value ? DateTime.MinValue : DateTime.Parse(reader["DetectionTime"].ToString()),
+                CreateAt = reader["CreateAt"] == DBNull.Value ? DateTime.MinValue : DateTime.Parse(reader["CreateAt"].ToString()),
+                UpdateAt = reader["UpdateAt"] == DBNull.Value ? DateTime.MinValue : DateTime.Parse(reader["UpdateAt"].ToString()),
                 IsDeleted = Convert.ToInt32(reader["IsDeleted"]) == 1
             };
         }
@@ -207,7 +207,7 @@ namespace TripleDetection.Presentation.Views.Detection
         private IEnumerable<DetectionRecord> ExportRecords(DetectionRecordQuery query)
         {
             var records = new List<DetectionRecord>();
-            using (var conn = new Microsoft.Data.Sqlite.SqliteConnection($"Data Source={_dbPath};Version=3;"))
+            using (var conn = new SQLiteConnection($"Data Source={_dbPath};Version=3;"))
             {
                 conn.Open();
                 var where = BuildWhereClause(query);

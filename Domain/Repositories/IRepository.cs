@@ -4,11 +4,12 @@ using System.Linq.Expressions;
 using TripleDetection.Domain.Entities;
 using TripleDetection.Domain.Entities.Queries;
 
-namespace TripleDetection.Domain.Repositories;
+namespace TripleDetection.Domain.Repositories
+{
 
 public interface IRepository<T> where T : BaseEntity
 {
-    T? GetById(int id);
+    T GetById(int id);
     IEnumerable<T> GetAll();
     IEnumerable<T> Find(Expression<Func<T, bool>> predicate);
     void Add(T entity);
@@ -17,4 +18,5 @@ public interface IRepository<T> where T : BaseEntity
     int Count();
     int Count(Expression<Func<T, bool>> predicate);
     IPagedResult<T> Query(PagedQuery query);
+}
 }
