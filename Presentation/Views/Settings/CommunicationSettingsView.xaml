@@ -1,7 +1,59 @@
 <UserControl x:Class="TripleDetection.Presentation.Views.Settings.CommunicationSettingsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Grid>
-        <TextBlock x:Name="ContentArea" Text="" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#666"/>
-    </Grid>
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel MaxWidth="600" HorizontalAlignment="Left" Margin="20">
+            <!-- Camera Settings -->
+            <TextBlock Text="Camera Settings" FontSize="14" FontWeight="SemiBold" Margin="0,0,0,10"/>
+
+            <Grid Margin="0,0,0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Camera IP:" VerticalAlignment="Center" Margin="0,0,10,5"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding CameraIp, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,10,5"/>
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Camera Port:" VerticalAlignment="Center" Margin="0,0,10,5"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding CameraPort, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,10,5"/>
+            </Grid>
+
+            <!-- PLC Settings -->
+            <TextBlock Text="PLC Settings" FontSize="14" FontWeight="SemiBold" Margin="0,0,0,10"/>
+
+            <Grid Margin="0,0,0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="PLC IP:" VerticalAlignment="Center" Margin="0,0,10,5"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding PlcIp, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,10,5"/>
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="PLC Port:" VerticalAlignment="Center" Margin="0,0,10,5"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding PlcPort, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,10,5"/>
+
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="PLC Type:" VerticalAlignment="Center" Margin="0,0,10,5"/>
+                <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding PlcTypeOptions}" SelectedItem="{Binding PlcType}" Margin="0,0,10,5"/>
+
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="Baud Rate:" VerticalAlignment="Center" Margin="0,0,10,5"/>
+                <ComboBox Grid.Row="3" Grid.Column="1" ItemsSource="{Binding BaudRateOptions}" SelectedItem="{Binding BaudRate}" Margin="0,0,10,5"/>
+            </Grid>
+
+            <!-- Save Button -->
+            <Button Content="Save" Command="{Binding SaveCommand}" HorizontalAlignment="Left"/>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>
