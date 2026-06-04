@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using TripleDetection.Domain.Entities;
 using TripleDetection.Infrastructure;
 using TripleDetection.Presentation.Models;
 
@@ -10,6 +11,7 @@ public class SystemSettingsService
 {
     private readonly string _configPath;
     private SystemSettings _settings;
+    private static readonly string DbPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Config", "tripledetection.db");
 
     public SystemSettingsService()
     {
@@ -26,6 +28,19 @@ public class SystemSettingsService
     {
         _settings = settings;
         JsonHelper.Save(settings, _configPath);
+        SaveToDb(settings);
+    }
+
+    private void SaveToDb(SystemSettings settings)
+    {
+        var systemConfig = new SystemConfig
+        {
+            Category = "System",
+            Key = "Settings",
+            Value = Newtonsoft.Json.JsonConvert.SerializeObject(settings)
+        };
+        var repo = new TripleDetection.Infrastructure.Repositories.SystemConfigRepository($"Data Source={DbPath}");
+        repo.SaveOrUpdate(systemConfig);
     }
 }
 }
