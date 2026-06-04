@@ -72,34 +72,5 @@ public class SystemConfigRepository : SqliteRepository<SystemConfig>, ISystemCon
         }
     }
 
-    public new IEnumerable<SystemConfig> GetAll()
-    {
-        var sql = "SELECT * FROM SystemConfigs WHERE IsDeleted = 0";
-        using (var conn = new SQLiteConnection(ConnectionString))
-        {
-            conn.Open();
-            using (var cmd = new SQLiteCommand(sql, conn))
-            {
-                return ExecuteReader(cmd);
-            }
-        }
     }
-
-    private new T MapRow<T>(SQLiteDataReader reader) where T : BaseEntity
-    {
-        var entity = Activator.CreateInstance<T>();
-        var type = typeof(T);
-        for (int i = 0; i < reader.FieldCount; i++)
-        {
-            var name = reader.GetName(i);
-            var prop = type.GetProperty(name);
-            if (prop == null || reader.IsDBNull(i)) continue;
-            var value = reader.GetValue(i);
-            if (prop.PropertyType == typeof(bool) && value is long l) prop.SetValue(entity, l != 0);
-            else if (prop.PropertyType == typeof(DateTime?) || prop.PropertyType == typeof(DateTime)) prop.SetValue(entity, DateTime.Parse(value.ToString()));
-            else prop.SetValue(entity, value);
-        }
-        return entity;
-    }
-}
 }
