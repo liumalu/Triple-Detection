@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS Products (
     CreateBy TEXT, UpdateBy TEXT
 );
 CREATE TABLE IF NOT EXISTS ProdTasks (
-    Id INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT NOT NULL, ProductId INTEGER,
+    Id INTEGER PRIMARY KEY AUTOINCREMENT, TaskName TEXT NOT NULL, ProductId INTEGER, ProductName TEXT,
     Status INTEGER NOT NULL DEFAULT 0, CreatedBy TEXT, ReviewedBy TEXT, ReviewedAt TEXT,
     ProductionDate TEXT, ExpirationDate TEXT, BatchNumber TEXT,
     IsDeleted INTEGER NOT NULL DEFAULT 0, CreateAt TEXT NOT NULL, UpdateAt TEXT NOT NULL,
@@ -51,7 +51,8 @@ CREATE TABLE IF NOT EXISTS DetectionRecords (
     BatchNumber TEXT, IsOK INTEGER NOT NULL DEFAULT 0, ProductionDate TEXT, ExpirationDate TEXT,
     ImagePath TEXT, ElapsedMs INTEGER NOT NULL DEFAULT 0, DetectionTime TEXT NOT NULL,
     IsDeleted INTEGER NOT NULL DEFAULT 0, CreateAt TEXT NOT NULL, UpdateAt TEXT NOT NULL,
-    CreateBy TEXT, UpdateBy TEXT
+    CreateBy TEXT, UpdateBy TEXT,
+    TaskName TEXT, ProductName TEXT, ProductCode TEXT
 );
 CREATE TABLE IF NOT EXISTS SystemConfigs (
     Id INTEGER PRIMARY KEY AUTOINCREMENT, Category TEXT NOT NULL, ConfigKey TEXT NOT NULL,
@@ -71,6 +72,7 @@ CREATE TABLE IF NOT EXISTS AuditLogs (
     Id INTEGER PRIMARY KEY AUTOINCREMENT, UserId INTEGER NOT NULL, UserName TEXT NOT NULL,
     Action TEXT NOT NULL, ObjectType TEXT NOT NULL, ObjectId INTEGER NOT NULL,
     Details TEXT, IpAddress TEXT,
+    FromStatus TEXT, ToStatus TEXT, RelatedRecordId INTEGER,
     IsDeleted INTEGER NOT NULL DEFAULT 0, CreateAt TEXT NOT NULL, UpdateAt TEXT NOT NULL,
     CreateBy TEXT, UpdateBy TEXT
 );
@@ -85,6 +87,11 @@ CREATE INDEX IF NOT EXISTS idx_detectionrecords_productid ON DetectionRecords(Pr
 CREATE INDEX IF NOT EXISTS idx_detectionrecords_deleted ON DetectionRecords(IsDeleted);
 CREATE INDEX IF NOT EXISTS idx_products_code ON Products(Code);
 CREATE INDEX IF NOT EXISTS idx_products_deleted ON Products(IsDeleted);
+CREATE INDEX IF NOT EXISTS idx_detectionrecords_date ON DetectionRecords(DetectionTime);
+CREATE INDEX IF NOT EXISTS idx_detectionrecords_task_date ON DetectionRecords(TaskId, DetectionTime);
+CREATE INDEX IF NOT EXISTS idx_auditlogs_action_date ON AuditLogs(Action, CreateAt);
+CREATE INDEX IF NOT EXISTS idx_auditlogs_user_date ON AuditLogs(UserId, CreateAt);
+CREATE INDEX IF NOT EXISTS idx_auditlogs_object ON AuditLogs(ObjectType, ObjectId);
 ";
                 cmd.ExecuteNonQuery();
             }
